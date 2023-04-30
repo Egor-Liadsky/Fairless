@@ -3,38 +3,28 @@ package com.mobile.fairless.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.mobile.fairless.Greeting
+import androidx.compose.material.Text
+import androidx.navigation.compose.rememberNavController
+import com.mobile.fairless.android.features.mainNavigation.MainNavigationScreen
+import com.mobile.fairless.android.navigation.AndroidNavigator
+import com.mobile.fairless.common.navigation.ScreenRoute
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class MainActivity : ComponentActivity() {
+    private val startDestination: ScreenRoute = ScreenRoute.Main
+    private val rootNavigation: AndroidNavigator by inject { parametersOf(startDestination) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
+            rootNavigation.init(navController)
             MyApplicationTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    GreetingView(Greeting().greet())
-                }
+                MainNavigationScreen(
+                    navController,
+                    startDestination
+                )
             }
         }
-    }
-}
-
-@Composable
-fun GreetingView(text: String) {
-    Text(text = text)
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        GreetingView("Hello, Android!")
     }
 }
