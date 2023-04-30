@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -40,6 +42,23 @@ android {
 
 dependencies {
     implementation(project(":shared"))
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ndk")
+
+    // DI
+    implementation("io.insert-koin:koin-android:3.3.2")
+    implementation("io.insert-koin:koin-androidx-compose:3.4.1")
+
+    // Images
+    implementation("io.coil-kt:coil-compose:2.3.0")
+
+    // Adfox
+    implementation("com.yandex.android:mobileads:5.6.0")
+
     implementation("androidx.compose.ui:ui:1.4.0")
     implementation("androidx.compose.ui:ui-tooling:1.4.0")
     implementation("androidx.compose.ui:ui-tooling-preview:1.4.0")
