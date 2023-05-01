@@ -3,8 +3,11 @@ package com.mobile.fairless.android.features.mainNavigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,8 +25,11 @@ import com.mobile.fairless.android.features.welcome.auth.AuthScreen
 import com.mobile.fairless.android.features.welcome.register.RegisterScreen
 import com.mobile.fairless.android.features.welcome.welcome.WelcomeScreen
 import com.mobile.fairless.common.navigation.ScreenRoute
+import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
+import kotlinx.coroutines.flow.collectLatest
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
@@ -32,16 +38,24 @@ import org.koin.core.qualifier.named
 fun MainNavigationScreen(
     navController: NavHostController = rememberNavController(),
     startDestination: ScreenRoute,
+    errorService: ErrorService = get(),
     viewModelWrapper: StatefulViewModelWrapper<MainNavigationViewModel, MainNavigationState> =
         getViewModel(qualifier = named("MainNavigationViewModel")) { parametersOf(startDestination) },
 ) {
     val backStackState = navController.currentBackStackEntryAsState()
+    val scaffoldState: ScaffoldState = rememberScaffoldState()
     val currentRoute = backStackState.value
-        ?.destination?.route?.substringBefore("/") ?: startDestination
+        ?.destination?.route?.substringBefore("/") ?: startDestination.name
 
     DisposableEffect(key1 = viewModelWrapper) {
         viewModelWrapper.viewModel.onViewShown()
         onDispose { viewModelWrapper.viewModel.onViewHidden() }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        errorService.state.collectLatest {
+            scaffoldState.snackbarHostState.showSnackbar(it)
+        }
     }
 
     Scaffold(

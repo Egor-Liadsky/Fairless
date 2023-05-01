@@ -81,16 +81,14 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
             Log.e("asjkld", "${viewModelWrapper.viewModel.state.value.email} ${viewModelWrapper.viewModel.state.value.password}")
             viewModelWrapper.viewModel.authUser(
                 UserResponse(
-                    identifier = viewModelWrapper.viewModel.state.value.email ?: "",
+                    identifier = viewModelWrapper.viewModel.state.value.email?.filter { !it.isWhitespace() } ?: "",
                     password = viewModelWrapper.viewModel.state.value.password ?: ""
                 )
             )
-            Log.e("user", state.value.user.toString())
-            if (state.value.user?.jwt != null){
-                viewModelWrapper.viewModel.navigateToMain()
-            }
         }
-        
+        if (state.value.user?.jwt != null){
+            viewModelWrapper.viewModel.navigateToMain()
+        }
         Text(text = state.value.user.toString())
     }
 }

@@ -56,7 +56,8 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
                     _state.update { it.copy(user = data) }
                 },
                 failureBlock = {
-                    errorService.showError(it.message.toString())
+                    navigator.navigateToMessage()
+                    errorService.showError("Логин или email неверны")
                 }
             )
         }
