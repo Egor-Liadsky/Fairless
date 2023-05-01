@@ -42,6 +42,18 @@ class NavigatorImpl(
         navigateToNavBarDestination(ScreenRoute.Menu)
     }
 
+    override fun navigateToWelcome() {
+        navigateToNavBarDestination(ScreenRoute.Welcome)
+    }
+
+    override fun navigateToAuth() {
+        navigateToNavBarDestination(ScreenRoute.Auth)
+    }
+
+    override fun navigateToRegister() {
+        navigateToNavBarDestination(ScreenRoute.Register)
+    }
+
     private fun navigateToNavBarDestination(root: ScreenRoute) {
         navController.navigate(root.name) {
             popUpTo(navController.graph.id) {
