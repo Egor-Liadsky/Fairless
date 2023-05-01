@@ -13,8 +13,10 @@ import org.koin.core.component.KoinComponent
 
 interface RegisterViewModel : KmpViewModel, SubScreenViewModel {
     val state: StateFlow<RegisterState>
+
+    fun navigateToWelcome()
     fun emailChanged(email: String)
-    fun login(login: String)
+    fun loginChanged(login: String)
     fun passwordChanged(password: String)
     fun passwordRetryChanged(passwordRetry: String)
 }
@@ -24,11 +26,15 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
     private val _state = MutableStateFlow(RegisterState())
     override val state: StateFlow<RegisterState> = _state.asStateFlow()
 
+    override fun navigateToWelcome() {
+        navigator.navigateToWelcome()
+    }
+
     override fun emailChanged(email: String) {
         _state.update { it.copy(email = email) }
     }
 
-    override fun login(login: String) {
+    override fun loginChanged(login: String) {
         _state.update { it.copy(login = login) }
     }
 

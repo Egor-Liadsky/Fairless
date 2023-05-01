@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.welcome.auth.layouts
+package com.mobile.fairless.android.features.welcome.register.layouts
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -20,10 +20,10 @@ import com.mobile.fairless.android.features.views.textFields.CommonTextField
 import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
+import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
 @Composable
-fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
+fun RegisterLayout(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
     Column(
         Modifier
             .fillMaxSize()
@@ -31,7 +31,7 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Войдите в\nсвой профиль",
+            text = "Регистрация",
             style = TextStyle(
                 fontFamily = fontQanelas,
                 fontWeight = FontWeight.Bold,
@@ -46,10 +46,20 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
             modifier = Modifier.padding(top = 40.dp),
             commonTextFieldParams = CommonTextFieldParams(
                 textState = viewModelWrapper.viewModel.state.value.email ?: "",
-                placeholder = "Введите свой логин или E-mail"
+                placeholder = "Введите свой E-mail"
             )
         ) {
             viewModelWrapper.viewModel.emailChanged(it)
+        }
+
+        CommonTextField(
+            modifier = Modifier.padding(top = 20.dp),
+            commonTextFieldParams = CommonTextFieldParams(
+                textState = viewModelWrapper.viewModel.state.value.password ?: "",
+                placeholder = "Введите свой логин",
+            )
+        ) {
+            viewModelWrapper.viewModel.loginChanged(it)
         }
 
         CommonTextField(
@@ -63,9 +73,20 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
             viewModelWrapper.viewModel.passwordChanged(it)
         }
 
+        CommonTextField(
+            modifier = Modifier.padding(top = 20.dp),
+            commonTextFieldParams = CommonTextFieldParams(
+                textState = viewModelWrapper.viewModel.state.value.password ?: "",
+                placeholder = "Повторите пароль",
+                isPassword = true
+            )
+        ) {
+            viewModelWrapper.viewModel.passwordRetryChanged(it)
+        }
+
         CommonButton(
             commonButtonParams = CommonButtonParams(
-                title = "Войти",
+                title = "Зарегистрироваться",
                 titleColor = colors.white,
                 background = colors.orangeMain
             ),

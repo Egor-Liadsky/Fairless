@@ -10,6 +10,8 @@ import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewM
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModelImpl
+import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
+import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModelImpl
 import com.mobile.fairless.features.welcome.welcome.viewModel.WelcomeViewModel
 import com.mobile.fairless.features.welcome.welcome.viewModel.WelcomeViewModelImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -32,5 +34,9 @@ fun androidModule() = module {
 
     viewModel(named("AuthViewModel")) {
         ViewModelWrapper<AuthViewModel>(AuthViewModelImpl(get()))
+    }
+
+    viewModel(named("RegisterViewModel")) {
+        ViewModelWrapper<RegisterViewModel>(RegisterViewModelImpl(get()))
     }
 }

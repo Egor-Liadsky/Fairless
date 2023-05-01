@@ -13,6 +13,8 @@ import org.koin.core.component.KoinComponent
 
 interface AuthViewModel : KmpViewModel, SubScreenViewModel {
     val state: StateFlow<AuthState>
+
+    fun navigateToWelcome()
     fun emailChanged(email: String)
     fun passwordChanged(password: String)
 }
@@ -21,6 +23,10 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
     AuthViewModel {
     private val _state = MutableStateFlow(AuthState())
     override val state: StateFlow<AuthState> = _state.asStateFlow()
+
+    override fun navigateToWelcome() {
+        navigator.navigateToWelcome()
+    }
 
     override fun emailChanged(email: String) {
         _state.update { it.copy(email = email) }
