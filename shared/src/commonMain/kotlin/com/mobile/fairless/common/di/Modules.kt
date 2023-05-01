@@ -2,6 +2,10 @@ package com.mobile.fairless.common.di
 
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.service.ErrorServiceImpl
+import com.mobile.fairless.features.welcome.auth.repository.AuthRepository
+import com.mobile.fairless.features.welcome.auth.repository.AuthRepositoryImpl
+import com.mobile.fairless.features.welcome.auth.service.AuthService
+import com.mobile.fairless.features.welcome.auth.service.AuthServiceImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
@@ -15,7 +19,7 @@ import org.koin.dsl.module
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
     startKoin {
         appDeclaration()
-        modules(commonModule())
+        modules(commonModule(), platformModule())
     }
 
 fun commonModule() = module {
@@ -40,4 +44,8 @@ fun commonModule() = module {
 
     // Services
     single<ErrorService> { ErrorServiceImpl() }
+    single<AuthService> { AuthServiceImpl(get()) }
+
+    // Repositories
+    single<AuthRepository> { AuthRepositoryImpl(get()) }
 }
