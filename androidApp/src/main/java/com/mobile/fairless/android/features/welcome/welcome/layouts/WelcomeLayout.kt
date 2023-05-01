@@ -57,6 +57,7 @@ fun WelcomeLayout(viewModelWrapper: ViewModelWrapper<WelcomeViewModel> = getView
                 ),
                 modifier = Modifier.padding(top = 40.dp)
             )
+
             Text(
                 text = "Выгодные скидки и промокоды",
                 style = TextStyle(

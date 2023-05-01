@@ -23,7 +23,11 @@ data class CommonButtonParams(
 )
 
 @Composable
-fun CommonButton(commonButtonParams: CommonButtonParams, modifier: Modifier, onClick: () -> Unit) {
+fun CommonButton(
+    commonButtonParams: CommonButtonParams,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     Button(
         modifier = modifier
             .width(320.dp)
