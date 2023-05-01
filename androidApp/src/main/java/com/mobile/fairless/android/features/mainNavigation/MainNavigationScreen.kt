@@ -18,6 +18,9 @@ import com.mobile.fairless.android.features.menu.MenuScreen
 import com.mobile.fairless.android.features.message.MessageScreen
 import com.mobile.fairless.android.features.notification.NotificationScreen
 import com.mobile.fairless.android.features.profile.ProfileScreen
+import com.mobile.fairless.android.features.welcome.auth.AuthScreen
+import com.mobile.fairless.android.features.welcome.register.RegisterScreen
+import com.mobile.fairless.android.features.welcome.welcome.WelcomeScreen
 import com.mobile.fairless.common.navigation.ScreenRoute
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
@@ -71,6 +74,15 @@ fun MainNavigationScreen(
             }
             composable(route = ScreenRoute.Menu.name) {
                 MenuScreen()
+            }
+            composable(route = ScreenRoute.Welcome.name) {
+                WelcomeScreen()
+            }
+            composable(route = ScreenRoute.Auth.name) {
+                AuthScreen()
+            }
+            composable(route = ScreenRoute.Register.name) {
+                RegisterScreen()
             }
         }
     }
