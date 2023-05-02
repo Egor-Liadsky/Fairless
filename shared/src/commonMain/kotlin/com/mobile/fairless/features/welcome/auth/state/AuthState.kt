@@ -6,5 +6,7 @@ data class AuthState(
     val email: String? = null,
     val password: String? = null,
 
+    val isLoading: Boolean = false,
+
     val user: UserReceive? = null
 )

@@ -1,9 +1,13 @@
 package com.mobile.fairless.android.features.views.buttons
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,6 +30,7 @@ data class CommonButtonParams(
 fun CommonButton(
     commonButtonParams: CommonButtonParams,
     modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
     onClick: () -> Unit
 ) {
     Button(
@@ -37,15 +42,24 @@ fun CommonButton(
             backgroundColor = commonButtonParams.background
         )
     ) {
-        Text(
-            text = commonButtonParams.title,
-            style = TextStyle(
-                fontFamily = fontQanelas,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                color = commonButtonParams.titleColor
+
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(20.dp),
+                color = colors.white
             )
-        )
+        } else {
+            Text(
+                text = commonButtonParams.title,
+                style = TextStyle(
+                    fontFamily = fontQanelas,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center,
+                    color = commonButtonParams.titleColor
+                )
+            )
+        }
     }
 }

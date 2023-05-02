@@ -74,11 +74,11 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
             commonButtonParams = CommonButtonParams(
                 title = "Войти",
                 titleColor = colors.white,
-                background = colors.orangeMain
+                background = colors.orangeMain,
             ),
+            isLoading = state.value.isLoading,
             modifier = Modifier.padding(top = 20.dp)
         ) {
-            Log.e("asjkld", "${viewModelWrapper.viewModel.state.value.email} ${viewModelWrapper.viewModel.state.value.password}")
             viewModelWrapper.viewModel.authUser(
                 UserResponse(
                     identifier = viewModelWrapper.viewModel.state.value.email?.filter { !it.isWhitespace() } ?: "",
@@ -89,6 +89,5 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
         if (state.value.user?.jwt != null){
             viewModelWrapper.viewModel.navigateToMain()
         }
-        Text(text = state.value.user.toString())
     }
 }

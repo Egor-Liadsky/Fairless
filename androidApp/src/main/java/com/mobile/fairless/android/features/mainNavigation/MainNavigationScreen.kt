@@ -59,6 +59,7 @@ fun MainNavigationScreen(
     }
 
     Scaffold(
+        scaffoldState = scaffoldState,
         bottomBar = {
             val isMainScreen = bottomNavigationItems.any { it.route.name == currentRoute }
             if (isMainScreen)

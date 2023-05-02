@@ -52,12 +52,15 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
+                    _state.update { it.copy(isLoading = true) }
                     val data = authService.authUser(userResponse)
                     _state.update { it.copy(user = data) }
                 },
                 failureBlock = {
-                    navigator.navigateToMessage()
                     errorService.showError("Логин или email неверны")
+                },
+                completionBlock = {
+                    _state.update { it.copy(isLoading = false) }
                 }
             )
         }
