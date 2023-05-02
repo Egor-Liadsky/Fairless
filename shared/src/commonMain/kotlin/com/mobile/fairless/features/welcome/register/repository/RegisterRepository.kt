@@ -16,22 +16,22 @@ class RegisterRepositoryImpl : RegisterRepository, BaseRepository() {
 
     override suspend fun registerUser(userRegisterResponse: UserRegisterResponse): UserReceive {
         val body = """
-            {
-                "email": "${userRegisterResponse.email}",
-                "username": "${userRegisterResponse.username}",
-                "password": "${userRegisterResponse.password}",
-                "city" : {
-                    "_id": "${userRegisterResponse.city._id}",
-                    "name": "${userRegisterResponse.city.name}",
-                    "code": "${userRegisterResponse.city.code}",
-                    "published_at": "${userRegisterResponse.city.published_at}",
-                    "createdAt": "${userRegisterResponse.city.createdAt}",
-                    "updatedAt": "${userRegisterResponse.city.updatedAt}",
-                    "__v": "${userRegisterResponse.city.__v}",
-                    "sort": "${userRegisterResponse.city.sort}",
-                    "id": "${userRegisterResponse.city.id}",
-                }
+        {
+            "email": "${userRegisterResponse.email}",
+            "username": "${userRegisterResponse.username}",
+            "password": "${userRegisterResponse.password}",
+            "city" : {
+                "_id": "${userRegisterResponse.city._id}",
+                "name": "${userRegisterResponse.city.name}",
+                "code": "${userRegisterResponse.city.code}",
+                "published_at": "${userRegisterResponse.city.published_at}",
+                "createdAt": "${userRegisterResponse.city.createdAt}",
+                "updatedAt": "${userRegisterResponse.city.updatedAt}",
+                "__v": ${userRegisterResponse.city.__v},
+                "sort": ${userRegisterResponse.city.sort},
+                "id": "${userRegisterResponse.city.id}"
             }
+        }
         """.trimIndent()
         val response = executeCall(
             type = HttpMethod.Post,

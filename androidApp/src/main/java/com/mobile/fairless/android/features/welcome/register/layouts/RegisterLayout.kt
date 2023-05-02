@@ -21,6 +21,7 @@ import com.mobile.fairless.android.features.views.textFields.CommonTextField
 import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.welcome.dto.City
 import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
@@ -97,11 +98,24 @@ fun RegisterLayout(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
             isLoading = state.value.isLoading,
             modifier = Modifier.padding(top = 20.dp)
         ) {
-//            viewModelWrapper.viewModel.registerUser(
-//                UserRegisterResponse(
-//                    email = state.value
-//                )
-//            )
+            viewModelWrapper.viewModel.registerUser(
+                UserRegisterResponse(
+                    email = state.value.email ?: "",
+                    username = state.value.login ?: "",
+                    password = state.value.password ?: "",
+                    city = City(
+                        _id = "61b0edeef2d07d28d43c5d02",
+                        name = "Ростов-на-Дону",
+                        code = "rostov-on-don",
+                        published_at = "2021-12-08T17:40:00.254Z",
+                        createdAt = "2021-12-08T17:39:58.010Z",
+                        updatedAt = "2022-01-14T09:03:58.234Z",
+                        __v = 0,
+                        sort = 200,
+                        id = "61b0edeef2d07d28d43c5d02"
+                    )
+                )
+            )
         }
     }
 }
