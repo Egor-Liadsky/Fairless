@@ -5,7 +5,6 @@ import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
-import com.mobile.fairless.features.welcome.auth.service.AuthService
 import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.service.RegisterService
 import com.mobile.fairless.features.welcome.register.state.RegisterState
@@ -25,7 +24,9 @@ interface RegisterViewModel : KmpViewModel, SubScreenViewModel {
     fun loginChanged(login: String)
     fun passwordChanged(password: String)
     fun passwordRetryChanged(passwordRetry: String)
+    fun searchChanged(search: String)
     fun registerUser(userRegisterResponse: UserRegisterResponse)
+    fun selectCityClick()
 }
 
 class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpViewModelImpl(),
@@ -57,6 +58,10 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
         _state.update { it.copy(passwordRetry = passwordRetry) }
     }
 
+    override fun searchChanged(search: String) {
+        _state.update { it.copy(search = search) }
+    }
+
     override fun registerUser(userRegisterResponse: UserRegisterResponse) {
         scope.launch {
             exceptionHandleable(
@@ -70,6 +75,30 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
                 },
                 completionBlock = {
                     _state.update { it.copy(isLoading = false) }
+                }
+            )
+        }
+    }
+
+    override fun selectCityClick() {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    _state.update { it.copy(isLoading = true) }
+                    if (_state.value.cities == null){
+                        _state.update { it.copy(cities = registerService.getCities()) }
+                    }
+                },
+                failureBlock = {
+                    errorService.showError("Ошибка при получении данных")
+                },
+                completionBlock = {
+                    _state.update {
+                        it.copy(
+                            alertDialogOpen = !it.alertDialogOpen,
+                            isLoading = false
+                        )
+                    }
                 }
             )
         }

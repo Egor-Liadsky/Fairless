@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.welcome.register.repository
 
 import com.mobile.fairless.common.network.BaseRepository
+import com.mobile.fairless.features.welcome.dto.City
 import com.mobile.fairless.features.welcome.dto.UserReceive
 import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
 import io.ktor.http.HttpMethod
@@ -10,6 +11,7 @@ import kotlinx.serialization.json.Json
 interface RegisterRepository {
 
     suspend fun registerUser(userRegisterResponse: UserRegisterResponse): UserReceive
+    suspend fun getCities(): List<City>
 }
 
 class RegisterRepositoryImpl : RegisterRepository, BaseRepository() {
@@ -38,6 +40,14 @@ class RegisterRepositoryImpl : RegisterRepository, BaseRepository() {
             path = "auth/local/register",
             headers = mapOf("Content-Type" to "application/json"),
             body = body
+        )
+        return Json.decodeFromString(response)
+    }
+
+    override suspend fun getCities(): List<City> {
+        val response = executeCall(
+            type = HttpMethod.Get,
+            path = "cities",
         )
         return Json.decodeFromString(response)
     }

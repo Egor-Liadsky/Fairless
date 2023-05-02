@@ -24,6 +24,7 @@ data class CommonButtonParams(
     val title: String,
     val titleColor: Color = colors.black,
     val background: Color = colors.white,
+    val progressBarColor: Color = colors.white
 )
 
 @Composable
@@ -47,7 +48,7 @@ fun CommonButton(
             CircularProgressIndicator(
                 modifier = Modifier
                     .size(20.dp),
-                color = colors.white
+                color = commonButtonParams.progressBarColor
             )
         } else {
             Text(

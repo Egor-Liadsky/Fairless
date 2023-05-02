@@ -44,7 +44,7 @@ fun RegisterLayout(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
                 textAlign = TextAlign.Center,
                 color = colors.black
             ),
-            modifier = Modifier.padding(top = 130.dp)
+            modifier = Modifier.padding(top = 70.dp)
         )
 
         CommonTextField(
@@ -87,6 +87,29 @@ fun RegisterLayout(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
             )
         ) {
             viewModelWrapper.viewModel.passwordRetryChanged(it)
+        }
+
+        CommonButton(
+            commonButtonParams = CommonButtonParams(
+                title = "Выбрать город",
+                titleColor = colors.black,
+                background = colors.white,
+                progressBarColor = colors.black
+            ),
+            isLoading = state.value.isLoading,
+            modifier = Modifier.padding(top = 20.dp)
+        ) {
+            viewModelWrapper.viewModel.selectCityClick()
+        }
+
+        if (state.value.alertDialogOpen && state.value.cities != null) {
+            SelectCityAlertDialog(
+                cities = state.value.cities,
+                isOpen = state.value.alertDialogOpen,
+                viewModelWrapper = viewModelWrapper
+            ) {
+                viewModelWrapper.viewModel.selectCityClick()
+            }
         }
 
         CommonButton(
