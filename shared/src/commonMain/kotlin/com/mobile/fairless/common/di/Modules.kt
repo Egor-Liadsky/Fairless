@@ -1,5 +1,7 @@
 package com.mobile.fairless.common.di
 
+import com.mobile.fairless.common.config.ConfigService
+import com.mobile.fairless.common.config.ConfigServiceImpl
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.service.ErrorServiceImpl
 import com.mobile.fairless.features.welcome.auth.repository.AuthRepository
@@ -45,7 +47,8 @@ fun commonModule() = module {
     // Services
     single<ErrorService> { ErrorServiceImpl() }
     single<AuthService> { AuthServiceImpl(get()) }
+    single<ConfigService> { ConfigServiceImpl() }
 
     // Repositories
-    single<AuthRepository> { AuthRepositoryImpl(get()) }
+    single<AuthRepository> { AuthRepositoryImpl() }
 }

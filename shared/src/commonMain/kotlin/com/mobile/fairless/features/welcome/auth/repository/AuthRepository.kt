@@ -1,5 +1,6 @@
 package com.mobile.fairless.features.welcome.auth.repository
 
+import com.mobile.fairless.common.network.BaseRepository
 import com.mobile.fairless.features.welcome.auth.dto.UserReceive
 import com.mobile.fairless.features.welcome.auth.dto.UserResponse
 import com.mobile.fairless.features.welcome.auth.state.AuthState
@@ -15,24 +16,28 @@ import io.ktor.http.contentType
 import io.ktor.util.InternalAPI
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToJsonElement
 
 interface AuthRepository {
     suspend fun authUser(userResponse: UserResponse): UserReceive
 }
 
-class AuthRepositoryImpl(private val httpClient: HttpClient) : AuthRepository {
+class AuthRepositoryImpl : AuthRepository, BaseRepository() {
 
     override suspend fun authUser(userResponse: UserResponse): UserReceive {
-        val response = httpClient.post("https://api.fairless.ru/auth/local") {
-            contentType(ContentType.Application.Json)
-            val body = """
+        val body = """
                 {
                     "identifier": "${userResponse.identifier}",
                     "password": "${userResponse.password}"
                 }
             """.trimIndent()
-            setBody(body)
-        }
-        return Json.decodeFromString(response.body())
+        val response = executeCall(
+            type = HttpMethod.Post,
+            path = "auth/local",
+            headers = mapOf("Content-Type" to "application/json"),
+            body = body
+        )
+        return Json.decodeFromString(response)
     }
 }
+

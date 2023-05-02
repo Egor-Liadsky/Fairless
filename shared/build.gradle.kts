@@ -94,7 +94,7 @@ buildkonfig {
     packageName = androidPackageName
 
     defaultConfigs() {
-        buildConfigField(Type.STRING, "BASE_URL", "https://api.fairless.ru/")
+        buildConfigField(Type.STRING, "BASE_URL", "https://api.fairless.ru")
     }
     targetConfigs {
         create("android") {
