@@ -1,6 +1,5 @@
 package com.mobile.fairless.android.features.welcome.auth.layouts
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,8 +21,7 @@ import com.mobile.fairless.android.features.views.textFields.CommonTextField
 import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.welcome.auth.dto.UserResponse
-import com.mobile.fairless.features.welcome.auth.state.AuthState
+import com.mobile.fairless.features.welcome.dto.UserAuthResponse
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 
 @Composable
@@ -34,7 +32,6 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
             .background(colors.backgroundWelcome),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         val state = viewModelWrapper.viewModel.state.collectAsState()
 
         Text(
@@ -80,9 +77,9 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
             modifier = Modifier.padding(top = 20.dp)
         ) {
             viewModelWrapper.viewModel.authUser(
-                UserResponse(
-                    identifier = viewModelWrapper.viewModel.state.value.email?.filter { !it.isWhitespace() } ?: "",
-                    password = viewModelWrapper.viewModel.state.value.password ?: ""
+                UserAuthResponse(
+                    identifier = state.value.email?.filter { !it.isWhitespace() } ?: "",
+                    password = state.value.password ?: ""
                 )
             )
         }

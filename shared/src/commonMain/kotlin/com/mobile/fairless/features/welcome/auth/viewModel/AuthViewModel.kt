@@ -5,8 +5,7 @@ import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
-import com.mobile.fairless.features.welcome.auth.dto.UserReceive
-import com.mobile.fairless.features.welcome.auth.dto.UserResponse
+import com.mobile.fairless.features.welcome.dto.UserAuthResponse
 import com.mobile.fairless.features.welcome.auth.service.AuthService
 import com.mobile.fairless.features.welcome.auth.state.AuthState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +22,7 @@ interface AuthViewModel : KmpViewModel, SubScreenViewModel {
     fun navigateToWelcome()
     fun emailChanged(email: String)
     fun passwordChanged(password: String)
-    fun authUser(userResponse: UserResponse)
+    fun authUser(userAuthResponse: UserAuthResponse)
     fun navigateToMain()
 }
 
@@ -48,12 +47,12 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
         _state.update { it.copy(password = password) }
     }
 
-    override fun authUser(userResponse: UserResponse) {
+    override fun authUser(userAuthResponse: UserAuthResponse) {
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
                     _state.update { it.copy(isLoading = true) }
-                    val data = authService.authUser(userResponse)
+                    val data = authService.authUser(userAuthResponse)
                     _state.update { it.copy(user = data) }
                 },
                 failureBlock = {

@@ -8,6 +8,10 @@ import com.mobile.fairless.features.welcome.auth.repository.AuthRepository
 import com.mobile.fairless.features.welcome.auth.repository.AuthRepositoryImpl
 import com.mobile.fairless.features.welcome.auth.service.AuthService
 import com.mobile.fairless.features.welcome.auth.service.AuthServiceImpl
+import com.mobile.fairless.features.welcome.register.repository.RegisterRepository
+import com.mobile.fairless.features.welcome.register.repository.RegisterRepositoryImpl
+import com.mobile.fairless.features.welcome.register.service.RegisterService
+import com.mobile.fairless.features.welcome.register.service.RegisterServiceImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
@@ -47,8 +51,10 @@ fun commonModule() = module {
     // Services
     single<ErrorService> { ErrorServiceImpl() }
     single<AuthService> { AuthServiceImpl(get()) }
+    single<RegisterService> { RegisterServiceImpl(get()) }
     single<ConfigService> { ConfigServiceImpl() }
 
     // Repositories
     single<AuthRepository> { AuthRepositoryImpl() }
+    single<RegisterRepository> { RegisterRepositoryImpl() }
 }

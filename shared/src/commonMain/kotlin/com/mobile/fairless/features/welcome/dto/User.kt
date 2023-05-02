@@ -1,14 +1,19 @@
-package com.mobile.fairless.features.welcome.auth.dto
+package com.mobile.fairless.features.welcome.dto
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserResponse(
-    @SerialName("identifier")
+data class UserAuthResponse(
     val identifier: String,
-    @SerialName("password")
     val password: String
+)
+
+@Serializable
+data class UserRegisterResponse(
+    val email: String,
+    val username: String,
+    val password: String,
+    val city: City
 )
 
 @Serializable

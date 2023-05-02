@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -20,6 +21,7 @@ import com.mobile.fairless.android.features.views.textFields.CommonTextField
 import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
 @Composable
@@ -30,6 +32,8 @@ fun RegisterLayout(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
             .background(colors.backgroundWelcome),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val state = viewModelWrapper.viewModel.state.collectAsState()
+
         Text(
             text = "Регистрация",
             style = TextStyle(
@@ -90,9 +94,14 @@ fun RegisterLayout(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
                 titleColor = colors.white,
                 background = colors.orangeMain
             ),
+            isLoading = state.value.isLoading,
             modifier = Modifier.padding(top = 20.dp)
         ) {
-
+//            viewModelWrapper.viewModel.registerUser(
+//                UserRegisterResponse(
+//                    email = state.value
+//                )
+//            )
         }
     }
 }
