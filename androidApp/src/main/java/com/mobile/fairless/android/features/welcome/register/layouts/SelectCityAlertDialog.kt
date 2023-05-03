@@ -67,13 +67,11 @@ fun SelectCityAlertDialog(
             ) {
                 Column(Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp)) {
                     SearchTopBar(
-                        searchTopBarParams = SearchTopBarParams(
-                            searchString = state.value.search ?: "",
-                            onClearText = { },
-                            onMicClick = { },
-                            onSearchClick = {},
-                            onValueChanged = { viewModelWrapper.viewModel.searchChanged(it) }
-                        ),
+                        searchString = state.value.search ?: "",
+                        onClearText = { },
+                        onMicClick = { },
+                        onSearchClick = {},
+                        onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
                     )
                     Spacer(modifier = Modifier.padding(bottom = 15.dp))
 

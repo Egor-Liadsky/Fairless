@@ -13,10 +13,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -45,72 +49,193 @@ data class SearchTopBarParams(
     val onValueChanged: (String) -> Unit
 )
 
+//@Composable
+//fun SearchTopBar(
+//    modifier: Modifier = Modifier,
+//    searchTopBarParams: SearchTopBarParams
+//) {
+//    var searchState by remember {
+//        mutableStateOf(searchTopBarParams.searchString)
+//    }
+//    val focusManager = LocalFocusManager.current
+//
+//    Row(
+//        modifier = Modifier
+//            .height(60.dp)
+//            .shadow(
+//                elevation = 2.dp,
+//                shape = RoundedCornerShape(10.dp)
+//            )
+//    ) {
+//        BasicTextField(
+//            value = searchState,
+//            onValueChange = { newText ->
+//                searchState = newText
+//                searchTopBarParams.onValueChanged(newText)
+//            },
+//            textStyle = TextStyle(
+//                fontFamily = fontQanelas,
+//                fontSize = 15.sp,
+//                fontWeight = FontWeight.SemiBold,
+//                color = colors.black,
+//            ),
+//            singleLine = true,
+//            decorationBox = { innerTextField ->
+//                Row(
+//                    verticalAlignment = Alignment.CenterVertically,
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(horizontal = 16.dp, vertical = 18.dp)
+//                ) {
+//                    if (searchTopBarParams.searchString.isNotEmpty()) {
+//                        IconButton(
+//                            onClick = {
+//                                searchState = ""
+//                                searchTopBarParams.onClearText()
+//                            },
+//                            modifier = Modifier.size(24.dp)
+//                                .background(colors.grayMain)
+//                        ) {
+//                            Icon(
+//                                painter = painterResource(R.drawable.ic_close),
+//                                contentDescription = "ic_close",
+//                                tint = colors.black,
+//                                modifier = Modifier.fillMaxSize()
+//                            )
+//                        }
+//                    } else {
+//                        Icon(
+//                            painter = painterResource(R.drawable.ic_search),
+//                            contentDescription = "ic_search",
+//                            tint = colors.black,
+//                            modifier = Modifier.size(24.dp)
+//                        )
+//                    }
+//
+//                    Box {
+//                        if (searchTopBarParams.searchString.isEmpty()) {
+//                            Text(
+//                                text = "Введите название города",
+//                                style = TextStyle(
+//                                    fontFamily = fontQanelas,
+//                                    fontSize = 15.sp,
+//                                    fontWeight = FontWeight.SemiBold,
+//                                    color = colors.grayMain,
+//                                )
+//                            )
+//                        }
+//                        innerTextField()
+//                    }
+//                    IconButton(
+//                        onClick = { searchTopBarParams.onMicClick() },
+//                        modifier = Modifier.size(24.dp)
+//                    ) {
+//                        Icon(
+//                            painter = painterResource(id = R.drawable.ic_mic),
+//                            contentDescription = "ic_mic",
+//                            tint = colors.black
+//                        )
+//                    }
+//                }
+//            },
+//            keyboardOptions = KeyboardOptions(
+//                imeAction = ImeAction.Search
+//            ),
+//            keyboardActions = KeyboardActions(onSearch = {
+//                focusManager.clearFocus()
+//                searchTopBarParams.onSearchClick()
+//            }),
+//            modifier = modifier
+//                .fillMaxWidth()
+//                .clip(RoundedCornerShape(10.dp))
+//                .background(colors.white, shape = RoundedCornerShape(10.dp))
+//        )
+//    }
+//}
+
 @Composable
 fun SearchTopBar(
     modifier: Modifier = Modifier,
-    searchTopBarParams: SearchTopBarParams
+    searchString: String,
+    onClearText: () -> Unit,
+    onMicClick: () -> Unit,
+    onSearchClick: () -> Unit,
+    onSearchChange: (String) -> Unit
 ) {
-    var searchState by remember {
-        mutableStateOf(searchTopBarParams.searchString)
+    val searchState = remember {
+        mutableStateOf(searchString)
     }
     val focusManager = LocalFocusManager.current
 
+    LaunchedEffect(key1 = searchState.value) {
+        onSearchChange(searchState.value)
+    }
     Row(
         modifier = Modifier
             .height(60.dp)
+            .fillMaxWidth()
             .shadow(
                 elevation = 2.dp,
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(8.dp)
             )
     ) {
         BasicTextField(
-            value = searchState,
-            onValueChange = { newText ->
-                searchState = newText
-                searchTopBarParams.onValueChanged(newText)
+            value = searchState.value,
+            onValueChange = {
+                searchState.value = it
             },
+            singleLine = true,
             textStyle = TextStyle(
                 fontFamily = fontQanelas,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = colors.black,
             ),
-            singleLine = true,
             decorationBox = { innerTextField ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 18.dp)
+                        .fillMaxSize()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 12.dp
+                        )
+                        .background(colors.white)
                 ) {
-                    if (searchTopBarParams.searchString.isNotEmpty()) {
+                    if (searchString.isNotEmpty())
                         IconButton(
                             onClick = {
-                                searchState = ""
-                                searchTopBarParams.onClearText()
+                                searchState.value = ""
+                                onClearText()
                             },
                             modifier = Modifier.size(24.dp)
-                                .background(colors.grayMain)
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_close),
                                 contentDescription = "ic_close",
-                                tint = colors.black,
+                                tint = colors.black.copy(alpha = 0.6f),
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
-                    } else {
+                    else
                         Icon(
                             painter = painterResource(R.drawable.ic_search),
                             contentDescription = "ic_search",
-                            tint = colors.black,
+                            tint = colors.black.copy(alpha = 0.6f),
                             modifier = Modifier.size(24.dp)
                         )
-                    }
 
-                    Box {
-                        if (searchTopBarParams.searchString.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .padding(
+                                start = 24.dp,
+                                end = 16.dp
+                            )
+                            .weight(1F)
+                    ) {
+                        if (searchString.isEmpty())
                             Text(
                                 text = "Введите название города",
                                 style = TextStyle(
@@ -120,17 +245,16 @@ fun SearchTopBar(
                                     color = colors.grayMain,
                                 )
                             )
-                        }
                         innerTextField()
                     }
                     IconButton(
-                        onClick = { searchTopBarParams.onMicClick() },
+                        onClick = { onMicClick() },
                         modifier = Modifier.size(24.dp)
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_mic),
                             contentDescription = "ic_mic",
-                            tint = colors.black
+                            tint = colors.black.copy(alpha = 0.6f)
                         )
                     }
                 }
@@ -140,12 +264,11 @@ fun SearchTopBar(
             ),
             keyboardActions = KeyboardActions(onSearch = {
                 focusManager.clearFocus()
-                searchTopBarParams.onSearchClick()
+                onSearchClick()
             }),
-            modifier = modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp))
-                .background(colors.white, shape = RoundedCornerShape(10.dp))
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colors.white)
         )
     }
 }
