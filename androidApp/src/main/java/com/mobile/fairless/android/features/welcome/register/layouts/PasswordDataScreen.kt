@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,11 @@ import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
 @Composable
 fun PasswordDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
+
+    BackHandler {
+        viewModelWrapper.viewModel.onBackAction()
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -44,7 +50,7 @@ fun PasswordDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
                 textAlign = TextAlign.Center,
                 color = colors.black
             ),
-            modifier = Modifier.padding(top = 130.dp)
+            modifier = Modifier.padding(top = 80.dp)
         )
 
         CommonTextField(

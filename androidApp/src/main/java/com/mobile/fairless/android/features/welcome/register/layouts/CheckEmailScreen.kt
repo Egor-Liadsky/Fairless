@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.mobile.fairless.android.di.ViewModelWrapper
@@ -9,6 +10,11 @@ import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
 @Composable
 fun CheckEmailScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
+
+    BackHandler {
+        viewModelWrapper.viewModel.onBackAction()
+    }
+
     Text(text = "CheckEmailScreen")
     CommonButton(commonButtonParams = CommonButtonParams("Далее")) {
         viewModelWrapper.viewModel.onNextClick()

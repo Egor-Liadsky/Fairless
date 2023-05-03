@@ -43,7 +43,7 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
                 textAlign = TextAlign.Center,
                 color = colors.black
             ),
-            modifier = Modifier.padding(top = 130.dp)
+            modifier = Modifier.padding(top = 100.dp)
         )
 
         CommonTextField(

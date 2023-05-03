@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,11 @@ import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
 @Composable
 fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
+
+    BackHandler {
+        viewModelWrapper.viewModel.navigateToWelcome()
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -42,7 +48,7 @@ fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
                 textAlign = TextAlign.Center,
                 color = colors.black
             ),
-            modifier = Modifier.padding(top = 130.dp)
+            modifier = Modifier.padding(top = 80.dp)
         )
 
         CommonTextField(
