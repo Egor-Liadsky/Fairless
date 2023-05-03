@@ -27,6 +27,8 @@ interface RegisterViewModel : KmpViewModel, SubScreenViewModel {
     fun searchChanged(search: String)
     fun registerUser(userRegisterResponse: UserRegisterResponse)
     fun selectCityClick()
+    fun onNextClick()
+    fun onBackAction()
 }
 
 class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpViewModelImpl(),
@@ -75,6 +77,7 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
                 },
                 completionBlock = {
                     _state.update { it.copy(isLoading = false) }
+                    onNextClick()
                 }
             )
         }
@@ -85,7 +88,7 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
             exceptionHandleable(
                 executionBlock = {
                     _state.update { it.copy(isLoading = true) }
-                    if (_state.value.cities == null){
+                    if (_state.value.cities == null) {
                         _state.update { it.copy(cities = registerService.getCities()) }
                     }
                 },
@@ -102,5 +105,23 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
                 }
             )
         }
+    }
+
+    override fun onNextClick() {
+        if (_state.value.stage < 3) {
+            _state.update { it.copy(stage = _state.value.stage + 1) }
+        } else {
+            scope.launch {
+                //TODO вставить функцию сохранения пользователя на устройство
+                navigator.navigateToMain()
+            }
+        }
+    }
+
+    override fun onBackAction() {
+        if(_state.value.stage > 1)
+            _state.update { it.copy(stage = _state.value.stage - 1) }
+        else
+            navigator.navigateBack()
     }
 }

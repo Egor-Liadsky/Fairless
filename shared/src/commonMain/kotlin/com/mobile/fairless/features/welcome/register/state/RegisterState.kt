@@ -11,6 +11,7 @@ data class RegisterState(
     val search: String? = null,
 
     val cities: List<City>? = null,
+    val stage: Int = 1,
 
     val isLoading: Boolean = false,
     val alertDialogOpen: Boolean = false,
