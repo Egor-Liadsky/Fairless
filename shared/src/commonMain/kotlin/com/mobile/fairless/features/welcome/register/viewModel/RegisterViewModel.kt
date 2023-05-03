@@ -5,6 +5,9 @@ import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
+import com.mobile.fairless.features.welcome.auth.service.AuthService
+import com.mobile.fairless.features.welcome.dto.City
+import com.mobile.fairless.features.welcome.dto.UserAuthResponse
 import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.service.RegisterService
 import com.mobile.fairless.features.welcome.register.state.RegisterState
@@ -22,6 +25,7 @@ interface RegisterViewModel : KmpViewModel, SubScreenViewModel {
     fun navigateToWelcome()
     fun emailChanged(email: String)
     fun loginChanged(login: String)
+    fun cityChanged(city: City)
     fun passwordChanged(password: String)
     fun passwordRetryChanged(passwordRetry: String)
     fun searchChanged(search: String)
@@ -29,12 +33,14 @@ interface RegisterViewModel : KmpViewModel, SubScreenViewModel {
     fun selectCityClick()
     fun onNextClick()
     fun onBackAction()
+    fun checkUser(userAuthResponse: UserAuthResponse)
 }
 
 class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpViewModelImpl(),
     RegisterViewModel {
 
     private val registerService: RegisterService by inject()
+    private val authService: AuthService by inject()
     private val errorService: ErrorService by inject()
 
     private val _state = MutableStateFlow(RegisterState())
@@ -50,6 +56,10 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
 
     override fun loginChanged(login: String) {
         _state.update { it.copy(login = login) }
+    }
+
+    override fun cityChanged(city: City) {
+        _state.update { it.copy(city = city) }
     }
 
     override fun passwordChanged(password: String) {
@@ -71,13 +81,13 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
                     _state.update { it.copy(isLoading = true) }
                     val data = registerService.registerUser(userRegisterResponse)
                     _state.update { it.copy(user = data) }
+                    navigator.navigateToMain()
                 },
                 failureBlock = {
                     errorService.showError("Некорректные данные")
                 },
                 completionBlock = {
                     _state.update { it.copy(isLoading = false) }
-                    onNextClick()
                 }
             )
         }
@@ -123,5 +133,23 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
             _state.update { it.copy(stage = _state.value.stage - 1) }
         else
             navigator.navigateBack()
+    }
+
+    override fun checkUser(userAuthResponse: UserAuthResponse) {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    _state.update { it.copy(isLoading = true) }
+                    val data = authService.authUser(userAuthResponse)
+                    _state.update { it.copy(user = data) }
+                },
+                failureBlock = {
+                    errorService.showError("Подтвердите аккаунт")
+                },
+                completionBlock = {
+                    _state.update { it.copy(isLoading = false) }
+                },
+            )
+        }
     }
 }

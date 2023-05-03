@@ -6,6 +6,7 @@ import com.mobile.fairless.features.welcome.dto.UserReceive
 data class RegisterState(
     val email: String? = null,
     val login: String? = null,
+    val city: City? = null,
     val password: String? = null,
     val passwordRetry: String? = null,
     val search: String? = null,

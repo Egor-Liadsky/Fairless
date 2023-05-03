@@ -1,6 +1,5 @@
-package com.mobile.fairless.android.features.welcome.register.layouts
+package com.mobile.fairless.android.features.welcome.register.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,6 @@ import androidx.compose.ui.window.DialogProperties
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.topBars.SearchTopBar
-import com.mobile.fairless.android.features.views.topBars.SearchTopBarParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.welcome.dto.City
@@ -46,6 +44,7 @@ fun SelectCityAlertDialog(
     viewModelWrapper: ViewModelWrapper<RegisterViewModel>,
     cities: List<City>?,
     isOpen: Boolean,
+    cityChanged: (City) -> Unit,
     onValueChanged: () -> Unit
 ) {
 
@@ -79,7 +78,8 @@ fun SelectCityAlertDialog(
                         if (cities != null) {
                             items(items = cities) { item ->
                                 CityCardView(city = item.name) {
-
+                                    cityChanged(item)
+                                    onValueChanged()
                                 }
                             }
                         }

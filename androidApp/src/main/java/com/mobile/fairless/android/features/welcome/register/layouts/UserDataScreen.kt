@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +22,7 @@ import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.textFields.CommonTextField
 import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
+import com.mobile.fairless.android.features.welcome.register.components.SelectCityAlertDialog
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
@@ -30,6 +33,8 @@ fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
     BackHandler {
         viewModelWrapper.viewModel.navigateToWelcome()
     }
+
+    val context = LocalContext.current
 
     Column(
         Modifier
@@ -73,7 +78,7 @@ fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
 
         CommonButton(
             commonButtonParams = CommonButtonParams(
-                title = "Выбрать город",
+                title = if (state.value.city == null) "Выберите свой город" else state.value.city!!.name,
                 titleColor = colors.black,
                 background = colors.white,
                 progressBarColor = colors.black
@@ -88,6 +93,7 @@ fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
             SelectCityAlertDialog(
                 cities = state.value.cities,
                 isOpen = state.value.alertDialogOpen,
+                cityChanged = { viewModelWrapper.viewModel.cityChanged(it) },
                 viewModelWrapper = viewModelWrapper
             ) {
                 viewModelWrapper.viewModel.selectCityClick()
@@ -102,7 +108,16 @@ fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
             ),
             modifier = Modifier.padding(top = 20.dp)
         ) {
+
+            //TODO Включить валидацию
+//            if (state.value.email == null || state.value.login == null || state.value.city == null ) {
+//                Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+//            } else {
+//                viewModelWrapper.viewModel.onNextClick()
+//            }
+
             viewModelWrapper.viewModel.onNextClick()
+
         }
     }
 }

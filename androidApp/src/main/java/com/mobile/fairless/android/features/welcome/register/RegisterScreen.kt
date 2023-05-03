@@ -13,7 +13,6 @@ import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.topBars.StageBar
 import com.mobile.fairless.android.features.welcome.register.layouts.CheckEmailScreen
 import com.mobile.fairless.android.features.welcome.register.layouts.PasswordDataScreen
-import com.mobile.fairless.android.features.welcome.register.layouts.RegisterLayout
 import com.mobile.fairless.android.features.welcome.register.layouts.UserDataScreen
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
