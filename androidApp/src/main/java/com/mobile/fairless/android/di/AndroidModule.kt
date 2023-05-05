@@ -5,6 +5,8 @@ import com.mobile.fairless.android.navigation.NavigatorImpl
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
 import com.mobile.fairless.common.viewModel.KmpViewModel
+import com.mobile.fairless.features.main.viewModel.MainViewModel
+import com.mobile.fairless.features.main.viewModel.MainViewModelImpl
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModelImpl
@@ -38,5 +40,9 @@ fun androidModule() = module {
 
     viewModel(named("RegisterViewModel")) {
         ViewModelWrapper<RegisterViewModel>(RegisterViewModelImpl(get()))
+    }
+
+    viewModel(named("MainViewModel")) {
+        ViewModelWrapper<MainViewModel>(MainViewModelImpl(get()))
     }
 }

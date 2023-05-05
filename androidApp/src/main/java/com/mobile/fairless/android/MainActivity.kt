@@ -12,7 +12,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 class MainActivity : ComponentActivity() {
-    private val startDestination: ScreenRoute = defineStartDestination()
+    private val startDestination: ScreenRoute = ScreenRoute.Main // TODO раскомментировать после добавления токена в преференс defineStartDestination()
     private val rootNavigation: AndroidNavigator by inject { parametersOf(startDestination) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
