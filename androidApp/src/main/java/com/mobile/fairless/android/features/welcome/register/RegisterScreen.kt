@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.ViewModelWrapper
@@ -31,7 +32,7 @@ fun RegisterScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel> = get(n
     Column(
         Modifier
             .fillMaxSize()
-            .background(colors.backgroundWelcome)) {
+            .background(colors.backgroundWelcome), horizontalAlignment = Alignment.CenterHorizontally) {
         StageBar(modifier = Modifier.padding(top = 30.dp), number = state.value.stage, count = 3)
         when (state.value.stage) {
             1 -> UserDataScreen(viewModelWrapper)

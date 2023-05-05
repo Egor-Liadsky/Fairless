@@ -1,7 +1,5 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -21,26 +19,18 @@ import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
-import com.mobile.fairless.android.features.views.textFields.CommonTextField
-import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
-import com.mobile.fairless.features.welcome.dto.City
 import com.mobile.fairless.features.welcome.dto.UserAuthResponse
-import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
-import org.koin.androidx.compose.get
-import org.koin.core.qualifier.named
 
 @Composable
 fun CheckEmailScreen(
-    viewModelWrapperRegister: ViewModelWrapper<RegisterViewModel>,
-    viewModelWrapperAuth: ViewModelWrapper<AuthViewModel> = get(named("AuthViewModel"))
+    viewModelWrapper: ViewModelWrapper<RegisterViewModel>,
 ) {
 
     BackHandler {
-        viewModelWrapperRegister.viewModel.onBackAction()
+        viewModelWrapper.viewModel.onBackAction()
     }
 
     val context = LocalContext.current
@@ -51,7 +41,7 @@ fun CheckEmailScreen(
             .background(colors.backgroundWelcome),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val state = viewModelWrapperRegister.viewModel.state.collectAsState()
+        val state = viewModelWrapper.viewModel.state.collectAsState()
 
         Text(
             text = "Успешно",
@@ -75,11 +65,12 @@ fun CheckEmailScreen(
                 textAlign = TextAlign.Center,
                 color = colors.black
             ),
-            modifier = Modifier.padding(top = 5.dp)
+            modifier = Modifier.padding(top = 30.dp)
         )
 
-        CommonButton(commonButtonParams = CommonButtonParams("Далее")) {
-            viewModelWrapperRegister.viewModel.checkUser(
+        CommonButton(commonButtonParams = CommonButtonParams("Далее"),
+        modifier = Modifier.padding(top = 30.dp)) {
+            viewModelWrapper.viewModel.checkUser(
                 UserAuthResponse(
                     identifier = state.value.email.toString(),
                     password = state.value.password.toString()
