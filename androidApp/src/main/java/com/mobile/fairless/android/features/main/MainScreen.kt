@@ -18,7 +18,7 @@ fun MainScreen(viewModelWrapper: ViewModelWrapper<MainViewModel> = get(named("Ma
 
     viewModelWrapper.viewModel.getCategories()
 
-    Column(Modifier.fillMaxSize().background(colors.backgroundWelcome)) {
+    Column(Modifier.fillMaxSize().background(colors.white)) {
         MainLayout(viewModelWrapper = viewModelWrapper)
     }
 }

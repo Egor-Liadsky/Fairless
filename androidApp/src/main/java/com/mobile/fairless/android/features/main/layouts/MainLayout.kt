@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import com.mobile.fairless.android.di.ViewModelWrapper
-import com.mobile.fairless.android.features.main.components.CategoriesView
 import com.mobile.fairless.android.features.main.components.MainTopBar
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 

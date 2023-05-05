@@ -34,14 +34,16 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    val data = mainService.getCategories()
-                    _state.update { it.copy(categories = data) }
+                    _state.update { it.copy(categoriesLoading = true) }
+                    if (_state.value.categories == null){
+                        _state.update { it.copy(categories = mainService.getCategories()) }
+                    }
                 },
                 failureBlock = {
                     errorService.showError("Нет подключения к интернету")
                 },
                 completionBlock = {
-
+                    _state.update { it.copy(categoriesLoading = false) }
                 }
             )
         }

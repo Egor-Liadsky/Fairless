@@ -4,14 +4,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,21 +30,45 @@ import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.main.models.Category
 
 @Composable
-fun CategoriesView(categories: List<Category>, onClick: () -> Unit) {
-    LazyRow(
+fun CategoriesView(
+    categories: List<Category>?,
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+    onClick: () -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier.fillMaxWidth().padding(vertical = 15.dp)
     ) {
-        items(items = categories) { category ->
-            CategoryItem(name = category.name.toString(), modifier = Modifier.padding(horizontal = 5.dp, vertical = 10.dp)) {
-                onClick()
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(20.dp).fillMaxWidth().padding(vertical = 10.dp),
+                color = colors.black,
+            )
+        } else {
+            LazyRow(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = modifier
+            ) {
+                if (categories != null) {
+                    items(items = categories) { category ->
+                        CategoryItem(
+                            name = category.name.toString(),
+                            modifier = Modifier.padding(horizontal = 3.dp)
+                        ) {
+                            onClick()
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun CategoryItem(name: String, modifier: Modifier = Modifier ,onClick: () -> Unit) {
+fun CategoryItem(name: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
 
     Row(modifier = modifier) {
         Card(
@@ -52,7 +79,8 @@ fun CategoryItem(name: String, modifier: Modifier = Modifier ,onClick: () -> Uni
                 .clickable { onClick() }
         ) {
             Row(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .padding(horizontal = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
