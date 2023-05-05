@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -35,7 +36,8 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
     Column(
         modifier = Modifier
             .background(colors.backgroundWelcome)
-            .padding(horizontal = 20.dp, vertical = 20.dp),
+            .padding(horizontal = 20.dp, vertical = 20.dp)
+            .height(110.dp),
     ) {
 
         Row(
@@ -54,7 +56,7 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
             )
 
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = { viewModelWrapper.viewModel.onProfileClick() },
                 modifier = Modifier
                     .size(24.dp)
                     .border(width = 0.5.dp, color = colors.black, shape = CircleShape)
@@ -70,7 +72,8 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
         }
         CategoriesView(
             categories = state.value.categories,
-            isLoading = state.value.categoriesLoading
+            isLoading = state.value.categoriesLoading,
+            modifier = Modifier.padding(top = 10.dp)
         ) {
 
         }

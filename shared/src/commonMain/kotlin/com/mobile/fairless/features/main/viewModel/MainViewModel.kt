@@ -20,6 +20,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     val state: StateFlow<MainState>
 
     fun getCategories()
+    fun onProfileClick()
 }
 
 class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent, MainViewModel {
@@ -47,5 +48,9 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                 }
             )
         }
+    }
+
+    override fun onProfileClick() {
+        navigator.navigateToProfile()
     }
 }

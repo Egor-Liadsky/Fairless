@@ -39,11 +39,11 @@ fun CategoriesView(
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().padding(vertical = 15.dp)
+        modifier = Modifier.fillMaxWidth()
     ) {
         if (isLoading) {
             CircularProgressIndicator(
-                modifier = Modifier.size(20.dp).fillMaxWidth().padding(vertical = 10.dp),
+                modifier = Modifier.size(20.dp).fillMaxWidth().padding(top = 15.dp),
                 color = colors.black,
             )
         } else {
