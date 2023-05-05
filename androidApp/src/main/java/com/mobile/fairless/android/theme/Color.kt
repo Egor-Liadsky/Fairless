@@ -8,7 +8,7 @@ data class Colors(
     val navBar: Color,
     val black: Color,
     val white: Color,
-    val backgroundWelcome: Color
+    val backgroundWelcome: Color,
 )
 
 val colors = Colors(
@@ -17,5 +17,5 @@ val colors = Colors(
     navBar = Color(0xFFF1F3F5),
     black = Color(0xFF2A2F33),
     white = Color(0xFFFFFFFF),
-    backgroundWelcome = Color(0xFFF4F6F7)
+    backgroundWelcome = Color(0xFFF4F6F7),
 )

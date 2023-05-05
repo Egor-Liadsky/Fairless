@@ -1,3 +1,5 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -42,6 +44,10 @@ kotlin {
                 // Network
                 implementation("io.ktor:ktor-client-core:2.2.2")
                 implementation("io.ktor:ktor-client-logging:2.2.2")
+                implementation("io.ktor:ktor-client-okhttp:2.2.2")
+                implementation("io.ktor:ktor-server-content-negotiation:2.2.2")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.2")
+
 
                 // Database
                 implementation("com.squareup.sqldelight:runtime:1.5.4")
@@ -88,6 +94,7 @@ buildkonfig {
     packageName = androidPackageName
 
     defaultConfigs() {
+        buildConfigField(Type.STRING, "BASE_URL", "https://api.fairless.ru")
     }
     targetConfigs {
         create("android") {

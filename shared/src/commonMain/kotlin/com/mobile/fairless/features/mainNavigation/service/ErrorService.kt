@@ -13,6 +13,7 @@ class ErrorServiceImpl : ErrorService {
     override val state = _errorState.asSharedFlow()
 
     override suspend fun showError(message: String) {
+        println("TAGTAG $message")
         _errorState.emit(message)
     }
 }
