@@ -40,12 +40,6 @@ val bottomNavigationItems = listOf(
         "Главная"
     ),
     BottomNavigationItem(
-        ScreenRoute.Profile,
-        R.drawable.ic_profile,
-        "ic_profile",
-        "Профиль"
-    ),
-    BottomNavigationItem(
         ScreenRoute.Notification,
         R.drawable.ic_notification,
         "ic_notification",
