@@ -52,6 +52,9 @@ kotlin {
                 // Database
                 implementation("com.squareup.sqldelight:runtime:1.5.4")
                 implementation("com.squareup.sqldelight:coroutines-extensions:1.5.4")
+
+                // Settings
+                implementation("com.russhwolf:multiplatform-settings:1.0.0")
             }
         }
 
@@ -74,6 +77,9 @@ kotlin {
 
                 // Adfox
                 implementation("com.yandex.android:mobileads:5.6.0")
+
+                // Serializer
+                implementation("com.google.code.gson:gson:2.8.8")
             }
         }
 

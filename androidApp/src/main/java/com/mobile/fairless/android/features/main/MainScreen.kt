@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.main
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,8 +18,11 @@ import org.koin.core.qualifier.named
 fun MainScreen(viewModelWrapper: ViewModelWrapper<MainViewModel> = get(named("MainViewModel"))) {
 
     viewModelWrapper.viewModel.getCategories()
+    viewModelWrapper.viewModel.getProfile()
 
     Column(Modifier.fillMaxSize().background(colors.white)) {
         MainLayout(viewModelWrapper = viewModelWrapper)
     }
+
+    Log.e("kajsldkjaklsjd", viewModelWrapper.viewModel.state.value.user.toString())
 }

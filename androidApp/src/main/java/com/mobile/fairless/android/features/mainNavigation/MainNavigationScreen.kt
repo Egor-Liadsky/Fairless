@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.mainNavigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -42,10 +43,23 @@ fun MainNavigationScreen(
     viewModelWrapper: StatefulViewModelWrapper<MainNavigationViewModel, MainNavigationState> =
         getViewModel(qualifier = named("MainNavigationViewModel")) { parametersOf(startDestination) },
 ) {
+
+    viewModelWrapper.viewModel.getProfile()
+
+
+    val start2 = if (viewModelWrapper.state.value.user?.user != null){
+        ScreenRoute.Main.name
+    } else {
+        ScreenRoute.Welcome.name
+    }
+
+    Log.e("jlkqhwekjh",viewModelWrapper.state.value.user.toString())
+
+
     val backStackState = navController.currentBackStackEntryAsState()
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     val currentRoute = backStackState.value
-        ?.destination?.route?.substringBefore("/") ?: startDestination.name
+        ?.destination?.route?.substringBefore("/") ?:start2 //startDestination.name
 
     DisposableEffect(key1 = viewModelWrapper) {
         viewModelWrapper.viewModel.onViewShown()
@@ -70,7 +84,7 @@ fun MainNavigationScreen(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = startDestination.name,
+            startDestination = start2,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)

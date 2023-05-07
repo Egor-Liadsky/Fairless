@@ -4,12 +4,13 @@ import com.mobile.fairless.android.navigation.AndroidNavigator
 import com.mobile.fairless.android.navigation.NavigatorImpl
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
-import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 import com.mobile.fairless.features.main.viewModel.MainViewModelImpl
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModelImpl
+import com.mobile.fairless.features.profile.viewModel.ProfileViewModel
+import com.mobile.fairless.features.profile.viewModel.ProfileViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModelImpl
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
@@ -26,7 +27,7 @@ fun androidModule() = module {
 
     viewModel(named("MainNavigationViewModel")) { (start: ScreenRoute) ->
         StatefulViewModelWrapper<MainNavigationViewModel, MainNavigationState>(
-            MainNavigationViewModelImpl(start, get())
+            MainNavigationViewModelImpl(start, get(), get())
         )
     }
 
@@ -44,5 +45,9 @@ fun androidModule() = module {
 
     viewModel(named("MainViewModel")) {
         ViewModelWrapper<MainViewModel>(MainViewModelImpl(get()))
+    }
+
+    viewModel(named("ProfileViewModel")) {
+        ViewModelWrapper<ProfileViewModel>(ProfileViewModelImpl(get()))
     }
 }
