@@ -23,6 +23,4 @@ fun MainScreen(viewModelWrapper: ViewModelWrapper<MainViewModel> = get(named("Ma
     Column(Modifier.fillMaxSize().background(colors.white)) {
         MainLayout(viewModelWrapper = viewModelWrapper)
     }
-
-    Log.e("kajsldkjaklsjd", viewModelWrapper.viewModel.state.value.user.toString())
 }

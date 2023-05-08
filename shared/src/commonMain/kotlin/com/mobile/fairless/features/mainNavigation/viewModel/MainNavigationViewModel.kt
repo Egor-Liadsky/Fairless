@@ -17,13 +17,11 @@ interface MainNavigationViewModel : StatefulKmpViewModel<MainNavigationState> {
     override val state: StateFlow<MainNavigationState>
     fun onRouteChange(route: ScreenRoute)
     fun onBottomBarButtonClick(route: ScreenRoute)
-    fun getProfile()
 }
 
 class MainNavigationViewModelImpl(
     override val startDestination: ScreenRoute,
     private val navigator: Navigator,
-    private val prefService: PrefService
 ) : KoinComponent, StatefulKmpViewModelImpl<MainNavigationState>(), MainNavigationViewModel {
 
     private val mutableState = MutableStateFlow(
@@ -34,10 +32,6 @@ class MainNavigationViewModelImpl(
 
     override fun onRouteChange(route: ScreenRoute) {
         if (route.isMain) mutableState.update { it.copy(screenRoute = route) }
-    }
-
-    override fun getProfile() {
-        mutableState.update { it.copy(user = prefService.getUserInfo() ?: UserReceive()) }
     }
 
     override fun onBottomBarButtonClick(route: ScreenRoute) {

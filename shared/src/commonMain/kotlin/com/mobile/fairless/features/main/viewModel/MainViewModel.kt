@@ -23,7 +23,6 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
 
     fun getCategories()
     fun onProfileClick()
-
     fun getProfile()
 }
 
@@ -60,6 +59,16 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     }
 
     override fun getProfile() {
-        _state.update { it.copy(user = prefService.getUserInfo() ?: UserReceive()) }
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    prefService.getUserInfo()
+                    _state.update { it.copy(user = prefService.getUserInfo())}
+                },
+                failureBlock = {
+                    navigator.navigateToWelcome()
+                },
+            )
+        }
     }
 }

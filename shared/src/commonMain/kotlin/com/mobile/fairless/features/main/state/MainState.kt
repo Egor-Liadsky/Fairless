@@ -7,5 +7,5 @@ data class MainState(
     val categories: List<Category>? = null,
     val categoriesLoading: Boolean = false,
 
-    val user: UserReceive? = null
+    val user: UserReceive? = UserReceive()
 )

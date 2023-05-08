@@ -23,8 +23,12 @@ actual class PrefServiceImpl : PrefService, KoinComponent {
         preferences.edit().putString(USER, gson.toJson(user)).apply()
     }
 
-    override fun getUserInfo(): UserReceive? {
-        Log.e("qweqweqweqweqwe", gson.fromJson(preferences.getString(USER, ""), UserReceive::class.java).toString())
-        return gson.fromJson(preferences.getString(USER, ""), UserReceive::class.java)
+    override fun getUserInfo(): UserReceive {
+        val data = preferences.getString(USER, "")
+        return if (data?.isEmpty() == true) {
+            UserReceive()
+        } else {
+            gson.fromJson(preferences.getString(USER, ""), UserReceive::class.java)
+        }
     }
 }
