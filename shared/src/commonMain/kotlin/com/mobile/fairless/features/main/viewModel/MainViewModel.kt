@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.main.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
@@ -8,6 +9,7 @@ import com.mobile.fairless.features.main.repository.MainRepository
 import com.mobile.fairless.features.main.service.MainService
 import com.mobile.fairless.features.main.state.MainState
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
+import com.mobile.fairless.features.welcome.dto.UserReceive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,12 +23,14 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
 
     fun getCategories()
     fun onProfileClick()
+    fun getProfile()
 }
 
 class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent, MainViewModel {
 
     private val mainService: MainService by inject()
     private val errorService: ErrorService by inject()
+    private val prefService: PrefService by inject()
 
     private val _state = MutableStateFlow(MainState())
     override val state: StateFlow<MainState> = _state.asStateFlow()
@@ -52,5 +56,19 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
 
     override fun onProfileClick() {
         navigator.navigateToProfile()
+    }
+
+    override fun getProfile() {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    prefService.getUserInfo()
+                    _state.update { it.copy(user = prefService.getUserInfo())}
+                },
+                failureBlock = {
+                    navigator.navigateToWelcome()
+                },
+            )
+        }
     }
 }

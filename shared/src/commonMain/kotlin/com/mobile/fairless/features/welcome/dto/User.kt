@@ -18,7 +18,7 @@ data class UserRegisterResponse(
 
 @Serializable
 data class UserReceive(
-    val jwt: String = "",
+    val jwt: String? = "",
     val user: User? = null
 )
 

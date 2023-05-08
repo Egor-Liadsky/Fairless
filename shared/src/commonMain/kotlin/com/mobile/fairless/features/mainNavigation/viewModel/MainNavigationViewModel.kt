@@ -2,9 +2,11 @@ package com.mobile.fairless.features.mainNavigation.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
+import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
+import com.mobile.fairless.features.welcome.dto.UserReceive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -31,7 +33,6 @@ class MainNavigationViewModelImpl(
     override fun onRouteChange(route: ScreenRoute) {
         if (route.isMain) mutableState.update { it.copy(screenRoute = route) }
     }
-
 
     override fun onBottomBarButtonClick(route: ScreenRoute) {
         mutableState.update { it.copy(screenRoute = route) }

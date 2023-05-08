@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.welcome.auth.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
@@ -8,6 +9,7 @@ import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.welcome.dto.UserAuthResponse
 import com.mobile.fairless.features.welcome.auth.service.AuthService
 import com.mobile.fairless.features.welcome.auth.state.AuthState
+import com.mobile.fairless.features.welcome.dto.UserReceive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,6 +33,7 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
 
     private val authService: AuthService by inject()
     private val errorService: ErrorService by inject()
+    private val prefService: PrefService by inject()
 
     private val _state = MutableStateFlow(AuthState())
     override val state: StateFlow<AuthState> = _state.asStateFlow()
@@ -60,6 +63,9 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
                 },
                 completionBlock = {
                     _state.update { it.copy(isLoading = false) }
+                    if (_state.value.user?.user != null){
+                        prefService.setUserInfo(_state.value.user ?: UserReceive())
+                    }
                 }
             )
         }
