@@ -27,7 +27,7 @@ fun androidModule() = module {
 
     viewModel(named("MainNavigationViewModel")) { (start: ScreenRoute) ->
         StatefulViewModelWrapper<MainNavigationViewModel, MainNavigationState>(
-            MainNavigationViewModelImpl(start, get(), get())
+            MainNavigationViewModelImpl(start, get())
         )
     }
 

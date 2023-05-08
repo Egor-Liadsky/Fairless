@@ -55,6 +55,9 @@ kotlin {
 
                 // Settings
                 implementation("com.russhwolf:multiplatform-settings:1.0.0")
+
+                // DateTime
+                implementation("com.soywiz.korlibs.klock:klock:3.4.0")
             }
         }
 
