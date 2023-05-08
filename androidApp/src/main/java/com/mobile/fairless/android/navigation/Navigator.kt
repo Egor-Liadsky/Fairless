@@ -54,6 +54,10 @@ class NavigatorImpl(
         navigateToNavBarDestination(ScreenRoute.Register)
     }
 
+    override fun navigateToSettings() {
+        navigateToNavBarDestination(ScreenRoute.Settings)
+    }
+
     private fun navigateToNavBarDestination(root: ScreenRoute) {
         navController.navigate(root.name) {
             popUpTo(navController.graph.id) {

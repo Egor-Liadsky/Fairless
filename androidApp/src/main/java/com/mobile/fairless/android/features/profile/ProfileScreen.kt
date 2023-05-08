@@ -33,6 +33,9 @@ fun ProfileScreen(viewModelWrapper: ViewModelWrapper<ProfileViewModel> = get(nam
             isEdit = true,
             backClick = {
                 viewModelWrapper.viewModel.onBackPressed()
+            },
+            editClick = {
+                viewModelWrapper.viewModel.navigateToSettings()
             })
 
         ProfileLayout(viewModelWrapper = viewModelWrapper)

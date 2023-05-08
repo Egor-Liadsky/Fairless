@@ -9,7 +9,8 @@ enum class ScreenRoute(val isMain: Boolean) {
     Menu(false),
     Welcome(false),
     Auth(false),
-    Register(false)
+    Register(false),
+    Settings(false)
 }
 
 interface Navigator {
@@ -23,4 +24,5 @@ interface Navigator {
     fun navigateToWelcome()
     fun navigateToAuth()
     fun navigateToRegister()
+    fun navigateToSettings()
 }

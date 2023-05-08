@@ -18,6 +18,7 @@ interface ProfileViewModel : KmpViewModel, SubScreenViewModel {
     val state: StateFlow<ProfileState>
 
     fun onBackPressed()
+    fun navigateToSettings()
     fun getProfile()
 }
 
@@ -31,6 +32,10 @@ class ProfileViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl
 
     override fun onBackPressed() {
         navigator.navigateBack()
+    }
+
+    override fun navigateToSettings() {
+        navigator.navigateToSettings()
     }
 
     override fun getProfile() {

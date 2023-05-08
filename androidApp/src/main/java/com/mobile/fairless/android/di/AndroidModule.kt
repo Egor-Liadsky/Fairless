@@ -11,6 +11,8 @@ import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewM
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModelImpl
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModel
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModelImpl
+import com.mobile.fairless.features.settings.viewModel.SettingsViewModel
+import com.mobile.fairless.features.settings.viewModel.SettingsViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModelImpl
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
@@ -49,5 +51,9 @@ fun androidModule() = module {
 
     viewModel(named("ProfileViewModel")) {
         ViewModelWrapper<ProfileViewModel>(ProfileViewModelImpl(get()))
+    }
+
+    viewModel(named("SettingsViewModel")) {
+        ViewModelWrapper<SettingsViewModel>(SettingsViewModelImpl(get()))
     }
 }
