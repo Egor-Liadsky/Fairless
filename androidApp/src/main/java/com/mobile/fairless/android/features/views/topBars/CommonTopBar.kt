@@ -46,7 +46,8 @@ fun CommonTopBar(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-        ) {
+        )
+        {
             Text(
                 text = title,
                 style = TextStyle(
@@ -56,7 +57,7 @@ fun CommonTopBar(
                     color = colors.black,
                     textAlign = TextAlign.Center
                 ),
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.padding(start = if (isEdit == false && isBack == true) 20.dp else 0.dp)
             )
             if (description != null) {
                 Text(
