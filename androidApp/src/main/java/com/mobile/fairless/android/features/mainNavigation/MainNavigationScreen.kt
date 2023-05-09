@@ -1,6 +1,7 @@
 package com.mobile.fairless.android.features.mainNavigation
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -9,6 +10,8 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -45,10 +48,14 @@ fun MainNavigationScreen(
     viewModelWrapper: StatefulViewModelWrapper<MainNavigationViewModel, MainNavigationState> =
         getViewModel(qualifier = named("MainNavigationViewModel")) { parametersOf(startDestination) },
 ) {
+    val state = viewModelWrapper.state
     val backStackState = navController.currentBackStackEntryAsState()
+    val bottomBarState = rememberSaveable { mutableStateOf(true) }
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     val currentRoute = backStackState.value
-        ?.destination?.route?.substringBefore("/") ?: startDestination.name
+        ?.destination?.route ?: startDestination.name
+
+    Log.e("currentScreenTAGTAG", currentRoute)
 
     DisposableEffect(key1 = viewModelWrapper) {
         viewModelWrapper.viewModel.onViewShown()
@@ -64,12 +71,11 @@ fun MainNavigationScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         bottomBar = {
-            val isMainScreen = bottomNavigationItems.any { it.route.name == currentRoute }
-            if (isMainScreen)
-                BottomBar(ScreenRoute.valueOf(currentRoute.toString())) { route: ScreenRoute ->
+            if (bottomBarState.value)
+                BottomBar(state.value.screenRoute) { route: ScreenRoute ->
                     viewModelWrapper.viewModel.onBottomBarButtonClick(route)
                 }
-        }
+        },
     ) { innerPadding ->
         NavHost(
             navController = navController,

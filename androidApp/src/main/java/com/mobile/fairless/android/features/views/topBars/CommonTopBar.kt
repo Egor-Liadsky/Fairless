@@ -25,22 +25,24 @@ import com.mobile.fairless.android.theme.fontQanelas
 fun CommonTopBar(
     title: String,
     description: String? = null,
+    isBack: Boolean? = false,
     isEdit: Boolean? = false,
     editClick: () -> Unit? = {},
-    backClick: () -> Unit
+    backClick: () -> Unit? = {}
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(colors.backgroundWelcome)
             .padding(20.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = if (isEdit == true) Arrangement.SpaceBetween else Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SquareButton(icon = painterResource(id = R.drawable.ic_back_button), iconSize = 15.dp) {
-            backClick()
+        if (isBack == true) {
+            SquareButton(icon = painterResource(id = R.drawable.ic_back_button), iconSize = 15.dp) {
+                backClick()
+            }
         }
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -53,7 +55,8 @@ fun CommonTopBar(
                     fontSize = 25.sp,
                     color = colors.black,
                     textAlign = TextAlign.Center
-                )
+                ),
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
             if (description != null) {
                 Text(

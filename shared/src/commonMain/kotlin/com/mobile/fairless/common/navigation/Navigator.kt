@@ -2,11 +2,13 @@ package com.mobile.fairless.common.navigation
 
 
 enum class ScreenRoute(val isMain: Boolean) {
+    //NavBar
     Main(true),
+    Notification(true),
+    Message(true),
+    Menu(true),
+
     Profile(false),
-    Notification(false),
-    Message(false),
-    Menu(false),
     Welcome(false),
     Auth(false),
     Register(false),

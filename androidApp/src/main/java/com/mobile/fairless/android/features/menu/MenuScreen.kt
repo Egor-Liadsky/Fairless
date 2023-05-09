@@ -5,10 +5,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.mobile.fairless.android.di.ViewModelWrapper
+import com.mobile.fairless.android.features.menu.layouts.MenuLayout
+import com.mobile.fairless.android.features.views.buttons.CommonButton
+import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
+import com.mobile.fairless.android.features.views.topBars.CommonTopBar
+import com.mobile.fairless.android.theme.colors
+import com.mobile.fairless.features.menu.viewModel.MenuViewModel
+import org.koin.androidx.compose.get
+import org.koin.core.qualifier.named
 
 @Composable
-fun MenuScreen() {
+fun MenuScreen(viewModelWrapper: ViewModelWrapper<MenuViewModel> = get(named("MenuViewModel"))) {
     Column(Modifier.fillMaxSize()) {
-        Text(text = "Menu")
+        CommonTopBar(title = "Меню")
+        MenuLayout(viewModelWrapper)
     }
 }

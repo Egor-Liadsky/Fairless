@@ -1,4 +1,4 @@
-package com.mobile.fairless.features.settings.viewModel
+package com.mobile.fairless.features.menu.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.viewModel.KmpViewModel
@@ -6,14 +6,15 @@ import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import org.koin.core.component.KoinComponent
 
-interface SettingsViewModel : KmpViewModel, SubScreenViewModel {
-    fun onBackPressed()
+interface MenuViewModel : KmpViewModel, SubScreenViewModel {
+
+    fun navigateToProfile()
 }
 
-class SettingsViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
-    SettingsViewModel {
+class MenuViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
+    MenuViewModel {
 
-    override fun onBackPressed() {
+    override fun navigateToProfile() {
         navigator.navigateToProfile()
     }
 }

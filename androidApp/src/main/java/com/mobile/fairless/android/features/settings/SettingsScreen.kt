@@ -14,7 +14,7 @@ import org.koin.core.qualifier.named
 @Composable
 fun SettingsScreen(viewModelWrapper: ViewModelWrapper<SettingsViewModel> = get(named("SettingsViewModel"))) {
     Column(Modifier.fillMaxSize()) {
-        CommonTopBar(title = "Настройки") {
+        CommonTopBar(title = "Настройки", isBack = true) {
             viewModelWrapper.viewModel.onBackPressed()
         }
 

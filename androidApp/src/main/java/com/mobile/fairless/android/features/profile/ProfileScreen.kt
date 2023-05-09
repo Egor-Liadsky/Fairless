@@ -1,9 +1,7 @@
 package com.mobile.fairless.android.features.profile
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -17,10 +15,6 @@ import org.koin.core.qualifier.named
 @Composable
 fun ProfileScreen(viewModelWrapper: ViewModelWrapper<ProfileViewModel> = get(named("ProfileViewModel"))) {
 
-    BackHandler {
-        viewModelWrapper.viewModel.onBackPressed()
-    }
-
     viewModelWrapper.viewModel.getProfile()
 
     val state = viewModelWrapper.viewModel.state.collectAsState()
@@ -30,9 +24,10 @@ fun ProfileScreen(viewModelWrapper: ViewModelWrapper<ProfileViewModel> = get(nam
         CommonTopBar(
             title = state.value.user?.user?.username ?: "",
             description = "На сервисе с ${state.value.user?.user?.dateTime}",
+            isBack = true,
             isEdit = true,
             backClick = {
-                viewModelWrapper.viewModel.onBackPressed()
+                viewModelWrapper.viewModel.navigateToMenu()
             },
             editClick = {
                 viewModelWrapper.viewModel.navigateToSettings()

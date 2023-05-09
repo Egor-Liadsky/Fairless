@@ -17,7 +17,7 @@ import org.koin.core.component.inject
 interface ProfileViewModel : KmpViewModel, SubScreenViewModel {
     val state: StateFlow<ProfileState>
 
-    fun onBackPressed()
+    fun navigateToMenu()
     fun navigateToSettings()
     fun getProfile()
 }
@@ -30,8 +30,8 @@ class ProfileViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl
     private val _state = MutableStateFlow(ProfileState())
     override val state: StateFlow<ProfileState> = _state.asStateFlow()
 
-    override fun onBackPressed() {
-        navigator.navigateBack()
+    override fun navigateToMenu() {
+        navigator.navigateToMenu()
     }
 
     override fun navigateToSettings() {
