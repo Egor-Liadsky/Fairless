@@ -58,6 +58,10 @@ class NavigatorImpl(
         navController.navigate(ScreenRoute.Settings.name)
     }
 
+    override fun navigateToProfileEdit() {
+        navController.navigate(ScreenRoute.ProfileEdit.name)
+    }
+
     private fun navigateToNavBarDestination(root: ScreenRoute) {
         navController.navigate(root.name) {
             popUpTo(navController.graph.id) {

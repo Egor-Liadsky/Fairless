@@ -25,6 +25,7 @@ import com.mobile.fairless.android.features.menu.MenuScreen
 import com.mobile.fairless.android.features.message.MessageScreen
 import com.mobile.fairless.android.features.notification.NotificationScreen
 import com.mobile.fairless.android.features.profile.ProfileScreen
+import com.mobile.fairless.android.features.profileEdit.ProfileEditScreen
 import com.mobile.fairless.android.features.settings.SettingsScreen
 import com.mobile.fairless.android.features.settings.layouts.SettingsLayout
 import com.mobile.fairless.android.features.welcome.auth.AuthScreen
@@ -71,11 +72,12 @@ fun MainNavigationScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         bottomBar = {
-            if (bottomBarState.value)
-                BottomBar(state.value.screenRoute) { route: ScreenRoute ->
+            val isMainScreen = bottomNavigationItems.any { it.route.name == currentRoute }
+            if (isMainScreen)
+                BottomBar(ScreenRoute.valueOf(currentRoute.toString())) { route: ScreenRoute ->
                     viewModelWrapper.viewModel.onBottomBarButtonClick(route)
                 }
-        },
+        }
     ) { innerPadding ->
         NavHost(
             navController = navController,
@@ -110,6 +112,9 @@ fun MainNavigationScreen(
             }
             composable(route = ScreenRoute.Settings.name) {
                 SettingsScreen()
+            }
+            composable(route = ScreenRoute.ProfileEdit.name) {
+                ProfileEditScreen()
             }
         }
     }

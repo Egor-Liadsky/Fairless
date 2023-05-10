@@ -34,8 +34,6 @@ fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
         viewModelWrapper.viewModel.navigateToWelcome()
     }
 
-    val context = LocalContext.current
-
     Column(
         Modifier
             .fillMaxSize()

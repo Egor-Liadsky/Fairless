@@ -13,6 +13,8 @@ import com.mobile.fairless.features.menu.viewModel.MenuViewModel
 import com.mobile.fairless.features.menu.viewModel.MenuViewModelImpl
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModel
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModelImpl
+import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModel
+import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModelImpl
 import com.mobile.fairless.features.settings.viewModel.SettingsViewModel
 import com.mobile.fairless.features.settings.viewModel.SettingsViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
@@ -61,5 +63,9 @@ fun androidModule() = module {
 
     viewModel(named("MenuViewModel")) {
         ViewModelWrapper<MenuViewModel>(MenuViewModelImpl(get()))
+    }
+
+    viewModel(named("ProfileEditViewModel")) {
+        ViewModelWrapper<ProfileEditViewModel>(ProfileEditViewModelImpl(get()))
     }
 }

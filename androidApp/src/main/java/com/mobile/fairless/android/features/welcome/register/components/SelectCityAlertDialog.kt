@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.welcome.register.components
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,6 +54,14 @@ fun SelectCityAlertDialog(
     var status by remember {
         mutableStateOf(isOpen)
     }
+
+    var sortedCities by remember {
+        mutableStateOf(cities?.map { it.name.contains(state.value.search.toString()) }
+        )
+    }
+
+    Log.e("ajshdasdad", sortedCities.toString())
+
     if (isOpen) {
         Dialog(
             onDismissRequest = {
@@ -76,10 +85,16 @@ fun SelectCityAlertDialog(
 
                     LazyColumn {
                         if (cities != null) {
-                            items(items = cities) { item ->
-                                CityCardView(city = item.name) {
-                                    cityChanged(item)
-                                    onValueChanged()
+                            items(items = cities.map {
+                                if (it.name.lowercase()
+                                        .contains(state.value.search.toString().lowercase())
+                                ) it else null
+                            }) { item ->
+                                if (item != null) {
+                                    CityCardView(city = item.name) {
+                                        cityChanged(item)
+                                        onValueChanged()
+                                    }
                                 }
                             }
                         }
