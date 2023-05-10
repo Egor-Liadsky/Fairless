@@ -33,13 +33,13 @@ fun SettingsLayout() {
                 shape = RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp)
             )
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.avatarka),
-            contentDescription = "avatarka",
-            modifier = Modifier
-                .size(170.dp)
-                .padding(top = 10.dp)
-        )
+//        Image(
+//            painter = painterResource(id = R.drawable.avatarka),
+//            contentDescription = "avatarka",
+//            modifier = Modifier
+//                .size(170.dp)
+//                .padding(top = 10.dp)
+//        )
 
         Text(
             text = "Редактировать фото", style = TextStyle(
@@ -57,7 +57,7 @@ fun SettingsLayout() {
         ShapeButton(title = "Личные данные", description = "редактировать личные данные") {
             
         }
-        ShapeButton(title = "Уведомления", modifier = Modifier.padding(top = 10.dp)) {
+        ShapeButton(title = "Уведомления", modifier = Modifier.padding(top = 20.dp)) {
             
         }
     }

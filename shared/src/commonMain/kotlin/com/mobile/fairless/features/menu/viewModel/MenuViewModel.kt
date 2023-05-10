@@ -9,6 +9,7 @@ import org.koin.core.component.KoinComponent
 interface MenuViewModel : KmpViewModel, SubScreenViewModel {
 
     fun navigateToProfile()
+    fun navigateToSettings()
 }
 
 class MenuViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
@@ -16,6 +17,10 @@ class MenuViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
 
     override fun navigateToProfile() {
         navigator.navigateToProfile()
+    }
+
+    override fun navigateToSettings() {
+        navigator.navigateToSettings()
     }
 }
 

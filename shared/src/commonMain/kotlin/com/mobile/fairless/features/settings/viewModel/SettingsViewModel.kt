@@ -7,14 +7,10 @@ import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import org.koin.core.component.KoinComponent
 
 interface SettingsViewModel : KmpViewModel, SubScreenViewModel {
-    fun onBackPressed()
 }
 
 class SettingsViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
     SettingsViewModel {
 
-    override fun onBackPressed() {
-        navigator.navigateToProfile()
-    }
 }
 

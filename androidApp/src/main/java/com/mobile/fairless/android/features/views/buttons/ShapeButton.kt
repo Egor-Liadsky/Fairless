@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,47 +35,49 @@ fun ShapeButton(
     description: String? = null,
     onClick: () -> Unit
 ) {
-    Button(
-        onClick = { onClick() },
-        colors = ButtonDefaults.buttonColors(backgroundColor = colors.white),
-        modifier = modifier
-            .clip(RoundedCornerShape(10.dp))
-            .width(320.dp)
-            .height(70.dp),
-        elevation = ButtonDefaults.elevation(defaultElevation = 5.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+    Row(modifier.shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))) {
+        Button(
+            onClick = { onClick() },
+            colors = ButtonDefaults.buttonColors(backgroundColor = colors.white),
+            modifier = Modifier
+                .clip(RoundedCornerShape(10.dp))
+                .width(400.dp),
         ) {
-            Column {
-                Text(
-                    text = title, style = TextStyle(
-                        color = colors.black,
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = if (description == null) 15.sp else 10.sp
-                    )
-                )
-
-                if (description != null) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
                     Text(
-                        text = description, style = TextStyle(
+                        text = title, style = TextStyle(
                             color = colors.black,
                             fontFamily = fontQanelas,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 10.sp
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = if (description == null) 25.sp else 20.sp
                         )
                     )
-                }
-            }
 
-            Icon(
-                painter = painterResource(id = R.drawable.ic_next), contentDescription = "ic_next",
-                tint = colors.orangeMain,
-                modifier = Modifier.size(15.dp)
-            )
+                    if (description != null) {
+                        Text(
+                            text = description, style = TextStyle(
+                                color = colors.black,
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 15.sp
+                            )
+                        )
+                    }
+                }
+
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_next), contentDescription = "ic_next",
+                    tint = colors.orangeMain,
+                    modifier = Modifier.size(15.dp)
+                )
+            }
         }
     }
 }

@@ -29,11 +29,11 @@ fun ProfileLayout(viewModelWrapper: ViewModelWrapper<ProfileViewModel>) {
             shape = RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp)
         )
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.avatarka),
-            contentDescription = "avatarka",
-            modifier = Modifier.size(200.dp)
-                .padding(top = 10.dp, bottom = 30.dp)
-        )
+//        Image(
+//            painter = painterResource(id = R.drawable.avatarka),
+//            contentDescription = "avatarka",
+//            modifier = Modifier.size(200.dp)
+//                .padding(top = 10.dp, bottom = 30.dp)
+//        )
     }
 }
