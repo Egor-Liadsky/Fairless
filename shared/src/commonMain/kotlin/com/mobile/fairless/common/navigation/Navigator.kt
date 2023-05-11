@@ -2,14 +2,18 @@ package com.mobile.fairless.common.navigation
 
 
 enum class ScreenRoute(val isMain: Boolean) {
+    //NavBar
     Main(true),
-    Profile(false),
     Notification(false),
     Message(false),
     Menu(false),
+
+    Profile(false),
     Welcome(false),
     Auth(false),
-    Register(false)
+    Register(false),
+    Settings(false),
+    ProfileEdit(false)
 }
 
 interface Navigator {
@@ -23,4 +27,6 @@ interface Navigator {
     fun navigateToWelcome()
     fun navigateToAuth()
     fun navigateToRegister()
+    fun navigateToSettings()
+    fun navigateToProfileEdit()
 }

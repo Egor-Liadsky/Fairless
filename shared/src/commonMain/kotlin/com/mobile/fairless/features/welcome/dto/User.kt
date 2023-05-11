@@ -1,5 +1,9 @@
 package com.mobile.fairless.features.welcome.dto
 
+import com.mobile.fairless.common.utils.DateTimeSerializer
+import com.mobile.fairless.common.utils.isToday
+import com.mobile.fairless.common.utils.isYesterday
+import com.soywiz.klock.DateTimeTz
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -31,14 +35,21 @@ data class User(
     val email: String,
     val username: String,
     val provider: String,
-    val createdAt: String,
+    @Serializable(with = DateTimeSerializer::class)
+    val createdAt: DateTimeTz,
     val updatedAt: String,
     val __v: Int,
     val city: City,
     val role: Role,
     val stocks: List<String>,
     val id: String
-)
+) {
+//    private val date = if (createdAt.isToday()) "Сегодня"
+//    else if (createdAt.isYesterday()) "Вчера"
+//    else createdAt.format("dd.MM.yyyy")
+    private val date = createdAt.format("dd.MM.yyyy")
+    val dateTime: String = date
+}
 
 @Serializable
 data class City(

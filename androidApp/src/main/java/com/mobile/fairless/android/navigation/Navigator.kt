@@ -27,7 +27,7 @@ class NavigatorImpl(
     }
 
     override fun navigateToProfile() {
-        navigateToNavBarDestination(ScreenRoute.Profile)
+        navController.navigate(ScreenRoute.Profile.name)
     }
 
     override fun navigateToNotification() {
@@ -52,6 +52,14 @@ class NavigatorImpl(
 
     override fun navigateToRegister() {
         navigateToNavBarDestination(ScreenRoute.Register)
+    }
+
+    override fun navigateToSettings() {
+        navController.navigate(ScreenRoute.Settings.name)
+    }
+
+    override fun navigateToProfileEdit() {
+        navController.navigate(ScreenRoute.ProfileEdit.name)
     }
 
     private fun navigateToNavBarDestination(root: ScreenRoute) {

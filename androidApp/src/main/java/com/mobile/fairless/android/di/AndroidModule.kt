@@ -9,8 +9,14 @@ import com.mobile.fairless.features.main.viewModel.MainViewModelImpl
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModelImpl
+import com.mobile.fairless.features.menu.viewModel.MenuViewModel
+import com.mobile.fairless.features.menu.viewModel.MenuViewModelImpl
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModel
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModelImpl
+import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModel
+import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModelImpl
+import com.mobile.fairless.features.settings.viewModel.SettingsViewModel
+import com.mobile.fairless.features.settings.viewModel.SettingsViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModelImpl
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
@@ -27,7 +33,7 @@ fun androidModule() = module {
 
     viewModel(named("MainNavigationViewModel")) { (start: ScreenRoute) ->
         StatefulViewModelWrapper<MainNavigationViewModel, MainNavigationState>(
-            MainNavigationViewModelImpl(start, get(), get())
+            MainNavigationViewModelImpl(start, get())
         )
     }
 
@@ -49,5 +55,17 @@ fun androidModule() = module {
 
     viewModel(named("ProfileViewModel")) {
         ViewModelWrapper<ProfileViewModel>(ProfileViewModelImpl(get()))
+    }
+
+    viewModel(named("SettingsViewModel")) {
+        ViewModelWrapper<SettingsViewModel>(SettingsViewModelImpl(get()))
+    }
+
+    viewModel(named("MenuViewModel")) {
+        ViewModelWrapper<MenuViewModel>(MenuViewModelImpl(get()))
+    }
+
+    viewModel(named("ProfileEditViewModel")) {
+        ViewModelWrapper<ProfileEditViewModel>(ProfileEditViewModelImpl(get()))
     }
 }
