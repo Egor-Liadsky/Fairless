@@ -1,6 +1,10 @@
 package com.mobile.fairless.android.features.mainNavigation
 
+import android.app.Activity
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,15 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
-import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.main.MainScreen
 import com.mobile.fairless.android.features.menu.MenuScreen
 import com.mobile.fairless.android.features.message.MessageScreen
@@ -27,7 +31,6 @@ import com.mobile.fairless.android.features.notification.NotificationScreen
 import com.mobile.fairless.android.features.profile.ProfileScreen
 import com.mobile.fairless.android.features.profileEdit.ProfileEditScreen
 import com.mobile.fairless.android.features.settings.SettingsScreen
-import com.mobile.fairless.android.features.settings.layouts.SettingsLayout
 import com.mobile.fairless.android.features.welcome.auth.AuthScreen
 import com.mobile.fairless.android.features.welcome.register.RegisterScreen
 import com.mobile.fairless.android.features.welcome.welcome.WelcomeScreen
@@ -49,9 +52,7 @@ fun MainNavigationScreen(
     viewModelWrapper: StatefulViewModelWrapper<MainNavigationViewModel, MainNavigationState> =
         getViewModel(qualifier = named("MainNavigationViewModel")) { parametersOf(startDestination) },
 ) {
-    val state = viewModelWrapper.state
     val backStackState = navController.currentBackStackEntryAsState()
-    val bottomBarState = rememberSaveable { mutableStateOf(true) }
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     val currentRoute = backStackState.value
         ?.destination?.route ?: startDestination.name
@@ -69,12 +70,32 @@ fun MainNavigationScreen(
         }
     }
 
+    val context = LocalContext.current
+    val activity = LocalContext.current as? Activity
+
+    val doubleBackPressed = remember {
+        mutableStateOf(false)
+    }
+
+    BackHandler(navController.previousBackStackEntry == null) {
+        if (doubleBackPressed.value) {
+            activity?.finish()
+        }
+        doubleBackPressed.value = true
+
+        Toast.makeText(context, "Нажмите ещё раз для выхода", Toast.LENGTH_SHORT).show()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            doubleBackPressed.value = false
+        }, 3000)
+    }
+
     Scaffold(
         scaffoldState = scaffoldState,
         bottomBar = {
             val isMainScreen = bottomNavigationItems.any { it.route.name == currentRoute }
             if (isMainScreen)
-                BottomBar(ScreenRoute.valueOf(currentRoute.toString())) { route: ScreenRoute ->
+                BottomBar(ScreenRoute.valueOf(currentRoute)) { route: ScreenRoute ->
                     viewModelWrapper.viewModel.onBottomBarButtonClick(route)
                 }
         }
