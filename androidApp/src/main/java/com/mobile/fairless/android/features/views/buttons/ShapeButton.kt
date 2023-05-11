@@ -41,7 +41,7 @@ fun ShapeButton(
             colors = ButtonDefaults.buttonColors(backgroundColor = colors.white),
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
-                .width(400.dp),
+                .width(320.dp),
         ) {
             Row(
                 modifier = Modifier

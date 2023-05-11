@@ -55,20 +55,20 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                 modifier = Modifier.fillMaxWidth(0.9f)
             )
 
-//            IconButton(
-//                onClick = { viewModelWrapper.viewModel.onProfileClick() },
-//                modifier = Modifier
-//                    .size(24.dp)
-//                    .border(width = 0.5.dp, color = colors.black, shape = CircleShape)
-//                    .background(colors.white, shape = CircleShape)
-//            ) {
-//                Icon(
-//                    painter = painterResource(id = R.drawable.ic_user),
-//                    contentDescription = "ic_user",
-//                    tint = colors.black,
-//                    modifier = Modifier.fillMaxSize()
-//                )
-//            }
+            IconButton(
+                onClick = { viewModelWrapper.viewModel.onProfileClick() },
+                modifier = Modifier
+                    .size(24.dp)
+                    .border(width = 0.5.dp, color = colors.black, shape = CircleShape)
+                    .background(colors.white, shape = CircleShape)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_user),
+                    contentDescription = "ic_user",
+                    tint = colors.black,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
         CategoriesView(
             categories = state.value.categories,
