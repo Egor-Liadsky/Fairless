@@ -17,10 +17,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.features.views.switchs.DefaultSwitch
 import com.mobile.fairless.android.theme.colors
+import com.mobile.fairless.android.theme.fontQanelas
 
 
 data class RectangleButtonParams(
@@ -77,6 +81,12 @@ fun RectangleButton(rectangleButtonParams: RectangleButtonParams, onClick: () ->
                     )
                     .weight(1F),
                 text = rectangleButtonParams.title,
+                style = TextStyle(
+                    fontFamily = fontQanelas,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colors.black,
+                    fontSize = 15.sp
+                )
             )
             if (rectangleButtonParams.isSwitching != null) {
                 DefaultSwitch(checked = rectangleButtonParams.isSwitching) {

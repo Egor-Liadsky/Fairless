@@ -27,6 +27,7 @@ fun CommonTopBar(
     description: String? = null,
     isBack: Boolean? = false,
     isEdit: Boolean? = false,
+    isSave: Boolean? = false,
     editClick: () -> Unit? = {},
     backClick: () -> Unit? = {}
 ) {
@@ -35,7 +36,7 @@ fun CommonTopBar(
             .fillMaxWidth()
             .background(colors.backgroundWelcome)
             .padding(20.dp),
-        horizontalArrangement = if (isEdit == true) Arrangement.SpaceBetween else Arrangement.Start,
+        horizontalArrangement = if (isEdit == true || isSave == true) Arrangement.SpaceBetween else Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (isBack == true) {
@@ -52,8 +53,8 @@ fun CommonTopBar(
                 text = title,
                 style = TextStyle(
                     fontFamily = fontQanelas,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontSize =  25.sp,
                     color = colors.black,
                     textAlign = TextAlign.Center
                 ),
@@ -76,6 +77,12 @@ fun CommonTopBar(
 
         if (isEdit == true) {
             SquareButton(icon = painterResource(id = R.drawable.ic_edit), iconSize = 30.dp) {
+                editClick()
+            }
+        }
+
+        if (isSave == true){
+            SquareButton(icon = painterResource(id = R.drawable.ic_success), iconSize = 30.dp) {
                 editClick()
             }
         }
