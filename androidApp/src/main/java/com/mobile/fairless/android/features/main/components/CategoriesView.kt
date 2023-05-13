@@ -11,12 +11,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,15 +24,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.viewModel.MainViewModel
 
 @Composable
 fun CategoriesView(
     categories: List<Category>?,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    categoryOpened: Category,
     selectCategory: (Category) -> Unit,
 ) {
     Row(
@@ -43,7 +45,10 @@ fun CategoriesView(
     ) {
         if (isLoading) {
             CircularProgressIndicator(
-                modifier = Modifier.size(20.dp).fillMaxWidth().padding(top = 15.dp),
+                modifier = Modifier
+                    .size(20.dp)
+                    .fillMaxWidth()
+                    .padding(top = 15.dp),
                 color = colors.black,
             )
         } else {
@@ -56,6 +61,7 @@ fun CategoriesView(
                     items(items = categories) { category ->
                         CategoryItem(
                             name = category.name.toString(),
+                            selected = categoryOpened.name == category.name,
                             modifier = Modifier.padding(horizontal = 3.dp)
                         ) {
                             selectCategory(category)
@@ -68,11 +74,16 @@ fun CategoriesView(
 }
 
 @Composable
-fun CategoryItem(name: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun CategoryItem(
+    name: String,
+    selected: Boolean,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
 
     Row(modifier = modifier) {
         Card(
-            backgroundColor = colors.white,
+            backgroundColor = if (selected) colors.orangeMain else colors.white,
             modifier = Modifier
                 .height(35.dp)
                 .clip(RoundedCornerShape(20.dp))
@@ -92,7 +103,7 @@ fun CategoryItem(name: String, modifier: Modifier = Modifier, onClick: () -> Uni
                         fontWeight = FontWeight.Normal,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center,
-                        color = colors.black
+                        color =if (selected) colors.white else colors.black
                     )
                 )
             }
