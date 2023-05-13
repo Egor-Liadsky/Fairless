@@ -39,6 +39,7 @@ fun commonModule() = module {
         Json {
             isLenient = true
             ignoreUnknownKeys = true
+            coerceInputValues = true
         }
     }
     single {

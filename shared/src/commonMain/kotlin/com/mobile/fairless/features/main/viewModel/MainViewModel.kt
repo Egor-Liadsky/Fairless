@@ -24,6 +24,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun getCategories()
     fun onProfileClick()
     fun getProfile()
+    fun getProductsByCategory()
 }
 
 class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent, MainViewModel {
@@ -62,12 +63,24 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    prefService.getUserInfo()
+                    prefService.getUserInfo() //TODO выяснить почему оно не в переменной
                     _state.update { it.copy(user = prefService.getUserInfo())}
                 },
                 failureBlock = {
                     navigator.navigateToWelcome()
                 },
+            )
+        }
+    }
+
+    override fun getProductsByCategory() {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    val data = mainService.getProductsByCategory()
+                    _state.update { it.copy(products = data) }
+                },
+                failureBlock = { errorService.showError("Ошибка") }
             )
         }
     }

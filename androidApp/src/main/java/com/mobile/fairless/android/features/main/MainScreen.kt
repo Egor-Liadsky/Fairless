@@ -18,7 +18,8 @@ import org.koin.core.qualifier.named
 fun MainScreen(viewModelWrapper: ViewModelWrapper<MainViewModel> = get(named("MainViewModel"))) {
 
     viewModelWrapper.viewModel.getCategories()
-    viewModelWrapper.viewModel.getProfile()
+    viewModelWrapper.viewModel.getProfile() //TODO убрать проверку на авторизацию пользователя
+    viewModelWrapper.viewModel.getProductsByCategory()
 
     Column(Modifier.fillMaxSize().background(colors.white)) {
         MainLayout(viewModelWrapper = viewModelWrapper)
