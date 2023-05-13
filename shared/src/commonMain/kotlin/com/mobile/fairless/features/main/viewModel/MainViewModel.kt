@@ -5,6 +5,7 @@ import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
+import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.repository.MainRepository
 import com.mobile.fairless.features.main.service.MainService
 import com.mobile.fairless.features.main.state.MainState
@@ -24,6 +25,8 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun getCategories()
     fun onProfileClick()
     fun getProfile()
+    fun getProductsByCategory()
+    fun selectCategory(category: Category)
 }
 
 class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent, MainViewModel {
@@ -41,7 +44,8 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                 executionBlock = {
                     _state.update { it.copy(categoriesLoading = true) }
                     if (_state.value.categories == null){
-                        _state.update { it.copy(categories = mainService.getCategories()) }
+                        val categories = mainService.getCategories()
+                        _state.update { it.copy(categories = categories) }
                     }
                 },
                 failureBlock = {
@@ -62,7 +66,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    prefService.getUserInfo()
+                    prefService.getUserInfo() //TODO выяснить почему оно не в переменной
                     _state.update { it.copy(user = prefService.getUserInfo())}
                 },
                 failureBlock = {
@@ -70,5 +74,23 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                 },
             )
         }
+    }
+
+    override fun getProductsByCategory() {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    val data = mainService.getProductsByCategory(_state.value.selectCategory.url ?: "all")
+                    if (data.data != null){
+                        _state.update { it.copy(products = data) }
+                    }
+                },
+                failureBlock = { errorService.showError("Ошибка") }
+            )
+        }
+    }
+
+    override fun selectCategory(category: Category) {
+        _state.update { it.copy(selectCategory = category) }
     }
 }

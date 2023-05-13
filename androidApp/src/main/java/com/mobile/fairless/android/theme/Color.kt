@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 data class Colors(
     val orangeMain: Color,
     val grayMain: Color,
+    val grayDivider: Color,
     val navBar: Color,
     val black: Color,
     val white: Color,
@@ -14,6 +15,7 @@ data class Colors(
 val colors = Colors(
     orangeMain = Color(0xFFF73B00),
     grayMain = Color(0xFFA8ADB0),
+    grayDivider = Color(0xFFE4E4E4),
     navBar = Color(0xFFF1F3F5),
     black = Color(0xFF2A2F33),
     white = Color(0xFFFFFFFF),
