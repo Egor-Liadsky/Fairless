@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.profile
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -19,6 +20,10 @@ fun ProfileScreen(viewModelWrapper: ViewModelWrapper<ProfileViewModel> = get(nam
 
     val state = viewModelWrapper.viewModel.state.collectAsState()
 
+    BackHandler {
+        viewModelWrapper.viewModel.navigateToMain()
+    }
+
     Column(Modifier.fillMaxSize()) {
 
         CommonTopBar(
@@ -27,7 +32,7 @@ fun ProfileScreen(viewModelWrapper: ViewModelWrapper<ProfileViewModel> = get(nam
             isBack = true,
             isEdit = true,
             backClick = {
-                viewModelWrapper.viewModel.onBackButtonClick()
+                viewModelWrapper.viewModel.navigateToMain()
             },
             editClick = {
                 viewModelWrapper.viewModel.navigateToProfileEdit()

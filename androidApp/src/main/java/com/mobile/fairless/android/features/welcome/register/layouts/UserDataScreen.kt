@@ -30,10 +30,6 @@ import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 @Composable
 fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
 
-    BackHandler {
-        viewModelWrapper.viewModel.navigateToWelcome()
-    }
-
     Column(
         Modifier
             .fillMaxSize()

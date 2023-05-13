@@ -37,7 +37,7 @@ class MenuViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
             exceptionHandleable(
                 executionBlock = { prefService.setUserInfo(UserReceive(jwt = "", user = null)) },
                 failureBlock = { errorService.showError("Произошла ошибка") },
-                completionBlock = { navigator.navigateToWelcome() }
+                completionBlock = { navigator.navigateToMain() }
             )
         }
     }

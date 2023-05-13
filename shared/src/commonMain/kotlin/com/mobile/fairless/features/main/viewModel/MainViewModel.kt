@@ -24,7 +24,6 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
 
     fun getCategories()
     fun onProfileClick()
-    fun getProfile()
     fun getProductsByCategory()
     fun selectCategory(category: Category)
 }
@@ -59,20 +58,11 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     }
 
     override fun onProfileClick() {
-        navigator.navigateToProfile()
-    }
-
-    override fun getProfile() {
-        scope.launch {
-            exceptionHandleable(
-                executionBlock = {
-                    prefService.getUserInfo() //TODO выяснить почему оно не в переменной
-                    _state.update { it.copy(user = prefService.getUserInfo())}
-                },
-                failureBlock = {
-                    navigator.navigateToWelcome()
-                },
-            )
+        val data = prefService.getUserInfo()
+        if (data?.user == null) {
+            navigator.navigateToAuth()
+        } else {
+            navigator.navigateToProfile()
         }
     }
 

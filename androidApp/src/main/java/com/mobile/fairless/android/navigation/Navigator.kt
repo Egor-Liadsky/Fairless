@@ -42,16 +42,12 @@ class NavigatorImpl(
         navigateToNavBarDestination(ScreenRoute.Menu)
     }
 
-    override fun navigateToWelcome() {
-        navigateToNavBarDestination(ScreenRoute.Welcome)
-    }
-
     override fun navigateToAuth() {
-        navigateToNavBarDestination(ScreenRoute.Auth)
+        navController.navigate(ScreenRoute.Auth.name)
     }
 
     override fun navigateToRegister() {
-        navigateToNavBarDestination(ScreenRoute.Register)
+        navController.navigate(ScreenRoute.Register.name)
     }
 
     override fun navigateToSettings() {

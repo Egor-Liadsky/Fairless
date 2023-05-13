@@ -83,8 +83,19 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
                 )
             )
         }
-        if (state.value.user?.jwt != null){
-            viewModelWrapper.viewModel.navigateToMain()
+        if (state.value.user != null) {
+            viewModelWrapper.viewModel.navigateToProfile()
+        }
+
+        CommonButton(
+            commonButtonParams = CommonButtonParams(
+                title = "Регистрация",
+                titleColor = colors.black,
+                background = colors.white
+            ),
+            modifier = Modifier.padding(top = 20.dp)
+        ) {
+            viewModelWrapper.viewModel.navigateToRegister()
         }
     }
 }
