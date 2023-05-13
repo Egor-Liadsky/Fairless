@@ -6,12 +6,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Product(
-    val data: List<Data>? = null,
+    val data: List<ProductData>? = null,
     val count: Int = 0
 )
 
 @Serializable
-data class Data(
+data class ProductData(
     val count_likes: String,
     val count_dislikes: String,
     val count_views: String,

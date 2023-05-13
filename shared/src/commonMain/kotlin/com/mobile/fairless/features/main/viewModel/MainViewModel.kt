@@ -78,7 +78,9 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
             exceptionHandleable(
                 executionBlock = {
                     val data = mainService.getProductsByCategory()
-                    _state.update { it.copy(products = data) }
+                    if (data.data != null){
+                        _state.update { it.copy(products = data) }
+                    }
                 },
                 failureBlock = { errorService.showError("Ошибка") }
             )
