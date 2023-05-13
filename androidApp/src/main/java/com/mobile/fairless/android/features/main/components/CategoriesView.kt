@@ -34,7 +34,7 @@ fun CategoriesView(
     categories: List<Category>?,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
-    onClick: () -> Unit
+    selectCategory: (Category) -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -58,7 +58,7 @@ fun CategoriesView(
                             name = category.name.toString(),
                             modifier = Modifier.padding(horizontal = 3.dp)
                         ) {
-                            onClick()
+                            selectCategory(category)
                         }
                     }
                 }

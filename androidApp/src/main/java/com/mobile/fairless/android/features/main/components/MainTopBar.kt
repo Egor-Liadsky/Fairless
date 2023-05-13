@@ -73,9 +73,9 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
         CategoriesView(
             categories = state.value.categories,
             isLoading = state.value.categoriesLoading,
-            modifier = Modifier.padding(top = 10.dp)
+            modifier = Modifier.padding(top = 10.dp),
         ) {
-
+            viewModelWrapper.viewModel.selectCategory(it)
         }
     }
 }

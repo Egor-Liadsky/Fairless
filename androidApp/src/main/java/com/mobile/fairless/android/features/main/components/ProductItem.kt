@@ -46,7 +46,7 @@ fun ProductItem(product: ProductData) {
         ) {
 
             AsyncImage(
-                model = "https://api.fairless.ru" + product.image.url,
+                model = "https://api.fairless.ru" + product.image?.url,
                 contentDescription = "product_image",
                 modifier = Modifier
                     .width(120.dp)
@@ -64,32 +64,35 @@ fun ProductItem(product: ProductData) {
                         color = colors.black
                     )
                 )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "${product.sale_price} ₽",
-                        style = TextStyle(
-                            fontFamily = fontQanelas,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            color = colors.orangeMain
+                if (product.sale_price != null){
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "${product.sale_price} ₽",
+                            style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp,
+                                color = colors.orangeMain
+                            )
                         )
-                    )
-                    Text(
-                        text = "${product.sale_old_price} ₽",
-                        style = TextStyle(
-                            fontFamily = fontQanelas,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 15.sp,
-                            color = colors.black
-                        ),
-                        modifier = Modifier.padding(start = 15.dp)
-                    )
+                        Text(
+                            text = "${product.sale_old_price} ₽",
+                            style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 15.sp,
+                                color = colors.black
+                            ),
+                            modifier = Modifier.padding(start = 15.dp)
+                        )
+                    }
                 }
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -125,22 +128,24 @@ fun ProductItem(product: ProductData) {
                     }
                 }
 
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 5.dp),
-                    colors.grayDivider
-                )
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.avatarka),
-                        contentDescription = "avatarka",
+                if (product.users_permissions_user != null){
+                    Divider(
                         modifier = Modifier
-                            .size(30.dp)
-                            .padding(end = 10.dp)
+                            .fillMaxWidth()
+                            .padding(vertical = 5.dp),
+                        colors.grayDivider
                     )
-                    Text(text = product.users_permissions_user.username)
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = R.drawable.avatarka),
+                            contentDescription = "avatarka",
+                            modifier = Modifier
+                                .size(30.dp)
+                                .padding(end = 10.dp)
+                        )
+                        Text(text = product.users_permissions_user!!.username )
+                    }
                 }
 
                 Divider(

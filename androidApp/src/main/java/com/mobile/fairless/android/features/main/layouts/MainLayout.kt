@@ -26,6 +26,8 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
 
     val state = viewModelWrapper.viewModel.state.collectAsState()
 
+    viewModelWrapper.viewModel.getProductsByCategory()
+
     Column {
         MainTopBar(viewModelWrapper = viewModelWrapper)
 
@@ -40,6 +42,7 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                 }
             }
         }
+        Log.e("aslkdjqklwdj", state.value.selectCategory.toString())
     }
 
     state.value.products.data?.forEach { item -> }

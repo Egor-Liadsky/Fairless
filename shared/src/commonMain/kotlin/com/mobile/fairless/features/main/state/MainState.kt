@@ -10,5 +10,7 @@ data class MainState(
     val categoriesLoading: Boolean = false,
 
     val user: UserReceive? = UserReceive(),
-    val products: Product = Product()
+    val products: Product = Product(),
+
+    val selectCategory: Category = Category()
 )

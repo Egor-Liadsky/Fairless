@@ -6,11 +6,11 @@ import com.mobile.fairless.features.main.repository.MainRepository
 
 interface MainService {
     suspend fun getCategories(): List<Category>
-    suspend fun getProductsByCategory(): Product
+    suspend fun getProductsByCategory(category: String): Product
 }
 
 class MainServiceImpl(private val mainRepository: MainRepository) : MainService {
 
     override suspend fun getCategories(): List<Category> = mainRepository.getCategories()
-    override suspend fun getProductsByCategory(): Product = mainRepository.getProductsByCategory()
+    override suspend fun getProductsByCategory(category: String): Product = mainRepository.getProductsByCategory(category)
 }

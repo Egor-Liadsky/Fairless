@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 interface MainRepository {
 
     suspend fun getCategories(): List<Category>
-    suspend fun getProductsByCategory(): Product
+    suspend fun getProductsByCategory(category: String): Product
 }
 
 class MainRepositoryImpl : MainRepository, BaseRepository() {
@@ -23,13 +23,13 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
         return Json.decodeFromString(response)
     }
 
-    override suspend fun getProductsByCategory(): Product {
+    override suspend fun getProductsByCategory(category: String): Product {
 
         val params = HashMap<String, String>()
-        params.put("category", "electric")
-        params.put("page", "2")
-        params.put("limit", "40")
-        params.put("_sort", "createdAt:DESC")
+        params["category"] = category
+//        params["page"] = "2"
+        params["limit"] = "40"
+        params["_sort"] = "createdAt:DESC"
 
         val response = executeCall(
             type = HttpMethod.Get,
@@ -40,4 +40,3 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
         return Json.decodeFromString(response)
     }
 }
-//stocks/stocks-index?category=hone&page=1&limit=40&_sort=createdAt:DESC
