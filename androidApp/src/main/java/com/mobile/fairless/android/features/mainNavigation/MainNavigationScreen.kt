@@ -122,9 +122,6 @@ fun MainNavigationScreen(
             composable(route = ScreenRoute.Menu.name) {
                 MenuScreen()
             }
-            composable(route = ScreenRoute.Welcome.name) {
-                WelcomeScreen()
-            }
             composable(route = ScreenRoute.Auth.name) {
                 AuthScreen()
             }

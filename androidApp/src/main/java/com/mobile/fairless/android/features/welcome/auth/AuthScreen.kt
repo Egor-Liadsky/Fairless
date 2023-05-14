@@ -15,7 +15,7 @@ import org.koin.core.qualifier.named
 fun AuthScreen(viewModelWrapper: ViewModelWrapper<AuthViewModel> = get(named("AuthViewModel"))) {
 
     BackHandler {
-        viewModelWrapper.viewModel.navigateToWelcome()
+        viewModelWrapper.viewModel.navigateToMain()
     }
 
     Column(Modifier.fillMaxSize()) {

@@ -25,10 +25,6 @@ fun RegisterScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel> = get(n
 
     val state = viewModelWrapper.viewModel.state.collectAsState()
 
-    BackHandler {
-        viewModelWrapper.viewModel.navigateToWelcome()
-    }
-
     Column(
         Modifier
             .fillMaxSize()

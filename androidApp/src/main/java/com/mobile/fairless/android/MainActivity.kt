@@ -15,7 +15,7 @@ import org.koin.core.parameter.parametersOf
 class MainActivity : ComponentActivity() {
     private val prefService: PrefService by inject()
 
-    private val startDestination: ScreenRoute = defineStartDestination()
+    private val startDestination: ScreenRoute = ScreenRoute.Main
     private val rootNavigation: AndroidNavigator by inject { parametersOf(startDestination) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,15 +29,6 @@ class MainActivity : ComponentActivity() {
                     startDestination
                 )
             }
-        }
-    }
-
-    private fun defineStartDestination(): ScreenRoute {
-        val data = prefService.getUserInfo()
-        return if (data?.jwt?.isNotEmpty() == true) {
-            ScreenRoute.Main
-        } else {
-            ScreenRoute.Welcome
         }
     }
 }
