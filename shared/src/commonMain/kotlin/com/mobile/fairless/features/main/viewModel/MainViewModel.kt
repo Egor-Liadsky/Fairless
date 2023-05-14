@@ -28,7 +28,8 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun selectCategory(category: Category)
 }
 
-class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent, MainViewModel {
+class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
+    MainViewModel {
 
     private val mainService: MainService by inject()
     private val errorService: ErrorService by inject()
@@ -42,7 +43,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
             exceptionHandleable(
                 executionBlock = {
                     _state.update { it.copy(categoriesLoading = true) }
-                    if (_state.value.categories == null){
+                    if (_state.value.categories == null) {
                         val categories = mainService.getCategories()
                         _state.update { it.copy(categories = categories) }
                     }
@@ -67,20 +68,27 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     }
 
     override fun getProductsByCategory() {
+        setLoading(true)
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
                     val data = mainService.getProductsByCategory(_state.value.selectCategory.url ?: "all")
-                    if (data.data != null){
+                    if (data.data != null) {
                         _state.update { it.copy(products = data) }
                     }
                 },
-                failureBlock = { errorService.showError("Ошибка") }
+                failureBlock = { errorService.showError("Ошибка") },
+                completionBlock = { setLoading(false) }
             )
         }
     }
 
     override fun selectCategory(category: Category) {
         _state.update { it.copy(selectCategory = category) }
+        getProductsByCategory()
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        _state.update { it.copy(productsLoading = isLoading) }
     }
 }

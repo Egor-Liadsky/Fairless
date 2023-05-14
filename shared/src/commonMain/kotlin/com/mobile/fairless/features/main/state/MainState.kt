@@ -7,10 +7,12 @@ import com.mobile.fairless.features.welcome.dto.UserReceive
 
 data class MainState(
     val categories: List<Category>? = null,
+
     val categoriesLoading: Boolean = false,
+    val productsLoading: Boolean = false,
 
     val user: UserReceive? = UserReceive(),
     val products: Product = Product(),
 
-    val selectCategory: Category = Category()
+    val selectCategory: Category = Category(),
 )
