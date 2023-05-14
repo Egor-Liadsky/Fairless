@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -35,12 +36,13 @@ fun ProductItem(product: ProductData) {
         modifier = Modifier
             .padding(vertical = 10.dp, horizontal = 10.dp)
             .width(350.dp),
-//            .height(200.dp),
         elevation = 2.dp,
         shape = RoundedCornerShape(10.dp)
     ) {
         Row(
-            Modifier.fillMaxSize().padding(horizontal = 5.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = 5.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -64,7 +66,7 @@ fun ProductItem(product: ProductData) {
                         color = colors.black
                     )
                 )
-                if (product.sale_price != null){
+                if (product.sale_price != null) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -86,7 +88,18 @@ fun ProductItem(product: ProductData) {
                                 fontFamily = fontQanelas,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 15.sp,
-                                color = colors.black
+                                color = colors.black,
+                                textDecoration = TextDecoration.LineThrough
+                            ),
+                            modifier = Modifier.padding(start = 15.dp)
+                        )
+                        Text(
+                            text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
+                            style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 15.sp,
+                                color = colors.black,
                             ),
                             modifier = Modifier.padding(start = 15.dp)
                         )
@@ -103,7 +116,7 @@ fun ProductItem(product: ProductData) {
                         style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = 15.sp,
+                            fontSize = 13.sp,
                             color = colors.black
                         ),
                     )
@@ -128,7 +141,7 @@ fun ProductItem(product: ProductData) {
                     }
                 }
 
-                if (product.users_permissions_user != null){
+                if (product.users_permissions_user != null) {
                     Divider(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -144,7 +157,7 @@ fun ProductItem(product: ProductData) {
                                 .size(30.dp)
                                 .padding(end = 10.dp)
                         )
-                        Text(text = product.users_permissions_user!!.username )
+                        Text(text = product.users_permissions_user!!.username)
                     }
                 }
 
@@ -159,6 +172,13 @@ fun ProductItem(product: ProductData) {
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_comment),
+                        contentDescription = "ic_comment",
+                        modifier = Modifier
+                            .padding(end = 10.dp)
+                            .size(15.dp)
+                    )
                     Text(
                         text = product.count_comments.toString(),
                         style = TextStyle(
