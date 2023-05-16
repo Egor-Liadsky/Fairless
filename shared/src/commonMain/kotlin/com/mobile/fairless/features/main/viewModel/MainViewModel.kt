@@ -44,12 +44,19 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                 executionBlock = {
                     _state.update { it.copy(categoriesLoading = true) }
                     if (_state.value.categories == null) {
-                        val categories = mainService.getCategories()
+                        val categories = mainService.getCategories().toMutableList()
+                        val indexAllCategory = categories.indexOfFirst { it.url == "all" }
+
+                        if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
+                            val elementToMove = categories[indexAllCategory]
+                            categories.removeAt(indexAllCategory)
+                            categories.add(0, elementToMove)
+                        }
                         _state.update { it.copy(categories = categories) }
                     }
                 },
                 failureBlock = {
-                    errorService.showError("Нет подключения к интернету")
+                    errorService.showError("Ошибка загрузки. Проверьте подключение к сети и повторите попытку.")
                 },
                 completionBlock = {
                     _state.update { it.copy(categoriesLoading = false) }
@@ -77,7 +84,6 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                         _state.update { it.copy(products = data) }
                     }
                 },
-                failureBlock = { errorService.showError("Ошибка") },
                 completionBlock = { setLoading(false) }
             )
         }

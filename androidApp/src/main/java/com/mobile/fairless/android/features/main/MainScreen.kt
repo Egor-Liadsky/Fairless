@@ -18,8 +18,12 @@ import org.koin.core.qualifier.named
 @Composable
 fun MainScreen(viewModelWrapper: ViewModelWrapper<MainViewModel> = get(named("MainViewModel"))) {
 
+    val state = viewModelWrapper.viewModel.state.collectAsState()
+
     viewModelWrapper.viewModel.getCategories()
+
     viewModelWrapper.viewModel.getProductsByCategory()
+
 
     Column(
         Modifier
