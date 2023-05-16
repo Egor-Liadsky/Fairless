@@ -28,6 +28,7 @@ import coil.compose.AsyncImage
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.android.utils.Constants
 import com.mobile.fairless.features.main.models.ProductData
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -50,7 +51,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
         ) {
 
             AsyncImage(
-                model = "https://api.fairless.ru" + product.image?.url,
+                model = Constants.BASE_URL + product.image?.url,
                 contentDescription = "product_image",
                 modifier = Modifier
                     .width(120.dp)

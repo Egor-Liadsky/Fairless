@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -23,16 +24,17 @@ import com.mobile.fairless.android.theme.colors
 fun SquareButton(
     modifier: Modifier = Modifier,
     icon: Painter,
+    iconColor: Color = colors.black,
     iconSize: Dp = 20.dp,
+    backgroundColor: Color = colors.white,
     onClick: () -> Unit
 ) {
-
     Button(
         onClick = { onClick() },
         modifier = modifier
             .size(48.dp)
             .clip(RoundedCornerShape(10.dp)),
-        colors = ButtonDefaults.buttonColors(backgroundColor = colors.white)
+        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor)
     ) {
         Column(
             Modifier.fillMaxSize(),
@@ -43,7 +45,7 @@ fun SquareButton(
                 painter = icon,
                 contentDescription = "ic_square_button",
                 modifier = Modifier.size(iconSize),
-                tint = colors.black
+                tint = iconColor
             )
         }
     }

@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.mobile.fairless.android.di.ViewModelWrapper
+import com.mobile.fairless.android.features.document.components.DocumentTopBar
+import com.mobile.fairless.android.features.document.layouts.DocumentLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import org.koin.androidx.compose.get
@@ -27,9 +29,9 @@ fun DocumentScreen(product: String, viewModelWrapper: ViewModelWrapper<DocumentV
         Modifier
             .fillMaxSize()
             .background(colors.backgroundWelcome)) {
-//        DocumentLayout(product = product)
         item {
-            Text(text = state.value.product.toString())
+            DocumentTopBar(product = state.value.product, viewModelWrapper = viewModelWrapper)
+            DocumentLayout(product = state.value.product)
         }
     }
 }
