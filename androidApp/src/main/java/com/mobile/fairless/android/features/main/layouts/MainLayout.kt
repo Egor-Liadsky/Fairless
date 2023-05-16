@@ -50,7 +50,9 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
             ) {
                 items(items = state.value.products.data ?: emptyList()) { product ->
                     Column {
-                        ProductItem(product = product)
+                        ProductItem(product = product) {
+                            viewModelWrapper.viewModel.onDocumentClick(product)
+                        }
                     }
                 }
             }

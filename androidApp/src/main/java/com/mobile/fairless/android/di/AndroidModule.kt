@@ -4,6 +4,8 @@ import com.mobile.fairless.android.navigation.AndroidNavigator
 import com.mobile.fairless.android.navigation.NavigatorImpl
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
+import com.mobile.fairless.features.document.viewModel.DocumentViewModel
+import com.mobile.fairless.features.document.viewModel.DocumentViewModelImpl
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 import com.mobile.fairless.features.main.viewModel.MainViewModelImpl
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
@@ -67,5 +69,8 @@ fun androidModule() = module {
 
     viewModel(named("ProfileEditViewModel")) {
         ViewModelWrapper<ProfileEditViewModel>(ProfileEditViewModelImpl(get()))
+    }
+    viewModel(named("DocumentViewModel")) {
+        ViewModelWrapper<DocumentViewModel>(DocumentViewModelImpl(get()))
     }
 }
