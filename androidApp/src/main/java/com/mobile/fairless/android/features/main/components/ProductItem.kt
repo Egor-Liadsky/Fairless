@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -91,7 +92,18 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                                 fontFamily = fontQanelas,
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 15.sp,
-                                color = colors.black
+                                color = colors.black,
+                                textDecoration = TextDecoration.LineThrough
+                            ),
+                            modifier = Modifier.padding(start = 15.dp)
+                        )
+                        Text(
+                            text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
+                            style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 15.sp,
+                                color = colors.black,
                             ),
                             modifier = Modifier.padding(start = 15.dp)
                         )
@@ -108,7 +120,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                         style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = 15.sp,
+                            fontSize = 13.sp,
                             color = colors.black
                         ),
                     )
@@ -168,6 +180,13 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_comment),
+                        contentDescription = "ic_comment",
+                        modifier = Modifier
+                            .padding(end = 10.dp)
+                            .size(15.dp)
+                    )
                     Text(
                         text = product.count_comments.toString(),
                         style = TextStyle(

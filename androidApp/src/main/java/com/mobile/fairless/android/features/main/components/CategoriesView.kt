@@ -1,8 +1,11 @@
 package com.mobile.fairless.android.features.main.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +22,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -58,15 +64,17 @@ fun CategoriesView(
                 modifier = modifier
             ) {
                 if (categories != null) {
+                    item { Spacer(modifier = Modifier.padding(start = 17.dp)) }
                     items(items = categories) { category ->
                         CategoryItem(
                             name = category.name.toString(),
-                            selected = categoryOpened.name == category.name,
+                            selected = categoryOpened.url == category.url,
                             modifier = Modifier.padding(horizontal = 3.dp)
                         ) {
                             selectCategory(category)
                         }
                     }
+                    item { Spacer(modifier = Modifier.padding(end = 17.dp)) }
                 }
             }
         }
@@ -81,12 +89,25 @@ fun CategoryItem(
     onClick: () -> Unit
 ) {
 
+    val orangeGradient = Brush.horizontalGradient(
+        colors = listOf(
+            Color(0xFFF51B00),
+            Color(0xFFFF8D00)
+        )
+    )
+    val whiteGradient = Brush.horizontalGradient(
+        colors = listOf(
+            colors.white,
+            colors.white
+        )
+    )
+
     Row(modifier = modifier) {
-        Card(
-            backgroundColor = if (selected) colors.orangeMain else colors.white,
+        Column(
             modifier = Modifier
-                .height(35.dp)
                 .clip(RoundedCornerShape(20.dp))
+                .background(if (selected) orangeGradient else whiteGradient, )
+                .height(35.dp)
                 .clickable { onClick() }
         ) {
             Row(
@@ -103,7 +124,7 @@ fun CategoryItem(
                         fontWeight = FontWeight.Normal,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center,
-                        color =if (selected) colors.white else colors.black
+                        color = if (selected) colors.white else colors.black
                     )
                 )
             }

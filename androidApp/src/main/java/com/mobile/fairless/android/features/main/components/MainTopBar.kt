@@ -36,13 +36,14 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
     Column(
         modifier = Modifier
             .background(colors.backgroundWelcome)
-            .padding(horizontal = 20.dp, vertical = 20.dp)
+            .padding(vertical = 20.dp)
             .height(110.dp),
     ) {
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 20.dp)
         ) {
             Text(
                 text = "Выберите нужную вам категорию",

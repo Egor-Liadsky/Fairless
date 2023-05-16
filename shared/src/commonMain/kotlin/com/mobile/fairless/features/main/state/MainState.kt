@@ -14,5 +14,5 @@ data class MainState(
     val user: UserReceive? = UserReceive(),
     val products: Product = Product(),
 
-    val selectCategory: Category = Category(),
+    val selectCategory: Category = Category(url = "all"),
 )
