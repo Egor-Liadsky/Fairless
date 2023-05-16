@@ -1,8 +1,9 @@
 package com.mobile.fairless.common.utils
 
-import net.thauvin.erik.urlencoder.UrlEncoder
+import java.net.URLDecoder
+import java.net.URLEncoder
 
 actual class UrlEncodeImpl: UrlEncode {
-    override fun encodeToUrl(data: String): String = UrlEncoder.encode(data)
-    override fun decodeToUrl(data: String): String = UrlEncoder.decode(data)
+    override fun encodeToUrl(data: String): String = URLEncoder.encode(data, "UTF-8")
+    override fun decodeToUrl(data: String): String = URLDecoder.decode(data, "UTF-8")
 }

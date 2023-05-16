@@ -32,7 +32,6 @@ import com.mobile.fairless.android.theme.fontQanelas
 fun ShapeButton(
     modifier: Modifier = Modifier,
     title: String,
-    description: String? = null,
     onClick: () -> Unit
 ) {
     Row(modifier.shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))) {
@@ -41,12 +40,12 @@ fun ShapeButton(
             colors = ButtonDefaults.buttonColors(backgroundColor = colors.white),
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
-                .width(320.dp),
+                .width(320.dp)
+                .height(60.dp),
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -56,20 +55,9 @@ fun ShapeButton(
                             color = colors.black,
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = if (description == null) 25.sp else 20.sp
+                            fontSize = 20.sp
                         )
                     )
-
-                    if (description != null) {
-                        Text(
-                            text = description, style = TextStyle(
-                                color = colors.black,
-                                fontFamily = fontQanelas,
-                                fontWeight = FontWeight.Normal,
-                                fontSize = 15.sp
-                            )
-                        )
-                    }
                 }
 
                 Icon(

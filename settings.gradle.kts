@@ -3,7 +3,6 @@ pluginManagement {
         google()
         gradlePluginPortal()
         mavenCentral()
-        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") } // only needed for SNAPSHOT
     }
     plugins {
         id("com.android.library").version("7.4.0").apply(false)
@@ -23,8 +22,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") } // only needed for SNAPSHOT
-
     }
 }
 
