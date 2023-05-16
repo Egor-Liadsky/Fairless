@@ -2,20 +2,22 @@ package com.mobile.fairless.features.main.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.storage.PrefService
+import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.main.models.Category
-import com.mobile.fairless.features.main.repository.MainRepository
+import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.service.MainService
 import com.mobile.fairless.features.main.state.MainState
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
-import com.mobile.fairless.features.welcome.dto.UserReceive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -26,6 +28,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun onProfileClick()
     fun getProductsByCategory()
     fun selectCategory(category: Category)
+    fun onDocumentClick(product: ProductData)
 }
 
 class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
@@ -34,6 +37,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     private val mainService: MainService by inject()
     private val errorService: ErrorService by inject()
     private val prefService: PrefService by inject()
+    private val urlEncode: UrlEncode by inject()
 
     private val _state = MutableStateFlow(MainState())
     override val state: StateFlow<MainState> = _state.asStateFlow()
@@ -86,6 +90,12 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     override fun selectCategory(category: Category) {
         _state.update { it.copy(selectCategory = category) }
         getProductsByCategory()
+    }
+
+    override fun onDocumentClick(product: ProductData) {
+        val document = Json.encodeToString(product)
+        val encodeUrl = urlEncode.encodeToUrl(document)
+        navigator.navigateToDocument(encodeUrl)
     }
 
     private fun setLoading(isLoading: Boolean) {

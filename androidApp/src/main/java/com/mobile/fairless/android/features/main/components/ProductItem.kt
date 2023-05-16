@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,18 +30,21 @@ import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.main.models.ProductData
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ProductItem(product: ProductData) {
+fun ProductItem(product: ProductData, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(vertical = 10.dp, horizontal = 10.dp)
             .width(350.dp),
-//            .height(200.dp),
+        onClick = { onClick() },
         elevation = 2.dp,
         shape = RoundedCornerShape(10.dp)
     ) {
         Row(
-            Modifier.fillMaxSize().padding(horizontal = 5.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = 5.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -56,7 +60,7 @@ fun ProductItem(product: ProductData) {
 
             Column(modifier = Modifier.padding(10.dp)) {
                 Text(
-                    text = product.name,
+                    text = product.name ?: "",
                     style = TextStyle(
                         fontFamily = fontQanelas,
                         fontWeight = FontWeight.SemiBold,
@@ -64,7 +68,7 @@ fun ProductItem(product: ProductData) {
                         color = colors.black
                     )
                 )
-                if (product.sale_price != null){
+                if (product.sale_price != null) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -99,7 +103,7 @@ fun ProductItem(product: ProductData) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = product.shop.name,
+                        text = product.shop?.name ?: "",
                         style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
@@ -108,27 +112,31 @@ fun ProductItem(product: ProductData) {
                         ),
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_like),
-                            contentDescription = "ic_like",
-                            modifier = Modifier
-                                .padding(end = 10.dp)
-                                .size(15.dp)
-                        )
-                        Text(text = product.count_likes)
+                        if (product.count_likes != null){
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_like),
+                                contentDescription = "ic_like",
+                                modifier = Modifier
+                                    .padding(end = 10.dp)
+                                    .size(15.dp)
+                            )
+                            Text(text = product.count_likes ?: "")
+                        }
 
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_dislike),
-                            contentDescription = "ic_dislike",
-                            modifier = Modifier
-                                .padding(start = 20.dp, end = 10.dp)
-                                .size(15.dp)
-                        )
-                        Text(text = product.count_dislikes)
+                        if (product.count_dislikes != null) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_dislike),
+                                contentDescription = "ic_dislike",
+                                modifier = Modifier
+                                    .padding(start = 20.dp, end = 10.dp)
+                                    .size(15.dp)
+                            )
+                            Text(text = product.count_dislikes ?: "")
+                        }
                     }
                 }
 
-                if (product.users_permissions_user != null){
+                if (product.users_permissions_user != null) {
                     Divider(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -144,7 +152,7 @@ fun ProductItem(product: ProductData) {
                                 .size(30.dp)
                                 .padding(end = 10.dp)
                         )
-                        Text(text = product.users_permissions_user!!.username )
+                        Text(text = product.users_permissions_user!!.username)
                     }
                 }
 
@@ -176,7 +184,7 @@ fun ProductItem(product: ProductData) {
                             .size(15.dp)
                     )
                     Text(
-                        text = product.count_views,
+                        text = product.count_views ?: "",
                         style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,

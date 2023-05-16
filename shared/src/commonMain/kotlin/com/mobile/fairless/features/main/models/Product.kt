@@ -12,38 +12,37 @@ data class Product(
 
 @Serializable
 data class ProductData(
-    val count_likes: String,
-    val count_dislikes: String,
-    val count_views: String,
-    val _id: String,
+    val count_likes: String? = null,
+    val count_dislikes: String? = null,
+    val count_views: String? = null,
+    val _id: String? = null,
     val date_start: String? = null,
     val date_end: String? = null,
-    val name: String,
-    val code: String,
+    val name: String? = null,
+    val code: String? = null,
     val sale_price: Int? = null,
-    val sale_url: String,
+    val sale_url: String? = null,
     val sale_old_price: Int? = null,
     val description: String? = null,
-    val published_at: String,
+    val published_at: String? = null,
     val SEO: String? = null,
-    val createdAt: String,
-    val updatedAt: String,
-    val __v: Int,
-    val category: Category,
-    val city: City,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val __v: Int? = null,
+    val category: Category? = null,
+    val city: City? = null,
     val image: Image? = null,
-    val shop: Shop,
-    val stock_type: StockType,
+    val shop: Shop? = null,
+    val stock_type: StockType? = null,
     val users_permissions_user: UsersPermissionsUser? = null,
-    val id: String,
+    val id: String? = null,
     val myLike: String? = null,
-    val count_comments: Int,
+    val count_comments: Int? = null,
     val promo_code: String? = null, //
     val promo_price: Int? = null, //
     val free_text: String? = null
 )
 
-//Throwable caught, cause: kotlinx.serialization.MissingFieldException: Fields [sale_price, sale_old_price] are required for type with serial name 'com.mobile.fairless.features.main.models.ProductData', but they were missing at path: $.data[26] at path: $.data[26], message: Fields [sale_price, sale_old_price] are required for type with serial name 'com.mobile.fairless.features.main.models.ProductData', but they were missing at path: $.data[26] at path: $.data[26] at path: $.data[26]
 @Serializable
 data class Image(
     val _id: String? = null,

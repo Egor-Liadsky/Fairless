@@ -19,11 +19,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
+import com.mobile.fairless.android.features.document.DocumentScreen
 import com.mobile.fairless.android.features.main.MainScreen
 import com.mobile.fairless.android.features.menu.MenuScreen
 import com.mobile.fairless.android.features.message.MessageScreen
@@ -35,6 +38,7 @@ import com.mobile.fairless.android.features.welcome.auth.AuthScreen
 import com.mobile.fairless.android.features.welcome.register.RegisterScreen
 import com.mobile.fairless.android.features.welcome.welcome.WelcomeScreen
 import com.mobile.fairless.common.navigation.ScreenRoute
+import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
@@ -133,6 +137,13 @@ fun MainNavigationScreen(
             }
             composable(route = ScreenRoute.ProfileEdit.name) {
                 ProfileEditScreen()
+            }
+            composable(
+                route = "${ScreenRoute.Document.name}/{product}",
+                arguments = listOf(navArgument("product") { type = NavType.StringType })
+            ) {
+                val product = it.arguments?.getString("product")
+                DocumentScreen(product = product ?: "")
             }
         }
     }
