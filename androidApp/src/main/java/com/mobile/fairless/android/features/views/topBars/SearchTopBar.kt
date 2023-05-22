@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.views.topBars
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +21,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,14 +42,7 @@ import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-
-data class SearchTopBarParams(
-    val searchString: String,
-    val onClearText: () -> Unit,
-    val onMicClick: () -> Unit,
-    val onSearchClick: () -> Unit,
-    val onValueChanged: (String) -> Unit
-)
+import com.mobile.fairless.features.welcome.register.state.RegisterState
 
 
 @Composable
@@ -57,16 +52,20 @@ fun SearchTopBar(
     onClearText: () -> Unit,
     onMicClick: () -> Unit,
     onSearchClick: () -> Unit,
+    state: State<RegisterState>,
     onSearchChange: (String) -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+
     val searchState = remember {
         mutableStateOf(searchString)
     }
-    val focusManager = LocalFocusManager.current
-
     LaunchedEffect(key1 = searchState.value) {
         onSearchChange(searchState.value)
     }
+
+    Log.e("sdfkjsdf", searchState.value)
+
     Row(
         modifier = Modifier
             .height(60.dp)

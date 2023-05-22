@@ -34,6 +34,7 @@ import com.mobile.fairless.android.features.notification.NotificationScreen
 import com.mobile.fairless.android.features.profile.ProfileScreen
 import com.mobile.fairless.android.features.profileEdit.ProfileEditScreen
 import com.mobile.fairless.android.features.settings.SettingsScreen
+import com.mobile.fairless.android.features.views.snackbar.DefaultSnackbar
 import com.mobile.fairless.android.features.welcome.auth.AuthScreen
 import com.mobile.fairless.android.features.welcome.register.RegisterScreen
 import com.mobile.fairless.android.features.welcome.welcome.WelcomeScreen
@@ -96,6 +97,9 @@ fun MainNavigationScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
+        snackbarHost = {
+            DefaultSnackbar(snackbarHostState = it)
+        },
         bottomBar = {
             val isMainScreen = bottomNavigationItems.any { it.route.name == currentRoute }
             if (isMainScreen)

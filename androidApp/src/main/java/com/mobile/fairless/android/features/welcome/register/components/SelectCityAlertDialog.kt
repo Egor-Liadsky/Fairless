@@ -1,6 +1,12 @@
 package com.mobile.fairless.android.features.welcome.register.components
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.speech.RecognizerIntent
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,8 +42,13 @@ import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.topBars.SearchTopBar
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.welcome.dto.City
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
 
 
 @Composable
@@ -45,6 +56,7 @@ fun SelectCityAlertDialog(
     viewModelWrapper: ViewModelWrapper<RegisterViewModel>,
     cities: List<City>?,
     isOpen: Boolean,
+    errorService: ErrorService = get(),
     cityChanged: (City) -> Unit,
     onValueChanged: () -> Unit
 ) {
@@ -55,12 +67,14 @@ fun SelectCityAlertDialog(
         mutableStateOf(isOpen)
     }
 
-    var sortedCities by remember {
-        mutableStateOf(cities?.map { it.name.contains(state.value.search.toString()) }
-        )
+    val startLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val result = it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            viewModelWrapper.viewModel.searchChanged(result?.get(0) ?: "")
+        }
     }
-
-    Log.e("ajshdasdad", sortedCities.toString())
 
     if (isOpen) {
         Dialog(
@@ -76,10 +90,19 @@ fun SelectCityAlertDialog(
                 Column(Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp)) {
                     SearchTopBar(
                         searchString = state.value.search ?: "",
-                        onClearText = { },
-                        onMicClick = { },
+                        onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
+                        onMicClick = {
+                            try {
+                                startLauncher.launch(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH))
+                            } catch (e: ActivityNotFoundException) {
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    errorService.showError("Нет сервиса распознавания речи")
+                                }
+                            }
+                        },
                         onSearchClick = {},
-                        onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
+                        onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) },
+                        state = state
                     )
                     Spacer(modifier = Modifier.padding(bottom = 15.dp))
 

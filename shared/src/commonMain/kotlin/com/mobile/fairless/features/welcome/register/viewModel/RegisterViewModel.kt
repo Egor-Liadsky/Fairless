@@ -28,6 +28,7 @@ interface RegisterViewModel : KmpViewModel, SubScreenViewModel {
     fun passwordChanged(password: String)
     fun passwordRetryChanged(passwordRetry: String)
     fun searchChanged(search: String)
+    fun onDeleteSearchClick()
     fun registerUser(userRegisterResponse: UserRegisterResponse)
     fun selectCityClick()
     fun onNextClick()
@@ -67,6 +68,10 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
 
     override fun searchChanged(search: String) {
         _state.update { it.copy(search = search) }
+    }
+
+    override fun onDeleteSearchClick() {
+        searchChanged("")
     }
 
     override fun registerUser(userRegisterResponse: UserRegisterResponse) {
