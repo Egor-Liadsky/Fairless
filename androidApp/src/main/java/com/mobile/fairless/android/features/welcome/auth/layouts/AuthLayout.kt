@@ -18,7 +18,6 @@ import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.textFields.CommonTextField
-import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.welcome.dto.UserAuthResponse
@@ -48,21 +47,17 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
 
         CommonTextField(
             modifier = Modifier.padding(top = 40.dp),
-            commonTextFieldParams = CommonTextFieldParams(
-                textState = viewModelWrapper.viewModel.state.value.email ?: "",
-                placeholder = "Введите свой логин или E-mail"
-            )
+            textState = viewModelWrapper.viewModel.state.value.email ?: "",
+            placeholder = "Введите свой логин или E-mail"
         ) {
             viewModelWrapper.viewModel.emailChanged(it)
         }
 
         CommonTextField(
             modifier = Modifier.padding(top = 20.dp),
-            commonTextFieldParams = CommonTextFieldParams(
-                textState = viewModelWrapper.viewModel.state.value.password ?: "",
-                placeholder = "Введите свой пароль",
-                isPassword = true
-            )
+            textState = viewModelWrapper.viewModel.state.value.password ?: "",
+            placeholder = "Введите свой пароль",
+            isPassword = true
         ) {
             viewModelWrapper.viewModel.passwordChanged(it)
         }

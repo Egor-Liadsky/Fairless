@@ -28,7 +28,7 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
         val params = HashMap<String, String>()
         params["category"] = category
         params["page"] = "1"
-        params["limit"] = "20"
+//        params["limit"] = "20"
         params["_sort"] = "createdAt:DESC"
 
         val response = executeCall(

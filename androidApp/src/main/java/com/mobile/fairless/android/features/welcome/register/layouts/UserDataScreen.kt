@@ -1,7 +1,5 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
-import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -21,7 +18,6 @@ import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.textFields.CommonTextField
-import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
 import com.mobile.fairless.android.features.welcome.register.components.SelectCityAlertDialog
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
@@ -52,21 +48,17 @@ fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
 
         CommonTextField(
             modifier = Modifier.padding(top = 40.dp),
-            commonTextFieldParams = CommonTextFieldParams(
-                textState = viewModelWrapper.viewModel.state.value.email ?: "",
-                placeholder = "Введите свой E-mail"
-            )
+            textState = viewModelWrapper.viewModel.state.value.email ?: "",
+            placeholder = "Введите свой E-mail"
         ) {
             viewModelWrapper.viewModel.emailChanged(it)
         }
 
         CommonTextField(
             modifier = Modifier.padding(top = 20.dp),
-            commonTextFieldParams = CommonTextFieldParams(
-                textState = viewModelWrapper.viewModel.state.value.password ?: "",
-                placeholder = "Введите свой логин",
-            )
-        ) {
+            textState = viewModelWrapper.viewModel.state.value.password ?: "",
+            placeholder = "Введите свой логин",
+            ) {
             viewModelWrapper.viewModel.loginChanged(it)
         }
 

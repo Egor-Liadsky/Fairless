@@ -20,7 +20,6 @@ import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.textFields.CommonTextField
-import com.mobile.fairless.android.features.views.textFields.CommonTextFieldParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.welcome.dto.City
@@ -56,22 +55,18 @@ fun PasswordDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
 
         CommonTextField(
             modifier = Modifier.padding(top = 20.dp),
-            commonTextFieldParams = CommonTextFieldParams(
-                textState = viewModelWrapper.viewModel.state.value.password ?: "",
-                placeholder = "Введите свой пароль",
-                isPassword = true
-            )
+            textState = viewModelWrapper.viewModel.state.value.password ?: "",
+            placeholder = "Введите свой пароль",
+            isPassword = true
         ) {
             viewModelWrapper.viewModel.passwordChanged(it)
         }
 
         CommonTextField(
             modifier = Modifier.padding(top = 20.dp),
-            commonTextFieldParams = CommonTextFieldParams(
-                textState = viewModelWrapper.viewModel.state.value.password ?: "",
-                placeholder = "Повторите пароль",
-                isPassword = true
-            )
+            textState = viewModelWrapper.viewModel.state.value.password ?: "",
+            placeholder = "Повторите пароль",
+            isPassword = true
         ) {
             viewModelWrapper.viewModel.passwordRetryChanged(it)
         }
@@ -86,13 +81,6 @@ fun PasswordDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
             isLoading = state.value.isLoading,
             modifier = Modifier.padding(top = 20.dp)
         ) {
-            Log.e("TAGUSERTAG", """
-                email: ${state.value.email}
-                login: ${state.value.login}
-                password: ${state.value.password}
-                city: ${state.value.city}
-            """.trimIndent())
-
             viewModelWrapper.viewModel.registerUser(
                 UserRegisterResponse(
                     email = state.value.email ?: "",
