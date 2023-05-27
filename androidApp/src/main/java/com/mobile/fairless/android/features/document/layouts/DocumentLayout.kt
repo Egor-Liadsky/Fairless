@@ -30,7 +30,6 @@ import com.mobile.fairless.features.main.models.ProductData
 
 @Composable
 fun DocumentLayout(product: ProductData) {
-
     Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)) {
         Text(
             text = product.name ?: "", style = TextStyle(
