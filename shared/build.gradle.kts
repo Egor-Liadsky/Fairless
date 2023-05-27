@@ -58,9 +58,6 @@ kotlin {
 
                 // DateTime
                 implementation("com.soywiz.korlibs.klock:klock:3.4.0")
-
-                // URL encode
-                implementation("net.thauvin.erik:urlencoder:1.3.0")
             }
         }
 

@@ -6,9 +6,9 @@ import com.mobile.fairless.features.main.models.Product
 enum class ScreenRoute(val isMain: Boolean) {
     //NavBar
     Main(true),
-    Notification(false),
-    Message(false),
-    Menu(false),
+    Notification(true),
+    Message(true),
+    Menu(true),
 
     Document(false),
     Profile(false),

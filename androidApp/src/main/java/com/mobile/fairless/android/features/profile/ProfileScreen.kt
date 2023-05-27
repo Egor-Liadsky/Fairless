@@ -20,9 +20,9 @@ fun ProfileScreen(viewModelWrapper: ViewModelWrapper<ProfileViewModel> = get(nam
 
     val state = viewModelWrapper.viewModel.state.collectAsState()
 
-    BackHandler {
-        viewModelWrapper.viewModel.navigateToMain()
-    }
+//    BackHandler {
+//        viewModelWrapper.viewModel.navigateToMain() TODO fixme
+//    }
 
     Column(Modifier.fillMaxSize()) {
 

@@ -53,12 +53,12 @@ fun SettingsLayout() {
         )
     }
     
-    Column(modifier = Modifier.padding(top = 40.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        ShapeButton(title = "Личные данные", description = "редактировать личные данные") {
-            
-        }
-        ShapeButton(title = "Уведомления", modifier = Modifier.padding(top = 20.dp)) {
-            
-        }
-    }
+//    Column(modifier = Modifier.padding(top = 40.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+//        ShapeButton(title = "Личные данные", description = "редактировать личные данные") {
+//
+//        }
+//        ShapeButton(title = "Уведомления", modifier = Modifier.padding(top = 20.dp)) {
+//
+//        }
+//    }
 }

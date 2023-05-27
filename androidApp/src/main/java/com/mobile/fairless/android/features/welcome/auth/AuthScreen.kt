@@ -1,6 +1,5 @@
 package com.mobile.fairless.android.features.welcome.auth
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -13,11 +12,6 @@ import org.koin.core.qualifier.named
 
 @Composable
 fun AuthScreen(viewModelWrapper: ViewModelWrapper<AuthViewModel> = get(named("AuthViewModel"))) {
-
-    BackHandler {
-        viewModelWrapper.viewModel.navigateToMain()
-    }
-
     Column(Modifier.fillMaxSize()) {
         AuthLayout(viewModelWrapper)
     }

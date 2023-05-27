@@ -66,10 +66,10 @@ class NavigatorImpl(
     private fun navigateToNavBarDestination(root: ScreenRoute) {
         navController.navigate(root.name) {
             popUpTo(navController.graph.id) {
-                if (root != currentMainStack) saveState = true
+                saveState = root.isMain
             }
-            launchSingleTop = true
-            restoreState = true
+            launchSingleTop = root.isMain
+            restoreState = root.isMain
         }.also { currentMainStack = root }
     }
 }

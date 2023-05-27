@@ -42,6 +42,14 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     private val _state = MutableStateFlow(MainState())
     override val state: StateFlow<MainState> = _state.asStateFlow()
 
+    override fun onViewShown() {
+        super.onViewShown()
+        getCategories()
+        if (_state.value.products.data == null) {
+            getProductsByCategory()
+        }
+    }
+
     override fun getCategories() {
         scope.launch {
             exceptionHandleable(

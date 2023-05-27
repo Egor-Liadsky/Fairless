@@ -22,7 +22,10 @@ import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.main.models.ProductData
 
 @Composable
-fun DocumentTopBar(product: ProductData, viewModelWrapper: ViewModelWrapper<DocumentViewModel>) {
+fun DocumentTopBar(
+    product: ProductData,
+    viewModelWrapper: ViewModelWrapper<DocumentViewModel>
+) {
 
     Row(
         modifier = Modifier
@@ -52,7 +55,7 @@ fun DocumentTopBar(product: ProductData, viewModelWrapper: ViewModelWrapper<Docu
             backgroundColor = colors.backgroundWelcome,
             iconColor = colors.orangeMain
         ) {
-            viewModelWrapper.viewModel.onBackButtonClick()
+            viewModelWrapper.viewModel.onShareClick(product)
         }
     }
 }
