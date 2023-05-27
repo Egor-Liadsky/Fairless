@@ -1,6 +1,8 @@
 package com.mobile.fairless.android.features.document
 
 import android.content.Intent
+import android.content.IntentSender
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -39,13 +41,20 @@ fun DocumentScreen(product: String, viewModelWrapper: ViewModelWrapper<DocumentV
         }
     }
 
+    LaunchedEffect(key1 = Unit) {
+        viewModelWrapper.viewModel.openUrl.collectLatest {
+            val openUrlIntent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.description))
+            context.startActivity(Intent.createChooser(openUrlIntent, it.title))
+        }
+    }
+
     LazyColumn(
         Modifier
             .fillMaxSize()
             .background(colors.backgroundWelcome)) {
         item {
             DocumentTopBar(product = state.value.product, viewModelWrapper = viewModelWrapper)
-            DocumentLayout(product = state.value.product)
+            DocumentLayout(product = state.value.product, viewModelWrapper = viewModelWrapper)
         }
     }
 }

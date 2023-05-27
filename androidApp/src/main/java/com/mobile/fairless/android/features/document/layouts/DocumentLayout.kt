@@ -21,15 +21,20 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
+import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.buttons.ShapeButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.main.models.ProductData
 
 @Composable
-fun DocumentLayout(product: ProductData) {
+fun DocumentLayout(
+    product: ProductData,
+    viewModelWrapper: ViewModelWrapper<DocumentViewModel>
+) {
     Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)) {
         Text(
             text = product.name ?: "", style = TextStyle(
@@ -154,7 +159,7 @@ fun DocumentLayout(product: ProductData) {
                     background = colors.orangeMain
                 ), modifier = Modifier.padding(top = 10.dp)
             ) {
-
+                viewModelWrapper.viewModel.openProductUrl(product)
             }
         }
 

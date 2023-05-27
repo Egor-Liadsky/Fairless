@@ -25,9 +25,11 @@ import org.koin.core.component.inject
 interface DocumentViewModel : KmpViewModel, SubScreenViewModel {
     val state: StateFlow<DocumentState>
     val shareText: SharedFlow<ShareInfo>
+    val openUrl: SharedFlow<ShareInfo>
 
     fun decodeProduct(product: String)
     fun onShareClick(product: ProductData)
+    fun openProductUrl(product: ProductData)
 
 }
 
@@ -42,6 +44,9 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
     private val mutableShareText = MutableSharedFlow<ShareInfo>()
     override val shareText: SharedFlow<ShareInfo> = mutableShareText
 
+    private val mutableOpenUrl = MutableSharedFlow<ShareInfo>()
+    override val openUrl: SharedFlow<ShareInfo> = mutableOpenUrl
+
     override fun decodeProduct(product: String) {
         _state.update {
             val decodeProduct = urlEncode.decodeToUrl(product)
@@ -51,7 +56,13 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
 
     override fun onShareClick(product: ProductData) {
         scope.launch {
-            mutableShareText.emit(ShareInfo(product.name ?: "", "${product.name}\n${product.sale_url}" ?: ""))
+            mutableShareText.emit(ShareInfo(product.name ?: "", "${product.name}\n${product.sale_url}"))
+        }
+    }
+
+    override fun openProductUrl(product: ProductData) {
+        scope.launch {
+            mutableOpenUrl.emit(ShareInfo(product.name ?: "", product.sale_url ?: ""))
         }
     }
 }
