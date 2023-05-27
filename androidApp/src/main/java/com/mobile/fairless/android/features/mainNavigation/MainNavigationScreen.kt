@@ -86,7 +86,6 @@ fun MainNavigationScreen(
             activity?.finish()
         }
         doubleBackPressed.value = true
-
         Toast.makeText(context, "Нажмите ещё раз для выхода", Toast.LENGTH_SHORT).show()
 
         Handler(Looper.getMainLooper()).postDelayed({

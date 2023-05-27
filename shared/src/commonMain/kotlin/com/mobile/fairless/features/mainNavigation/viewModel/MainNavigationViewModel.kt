@@ -16,9 +16,7 @@ import org.koin.core.component.KoinComponent
 interface MainNavigationViewModel : StatefulKmpViewModel<MainNavigationState> {
     val startDestination: ScreenRoute
     override val state: StateFlow<MainNavigationState>
-    fun onRouteChange(route: ScreenRoute)
     fun onBottomBarButtonClick(route: ScreenRoute)
-    fun productToJson(product: Product): String
 }
 
 class MainNavigationViewModelImpl(
@@ -32,10 +30,6 @@ class MainNavigationViewModelImpl(
     override val state: StateFlow<MainNavigationState>
         get() = mutableState
 
-    override fun onRouteChange(route: ScreenRoute) {
-        if (route.isMain) mutableState.update { it.copy(screenRoute = route) }
-    }
-
     override fun onBottomBarButtonClick(route: ScreenRoute) {
         mutableState.update { it.copy(screenRoute = route) }
         when (route) {
@@ -46,9 +40,5 @@ class MainNavigationViewModelImpl(
             ScreenRoute.Menu -> navigator.navigateToMenu()
             else -> {}
         }
-    }
-
-    override fun productToJson(product: Product): String {
-        return Json.encodeToString(product)
     }
 }
