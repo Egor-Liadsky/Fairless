@@ -28,17 +28,16 @@ class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
 
         var date = DateTimeTz.nowLocal()
 
-        when (last){
-            DateFilter.TODAY -> date = date.minus(DateTimeSpan(days = 1))
-            DateFilter.WEEK -> date = date.minus(DateTimeSpan(weeks = 1))
-            DateFilter.MONTH -> date = date.minus(MonthSpan(1))
-            else -> { }
+        date = when (last){
+            DateFilter.TODAY -> date.minus(DateTimeSpan(days = 1))
+            DateFilter.WEEK -> date.minus(DateTimeSpan(weeks = 1))
+            DateFilter.MONTH -> date.minus(MonthSpan(1))
         }
 
         val params = HashMap<String, String>()
         params["_limit"] = limit.toString()
-        params["_sort"] = "count_likes%3ADESC"
-        params["createdAt_gte"] = date.format(ISO8601.DATETIME_COMPLETE)//.format(ISO8601.DATE_CALENDAR_COMPLETE)
+        params["_sort"] = "count_likes:DESC"
+        params["createdAt_gte"] = "${date.format(ISO8601.DATE_CALENDAR_COMPLETE)}T00:00:01"//.format(ISO8601.DATE_CALENDAR_COMPLETE)
 
         val response = executeCall(
             type = HttpMethod.Get,
