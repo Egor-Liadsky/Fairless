@@ -39,9 +39,6 @@ fun DocumentLayout(
     product: ProductData,
     viewModelWrapper: ViewModelWrapper<DocumentViewModel>
 ) {
-
-    val state = viewModelWrapper.viewModel.state.collectAsState()
-
     Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)) {
         Text(
             text = product.name ?: "", style = TextStyle(

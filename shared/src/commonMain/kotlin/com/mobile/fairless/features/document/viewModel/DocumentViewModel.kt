@@ -34,8 +34,9 @@ interface DocumentViewModel : KmpViewModel, SubScreenViewModel {
     fun decodeProduct(product: String)
     fun onShareClick(product: ProductData)
     fun openProductUrl(product: ProductData)
-    fun getFireProducts()
+    fun getFireProducts(period: DateFilter)
     fun onDocumentClick(product: ProductData)
+    fun selectFirePeriod(period: DateFilter)
 }
 
 class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
@@ -57,7 +58,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
 
     override fun onViewShown() {
         super.onViewShown()
-        getFireProducts()
+        getFireProducts(state.value.selectFirePeriod)
     }
 
     override fun decodeProduct(product: String) {
@@ -79,13 +80,20 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
         }
     }
 
-    override fun getFireProducts() {
+    override fun getFireProducts(period: DateFilter) {
+        setFireLoadingProducts(true)
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    _state.update {
-                        it.copy(fireProduct = documentService.getFireProducts(4, DateFilter.TODAY))
+                    val data = documentService.getFireProducts(4, period)
+                    if (data.isEmpty()){
+                        selectFirePeriod(DateFilter.WEEK)
+                        _state.update { it.copy(todayNull = true) }
                     }
+                    _state.update {
+                        it.copy(fireProduct = data)
+                    }
+                    setFireLoadingProducts(false)
                 },
                 failureBlock = {
                     errorService.showError("Проверьте подключение с интернетом")
@@ -98,6 +106,15 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
         val document = Json.encodeToString(product)
         val encodeUrl = urlEncode.encodeToUrl(document)
         navigator.navigateToDocument(encodeUrl)
+    }
+
+    override fun selectFirePeriod(period: DateFilter) {
+        _state.update { it.copy(selectFirePeriod = period) }
+        getFireProducts(period)
+    }
+
+    private fun setFireLoadingProducts(status: Boolean) {
+        _state.update { it.copy(fireProductsLoading = status) }
     }
 }
 

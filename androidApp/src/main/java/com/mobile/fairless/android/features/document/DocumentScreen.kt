@@ -62,7 +62,7 @@ fun DocumentScreen(
 
     LazyColumn(
         Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .background(colors.backgroundWelcome)
     ) {
         item {
