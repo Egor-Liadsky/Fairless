@@ -165,7 +165,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                                 .size(30.dp)
                                 .padding(end = 10.dp)
                         )
-                        Text(text = product.users_permissions_user!!.username)
+                        Text(text = product.users_permissions_user!!.username ?: "")
                     }
                 }
 

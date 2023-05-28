@@ -1,19 +1,32 @@
 package com.mobile.fairless.android.features.document.layouts
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -22,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.di.ViewModelWrapper
+import com.mobile.fairless.android.features.document.components.FireProductItem
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.buttons.ShapeButton
@@ -35,6 +49,8 @@ fun DocumentLayout(
     product: ProductData,
     viewModelWrapper: ViewModelWrapper<DocumentViewModel>
 ) {
+    val context = LocalContext.current
+
     Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)) {
         Text(
             text = product.name ?: "", style = TextStyle(
@@ -51,36 +67,36 @@ fun DocumentLayout(
                     .padding(top = 15.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "${product.sale_price} ₽",
-                    style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                        color = colors.orangeMain
+                    Text(
+                        text = "${product.sale_price} ₽",
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                            color = colors.orangeMain
+                        )
                     )
-                )
-                Text(
-                    text = "${product.sale_old_price} ₽",
-                    style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = colors.black,
-                        textDecoration = TextDecoration.LineThrough
-                    ),
-                    modifier = Modifier.padding(start = 15.dp)
-                )
-                Text(
-                    text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
-                    style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = colors.black,
-                    ),
-                    modifier = Modifier.padding(start = 15.dp)
-                )
+                    Text(
+                        text = "${product.sale_old_price} ₽",
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = colors.black,
+                            textDecoration = TextDecoration.LineThrough
+                        ),
+                        modifier = Modifier.padding(start = 15.dp)
+                    )
+                    Text(
+                        text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = colors.black,
+                        ),
+                        modifier = Modifier.padding(start = 15.dp)
+                    )
             }
         }
 
@@ -127,10 +143,51 @@ fun DocumentLayout(
             }
         }
 
+        if (product.promo_code != null) {
+            Column(modifier = Modifier
+                .border(0.5.dp, colors.black, RoundedCornerShape(5.dp))
+                .clip(
+                    RoundedCornerShape(5.dp)
+                )
+                .clickable {
+                    val clipboard =
+                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    clipboard.setPrimaryClip(
+                        ClipData.newPlainText(
+                            "Промокод",
+                            product.promo_code
+                        )
+                    )
+                    Toast
+                        .makeText(context, "Скопировано", Toast.LENGTH_SHORT)
+                        .show()
+                }) {
+                Row(
+                    modifier = Modifier
+                        .padding(5.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = product.promo_code!!,
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = colors.black
+                        ),
+                        modifier = Modifier.padding(end = 10.dp)
+                    )
+                    Icon(painter = painterResource(id = R.drawable.ic_copy), contentDescription = "ic_copy",
+                        modifier = Modifier.size(20.dp), tint = colors.black)
+                }
+            }
+        }
+
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 5.dp),
+                .padding(bottom = 5.dp, top = 10.dp),
             colors.grayDivider
         )
 
@@ -143,7 +200,7 @@ fun DocumentLayout(
                         .size(30.dp)
                         .padding(end = 10.dp)
                 )
-                Text(text = product.users_permissions_user!!.username)
+                Text(text = product.users_permissions_user!!.username ?: "")
             }
         }
 

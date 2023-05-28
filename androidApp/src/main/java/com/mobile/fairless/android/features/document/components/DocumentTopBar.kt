@@ -26,7 +26,6 @@ fun DocumentTopBar(
     product: ProductData,
     viewModelWrapper: ViewModelWrapper<DocumentViewModel>
 ) {
-
     Row(
         modifier = Modifier
             .background(
