@@ -65,10 +65,8 @@ fun DocumentLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 15.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row (verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "${product.sale_price} ₽",
                         style = TextStyle(
@@ -99,47 +97,6 @@ fun DocumentLayout(
                         ),
                         modifier = Modifier.padding(start = 15.dp)
                     )
-                }
-
-                if (product.promo_code != null) {
-                    Column(modifier = Modifier
-                        .border(0.5.dp, colors.black, RoundedCornerShape(5.dp))
-                        .clip(
-                            RoundedCornerShape(5.dp)
-                        )
-                        .clickable {
-                            val clipboard =
-                                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                            clipboard.setPrimaryClip(
-                                ClipData.newPlainText(
-                                    "Промокод",
-                                    product.promo_code
-                                )
-                            )
-                            Toast
-                                .makeText(context, "Скопировано", Toast.LENGTH_SHORT)
-                                .show()
-                        }) {
-                        Row(
-                            modifier = Modifier
-                                .padding(5.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = product.promo_code!!,
-                                style = TextStyle(
-                                    fontFamily = fontQanelas,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 15.sp,
-                                    color = colors.black
-                                )
-                            )
-                            Icon(painter = painterResource(id = R.drawable.ic_copy), contentDescription = "ic_copy",
-                                modifier = Modifier.size(20.dp), tint = colors.black)
-                        }
-                    }
-                }
             }
         }
 
@@ -186,10 +143,51 @@ fun DocumentLayout(
             }
         }
 
+        if (product.promo_code != null) {
+            Column(modifier = Modifier
+                .border(0.5.dp, colors.black, RoundedCornerShape(5.dp))
+                .clip(
+                    RoundedCornerShape(5.dp)
+                )
+                .clickable {
+                    val clipboard =
+                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    clipboard.setPrimaryClip(
+                        ClipData.newPlainText(
+                            "Промокод",
+                            product.promo_code
+                        )
+                    )
+                    Toast
+                        .makeText(context, "Скопировано", Toast.LENGTH_SHORT)
+                        .show()
+                }) {
+                Row(
+                    modifier = Modifier
+                        .padding(5.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = product.promo_code!!,
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = colors.black
+                        ),
+                        modifier = Modifier.padding(end = 10.dp)
+                    )
+                    Icon(painter = painterResource(id = R.drawable.ic_copy), contentDescription = "ic_copy",
+                        modifier = Modifier.size(20.dp), tint = colors.black)
+                }
+            }
+        }
+
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 5.dp),
+                .padding(bottom = 5.dp, top = 10.dp),
             colors.grayDivider
         )
 
