@@ -36,8 +36,8 @@ data class ProductData(
     val stock_type: StockType? = null,
     val users_permissions_user: UsersPermissionsUser? = null,
     val id: String? = null,
-    val myLike: String? = null,
-    val count_comments: Int? = null,
+    val myLike: String? = "",
+    val count_comments: Int? = 0,
     val promo_code: String? = null, //
     val promo_price: Int? = null, //
     val free_text: String? = null
@@ -67,77 +67,77 @@ data class Image(
 
 @Serializable
 data class ImageX(
-    val _id: String,
-    val name: String,
-    val alternativeText: String,
-    val caption: String,
-    val hash: String,
-    val ext: String,
-    val mime: String,
-    val size: Double,
-    val width: Int,
-    val height: Int,
-    val url: String,
-    val provider: String,
-    val related: List<String>,
-    val createdAt: String,
-    val updatedAt: String,
-    val __v: Int,
-    val id: String,
+    val _id: String? = null,
+    val name: String? = null,
+    val alternativeText: String? = null,
+    val caption: String? = null,
+    val hash: String? = null,
+    val ext: String? = null,
+    val mime: String? = null,
+    val size: Double? = null,
+    val width: Int? = null,
+    val height: Int? = null,
+    val url: String? = null,
+    val provider: String? = null,
+    val related: List<String>? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val __v: Int? = null,
+    val id: String? = null,
 )
 
 @Serializable
 data class Shop(
-    val top: Boolean,
-    val _id: String,
+    val top: Boolean? = null,
+    val _id: String? = null,
     @SerialName("Name")
     val Name2: String? = null, //
-    val name: String,
-    val icon: String,
-    val code: String,
-    val sort: Int,
-    val published_at: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val __v: Int,
+    val name: String? = null,
+    val icon: String? = null,
+    val code: String? = null,
+    val sort: Int? = null,
+    val published_at: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val __v: Int? = null,
     val image: ImageX? = null,
     val seo_text: String? = null,
-    val id: String,
+    val id: String? = null,
 )
 
 @Serializable
 data class StockType(
-    val _id: String,
-    val code: String,
-    val name: String,
-    val published_at: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val __v: Int,
-    val id: String,
+    val _id: String? = null,
+    val code: String? = null,
+    val name: String? = null,
+    val published_at: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val __v: Int? = null,
+    val id: String? = null,
 )
 
 @Serializable
 data class UsersPermissionsUser(
-    val confirmed: Boolean,
-    val blocked: Boolean,
-    val avatar: List<String>,
-    val _id: String,
-    val email: String,
-    val username: String,
-    val provider: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val __v: Int,
-    val city: String,
+    val confirmed: Boolean? = null,
+    val blocked: Boolean? = null,
+    val avatar: List<String>? = null,
+    val _id: String? = null,
+    val email: String? = null,
+    val username: String? = null,
+    val provider: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val __v: Int? = null,
+    val city: String? = null,
     val cityCode: String? = null, //
-    val role: String,
-    val id: String,
+    val role: String? = null,
+    val id: String? = null,
 )
 
 @Serializable
 data class Formats(
-    val thumbnail: Thumbnail,
+    val thumbnail: Thumbnail? = null,
     val large: Large? = null,//
     val medium: Medium? = null,//
     val small: Small? = null//
@@ -145,54 +145,54 @@ data class Formats(
 
 @Serializable
 data class Large(
-    val ext: String,
-    val hash: String,
-    val height: Int,
-    val mime: String,
-    val name: String,
+    val ext: String? = null,
+    val hash: String? = null,
+    val height: Int? = null,
+    val mime: String? = null,
+    val name: String? = null,
     val path: String? = null,
-    val size: Double,
-    val url: String,
-    val width: Int
+    val size: Double? = null,
+    val url: String? = null,
+    val width: Int? = null
 )
 
 @Serializable
 data class Medium(
-    val ext: String,
-    val hash: String,
-    val height: Int,
-    val mime: String,
-    val name: String,
+    val ext: String? = null,
+    val hash: String? = null,
+    val height: Int? = null,
+    val mime: String? = null,
+    val name: String? = null,
     val path: String? = null,
-    val size: Double,
-    val url: String,
-    val width: Int
+    val size: Double? = null,
+    val url: String? = null,
+    val width: Int? = null
 )
 
 @Serializable
 data class Small(
-    val ext: String,
-    val hash: String,
-    val height: Int,
-    val mime: String,
-    val name: String,
+    val ext: String? = null,
+    val hash: String? = null,
+    val height: Int? = null,
+    val mime: String? = null,
+    val name: String? = null,
     val path: String? = null,
-    val size: Double,
-    val url: String,
-    val width: Int
+    val size: Double? = null,
+    val url: String? = null,
+    val width: Int? = null
 )
 
 @Serializable
 data class Thumbnail(
-    val name: String,
-    val hash: String,
-    val ext: String,
-    val mime: String,
-    val width: Int,
-    val height: Int,
-    val size: Double,
+    val name: String? = null,
+    val hash: String? = null,
+    val ext: String? = null,
+    val mime: String? = null,
+    val width: Int? = null,
+    val height: Int? = null,
+    val size: Double? = null,
     val path: String? = null,
-    val url: String,
+    val url: String? = null,
 )
 
 

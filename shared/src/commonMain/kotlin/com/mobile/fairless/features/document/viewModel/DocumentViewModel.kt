@@ -6,9 +6,12 @@ import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.document.model.ShareInfo
+import com.mobile.fairless.features.document.service.DocumentService
 import com.mobile.fairless.features.document.state.DocumentState
+import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -17,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -30,11 +34,15 @@ interface DocumentViewModel : KmpViewModel, SubScreenViewModel {
     fun decodeProduct(product: String)
     fun onShareClick(product: ProductData)
     fun openProductUrl(product: ProductData)
-
+    fun getFireProducts()
+    fun onDocumentClick(product: ProductData)
 }
 
 class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
     DocumentViewModel {
+
+    private val documentService: DocumentService by inject()
+    private val errorService: ErrorService by inject()
 
     private val _state = MutableStateFlow(DocumentState())
     override val state: StateFlow<DocumentState> = _state.asStateFlow()
@@ -46,6 +54,11 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
 
     private val mutableOpenUrl = MutableSharedFlow<ShareInfo>()
     override val openUrl: SharedFlow<ShareInfo> = mutableOpenUrl
+
+    override fun onViewShown() {
+        super.onViewShown()
+        getFireProducts()
+    }
 
     override fun decodeProduct(product: String) {
         _state.update {
@@ -64,6 +77,27 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
         scope.launch {
             mutableOpenUrl.emit(ShareInfo(product.name ?: "", product.sale_url ?: ""))
         }
+    }
+
+    override fun getFireProducts() {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    _state.update {
+                        it.copy(fireProduct = documentService.getFireProducts(4, DateFilter.TODAY))
+                    }
+                },
+                failureBlock = {
+                    errorService.showError("Проверьте подключение с интернетом")
+                }
+            )
+        }
+    }
+
+    override fun onDocumentClick(product: ProductData) {
+        val document = Json.encodeToString(product)
+        val encodeUrl = urlEncode.encodeToUrl(document)
+        navigator.navigateToDocument(encodeUrl)
     }
 }
 

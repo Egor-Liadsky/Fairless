@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.di.ViewModelWrapper
+import com.mobile.fairless.android.features.document.components.FireProductItem
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.buttons.ShapeButton
@@ -35,6 +39,9 @@ fun DocumentLayout(
     product: ProductData,
     viewModelWrapper: ViewModelWrapper<DocumentViewModel>
 ) {
+
+    val state = viewModelWrapper.viewModel.state.collectAsState()
+
     Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)) {
         Text(
             text = product.name ?: "", style = TextStyle(
@@ -143,7 +150,7 @@ fun DocumentLayout(
                         .size(30.dp)
                         .padding(end = 10.dp)
                 )
-                Text(text = product.users_permissions_user!!.username)
+                Text(text = product.users_permissions_user!!.username ?: "")
             }
         }
 
