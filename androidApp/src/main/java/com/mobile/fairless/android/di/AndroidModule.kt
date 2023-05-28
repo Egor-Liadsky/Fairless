@@ -17,6 +17,8 @@ import com.mobile.fairless.features.profile.viewModel.ProfileViewModel
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModelImpl
 import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModel
 import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModelImpl
+import com.mobile.fairless.features.search.viewModel.SearchViewModel
+import com.mobile.fairless.features.search.viewModel.SearchViewModelImpl
 import com.mobile.fairless.features.settings.viewModel.SettingsViewModel
 import com.mobile.fairless.features.settings.viewModel.SettingsViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
@@ -49,6 +51,10 @@ fun androidModule() = module {
 
     viewModel(named("RegisterViewModel")) {
         ViewModelWrapper<RegisterViewModel>(RegisterViewModelImpl(get()))
+    }
+
+    viewModel(named("SearchViewModel")) {
+        ViewModelWrapper<SearchViewModel>(SearchViewModelImpl(get()))
     }
 
     viewModel(named("MainViewModel")) {
