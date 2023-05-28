@@ -29,6 +29,7 @@ class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
         var date = DateTimeTz.nowLocal()
 
         when (last){
+            DateFilter.TODAY -> date = date.minus(DateTimeSpan(days = 1))
             DateFilter.WEEK -> date = date.minus(DateTimeSpan(weeks = 1))
             DateFilter.MONTH -> date = date.minus(MonthSpan(1))
             else -> { }

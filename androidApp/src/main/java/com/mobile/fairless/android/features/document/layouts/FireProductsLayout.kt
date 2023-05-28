@@ -169,19 +169,25 @@ fun FireProductsLayout(viewModelWrapper: ViewModelWrapper<DocumentViewModel>) {
                 FireProductItem(product = state.value.fireProduct[0]) {
                     viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[0])
                 }
-                FireProductItem(product = state.value.fireProduct[1]) {
-                    viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[1])
+                if (state.value.fireProduct.size > 1){
+                    FireProductItem(product = state.value.fireProduct[1]) {
+                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[1])
+                    }
                 }
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                FireProductItem(product = state.value.fireProduct[2]) {
-                    viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[2])
+                if (state.value.fireProduct.size > 2){
+                    FireProductItem(product = state.value.fireProduct[2]) {
+                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[2])
+                    }
                 }
-                FireProductItem(product = state.value.fireProduct[3]) {
-                    viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[3])
+                if (state.value.fireProduct.size > 3){
+                    FireProductItem(product = state.value.fireProduct[3]) {
+                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[3])
+                    }
                 }
             }
         }
