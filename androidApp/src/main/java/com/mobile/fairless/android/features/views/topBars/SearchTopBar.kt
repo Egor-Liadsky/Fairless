@@ -48,11 +48,11 @@ import com.mobile.fairless.features.welcome.register.state.RegisterState
 @Composable
 fun SearchTopBar(
     modifier: Modifier = Modifier,
+    placeholder: String? = "",
     searchString: String,
     onClearText: () -> Unit,
     onMicClick: () -> Unit,
     onSearchClick: () -> Unit,
-    state: State<RegisterState>,
     onSearchChange: (String) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
@@ -132,7 +132,7 @@ fun SearchTopBar(
                     ) {
                         if (searchString.isEmpty())
                             Text(
-                                text = "Введите название города",
+                                text = placeholder ?: "",
                                 style = TextStyle(
                                     fontFamily = fontQanelas,
                                     fontSize = 15.sp,

@@ -42,6 +42,7 @@ fun SearchLayout(
     Column(Modifier.fillMaxSize()) {
         Column(Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp)) {
             SearchTopBar(
+                placeholder = "Введите название товара",
                 searchString = state.value.search ?: "",
                 onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
                 onMicClick = {
@@ -54,7 +55,6 @@ fun SearchLayout(
                     }
                 },
                 onSearchClick = { /*TODO*/ },
-                state = state,
                 onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
             )
         }
