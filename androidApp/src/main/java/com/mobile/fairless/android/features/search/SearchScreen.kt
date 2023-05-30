@@ -20,7 +20,7 @@ fun SearchScreen(viewModelWrapper: StatefulViewModelWrapper<SearchViewModel, Sea
     Column(
         Modifier
             .fillMaxSize()
-            .background(colors.backgroundWelcome)) {
+            .background(colors.white)) {
         SearchLayout(viewModelWrapper = viewModelWrapper)
     }
 }

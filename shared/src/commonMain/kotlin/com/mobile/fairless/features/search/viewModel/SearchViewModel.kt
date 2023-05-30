@@ -19,6 +19,10 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
 
     fun searchChanged(search: String)
     fun onDeleteSearchClick()
+    fun selectPopularFilter(name: String)
+    fun selectFilters(name: String)
+    fun popularFilterOpen()
+    fun filtersOpen()
 }
 
 class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, StatefulKmpViewModelImpl<SearchState>(),
@@ -33,5 +37,21 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
 
     override fun onDeleteSearchClick() {
         searchChanged("")
+    }
+
+    override fun selectPopularFilter(name: String) {
+        _state.update { it.copy(selectedPopularFilter = name) }
+    }
+
+    override fun selectFilters(name: String) {
+        _state.update { it.copy(selectedFilters = name) }
+    }
+
+    override fun popularFilterOpen() {
+        _state.update { it.copy(popularFilterOpen = !it.popularFilterOpen) }
+    }
+
+    override fun filtersOpen() {
+        _state.update { it.copy(filtersOpen = !it.filtersOpen) }
     }
 }
