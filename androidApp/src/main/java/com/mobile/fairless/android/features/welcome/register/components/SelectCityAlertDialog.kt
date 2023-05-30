@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.speech.RecognizerIntent
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -38,12 +37,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mobile.fairless.android.R
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
-import com.mobile.fairless.android.features.views.topBars.SearchTopBar
+import com.mobile.fairless.android.features.views.topBars.SelectCityTopBar
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.welcome.dto.City
+import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +54,7 @@ import org.koin.androidx.compose.get
 
 @Composable
 fun SelectCityAlertDialog(
-    viewModelWrapper: ViewModelWrapper<RegisterViewModel>,
+    viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel, RegisterState>,
     cities: List<City>?,
     isOpen: Boolean,
     errorService: ErrorService = get(),
@@ -61,7 +62,7 @@ fun SelectCityAlertDialog(
     onValueChanged: () -> Unit
 ) {
 
-    val state = viewModelWrapper.viewModel.state.collectAsState()
+    val state = viewModelWrapper.state
 
     var status by remember {
         mutableStateOf(isOpen)
@@ -88,9 +89,10 @@ fun SelectCityAlertDialog(
                 color = colors.backgroundWelcome, modifier = Modifier.fillMaxSize()
             ) {
                 Column(Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp)) {
-                    SearchTopBar(
+                    SelectCityTopBar(
+                        state = state,
                         placeholder = "Введите название города",
-                        searchString = state.value.search ?: "",
+                        searchString = state.value.search,
                         onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
                         onMicClick = {
                             try {

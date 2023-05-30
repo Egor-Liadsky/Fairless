@@ -16,7 +16,7 @@ import org.koin.androidx.compose.get
 import org.koin.core.qualifier.named
 
 @Composable
-fun SearchScreen(viewModelWrapper: ViewModelWrapper<SearchViewModel> = get(named("SearchViewModel"))) {
+fun SearchScreen(viewModelWrapper: StatefulViewModelWrapper<SearchViewModel, SearchState> = get(named("SearchViewModel"))) {
     Column(
         Modifier
             .fillMaxSize()

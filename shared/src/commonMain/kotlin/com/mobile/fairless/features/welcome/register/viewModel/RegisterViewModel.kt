@@ -3,6 +3,8 @@ package com.mobile.fairless.features.welcome.register.viewModel
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.welcome.auth.service.AuthService
@@ -19,8 +21,8 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface RegisterViewModel : KmpViewModel, SubScreenViewModel {
-    val state: StateFlow<RegisterState>
+interface RegisterViewModel : StatefulKmpViewModel<RegisterState>, SubScreenViewModel {
+    override val state: StateFlow<RegisterState>
 
     fun emailChanged(email: String)
     fun loginChanged(login: String)
@@ -36,7 +38,7 @@ interface RegisterViewModel : KmpViewModel, SubScreenViewModel {
     fun checkUser(userAuthResponse: UserAuthResponse)
 }
 
-class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpViewModelImpl(),
+class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, StatefulKmpViewModelImpl<RegisterState>(),
     RegisterViewModel {
 
     private val registerService: RegisterService by inject()
