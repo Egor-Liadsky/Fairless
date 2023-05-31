@@ -8,14 +8,23 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
+import com.mobile.fairless.android.features.main.components.ProductItem
 import com.mobile.fairless.android.features.search.components.FilterView
 import com.mobile.fairless.android.features.search.components.SearchTopBar
 import com.mobile.fairless.android.theme.colors
@@ -68,7 +77,7 @@ fun SearchLayout(
                         }
                     }
                 },
-                onSearchClick = { /*TODO*/ },
+                onSearchClick = { viewModelWrapper.viewModel.searchProducts(state.value.searchString) },
                 onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
             )
             FilterView(
@@ -91,6 +100,31 @@ fun SearchLayout(
                     viewModelWrapper.viewModel.filtersOpen()
                 }
             )
+        }
+
+        if (state.value.productsLoading){
+            Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(bottom = 20.dp)
+                        .size(40.dp),
+                    color = colors.orangeMain,
+                )
+            }
+        } else {
+            LazyColumn(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(items = state.value.products ?: emptyList()) { product ->
+                    Column {
+                        ProductItem(product = product) {
+                            viewModelWrapper.viewModel.onDocumentClick(product)
+                        }
+                    }
+                }
+            }
         }
     }
 }
