@@ -30,6 +30,7 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun popularFilterOpen()
     fun filtersOpen()
     fun onDocumentClick(product: ProductData)
+    fun getCategories()
 }
 
 class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, StatefulKmpViewModelImpl<SearchState>(),
@@ -41,6 +42,11 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
 
     private val _state = MutableStateFlow(SearchState())
     override val state: StateFlow<SearchState> = _state.asStateFlow()
+
+    override fun onViewShown() {
+        super.onViewShown()
+        getCategories()
+    }
 
     override fun searchProducts(name: String) {
         scope.launch {
@@ -86,6 +92,33 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
         val document = Json.encodeToString(product)
         val encodeUrl = urlEncode.encodeToUrl(document)
         navigator.navigateToDocument(encodeUrl)
+    }
+
+    override fun getCategories() {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    _state.update { it.copy(categoriesLoading = true) }
+                    if (_state.value.categories == null) {
+                        val categories = searchService.getCategories().toMutableList()
+                        val indexAllCategory = categories.indexOfFirst { it.url == "all" }
+
+                        if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
+                            val elementToMove = categories[indexAllCategory]
+                            categories.removeAt(indexAllCategory)
+                            categories.add(0, elementToMove)
+                        }
+                        _state.update { it.copy(categories = categories) }
+                    }
+                },
+                failureBlock = {
+                    errorService.showError("Ошибка загрузки. Проверьте подключение к сети и повторите попытку.")
+                },
+                completionBlock = {
+                    _state.update { it.copy(categoriesLoading = false) }
+                }
+            )
+        }
     }
 
     private fun setLoading(status: Boolean){

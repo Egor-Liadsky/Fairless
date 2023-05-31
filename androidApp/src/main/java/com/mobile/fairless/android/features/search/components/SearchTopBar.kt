@@ -48,6 +48,7 @@ import com.mobile.fairless.features.welcome.register.state.RegisterState
 
 @Composable
 fun SearchTopBar(
+    modifier: Modifier = Modifier,
     state: State<SearchState>,
     placeholder: String? = "",
     searchString: String,
@@ -65,7 +66,7 @@ fun SearchTopBar(
     Log.e("sdfkjsdf", searchString)
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .height(60.dp)
             .fillMaxWidth()
             .shadow(
