@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetState
@@ -22,7 +24,14 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -32,12 +41,13 @@ import com.mobile.fairless.android.R
 import com.mobile.fairless.android.features.main.components.CategoriesView
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.search.state.SearchState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FiltersSheet(sheetState: ModalBottomSheetState, state: State<SearchState>) {
+fun FiltersSheet(sheetState: ModalBottomSheetState, selectCategoryClick: (Category) -> Unit,state: State<SearchState>) {
     val scope = rememberCoroutineScope()
 
     BackHandler {
@@ -47,10 +57,24 @@ fun FiltersSheet(sheetState: ModalBottomSheetState, state: State<SearchState>) {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 20.dp)
+            .padding(start = 16.dp, bottom = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+
     ) {
+        Divider(
+            Modifier
+                .width(30.dp)
+                .clip(RoundedCornerShape(2.dp))
+                .padding(top = 10.dp),
+            color = colors.navBar,
+            thickness = 3.dp
+        )
+//        Divider(color = Color.Blue, )
+
         Row(
-            Modifier.fillMaxWidth(),
+            Modifier
+                .fillMaxWidth()
+                .padding(end = 16.dp, top = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -99,7 +123,7 @@ fun FiltersSheet(sheetState: ModalBottomSheetState, state: State<SearchState>) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 16.dp, end = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -159,12 +183,14 @@ fun FiltersSheet(sheetState: ModalBottomSheetState, state: State<SearchState>) {
                     fontSize = 16.sp
                 ), modifier = Modifier.padding(top = 16.dp)
             )
-            CategoriesView(
-                categories = state.value.categories,
-                categoryOpened = state.value.selectCategory,
-                modifier = Modifier.width(225.dp).background(colors.backgroundWelcome)
-            ) {
-
+            Column(Modifier.width(240.dp)) {
+                CategoriesView(
+                    categories = state.value.categories,
+                    categoryOpened = state.value.selectCategory,
+                    isPadding = false,
+                ) {
+                        selectCategoryClick(it)
+                }
             }
         }
     }

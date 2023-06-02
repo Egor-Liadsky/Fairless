@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
@@ -27,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
@@ -73,60 +75,71 @@ fun SearchLayout(
     ModalBottomSheetLayout(
         modifier = Modifier.fillMaxSize(),
         sheetState = sheetState,
+        sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
         sheetContent = {
-            FiltersSheet(sheetState, state)
+            FiltersSheet(
+                sheetState = sheetState,
+                state = state,
+                selectCategoryClick = {
+                    viewModelWrapper.viewModel.selectCategory(it)
+                })
         },
     ) {
         Column(
             Modifier
                 .fillMaxWidth()
                 .background(colors.backgroundWelcome)
-                .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+                .padding(top = 20.dp)
         ) {
-            SearchTopBar(
-                state = state,
-                placeholder = "Введите название товара",
-                searchString = state.value.searchString,
-                onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
-                onMicClick = {
-                    try {
-                        startLauncher.launch(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH))
-                    } catch (e: ActivityNotFoundException) {
-                        CoroutineScope(Dispatchers.Main).launch {
-                            errorService.showError("Нет сервиса распознавания речи")
+            Column(Modifier.padding(start = 20.dp, end = 20.dp)) {
+                SearchTopBar(
+                    state = state,
+                    placeholder = "Введите название товара",
+                    searchString = state.value.searchString,
+                    onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
+                    onMicClick = {
+                        try {
+                            startLauncher.launch(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH))
+                        } catch (e: ActivityNotFoundException) {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                errorService.showError("Нет сервиса распознавания речи")
+                            }
                         }
-                    }
-                },
-                onSearchClick = { viewModelWrapper.viewModel.searchProducts(state.value.searchString) },
-                onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
-            )
-            Column {
-                FilterView(
-                    modifier = Modifier.padding(vertical = 5.dp),
-                    popularFilterOpen = state.value.popularFilterOpen,
-                    filtersOpen = state.value.filtersOpen,
-                    selectPopularsFilter = state.value.selectedPopularFilter,
-                    popularFilterClick = {
-                        viewModelWrapper.viewModel.popularFilterOpen()
                     },
-                    filterClick = {
-                        scope.launch { sheetState.show() }
-                        viewModelWrapper.viewModel.filtersOpen()
-                    },
-                    popularFilterItemClick = {
-                        viewModelWrapper.viewModel.selectPopularFilter(it)
-                        viewModelWrapper.viewModel.popularFilterOpen()
-                    },
-                    filterItemClick = {
-                        viewModelWrapper.viewModel.selectFilters(it)
-                        viewModelWrapper.viewModel.filtersOpen()
-                    }
+                    onSearchClick = { viewModelWrapper.viewModel.searchProducts(state.value.searchString) },
+                    onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
                 )
+                Column {
+                    FilterView(
+                        modifier = Modifier.padding(vertical = 5.dp),
+                        popularFilterOpen = state.value.popularFilterOpen,
+                        filtersOpen = state.value.filtersOpen,
+                        selectPopularsFilter = state.value.selectedPopularFilter,
+                        popularFilterClick = {
+                            viewModelWrapper.viewModel.popularFilterOpen()
+                        },
+                        filterClick = {
+                            scope.launch { sheetState.show() }
+                            viewModelWrapper.viewModel.filtersOpen()
+                        },
+                        popularFilterItemClick = {
+                            viewModelWrapper.viewModel.selectPopularFilter(it)
+                            viewModelWrapper.viewModel.popularFilterOpen()
+                        },
+                        filterItemClick = {
+                            viewModelWrapper.viewModel.selectFilters(it)
+                            viewModelWrapper.viewModel.filtersOpen()
+                        }
+                    )
+                }
             }
+
 
             if (state.value.productsLoading) {
                 Column(
-                    modifier = Modifier.fillMaxSize().background(colors.white),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors.white),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -141,7 +154,9 @@ fun SearchLayout(
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize().background(colors.white)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors.white)
                 ) {
                     items(items = state.value.products ?: emptyList()) { product ->
                         Column {

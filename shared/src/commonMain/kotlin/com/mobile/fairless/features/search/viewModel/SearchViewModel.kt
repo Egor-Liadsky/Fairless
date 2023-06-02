@@ -5,6 +5,7 @@ import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
+import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.service.SearchService
@@ -31,6 +32,7 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun filtersOpen()
     fun onDocumentClick(product: ProductData)
     fun getCategories()
+    fun selectCategory(category: Category)
 }
 
 class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, StatefulKmpViewModelImpl<SearchState>(),
@@ -119,6 +121,10 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
                 }
             )
         }
+    }
+
+    override fun selectCategory(category: Category) {
+        _state.update { it.copy(selectCategory = category) }
     }
 
     private fun setLoading(status: Boolean){
