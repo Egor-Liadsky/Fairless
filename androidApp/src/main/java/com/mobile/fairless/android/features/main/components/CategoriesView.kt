@@ -1,6 +1,7 @@
 package com.mobile.fairless.android.features.main.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ fun CategoriesView(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     categoryOpened: Category,
+    isPadding: Boolean = true,
     selectCategory: (Category) -> Unit,
 ) {
     Row(
@@ -64,7 +66,7 @@ fun CategoriesView(
                 modifier = modifier
             ) {
                 if (categories != null) {
-                    item { Spacer(modifier = Modifier.padding(start = 17.dp)) }
+                    item { Spacer(modifier = Modifier.padding(start = if (isPadding) 17.dp else 0.dp)) }
                     items(items = categories) { category ->
                         CategoryItem(
                             name = category.name.toString(),
@@ -102,11 +104,11 @@ fun CategoryItem(
         )
     )
 
-    Row(modifier = modifier) {
+    Row(modifier = modifier.border(1.dp, colors.navBar, RoundedCornerShape(20.dp))) {
         Column(
             modifier = Modifier
                 .clip(RoundedCornerShape(20.dp))
-                .background(if (selected) orangeGradient else whiteGradient, )
+                .background(if (selected) orangeGradient else whiteGradient)
                 .height(35.dp)
                 .clickable { onClick() }
         ) {

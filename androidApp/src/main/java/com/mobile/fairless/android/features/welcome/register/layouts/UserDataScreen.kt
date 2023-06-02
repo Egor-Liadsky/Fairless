@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
@@ -21,10 +22,12 @@ import com.mobile.fairless.android.features.views.textFields.CommonTextField
 import com.mobile.fairless.android.features.welcome.register.components.SelectCityAlertDialog
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
+import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
 @Composable
-fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
+fun UserDataScreen(viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel, RegisterState>) {
 
     Column(
         Modifier
@@ -32,7 +35,7 @@ fun UserDataScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel>) {
             .background(colors.backgroundWelcome),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val state = viewModelWrapper.viewModel.state.collectAsState()
+        val state = viewModelWrapper.state
 
         Text(
             text = "Регистрация",

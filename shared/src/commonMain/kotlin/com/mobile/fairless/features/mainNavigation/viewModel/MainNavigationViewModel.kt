@@ -34,8 +34,7 @@ class MainNavigationViewModelImpl(
         mutableState.update { it.copy(screenRoute = route) }
         when (route) {
             ScreenRoute.Main -> navigator.navigateToMain()
-            ScreenRoute.Profile -> navigator.navigateToProfile()
-            ScreenRoute.Notification -> navigator.navigateToNotification()
+            ScreenRoute.Search -> navigator.navigateToSearch()
             ScreenRoute.Message -> navigator.navigateToMessage()
             ScreenRoute.Menu -> navigator.navigateToMenu()
             else -> {}

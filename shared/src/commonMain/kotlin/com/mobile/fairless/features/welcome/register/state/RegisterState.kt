@@ -9,7 +9,7 @@ data class RegisterState(
     val city: City? = null,
     val password: String? = null,
     val passwordRetry: String? = null,
-    val search: String? = null,
+    val search: String = "",
 
     val cities: List<City>? = null,
     val stage: Int = 1,

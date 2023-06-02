@@ -27,6 +27,10 @@ class NavigatorImpl(
         navigateToNavBarDestination(ScreenRoute.Main)
     }
 
+    override fun navigateToSearch() {
+        navigateToNavBarDestination(ScreenRoute.Search)
+    }
+
     override fun navigateToProfile() {
         navController.navigate(ScreenRoute.Profile.name)
     }

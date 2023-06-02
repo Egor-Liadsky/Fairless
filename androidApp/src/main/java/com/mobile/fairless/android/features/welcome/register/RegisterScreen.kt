@@ -10,20 +10,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.topBars.StageBar
 import com.mobile.fairless.android.features.welcome.register.layouts.CheckEmailScreen
 import com.mobile.fairless.android.features.welcome.register.layouts.PasswordDataScreen
 import com.mobile.fairless.android.features.welcome.register.layouts.UserDataScreen
 import com.mobile.fairless.android.theme.colors
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
+import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 import org.koin.androidx.compose.get
 import org.koin.core.qualifier.named
 
 @Composable
-fun RegisterScreen(viewModelWrapper: ViewModelWrapper<RegisterViewModel> = get(named("RegisterViewModel"))) {
+fun RegisterScreen(viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel, RegisterState> = get(named("RegisterViewModel"))) {
 
-    val state = viewModelWrapper.viewModel.state.collectAsState()
+    val state = viewModelWrapper.state
 
     Column(
         Modifier

@@ -4,6 +4,7 @@ import com.mobile.fairless.android.navigation.AndroidNavigator
 import com.mobile.fairless.android.navigation.NavigatorImpl
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.document.viewModel.DocumentViewModelImpl
 import com.mobile.fairless.features.main.viewModel.MainViewModel
@@ -17,10 +18,14 @@ import com.mobile.fairless.features.profile.viewModel.ProfileViewModel
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModelImpl
 import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModel
 import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModelImpl
+import com.mobile.fairless.features.search.state.SearchState
+import com.mobile.fairless.features.search.viewModel.SearchViewModel
+import com.mobile.fairless.features.search.viewModel.SearchViewModelImpl
 import com.mobile.fairless.features.settings.viewModel.SettingsViewModel
 import com.mobile.fairless.features.settings.viewModel.SettingsViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModelImpl
+import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModelImpl
 import com.mobile.fairless.features.welcome.welcome.viewModel.WelcomeViewModel
@@ -48,7 +53,11 @@ fun androidModule() = module {
     }
 
     viewModel(named("RegisterViewModel")) {
-        ViewModelWrapper<RegisterViewModel>(RegisterViewModelImpl(get()))
+        StatefulViewModelWrapper<RegisterViewModel, RegisterState>(RegisterViewModelImpl(get()))
+    }
+
+    viewModel(named("SearchViewModel")) {
+        StatefulViewModelWrapper<SearchViewModel, SearchState>(SearchViewModelImpl(get()))
     }
 
     viewModel(named("MainViewModel")) {

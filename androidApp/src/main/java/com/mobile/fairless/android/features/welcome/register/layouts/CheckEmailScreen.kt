@@ -16,24 +16,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.welcome.dto.UserAuthResponse
+import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
 @Composable
 fun CheckEmailScreen(
-    viewModelWrapper: ViewModelWrapper<RegisterViewModel>,
+    viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel, RegisterState>,
 ) {
 
     BackHandler {
         viewModelWrapper.viewModel.onBackAction()
     }
-
-    val context = LocalContext.current
 
     Column(
         Modifier
@@ -41,7 +41,7 @@ fun CheckEmailScreen(
             .background(colors.backgroundWelcome),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val state = viewModelWrapper.viewModel.state.collectAsState()
+        val state = viewModelWrapper.state
 
         Text(
             text = "Успешно",

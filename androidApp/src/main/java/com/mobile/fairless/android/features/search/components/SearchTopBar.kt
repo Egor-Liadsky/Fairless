@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.views.topBars
+package com.mobile.fairless.android.features.search.components
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -42,32 +42,31 @@ import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.search.state.SearchState
 import com.mobile.fairless.features.welcome.register.state.RegisterState
 
 
 @Composable
 fun SearchTopBar(
     modifier: Modifier = Modifier,
+    state: State<SearchState>,
+    placeholder: String? = "",
     searchString: String,
     onClearText: () -> Unit,
     onMicClick: () -> Unit,
     onSearchClick: () -> Unit,
-    state: State<RegisterState>,
     onSearchChange: (String) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
-    val searchState = remember {
-        mutableStateOf(searchString)
-    }
-    LaunchedEffect(key1 = searchState.value) {
-        onSearchChange(searchState.value)
+    LaunchedEffect(key1 = state.value.searchString) {
+        onSearchChange(state.value.searchString)
     }
 
-    Log.e("sdfkjsdf", searchState.value)
+    Log.e("sdfkjsdf", searchString)
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .height(60.dp)
             .fillMaxWidth()
             .shadow(
@@ -76,9 +75,9 @@ fun SearchTopBar(
             )
     ) {
         BasicTextField(
-            value = searchState.value,
+            value = state.value.searchString,
             onValueChange = {
-                searchState.value = it
+                onSearchChange(it)
             },
             singleLine = true,
             textStyle = TextStyle(
@@ -102,7 +101,6 @@ fun SearchTopBar(
                     if (searchString.isNotEmpty())
                         IconButton(
                             onClick = {
-                                searchState.value = ""
                                 onClearText()
                             },
                             modifier = Modifier.size(24.dp)
@@ -132,7 +130,7 @@ fun SearchTopBar(
                     ) {
                         if (searchString.isEmpty())
                             Text(
-                                text = "Введите название города",
+                                text = placeholder ?: "",
                                 style = TextStyle(
                                     fontFamily = fontQanelas,
                                     fontSize = 15.sp,
