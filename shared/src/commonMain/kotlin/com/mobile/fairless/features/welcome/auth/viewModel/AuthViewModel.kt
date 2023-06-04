@@ -24,9 +24,8 @@ interface AuthViewModel : KmpViewModel, SubScreenViewModel {
     fun emailChanged(email: String)
     fun passwordChanged(password: String)
     fun authUser(userAuthResponse: UserAuthResponse)
-    fun navigateToProfile()
+    fun navigateToMenu()
     fun navigateToRegister()
-    fun navigateToMain()
 }
 
 class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpViewModelImpl(),
@@ -69,16 +68,12 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
         }
     }
 
-    override fun navigateToProfile() {
-        navigator.navigateToProfile()
+    override fun navigateToMenu() {
+        navigator.navigateToMenu()
     }
 
     override fun navigateToRegister() {
         navigator.navigateToRegister()
-    }
-
-    override fun navigateToMain() {
-        navigator.navigateToMain()
     }
 }
 
