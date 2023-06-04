@@ -4,7 +4,6 @@ import com.mobile.fairless.android.navigation.AndroidNavigator
 import com.mobile.fairless.android.navigation.NavigatorImpl
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
-import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.document.viewModel.DocumentViewModelImpl
 import com.mobile.fairless.features.main.viewModel.MainViewModel
@@ -18,20 +17,14 @@ import com.mobile.fairless.features.menu.viewModel.MenuViewModelImpl
 import com.mobile.fairless.features.profile.state.ProfileState
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModel
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModelImpl
-import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModel
-import com.mobile.fairless.features.profileEdit.viewModel.ProfileEditViewModelImpl
 import com.mobile.fairless.features.search.state.SearchState
 import com.mobile.fairless.features.search.viewModel.SearchViewModel
 import com.mobile.fairless.features.search.viewModel.SearchViewModelImpl
-import com.mobile.fairless.features.settings.viewModel.SettingsViewModel
-import com.mobile.fairless.features.settings.viewModel.SettingsViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModelImpl
 import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModelImpl
-import com.mobile.fairless.features.welcome.welcome.viewModel.WelcomeViewModel
-import com.mobile.fairless.features.welcome.welcome.viewModel.WelcomeViewModelImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -44,10 +37,6 @@ fun androidModule() = module {
         StatefulViewModelWrapper<MainNavigationViewModel, MainNavigationState>(
             MainNavigationViewModelImpl(start, get())
         )
-    }
-
-    viewModel(named("WelcomeViewModel")) {
-        ViewModelWrapper<WelcomeViewModel>(WelcomeViewModelImpl(get()))
     }
 
     viewModel(named("AuthViewModel")) {
@@ -70,17 +59,10 @@ fun androidModule() = module {
         StatefulViewModelWrapper<ProfileViewModel, ProfileState>(ProfileViewModelImpl(get()))
     }
 
-    viewModel(named("SettingsViewModel")) {
-        ViewModelWrapper<SettingsViewModel>(SettingsViewModelImpl(get()))
-    }
-
     viewModel(named("MenuViewModel")) {
         StatefulViewModelWrapper<MenuViewModel, MenuState>(MenuViewModelImpl(get()))
     }
 
-    viewModel(named("ProfileEditViewModel")) {
-        ViewModelWrapper<ProfileEditViewModel>(ProfileEditViewModelImpl(get()))
-    }
     viewModel(named("DocumentViewModel")) {
         ViewModelWrapper<DocumentViewModel>(DocumentViewModelImpl(get()))
     }

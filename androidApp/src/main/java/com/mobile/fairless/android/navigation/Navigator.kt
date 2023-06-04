@@ -3,7 +3,6 @@ package com.mobile.fairless.android.navigation
 import androidx.navigation.NavHostController
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
-import com.mobile.fairless.features.main.models.Product
 
 interface AndroidNavigator : Navigator {
     fun init(navHostController: NavHostController)
@@ -53,14 +52,6 @@ class NavigatorImpl(
 
     override fun navigateToRegister() {
         navController.navigate(ScreenRoute.Register.name)
-    }
-
-    override fun navigateToSettings() {
-        navController.navigate(ScreenRoute.Settings.name)
-    }
-
-    override fun navigateToProfileEdit() {
-        navController.navigate(ScreenRoute.ProfileEdit.name)
     }
 
     override fun navigateToDocument(product: String) {

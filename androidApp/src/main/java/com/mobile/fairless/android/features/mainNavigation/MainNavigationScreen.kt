@@ -32,15 +32,11 @@ import com.mobile.fairless.android.features.menu.MenuScreen
 import com.mobile.fairless.android.features.message.MessageScreen
 import com.mobile.fairless.android.features.notification.NotificationScreen
 import com.mobile.fairless.android.features.profile.ProfileScreen
-import com.mobile.fairless.android.features.profileEdit.ProfileEditScreen
 import com.mobile.fairless.android.features.search.SearchScreen
-import com.mobile.fairless.android.features.settings.SettingsScreen
 import com.mobile.fairless.android.features.views.snackbar.DefaultSnackbar
 import com.mobile.fairless.android.features.welcome.auth.AuthScreen
 import com.mobile.fairless.android.features.welcome.register.RegisterScreen
-import com.mobile.fairless.android.features.welcome.welcome.WelcomeScreen
 import com.mobile.fairless.common.navigation.ScreenRoute
-import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
@@ -138,12 +134,6 @@ fun MainNavigationScreen(
             }
             composable(route = ScreenRoute.Register.name) {
                 RegisterScreen()
-            }
-            composable(route = ScreenRoute.Settings.name) {
-                SettingsScreen()
-            }
-            composable(route = ScreenRoute.ProfileEdit.name) {
-                ProfileEditScreen()
             }
             composable(
                 route = "${ScreenRoute.Document.name}/{product}",

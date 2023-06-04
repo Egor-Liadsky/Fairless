@@ -21,7 +21,6 @@ import org.koin.core.component.inject
 
 interface ProfileViewModel : StatefulKmpViewModel<ProfileState>, SubScreenViewModel {
 
-    fun navigateToProfileEdit()
     fun getProfile()
     fun navigateToMain()
     fun selectButton(profileButton: ProfileButton)
@@ -41,10 +40,6 @@ class ProfileViewModelImpl(override val navigator: Navigator) : StatefulKmpViewM
 
     private val _state = MutableStateFlow(ProfileState())
     override val state: StateFlow<ProfileState> = _state.asStateFlow()
-
-    override fun navigateToProfileEdit() {
-        navigator.navigateToProfileEdit()
-    }
 
     override fun getProfile() {
         _state.update { it.copy(user = prefService.getUserInfo() ?: UserReceive()) }
