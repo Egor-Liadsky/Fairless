@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,6 +49,8 @@ fun MiniTextField(
     isPassword: Boolean = false,
     onValueChanged: (String) -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+
     var text by remember {
         mutableStateOf(textState)
     }
@@ -86,6 +90,9 @@ fun MiniTextField(
                     keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text,
                     imeAction = ImeAction.Go
                 ),
+                keyboardActions = KeyboardActions(onAny = {
+                    focusManager.clearFocus()
+                }),
                 singleLine = true,
                 modifier = Modifier
                     .background(colors.navBar, shape = RoundedCornerShape(5.dp))
