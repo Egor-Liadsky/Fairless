@@ -2,6 +2,7 @@ package com.mobile.fairless.android.features.welcome.register.layouts
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -61,21 +62,31 @@ fun CheckEmailScreen(
             style = TextStyle(
                 fontFamily = fontQanelas,
                 fontWeight = FontWeight.Light,
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 color = colors.black
             ),
-            modifier = Modifier.padding(top = 30.dp)
+            modifier = Modifier.padding(top = 30.dp, start = 16.dp, end = 16.dp)
         )
-
-        CommonButton(commonButtonParams = CommonButtonParams("Далее"),
-        modifier = Modifier.padding(top = 30.dp)) {
-            viewModelWrapper.viewModel.checkUser(
-                UserAuthResponse(
-                    identifier = state.value.email.toString(),
-                    password = state.value.password.toString()
+        Box(
+            modifier = Modifier.fillMaxSize().padding(bottom = 40.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            CommonButton(
+                commonButtonParams = CommonButtonParams(
+                    "Далее",
+                    background = colors.orangeMain,
+                    titleColor = colors.white
+                ),
+                modifier = Modifier.padding(top = 30.dp)
+            ) {
+                viewModelWrapper.viewModel.checkUser(
+                    UserAuthResponse(
+                        identifier = state.value.email.toString(),
+                        password = state.value.password.toString()
+                    )
                 )
-            )
+            }
         }
     }
 }

@@ -1,33 +1,36 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
-import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.textFields.CommonTextField
 import com.mobile.fairless.android.features.welcome.register.components.SelectCityAlertDialog
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 
 @Composable
 fun UserDataScreen(viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel, RegisterState>) {
+
+    val context = LocalContext.current
+    val state = viewModelWrapper.state
 
     Column(
         Modifier
@@ -35,7 +38,6 @@ fun UserDataScreen(viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel,
             .background(colors.backgroundWelcome),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val state = viewModelWrapper.state
 
         Text(
             text = "Регистрация",
@@ -59,9 +61,9 @@ fun UserDataScreen(viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel,
 
         CommonTextField(
             modifier = Modifier.padding(top = 20.dp),
-            textState = viewModelWrapper.viewModel.state.value.password ?: "",
+            textState = viewModelWrapper.viewModel.state.value.login ?: "",
             placeholder = "Введите свой логин",
-            ) {
+        ) {
             viewModelWrapper.viewModel.loginChanged(it)
         }
 
@@ -88,25 +90,25 @@ fun UserDataScreen(viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel,
                 viewModelWrapper.viewModel.selectCityClick()
             }
         }
-
-        CommonButton(
-            commonButtonParams = CommonButtonParams(
-                title = "Далее",
-                titleColor = colors.white,
-                background = colors.orangeMain
-            ),
-            modifier = Modifier.padding(top = 20.dp)
+        Box(
+            modifier = Modifier.fillMaxSize().padding(bottom = 40.dp),
+            contentAlignment = Alignment.BottomCenter
         ) {
+            CommonButton(
+                commonButtonParams = CommonButtonParams(
+                    title = "Далее",
+                    titleColor = colors.white,
+                    background = colors.orangeMain
+                ),
+                modifier = Modifier.padding(top = 20.dp)
+            ) {
 
-            //TODO Включить валидацию
-//            if (state.value.email == null || state.value.login == null || state.value.city == null ) {
-//                Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
-//            } else {
-//                viewModelWrapper.viewModel.onNextClick()
-//            }
-
-            viewModelWrapper.viewModel.onNextClick()
-
+                if ((state.value.email == null) || (state.value.login == null) || (state.value.city == null)) {
+                    Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                } else {
+                    viewModelWrapper.viewModel.onNextClick()
+                }
+            }
         }
     }
 }
