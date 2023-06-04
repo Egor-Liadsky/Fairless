@@ -44,7 +44,6 @@ kotlin {
                 // Network
                 implementation("io.ktor:ktor-client-core:2.2.2")
                 implementation("io.ktor:ktor-client-logging:2.2.2")
-                implementation("io.ktor:ktor-client-okhttp:2.2.2")
                 implementation("io.ktor:ktor-server-content-negotiation:2.2.2")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.2")
 
