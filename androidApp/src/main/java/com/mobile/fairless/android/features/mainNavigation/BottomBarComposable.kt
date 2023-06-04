@@ -45,12 +45,12 @@ val bottomNavigationItems = listOf(
         "ic_search",
         "Поиск"
     ),
-    BottomNavigationItem(
-        ScreenRoute.Message,
-        R.drawable.ic_message,
-        "ic_message",
-        "Сообщения"
-    ),
+//    BottomNavigationItem(
+//        ScreenRoute.Message,
+//        R.drawable.ic_message,
+//        "ic_message",
+//        "Сообщения"
+//    ),
     BottomNavigationItem(
         ScreenRoute.Menu,
         R.drawable.ic_menu,

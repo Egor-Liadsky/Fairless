@@ -4,6 +4,8 @@ import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.document.model.ShareInfo
 import com.mobile.fairless.features.document.service.DocumentService
@@ -26,8 +28,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-interface DocumentViewModel : KmpViewModel, SubScreenViewModel {
-    val state: StateFlow<DocumentState>
+interface DocumentViewModel : StatefulKmpViewModel<DocumentState>, SubScreenViewModel {
     val shareText: SharedFlow<ShareInfo>
     val openUrl: SharedFlow<ShareInfo>
 
@@ -37,9 +38,10 @@ interface DocumentViewModel : KmpViewModel, SubScreenViewModel {
     fun getFireProducts(period: DateFilter)
     fun onDocumentClick(product: ProductData)
     fun selectFirePeriod(period: DateFilter)
+    fun getCommentsByDocument(documentId: String)
 }
 
-class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
+class DocumentViewModelImpl(override val navigator: Navigator) : StatefulKmpViewModelImpl<DocumentState>(), KoinComponent,
     DocumentViewModel {
 
     private val documentService: DocumentService by inject()
@@ -59,6 +61,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
     override fun onViewShown() {
         super.onViewShown()
         getFireProducts(state.value.selectFirePeriod)
+        getCommentsByDocument(state.value.product._id ?: "")
     }
 
     override fun decodeProduct(product: String) {
@@ -111,6 +114,19 @@ class DocumentViewModelImpl(override val navigator: Navigator) : KmpViewModelImp
     override fun selectFirePeriod(period: DateFilter) {
         _state.update { it.copy(selectFirePeriod = period) }
         getFireProducts(period)
+    }
+
+    override fun getCommentsByDocument(documentId: String) {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    _state.update { it.copy(comments = documentService.getComments(documentId)) }
+                },
+                failureBlock = {
+                    errorService.showError("Проверьте соеденение с интернетом.")
+                }
+            )
+        }
     }
 
     private fun setFireLoadingProducts(status: Boolean) {

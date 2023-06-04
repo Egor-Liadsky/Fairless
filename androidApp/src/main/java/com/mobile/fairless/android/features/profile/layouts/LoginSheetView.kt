@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.profile.components
+package com.mobile.fairless.android.features.profile.layouts
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.fairless.android.features.profile.components.DefaultButton
 import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.features.views.textFields.MiniTextField
 import com.mobile.fairless.android.theme.colors
@@ -27,12 +28,12 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PasswordSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>) {
+fun LoginSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>) {
     val scope = rememberCoroutineScope()
 
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = "Изменение пароля", style = TextStyle(
+            text = "Изменение логина", style = TextStyle(
                 fontFamily = fontQanelas,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 20.sp,
@@ -41,28 +42,13 @@ fun PasswordSheetView(sheetState: ModalBottomSheetState, state: State<ProfileSta
         )
 
         MiniTextField(
-            modifier = Modifier.padding(top = 20.dp),
+            modifier = Modifier.padding(vertical = 20.dp),
             onValueChanged = {},
-            isPassword = true,
-            placeholder = "Текущий пароль"
-        )
-
-        MiniTextField(
-            modifier = Modifier.padding(top = 20.dp),
-            onValueChanged = {},
-            isPassword = true,
-            placeholder = "Новый пароль"
-        )
-
-        MiniTextField(
-            modifier = Modifier.padding(top = 20.dp),
-            onValueChanged = {},
-            isPassword = true,
-            placeholder = "Повторите пароль"
+            placeholder = "Новый логин"
         )
 
         Row(
-            Modifier.fillMaxWidth().padding(top = 20.dp),
+            Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

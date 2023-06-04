@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.profile.components
+package com.mobile.fairless.android.features.profile.layouts
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
+import com.mobile.fairless.android.features.profile.components.ProfileSelectCitySearchTopBar
 import com.mobile.fairless.android.features.welcome.register.components.CityCardView
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.features.mainNavigation.service.ErrorService

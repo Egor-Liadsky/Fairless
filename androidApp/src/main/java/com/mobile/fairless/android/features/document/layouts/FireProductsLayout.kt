@@ -25,17 +25,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.document.components.FireProductItem
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.main.models.DateFilter
 
 @Composable
-fun FireProductsLayout(viewModelWrapper: ViewModelWrapper<DocumentViewModel>) {
+fun FireProductsLayout(viewModelWrapper: StatefulViewModelWrapper<DocumentViewModel, DocumentState>) {
 
-    val state = viewModelWrapper.viewModel.state.collectAsState()
+    val state = viewModelWrapper.state
 
     // TODO найти другой способ реализации Grid
     if (state.value.fireProduct.isNotEmpty()) {

@@ -35,7 +35,7 @@ class MainNavigationViewModelImpl(
         when (route) {
             ScreenRoute.Main -> navigator.navigateToMain()
             ScreenRoute.Search -> navigator.navigateToSearch()
-            ScreenRoute.Message -> navigator.navigateToMessage()
+//            ScreenRoute.Message -> navigator.navigateToMessage()
             ScreenRoute.Menu -> navigator.navigateToMenu()
             else -> {}
         }
