@@ -21,9 +21,7 @@ import org.koin.core.component.inject
 interface MenuViewModel : StatefulKmpViewModel<MenuState>, SubScreenViewModel {
 
     fun navigateToProfile()
-    fun navigateToSettings()
     fun getProfile()
-    fun exitUser()
 }
 
 class MenuViewModelImpl(override val navigator: Navigator) : StatefulKmpViewModelImpl<MenuState>(), KoinComponent,
@@ -41,20 +39,6 @@ class MenuViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
 
     override fun getProfile() {
         _state.update { it.copy(user = prefService.getUserInfo() ?: UserReceive()) }
-    }
-
-    override fun navigateToSettings() {
-        navigator.navigateToSettings()
-    }
-
-    override fun exitUser() {
-        scope.launch {
-            exceptionHandleable(
-                executionBlock = { prefService.setUserInfo(UserReceive(jwt = "", user = null)) },
-                failureBlock = { errorService.showError("Произошла ошибка") },
-                completionBlock = { navigator.navigateToMain() }
-            )
-        }
     }
 }
 

@@ -14,6 +14,10 @@ import com.mobile.fairless.features.main.service.MainService
 import com.mobile.fairless.features.main.service.MainServiceImpl
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.service.ErrorServiceImpl
+import com.mobile.fairless.features.profile.repository.ProfileRepository
+import com.mobile.fairless.features.profile.repository.ProfileRepositoryImpl
+import com.mobile.fairless.features.profile.service.ProfileService
+import com.mobile.fairless.features.profile.service.ProfileServiceImpl
 import com.mobile.fairless.features.search.repository.SearchRepository
 import com.mobile.fairless.features.search.repository.SearchRepositoryImpl
 import com.mobile.fairless.features.search.service.SearchService
@@ -70,6 +74,7 @@ fun commonModule() = module {
     single<MainService> { MainServiceImpl(get()) }
     single<DocumentService> { DocumentServiceImpl(get()) }
     single<SearchService> { SearchServiceImpl(get()) }
+    single<ProfileService> { ProfileServiceImpl(get()) }
 
     // Repositories
     single<AuthRepository> { AuthRepositoryImpl() }
@@ -77,6 +82,7 @@ fun commonModule() = module {
     single<MainRepository> { MainRepositoryImpl() }
     single<DocumentRepository> { DocumentRepositoryImpl() }
     single<SearchRepository> { SearchRepositoryImpl() }
+    single<ProfileRepository> { ProfileRepositoryImpl() }
 
     // Settings
     single<PrefService> { PrefServiceImpl() }

@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
+import com.mobile.fairless.android.features.profile.components.CitySheetView
 import com.mobile.fairless.android.features.profile.components.EmailSheetView
 import com.mobile.fairless.android.features.profile.components.ExitButton
 import com.mobile.fairless.android.features.profile.components.LoginSheetView
@@ -84,7 +85,7 @@ fun ProfileLayout(viewModelWrapper: StatefulViewModelWrapper<ProfileViewModel, P
                     ProfileSheet(
                         sheetState = sheetState,
                         state = state,
-                        content = { EmailSheetView(sheetState, state) })
+                        content = { CitySheetView(sheetState, viewModelWrapper) })
                 }
 
                 ProfileButton.EMAIL -> {
@@ -132,7 +133,8 @@ fun ProfileLayout(viewModelWrapper: StatefulViewModelWrapper<ProfileViewModel, P
                 contentAlignment = Alignment.BottomCenter
             ) {
                 ExitButton {
-
+                    viewModelWrapper.viewModel.exitUser()
+                    viewModelWrapper.viewModel.onBackButtonClick()
                 }
             }
         }
