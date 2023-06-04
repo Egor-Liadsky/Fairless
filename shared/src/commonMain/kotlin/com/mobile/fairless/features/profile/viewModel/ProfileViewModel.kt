@@ -5,8 +5,11 @@ import com.mobile.fairless.common.navigation.ScreenRoute
 import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
+import com.mobile.fairless.features.profile.state.ProfileButton
 import com.mobile.fairless.features.profile.state.ProfileState
 import com.mobile.fairless.features.welcome.dto.UserReceive
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,15 +20,15 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface ProfileViewModel : KmpViewModel, SubScreenViewModel {
-    val state: StateFlow<ProfileState>
+interface ProfileViewModel : StatefulKmpViewModel<ProfileState>, SubScreenViewModel {
 
     fun navigateToProfileEdit()
     fun getProfile()
     fun navigateToMain()
+    fun selectButton(profileButton: ProfileButton)
 }
 
-class ProfileViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
+class ProfileViewModelImpl(override val navigator: Navigator) : StatefulKmpViewModelImpl<ProfileState>(), KoinComponent,
     ProfileViewModel {
 
     private val prefService: PrefService by inject()
@@ -43,6 +46,10 @@ class ProfileViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl
 
     override fun navigateToMain() {
         navigator.navigateToMain()
+    }
+
+    override fun selectButton(profileButton: ProfileButton) {
+        _state.update { it.copy(selectButton = profileButton) }
     }
 }
 
