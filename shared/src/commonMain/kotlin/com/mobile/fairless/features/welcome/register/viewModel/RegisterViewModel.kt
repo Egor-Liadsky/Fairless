@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.welcome.register.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
@@ -10,6 +11,7 @@ import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.welcome.auth.service.AuthService
 import com.mobile.fairless.features.welcome.dto.City
 import com.mobile.fairless.features.welcome.dto.UserAuthResponse
+import com.mobile.fairless.features.welcome.dto.UserReceive
 import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.service.RegisterService
 import com.mobile.fairless.features.welcome.register.state.RegisterState
@@ -44,6 +46,7 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
     private val registerService: RegisterService by inject()
     private val authService: AuthService by inject()
     private val errorService: ErrorService by inject()
+    private val prefService: PrefService by inject()
 
     private val _state = MutableStateFlow(RegisterState())
     override val state: StateFlow<RegisterState> = _state.asStateFlow()
@@ -83,7 +86,7 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
                     _state.update { it.copy(isLoading = true) }
                     val data = registerService.registerUser(userRegisterResponse)
                     _state.update { it.copy(user = data) }
-                    navigator.navigateToMenu()
+                    onNextClick()
                 },
                 failureBlock = {
                     errorService.showError("Некорректные данные")
@@ -143,6 +146,10 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
                     _state.update { it.copy(isLoading = true) }
                     val data = authService.authUser(userAuthResponse)
                     _state.update { it.copy(user = data) }
+                    if (_state.value.user?.user != null){
+                        prefService.setUserInfo(_state.value.user ?: UserReceive())
+                    }
+                    navigator.navigateToMain()
                 },
                 failureBlock = {
                     errorService.showError("Подтвердите аккаунт")
