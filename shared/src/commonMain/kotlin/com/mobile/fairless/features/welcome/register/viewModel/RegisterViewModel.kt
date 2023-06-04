@@ -83,7 +83,7 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
                     _state.update { it.copy(isLoading = true) }
                     val data = registerService.registerUser(userRegisterResponse)
                     _state.update { it.copy(user = data) }
-                    navigator.navigateToMain()
+                    navigator.navigateToMenu()
                 },
                 failureBlock = {
                     errorService.showError("Некорректные данные")
@@ -124,8 +124,7 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
             _state.update { it.copy(stage = _state.value.stage + 1) }
         } else {
             scope.launch {
-                //TODO вставить функцию сохранения пользователя на устройство
-                navigator.navigateToMain()
+                navigator.navigateToMenu()
             }
         }
     }

@@ -51,34 +51,46 @@ fun ProfileView(state: MenuState, onClick: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Row (verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = R.drawable.avatarka),
-                            contentDescription = "ic_avatarka",
-                            modifier = Modifier
-                                .size(60.dp)
-                                .clip(CircleShape)
-                        )
-                        Column(Modifier.padding(start = 16.dp)) {
-                            Text(
-                                text = state.user!!.user?.username.toString(), style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontFamily = fontQanelas,
-                                    fontWeight = FontWeight.Bold,
-                                    color = colors.black
-                                )
+                    if (state.user!!.user != null){
+                        Row (verticalAlignment = Alignment.CenterVertically) {
+                            Image(
+                                painter = painterResource(id = R.drawable.avatarka),
+                                contentDescription = "ic_avatarka",
+                                modifier = Modifier
+                                    .size(60.dp)
+                                    .clip(CircleShape)
                             )
-                            Text(
-                                text = "На сервисе с " + state.user!!.user?.dateTime.toString(),
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontFamily = fontQanelas,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = colors.black
+                            Column(Modifier.padding(start = 16.dp)) {
+                                Text(
+                                    text = state.user!!.user?.username.toString(), style = TextStyle(
+                                        fontSize = 20.sp,
+                                        fontFamily = fontQanelas,
+                                        fontWeight = FontWeight.Bold,
+                                        color = colors.black
+                                    )
                                 )
-                            )
+                                Text(
+                                    text = "На сервисе с " + state.user!!.user?.dateTime.toString(),
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        fontFamily = fontQanelas,
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = colors.black
+                                    )
+                                )
+                            }
                         }
+                    } else {
+                        Text(
+                            text = "Авторизоваться", style = TextStyle(
+                                fontSize = 20.sp,
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.black
+                            )
+                        )
                     }
+
                     Icon(
                         painter = painterResource(id = R.drawable.ic_next),
                         contentDescription = "ic_next",

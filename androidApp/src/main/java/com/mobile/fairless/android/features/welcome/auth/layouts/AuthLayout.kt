@@ -79,7 +79,7 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
             )
         }
         if (state.value.user != null) {
-            viewModelWrapper.viewModel.navigateToProfile()
+            viewModelWrapper.viewModel.onBackButtonClick()
         }
 
         CommonButton(

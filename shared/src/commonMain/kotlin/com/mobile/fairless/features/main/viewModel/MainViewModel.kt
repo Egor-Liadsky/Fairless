@@ -25,7 +25,6 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     val state: StateFlow<MainState>
 
     fun getCategories()
-    fun onProfileClick()
     fun getProductsByCategory()
     fun selectCategory(category: Category)
     fun onDocumentClick(product: ProductData)
@@ -74,15 +73,6 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                     _state.update { it.copy(categoriesLoading = false) }
                 }
             )
-        }
-    }
-
-    override fun onProfileClick() {
-        val data = prefService.getUserInfo()
-        if (data?.user == null) {
-            navigator.navigateToAuth()
-        } else {
-            navigator.navigateToProfile()
         }
     }
 

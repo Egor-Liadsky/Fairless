@@ -28,13 +28,17 @@ class MenuViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
     MenuViewModel {
 
     private val prefService: PrefService by inject()
-    private val errorService: ErrorService by inject()
 
     private val _state = MutableStateFlow(MenuState())
     override val state: StateFlow<MenuState> = _state.asStateFlow()
 
     override fun navigateToProfile() {
-        navigator.navigateToProfile()
+        val data = prefService.getUserInfo()
+        if (data?.user == null) {
+            navigator.navigateToAuth()
+        } else {
+            navigator.navigateToProfile()
+        }
     }
 
     override fun getProfile() {
