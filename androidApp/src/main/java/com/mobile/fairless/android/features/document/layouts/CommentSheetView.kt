@@ -1,6 +1,8 @@
 package com.mobile.fairless.android.features.document.layouts
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
@@ -26,6 +27,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,7 +47,7 @@ fun CommentSheetView(
     sheetState: ModalBottomSheetState,
     state: State<DocumentState>,
     sendCommentOnClick: () -> Unit,
-    onValueChanged: (String) -> Unit
+    onValueChanged: (String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
 
@@ -63,7 +65,7 @@ fun CommentSheetView(
                 sheetState = sheetStateSendComment,
                 state = state,
                 onClick = { sendCommentOnClick() },
-                onValueChanged = { onValueChanged(it) }
+                onValueChanged = { onValueChanged(it) },
             )
         },
     ) {
@@ -90,19 +92,31 @@ fun CommentSheetView(
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 20.sp,
                         color = colors.black
-                    )
+                    ), modifier = Modifier.padding(bottom = 20.dp)
                 )
-                LazyColumn {
-                    items(items = state.value.comments ?: emptyList()) { comment ->
-                        CommentItem(modifier = Modifier.padding(top = 20.dp), comment = comment)
-                    }
-                }
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-                    GradientButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        title = "Добавить комментарий"
+
+                if (state.value.authUser) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.BottomCenter
                     ) {
-                        scope.launch { sheetStateSendComment.show() }
+                        LazyColumn(
+                            Modifier
+                                .align(Alignment.TopCenter)
+                                .padding(bottom = 60.dp)) {
+                            items(items = state.value.comments ?: emptyList()) { comment ->
+                                CommentItem(modifier = Modifier.padding(bottom = 5.dp), comment = comment)
+                            }
+                        }
+
+                        GradientButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.BottomCenter),
+                            title = "Добавить комментарий"
+                        ) {
+                            scope.launch { sheetStateSendComment.show() }
+                        }
                     }
                 }
             }
@@ -112,44 +126,50 @@ fun CommentSheetView(
 
 @Composable
 fun CommentItem(modifier: Modifier = Modifier, comment: Comment) {
-    Column(modifier.fillMaxWidth()) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.avatarka),
-                contentDescription = "ic_avatarka",
-                modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape)
-            )
-            Column {
-                Text(
-                    text = comment.users_permissions_user?.username ?: "", style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        color = colors.black
+    Column(
+        modifier
+            .fillMaxWidth()
+            .border(1.dp, colors.navBar, RoundedCornerShape(5.dp))
+    ) {
+        Column(Modifier.padding(16.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.avatarka),
+                    contentDescription = "ic_avatarka",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(5.dp))
+                )
+                Column(Modifier.padding(start = 16.dp)) {
+                    Text(
+                        text = comment.users_permissions_user?.username ?: "", style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            color = colors.black
+                        )
                     )
-                )
-                Text(
-                    text = comment.users_permissions_user?.dateTime ?: "", style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 14.sp,
-                        color = colors.black
-                    ), modifier = Modifier.padding(top = 10.dp)
-                )
+                    Text(
+                        text = comment.dateTime ?: "", style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 12.sp,
+                            color = Color(0xFF797979)
+                        ), modifier = Modifier.padding(top = 9.dp)
+                    )
+                }
             }
-        }
 
-        Text(
-            text = comment.text ?: "", style = TextStyle(
-                fontFamily = fontQanelas,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 18.sp,
-                color = colors.black
-            ), modifier = Modifier.padding(top = 10.dp)
-        )
+            Text(
+                text = comment.text ?: "", style = TextStyle(
+                    fontFamily = fontQanelas,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                    color = colors.black
+                ), modifier = Modifier.padding(top = 10.dp)
+            )
+        }
     }
 }

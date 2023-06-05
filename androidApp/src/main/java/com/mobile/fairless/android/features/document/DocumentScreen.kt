@@ -90,7 +90,8 @@ fun DocumentScreen(
                 sheetState = sheetState,
                 state = state,
                 sendCommentOnClick = { viewModelWrapper.viewModel.sendComment(state.value.commentText ?: "") },
-                onValueChanged = { viewModelWrapper.viewModel.changeCommentText(it) })
+                onValueChanged = { viewModelWrapper.viewModel.changeCommentText(it) },
+            )
         },
     ) {
         LazyColumn(

@@ -12,5 +12,6 @@ data class DocumentState(
     val selectFirePeriod: DateFilter = DateFilter.TODAY,
     val todayNull: Boolean = false,
     val fireProductsLoading: Boolean = false,
-    val comments: List<Comment>? = null
+    val comments: List<Comment>? = null,
+    val authUser: Boolean = false
 )

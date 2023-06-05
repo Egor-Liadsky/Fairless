@@ -9,12 +9,16 @@ data class Comment(
     val _id: String? = null,
     val text: String? = null,
     val stock_id: String? = null,
-    val createdAt: String? = null,
+    @Serializable(with = DateTimeSerializer::class)
+    val createdAt: DateTimeTz? = null,
     val updatedAt: String? = null,
     val __v: Int? = null,
     val users_permissions_user: UsersPermissionsUser? = null,
     val id: String? = null
-)
+){
+    private val date = createdAt?.format("dd.MM.yyyy")
+    val dateTime: String = date ?: ""
+}
 
 @Serializable
 data class UsersPermissionsUser(
@@ -32,7 +36,4 @@ data class UsersPermissionsUser(
     val city: String? = null,
     val role: String? = null,
     val id: String? = null
-){
-    private val date = createdAt?.format("dd.MM.yyyy")
-    val dateTime: String = date ?: ""
-}
+)

@@ -69,6 +69,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         super.onViewShown()
         getFireProducts(state.value.selectFirePeriod)
         getCommentsByDocument(state.value.product._id ?: "")
+        checkUser()
     }
 
     override fun decodeProduct(product: String) {
@@ -158,6 +159,14 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
 
     override fun changeCommentText(text: String) {
         _state.update { it.copy(commentText = text) }
+    }
+
+    private fun checkUser() {
+        if (prefService.getUserInfo()?.user != null){
+            _state.update { it.copy(authUser = true) }
+        } else {
+            _state.update { it.copy(authUser = false) }
+        }
     }
 
     private fun setFireLoadingProducts(status: Boolean) {

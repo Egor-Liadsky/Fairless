@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.document.layouts
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -90,11 +91,11 @@ fun SendCommentSheetView(
                     Spacer(modifier = Modifier.padding(horizontal = 8.dp))
                     GradientButton(Modifier.fillMaxWidth(1f), title = "Отправить") {
                         focusManager.clearFocus()
-                        if (state.value.commentText != ""){
+                        if ((state.value.commentText?.length ?: 0) < 3){
+                            scope.launch { errorService.showError("Длина комментария должна быть не менее 3-х символов") }
+                        } else {
                             onClick()
                             scope.launch { sheetState.hide() }
-                        } else {
-                            scope.launch { errorService.showError("Введите текст") }
                         }
                     }
                 }
