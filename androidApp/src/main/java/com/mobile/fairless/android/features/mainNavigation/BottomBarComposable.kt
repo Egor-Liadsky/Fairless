@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
@@ -77,15 +78,13 @@ fun BottomBar(
             BottomNavigationItem(
                 icon = {
                     Box(
-                        Modifier
-                            .height(20.dp)
-                            .width(30.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             painter = painterResource(item.iconId),
                             contentDescription = item.iconContentDescription,
-                            tint = if (currentRoute == item.route) selectColor else color
+                            tint = if (currentRoute == item.route) selectColor else color,
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                 },

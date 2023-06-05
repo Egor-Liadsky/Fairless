@@ -4,6 +4,8 @@ import com.mobile.fairless.common.network.BaseRepository
 import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.welcome.dto.User
+import com.mobile.fairless.features.welcome.dto.UserReceive
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.ISO8601
@@ -16,6 +18,7 @@ interface DocumentRepository {
 
     suspend fun getFireProducts(limit: Int, last: DateFilter): List<ProductData>
     suspend fun getComments(documentId: String): List<Comment>
+    suspend fun sendComment(user: UserReceive, text: String, documentId: String)
 }
 
 class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
@@ -57,5 +60,45 @@ class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
             path = "stockcomments"
         )
         return Json.decodeFromString(response)
+    }
+
+    override suspend fun sendComment(user: UserReceive, text: String, documentId: String) {
+        val body = """
+            {
+                "text": "$text",
+                "users_permissions_user": {
+                    "confirmed": "${user.user?.confirmed}",
+                    "blocked": "${user.user?.blocked}",
+                    "avatar": [],
+                    "_id": "${user.user?._id}",
+                    "email": "${user.user?.email}",
+                    "username": "${user.user?.username}",
+                    "provider": "${user.user?.provider}",
+                    "createdAt": "${user.user?.createdAt}",
+                    "updatedAt": "${user.user?.updatedAt}",
+                    "__v": ${user.user?.__v},
+                    "city": "${user.user?.city}",
+                    "role": {
+                        "_id": "${user.user?.role?._id}",
+                        "name": "${user.user?.role?.name}",
+                        "description": "${user.user?.role?.description}",
+                        "type": "${user.user?.role?.type}",
+                        "__v": ${user.user?.role?.__v},
+                        "id": "${user.user?.role?.id}"
+                    },
+                    "id": "${user.user?.id}"
+                },
+                "stock_id": "$documentId"
+            }
+        """.trimIndent()
+        executeCall(
+            type = HttpMethod.Post,
+            headers = mapOf(
+                "Content-Type" to "application/json",
+                "authorization" to "Bearer ${user.jwt}",
+            ),
+            path = "stockcomments",
+            body = body
+        )
     }
 }

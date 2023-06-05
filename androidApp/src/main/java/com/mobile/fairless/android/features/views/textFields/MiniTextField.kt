@@ -97,8 +97,7 @@ fun MiniTextField(
                 modifier = Modifier
                     .background(colors.navBar, shape = RoundedCornerShape(5.dp))
                     .clip(RoundedCornerShape(5.dp))
-                    .fillMaxWidth()
-                    .height(35.dp),
+                    .fillMaxWidth(),
                 decorationBox = { innerTextField ->
                     Column(verticalArrangement = Arrangement.Center) {
                         Row(

@@ -61,8 +61,6 @@ fun DocumentScreen(
         skipHalfExpanded = true
     )
 
-    val scope = rememberCoroutineScope()
-
     viewModelWrapper.viewModel.onViewShown()
 
     LaunchedEffect(key1 = Unit) {
@@ -88,7 +86,11 @@ fun DocumentScreen(
         sheetState = sheetState,
         sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
         sheetContent = {
-            CommentSheetView(sheetState = sheetState, state = state)
+            CommentSheetView(
+                sheetState = sheetState,
+                state = state,
+                sendCommentOnClick = { viewModelWrapper.viewModel.sendComment(state.value.commentText ?: "") },
+                onValueChanged = { viewModelWrapper.viewModel.changeCommentText(it) })
         },
     ) {
         LazyColumn(

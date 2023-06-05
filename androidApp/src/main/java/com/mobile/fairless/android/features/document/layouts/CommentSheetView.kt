@@ -1,6 +1,7 @@
 package com.mobile.fairless.android.features.document.layouts
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,8 +15,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,44 +32,78 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
+import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.document.state.DocumentState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CommentSheetView(sheetState: ModalBottomSheetState, state: State<DocumentState>) {
+fun CommentSheetView(
+    sheetState: ModalBottomSheetState,
+    state: State<DocumentState>,
+    sendCommentOnClick: () -> Unit,
+    onValueChanged: (String) -> Unit
+) {
     val scope = rememberCoroutineScope()
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, bottom = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    val sheetStateSendComment = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
 
-        ) {
-        Divider(
-            Modifier
-                .width(30.dp)
-                .clip(RoundedCornerShape(2.dp))
-                .padding(top = 10.dp, bottom = 10.dp),
-            color = colors.navBar,
-            thickness = 3.dp
-        )
-
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = "Комментарии", style = TextStyle(
-                    fontFamily = fontQanelas,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp,
-                    color = colors.black
-                )
+    ModalBottomSheetLayout(
+        modifier = Modifier.fillMaxSize(),
+        sheetState = sheetStateSendComment,
+        sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
+        sheetContent = {
+            SendCommentSheetView(
+                sheetState = sheetStateSendComment,
+                state = state,
+                onClick = { sendCommentOnClick() },
+                onValueChanged = { onValueChanged(it) }
             )
-            LazyColumn {
-                items(items = state.value.comments ?: emptyList()) { comment ->
-                    CommentItem(modifier = Modifier.padding(top = 20.dp), comment = comment)
+        },
+    ) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp, bottom = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+
+            ) {
+            Divider(
+                Modifier
+                    .width(30.dp)
+                    .clip(RoundedCornerShape(2.dp))
+                    .padding(top = 10.dp, bottom = 10.dp),
+                color = colors.navBar,
+                thickness = 3.dp
+            )
+
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "Комментарии", style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 20.sp,
+                        color = colors.black
+                    )
+                )
+                LazyColumn {
+                    items(items = state.value.comments ?: emptyList()) { comment ->
+                        CommentItem(modifier = Modifier.padding(top = 20.dp), comment = comment)
+                    }
+                }
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+                    GradientButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        title = "Добавить комментарий"
+                    ) {
+                        scope.launch { sheetStateSendComment.show() }
+                    }
                 }
             }
         }
