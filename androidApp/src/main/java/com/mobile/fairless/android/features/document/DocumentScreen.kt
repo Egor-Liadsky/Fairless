@@ -89,7 +89,11 @@ fun DocumentScreen(
             CommentSheetView(
                 sheetState = sheetState,
                 state = state,
-                sendCommentOnClick = { viewModelWrapper.viewModel.sendComment(state.value.commentText ?: "") },
+                sendCommentOnClick = {
+                    viewModelWrapper.viewModel.sendComment(
+                        state.value.commentText?.lines()?.joinToString(" ") ?: ""
+                    )
+                },
                 onValueChanged = { viewModelWrapper.viewModel.changeCommentText(it) },
             )
         },
@@ -106,7 +110,7 @@ fun DocumentScreen(
                 DocumentLayout(
                     product = state.value.product,
                     viewModelWrapper = viewModelWrapper,
-                    sheetState = sheetState
+                    sheetState = sheetState,
                 )
             }
             item {

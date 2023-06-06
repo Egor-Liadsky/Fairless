@@ -44,6 +44,7 @@ interface DocumentViewModel : StatefulKmpViewModel<DocumentState>, SubScreenView
     fun getCommentsByDocument(documentId: String)
     fun sendComment(text: String)
     fun changeCommentText(text: String)
+    fun reactionDocument(like: Boolean)
 }
 
 class DocumentViewModelImpl(override val navigator: Navigator) :
@@ -147,7 +148,11 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
             exceptionHandleable(
                 executionBlock = {
                     val user = prefService.getUserInfo()
-                    documentService.sendComment(user ?: UserReceive(), text, state.value.product.id ?: "")
+                    documentService.sendComment(
+                        user ?: UserReceive(),
+                        text,
+                        state.value.product.id ?: ""
+                    )
                     getCommentsByDocument(state.value.product.id ?: "")
                 },
                 failureBlock = {
@@ -161,8 +166,25 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         _state.update { it.copy(commentText = text) }
     }
 
+    override fun reactionDocument(like: Boolean) {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    documentService.reactionDocument(
+                        like,
+                        state.value.product._id ?: "",
+                        prefService.getUserInfo() ?: UserReceive()
+                    )
+                },
+                failureBlock = {
+                    errorService.showError("Проверьте соеденение с интернетом.")
+                }
+            )
+        }
+    }
+
     private fun checkUser() {
-        if (prefService.getUserInfo()?.user != null){
+        if (prefService.getUserInfo()?.user != null) {
             _state.update { it.copy(authUser = true) }
         } else {
             _state.update { it.copy(authUser = false) }

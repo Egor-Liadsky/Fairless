@@ -13,5 +13,5 @@ data class DocumentState(
     val todayNull: Boolean = false,
     val fireProductsLoading: Boolean = false,
     val comments: List<Comment>? = null,
-    val authUser: Boolean = false
+    val authUser: Boolean = false,
 )

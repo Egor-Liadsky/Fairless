@@ -79,36 +79,36 @@ fun DocumentLayout(
                     .padding(top = 15.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                    Text(
-                        text = "${product.sale_price} ₽",
-                        style = TextStyle(
-                            fontFamily = fontQanelas,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            color = colors.orangeMain
-                        )
+                Text(
+                    text = "${product.sale_price} ₽",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        color = colors.orangeMain
                     )
-                    Text(
-                        text = "${product.sale_old_price} ₽",
-                        style = TextStyle(
-                            fontFamily = fontQanelas,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 15.sp,
-                            color = colors.black,
-                            textDecoration = TextDecoration.LineThrough
-                        ),
-                        modifier = Modifier.padding(start = 15.dp)
-                    )
-                    Text(
-                        text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
-                        style = TextStyle(
-                            fontFamily = fontQanelas,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 15.sp,
-                            color = colors.black,
-                        ),
-                        modifier = Modifier.padding(start = 15.dp)
-                    )
+                )
+                Text(
+                    text = "${product.sale_old_price} ₽",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 15.sp,
+                        color = colors.black,
+                        textDecoration = TextDecoration.LineThrough
+                    ),
+                    modifier = Modifier.padding(start = 15.dp)
+                )
+                Text(
+                    text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 15.sp,
+                        color = colors.black,
+                    ),
+                    modifier = Modifier.padding(start = 15.dp)
+                )
             }
         }
 
@@ -128,7 +128,9 @@ fun DocumentLayout(
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (product.count_likes != null) {
-                    IconButton(modifier = Modifier.padding(end = 3.dp), onClick = { /*TODO*/ }) {
+                    IconButton(
+                        modifier = Modifier.padding(end = 3.dp),
+                        onClick = { viewModelWrapper.viewModel.reactionDocument(true) }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_like),
                             contentDescription = "ic_like",
@@ -142,7 +144,7 @@ fun DocumentLayout(
                 if (product.count_dislikes != null) {
                     IconButton(
                         modifier = Modifier.padding(start = 20.dp, end = 3.dp),
-                        onClick = { /*TODO*/ }) {
+                        onClick = { viewModelWrapper.viewModel.reactionDocument(false) }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_dislike),
                             contentDescription = "ic_dislike",
@@ -190,8 +192,12 @@ fun DocumentLayout(
                         ),
                         modifier = Modifier.padding(end = 10.dp)
                     )
-                    Icon(painter = painterResource(id = R.drawable.ic_copy), contentDescription = "ic_copy",
-                        modifier = Modifier.size(20.dp), tint = colors.black)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_copy),
+                        contentDescription = "ic_copy",
+                        modifier = Modifier.size(20.dp),
+                        tint = colors.black
+                    )
                 }
             }
         }

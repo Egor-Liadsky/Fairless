@@ -19,6 +19,7 @@ interface DocumentRepository {
     suspend fun getFireProducts(limit: Int, last: DateFilter): List<ProductData>
     suspend fun getComments(documentId: String): List<Comment>
     suspend fun sendComment(user: UserReceive, text: String, documentId: String)
+    suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive)
 }
 
 class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
@@ -98,6 +99,25 @@ class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
                 "authorization" to "Bearer ${user.jwt}",
             ),
             path = "stockcomments",
+            body = body
+        )
+    }
+
+    override suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive) {
+        val body = """
+            {
+                "like": $like,
+                "user_id": "${user.user?.id}",
+                "stock_id": "$documentId"
+            }
+        """.trimIndent()
+        executeCall(
+            type = HttpMethod.Post,
+            headers = mapOf(
+                "Content-Type" to "application/json",
+                "authorization" to "Bearer ${user.jwt}",
+            ),
+            path = "likes",
             body = body
         )
     }
