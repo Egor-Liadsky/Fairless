@@ -27,7 +27,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun getCategories()
     fun getProductsByCategory()
     fun selectCategory(category: Category)
-    fun onDocumentClick(product: ProductData)
+    fun onDocumentClick(product: String)
 }
 
 class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
@@ -96,7 +96,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         getProductsByCategory()
     }
 
-    override fun onDocumentClick(product: ProductData) {
+    override fun onDocumentClick(product: String) {
         val document = Json.encodeToString(product)
         val encodeUrl = urlEncode.encodeToUrl(document)
         navigator.navigateToDocument(encodeUrl)

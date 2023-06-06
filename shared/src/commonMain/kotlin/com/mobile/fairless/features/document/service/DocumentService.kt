@@ -11,6 +11,7 @@ interface DocumentService {
     suspend fun getComments(documentId: String): List<Comment>
     suspend fun sendComment(user: UserReceive, text: String, documentId: String)
     suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive)
+    suspend fun getDocument(name: String): List<ProductData>
 }
 
 class DocumentServiceImpl(private val documentRepository: DocumentRepository) : DocumentService {
@@ -28,4 +29,7 @@ class DocumentServiceImpl(private val documentRepository: DocumentRepository) : 
     override suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive) {
         documentRepository.reactionDocument(like, documentId, user)
     }
+
+    override suspend fun getDocument(name: String): List<ProductData> =
+        documentRepository.getDocument(name)
 }

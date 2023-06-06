@@ -20,6 +20,7 @@ interface DocumentRepository {
     suspend fun getComments(documentId: String): List<Comment>
     suspend fun sendComment(user: UserReceive, text: String, documentId: String)
     suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive)
+    suspend fun getDocument(name: String): List<ProductData>
 }
 
 class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
@@ -120,5 +121,18 @@ class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
             path = "likes",
             body = body
         )
+    }
+
+    override suspend fun getDocument(name: String): List<ProductData> {
+        val params = HashMap<String, String>()
+        params["_limit"] = "1"
+        params["name_contains"] = name
+        val response = executeCall(
+            type = HttpMethod.Get,
+            parameters = params,
+            headers = mapOf("Content-Type" to "application/json"),
+            path = "stocks"
+        )
+        return Json.decodeFromString(response)
     }
 }

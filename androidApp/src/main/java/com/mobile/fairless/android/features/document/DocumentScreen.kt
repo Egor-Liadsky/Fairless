@@ -52,8 +52,9 @@ fun DocumentScreen(
     )
 ) {
 
+    viewModelWrapper.viewModel.getNameProduct(product)
+
     val context = LocalContext.current
-    viewModelWrapper.viewModel.decodeProduct(product)
     val state = viewModelWrapper.viewModel.state.collectAsState()
 
     val sheetState = rememberModalBottomSheetState(

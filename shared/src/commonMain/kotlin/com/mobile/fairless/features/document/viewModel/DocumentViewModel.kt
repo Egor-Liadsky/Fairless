@@ -35,16 +35,16 @@ interface DocumentViewModel : StatefulKmpViewModel<DocumentState>, SubScreenView
     val shareText: SharedFlow<ShareInfo>
     val openUrl: SharedFlow<ShareInfo>
 
-    fun decodeProduct(product: String)
     fun onShareClick(product: ProductData)
     fun openProductUrl(product: ProductData)
     fun getFireProducts(period: DateFilter)
-    fun onDocumentClick(product: ProductData)
+    fun onDocumentClick(product: String)
     fun selectFirePeriod(period: DateFilter)
     fun getCommentsByDocument(documentId: String)
     fun sendComment(text: String)
     fun changeCommentText(text: String)
     fun reactionDocument(like: Boolean)
+    fun getNameProduct(productName: String)
 }
 
 class DocumentViewModelImpl(override val navigator: Navigator) :
@@ -68,16 +68,29 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
 
     override fun onViewShown() {
         super.onViewShown()
+        getDocument()
         getFireProducts(state.value.selectFirePeriod)
         getCommentsByDocument(state.value.product._id ?: "")
         checkUser()
     }
 
-    override fun decodeProduct(product: String) {
-        _state.update {
-            val decodeProduct = urlEncode.decodeToUrl(product)
-            it.copy(product = Json.decodeFromString(decodeProduct))
+    private fun getDocument(){
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    val document = documentService.getDocument(state.value.productName)[0]
+                    _state.update { it.copy(product = document) }
+                },
+                failureBlock = {
+                    errorService.showError("Проверьте соеденение с интернетом.")
+                }
+            )
         }
+    }
+
+    override fun getNameProduct(productName: String) {
+        val decodeProduct = urlEncode.decodeToUrl(productName)
+        _state.update { it.copy(productName = Json.decodeFromString(decodeProduct)) }
     }
 
     override fun onShareClick(product: ProductData) {
@@ -119,7 +132,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         }
     }
 
-    override fun onDocumentClick(product: ProductData) {
+    override fun onDocumentClick(product: String) {
         val document = Json.encodeToString(product)
         val encodeUrl = urlEncode.encodeToUrl(document)
         navigator.navigateToDocument(encodeUrl)
@@ -170,11 +183,16 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    documentService.reactionDocument(
-                        like,
-                        state.value.product._id ?: "",
-                        prefService.getUserInfo() ?: UserReceive()
-                    )
+                    if (state.value.authUser){
+                        documentService.reactionDocument(
+                            like,
+                            state.value.product._id ?: "",
+                            prefService.getUserInfo() ?: UserReceive()
+                        )
+                        getDocument()
+                    } else {
+                        errorService.showError("Необходимо авторизоваться.")
+                    }
                 },
                 failureBlock = {
                     errorService.showError("Проверьте соеденение с интернетом.")
@@ -195,4 +213,3 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         _state.update { it.copy(fireProductsLoading = status) }
     }
 }
-

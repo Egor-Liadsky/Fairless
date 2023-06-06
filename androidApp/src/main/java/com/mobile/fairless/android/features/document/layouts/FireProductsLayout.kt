@@ -169,11 +169,11 @@ fun FireProductsLayout(viewModelWrapper: StatefulViewModelWrapper<DocumentViewMo
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 FireProductItem(product = state.value.fireProduct[0]) {
-                    viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[0])
+                    viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[0].name ?: "")
                 }
                 if (state.value.fireProduct.size > 1){
                     FireProductItem(product = state.value.fireProduct[1]) {
-                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[1])
+                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[1].name ?: "")
                     }
                 }
             }
@@ -183,12 +183,12 @@ fun FireProductsLayout(viewModelWrapper: StatefulViewModelWrapper<DocumentViewMo
             ) {
                 if (state.value.fireProduct.size > 2){
                     FireProductItem(product = state.value.fireProduct[2]) {
-                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[2])
+                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[2].name ?: "")
                     }
                 }
                 if (state.value.fireProduct.size > 3){
                     FireProductItem(product = state.value.fireProduct[3]) {
-                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[3])
+                        viewModelWrapper.viewModel.onDocumentClick(state.value.fireProduct[3].name ?: "")
                     }
                 }
             }
