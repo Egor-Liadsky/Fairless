@@ -36,11 +36,24 @@ data class ProductData(
     val stock_type: StockType? = null,
     val users_permissions_user: UsersPermissionsUser? = null,
     val id: String? = null,
-    val myLike: String? = "",
+    val myLike: List<MyLike>? = null,
     val count_comments: Int? = 0,
     val promo_code: String? = null, //
     val promo_price: Int? = null, //
     val free_text: String? = null
+)
+
+@Serializable
+data class MyLike(
+    val _id: String? = null,
+    val like: Boolean? = null,
+    val user_id: String? = null,
+    val stock_id: String? = null,
+    val published_at: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val __v: Int? = null,
+    val id: String? = null
 )
 
 @Serializable

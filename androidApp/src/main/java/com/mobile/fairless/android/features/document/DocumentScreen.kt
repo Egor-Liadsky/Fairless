@@ -13,32 +13,54 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.document.components.DocumentTopBar
 import com.mobile.fairless.android.features.document.components.FireProductItem
+import com.mobile.fairless.android.features.document.layouts.CommentSheetView
 import com.mobile.fairless.android.features.document.layouts.DocumentLayout
 import com.mobile.fairless.android.features.document.layouts.FireProductsLayout
+import com.mobile.fairless.android.features.search.components.FiltersSheet
 import com.mobile.fairless.android.theme.colors
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
+import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
 import org.koin.core.qualifier.named
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DocumentScreen(
     product: String,
-    viewModelWrapper: ViewModelWrapper<DocumentViewModel> = get(named("DocumentViewModel"))
+    viewModelWrapper: StatefulViewModelWrapper<DocumentViewModel, DocumentState> = getViewModel(
+        named("DocumentViewModel")
+    )
 ) {
 
+    viewModelWrapper.viewModel.getNameProduct(product)
+
     val context = LocalContext.current
-    viewModelWrapper.viewModel.decodeProduct(product)
     val state = viewModelWrapper.viewModel.state.collectAsState()
+
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
 
     viewModelWrapper.viewModel.onViewShown()
 
@@ -60,19 +82,41 @@ fun DocumentScreen(
         }
     }
 
-    LazyColumn(
-        Modifier
-            .fillMaxSize()
-            .background(colors.backgroundWelcome)
+    ModalBottomSheetLayout(
+        modifier = Modifier.fillMaxSize(),
+        sheetState = sheetState,
+        sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
+        sheetContent = {
+            CommentSheetView(
+                sheetState = sheetState,
+                state = state,
+                sendCommentOnClick = {
+                    viewModelWrapper.viewModel.sendComment(
+                        state.value.commentText?.lines()?.joinToString(" ") ?: ""
+                    )
+                },
+                onValueChanged = { viewModelWrapper.viewModel.changeCommentText(it) },
+            )
+        },
     ) {
-        item {
-            DocumentTopBar(product = state.value.product, viewModelWrapper = viewModelWrapper)
-        }
-        item {
-            DocumentLayout(product = state.value.product, viewModelWrapper = viewModelWrapper)
-        }
-        item {
-            FireProductsLayout(viewModelWrapper = viewModelWrapper)
+        LazyColumn(
+            Modifier
+                .fillMaxSize()
+                .background(colors.backgroundWelcome)
+        ) {
+            item {
+                DocumentTopBar(product = state.value.product, viewModelWrapper = viewModelWrapper)
+            }
+            item {
+                DocumentLayout(
+                    product = state.value.product,
+                    viewModelWrapper = viewModelWrapper,
+                    sheetState = sheetState,
+                )
+            }
+            item {
+                FireProductsLayout(viewModelWrapper = viewModelWrapper)
+            }
         }
     }
 }

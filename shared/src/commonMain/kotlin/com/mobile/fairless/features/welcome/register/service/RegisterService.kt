@@ -1,5 +1,6 @@
 package com.mobile.fairless.features.welcome.register.service
 
+import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.welcome.dto.City
 import com.mobile.fairless.features.welcome.dto.UserReceive
 import com.mobile.fairless.features.welcome.dto.UserRegisterResponse

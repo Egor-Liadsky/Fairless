@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.profile.components
+package com.mobile.fairless.android.features.profile.layouts
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -12,6 +12,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.fairless.android.features.profile.components.ProfileCategoryButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 

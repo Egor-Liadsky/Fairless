@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +33,7 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val state = viewModelWrapper.viewModel.state.collectAsState()
+        val focusManager = LocalFocusManager.current
 
         Text(
             text = "Войдите в\nсвой профиль",
@@ -71,6 +73,7 @@ fun AuthLayout(viewModelWrapper: ViewModelWrapper<AuthViewModel>) {
             isLoading = state.value.isLoading,
             modifier = Modifier.padding(top = 20.dp)
         ) {
+            focusManager.clearFocus()
             viewModelWrapper.viewModel.authUser(
                 UserAuthResponse(
                     identifier = state.value.email?.filter { !it.isWhitespace() } ?: "",

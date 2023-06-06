@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.profile.components
+package com.mobile.fairless.android.features.profile.layouts
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column

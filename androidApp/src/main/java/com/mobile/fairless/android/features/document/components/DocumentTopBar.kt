@@ -14,17 +14,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.mobile.fairless.android.R
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.SquareButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.utils.Constants
+import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.main.models.ProductData
 
 @Composable
 fun DocumentTopBar(
     product: ProductData,
-    viewModelWrapper: ViewModelWrapper<DocumentViewModel>
+    viewModelWrapper: StatefulViewModelWrapper<DocumentViewModel, DocumentState>
 ) {
     Row(
         modifier = Modifier
