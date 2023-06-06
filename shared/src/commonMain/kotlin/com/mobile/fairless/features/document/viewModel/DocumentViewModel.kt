@@ -12,6 +12,7 @@ import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.document.model.ShareInfo
 import com.mobile.fairless.features.document.service.DocumentService
 import com.mobile.fairless.features.document.state.DocumentState
+import com.mobile.fairless.features.document.state.Period
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductData
@@ -45,6 +46,7 @@ interface DocumentViewModel : StatefulKmpViewModel<DocumentState>, SubScreenView
     fun changeCommentText(text: String)
     fun reactionDocument(like: Boolean)
     fun getNameProduct(productName: String)
+    fun periodClick()
 }
 
 class DocumentViewModelImpl(override val navigator: Navigator) :
@@ -69,12 +71,12 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
     override fun onViewShown() {
         super.onViewShown()
         getDocument()
-        getFireProducts(state.value.selectFirePeriod)
+        getFireProducts(state.value.selectFirePeriod.period)
         getCommentsByDocument(state.value.product._id ?: "")
         checkUser()
     }
 
-    private fun getDocument(){
+    private fun getDocument() {
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
@@ -91,6 +93,10 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
     override fun getNameProduct(productName: String) {
         val decodeProduct = urlEncode.decodeToUrl(productName)
         _state.update { it.copy(productName = Json.decodeFromString(decodeProduct)) }
+    }
+
+    override fun periodClick() {
+        _state.update { it.copy(periodMenuOpen = !it.periodMenuOpen) }
     }
 
     override fun onShareClick(product: ProductData) {
@@ -139,7 +145,19 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
     }
 
     override fun selectFirePeriod(period: DateFilter) {
-        _state.update { it.copy(selectFirePeriod = period) }
+        _state.update {
+            it.copy(
+                selectFirePeriod =
+                when (period) {
+                    DateFilter.TODAY -> Period("Сегодня", DateFilter.TODAY)
+                    DateFilter.WEEK -> Period("Неделя", DateFilter.WEEK)
+                    DateFilter.MONTH -> Period("Месяц", DateFilter.MONTH)
+                    else -> {
+                        Period("Сегодня", DateFilter.TODAY)
+                    }
+                }
+            )
+        }
         getFireProducts(period)
     }
 
@@ -183,7 +201,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    if (state.value.authUser){
+                    if (state.value.authUser) {
                         documentService.reactionDocument(
                             like,
                             state.value.product._id ?: "",
