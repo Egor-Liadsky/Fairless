@@ -10,6 +10,8 @@ import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.service.SearchService
 import com.mobile.fairless.features.search.state.SearchState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,18 +47,21 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
     private val _state = MutableStateFlow(SearchState())
     override val state: StateFlow<SearchState> = _state.asStateFlow()
 
+    private var job: Job? = null
+
     override fun onViewShown() {
         super.onViewShown()
         getCategories()
     }
 
     override fun searchProducts(name: String) {
-        scope.launch {
+        job?.cancel()
+        job = scope.launch {
             exceptionHandleable(
                 executionBlock = {
+                    delay(300)
                     setLoading(true)
                     _state.update { it.copy(products = searchService.searchProducts(name)) }
-                    println("kjhsdkjfhkjsdf        ||       $name")
                     setLoading(false)
                 },
                 failureBlock = {
