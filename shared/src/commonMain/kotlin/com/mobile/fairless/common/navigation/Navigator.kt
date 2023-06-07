@@ -13,6 +13,11 @@ enum class ScreenRoute(val isMain: Boolean) {
     Profile(false),
     Auth(false),
     Register(false),
+    AboutFairLess(false),
+    Rules(false),
+    Feedback(false),
+    Faq(false),
+    AboutApp(false)
 }
 
 interface Navigator {
@@ -27,4 +32,9 @@ interface Navigator {
     fun navigateToAuth()
     fun navigateToRegister()
     fun navigateToDocument(product: String)
+    fun navigateToAboutFairLess()
+    fun navigateToRules()
+    fun navigateToFeedback()
+    fun navigateToFaq()
+    fun navigateToAboutApp()
 }

@@ -17,5 +17,5 @@ fun MenuLayout(viewModelWrapper: StatefulViewModelWrapper<MenuViewModel, MenuSta
     TestView {
 
     }
-    AdditionalView()
+    AdditionalView(viewModelWrapper)
 }

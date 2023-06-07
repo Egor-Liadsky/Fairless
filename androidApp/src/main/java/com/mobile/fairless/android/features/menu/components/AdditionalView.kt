@@ -16,13 +16,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.menu.state.MenuState
+import com.mobile.fairless.features.menu.viewModel.MenuViewModel
 
 data class AdditionalInfo(
     val title: String,
@@ -30,13 +34,13 @@ data class AdditionalInfo(
 )
 
 @Composable
-fun AdditionalView() {
+fun AdditionalView(viewModelWrapper: StatefulViewModelWrapper<MenuViewModel, MenuState>) {
     val list = listOf(
-        AdditionalInfo(title = "О нас", onClick = { }),
-        AdditionalInfo(title = "Правила поведения", onClick = { }),
-        AdditionalInfo(title = "Обратная связь", onClick = { }),
-        AdditionalInfo(title = "FAQ", onClick = { }),
-        AdditionalInfo(title = "О приложении", onClick = { }),
+        AdditionalInfo(title = stringResource(id = R.string.about), onClick = { viewModelWrapper.viewModel.navigateToAboutFairLess() }),
+        AdditionalInfo(title = stringResource(id = R.string.rules), onClick = { viewModelWrapper.viewModel.navigateToRules() }),
+        AdditionalInfo(title = stringResource(id = R.string.feedback), onClick = { viewModelWrapper.viewModel.navigateToFeedback() }),
+        AdditionalInfo(title = "FAQ", onClick = { viewModelWrapper.viewModel.navigateToFaq() }),
+        AdditionalInfo(title = stringResource(id = R.string.about_app), onClick = { viewModelWrapper.viewModel.navigateToAboutApp() }),
     )
 
     Column(
