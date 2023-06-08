@@ -45,7 +45,7 @@ fun CommonTopBar(
                 fontWeight = FontWeight.SemiBold,
                 fontSize =  20.sp,
                 color = colors.black,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Start
             ),
             modifier = Modifier.padding(start = 20.dp)
         )
