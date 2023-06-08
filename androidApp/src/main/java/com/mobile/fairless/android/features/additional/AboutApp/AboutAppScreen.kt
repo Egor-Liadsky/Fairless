@@ -46,12 +46,12 @@ fun AboutAppScreen(viewModelWrapper: ViewModelWrapper<AboutAppViewModel> = get(n
             )
 
             Text(
-                text = "1.0", style = TextStyle(
+                text = "Версия 1.0", style = TextStyle(
                     fontFamily = fontQanelas,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 20.sp,
                     color = colors.black
-                ), modifier = Modifier.padding(top = 20.dp)
+                ), modifier = Modifier.padding(top = 30.dp)
             )
         }
 
