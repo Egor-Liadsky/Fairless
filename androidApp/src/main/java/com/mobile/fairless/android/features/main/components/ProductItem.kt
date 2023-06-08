@@ -19,6 +19,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -55,105 +57,88 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                 model = Constants.BASE_URL + product.image?.url,
                 contentDescription = "product_image",
                 modifier = Modifier
-                    .width(120.dp)
-                    .height(180.dp)
-                    .padding(horizontal = 10.dp, vertical = 10.dp)
+                    .width(90.dp)
+                    .height(120.dp)
+                    .padding(horizontal = 10.dp, vertical = 20.dp)
             )
 
-            Column(modifier = Modifier.padding(10.dp)) {
+            Column(
+                modifier = Modifier.padding(
+                    start = 7.dp,
+                    top = 20.dp,
+                    bottom = 10.dp,
+                    end = 15.dp
+                )
+            ) {
                 Text(
                     text = product.name ?: "",
                     style = TextStyle(
                         fontFamily = fontQanelas,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 13.sp,
+                        fontSize = 12.sp,
                         color = colors.black
                     )
                 )
-                if (product.sale_price != null) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "${product.sale_price} ₽",
-                            style = TextStyle(
-                                fontFamily = fontQanelas,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                                color = colors.orangeMain
-                            )
-                        )
-                        Text(
-                            text = "${product.sale_old_price} ₽",
-                            style = TextStyle(
-                                fontFamily = fontQanelas,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 15.sp,
-                                color = colors.black,
-                                textDecoration = TextDecoration.LineThrough
-                            ),
-                            modifier = Modifier.padding(start = 15.dp)
-                        )
-                        Text(
-                            text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
-                            style = TextStyle(
-                                fontFamily = fontQanelas,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 15.sp,
-                                color = colors.black,
-                            ),
-                            modifier = Modifier.padding(start = 15.dp)
-                        )
-                    }
-                }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 17.dp),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+
+                    if (product.sale_price != null) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = "${product.sale_price} ₽",
+                                style = TextStyle(
+                                    fontFamily = fontQanelas,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 17.sp,
+                                    color = colors.orangeMain
+                                )
+                            )
+                            Text(
+                                text = "${product.sale_old_price} ₽",
+                                style = TextStyle(
+                                    fontFamily = fontQanelas,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 10.sp,
+                                    color = colors.black,
+                                    textDecoration = TextDecoration.LineThrough
+                                ),
+                                modifier = Modifier.padding(start = 7.dp)
+                            )
+                            Text(
+                                text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
+                                style = TextStyle(
+                                    fontFamily = fontQanelas,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 10.sp,
+                                    color = colors.black,
+                                ),
+                                modifier = Modifier.padding(start = 7.dp)
+                            )
+                        }
+                    }
+
                     Text(
                         text = product.shop?.name ?: "",
                         style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = 13.sp,
+                            fontSize = 9.sp,
                             color = colors.black
                         ),
                     )
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        if (product.count_likes != null){
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_like),
-                                contentDescription = "ic_like",
-                                modifier = Modifier
-                                    .padding(end = 10.dp)
-                                    .size(15.dp)
-                            )
-                            Text(text = product.count_likes ?: "")
-                        }
-
-                        if (product.count_dislikes != null) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_dislike),
-                                contentDescription = "ic_dislike",
-                                modifier = Modifier
-                                    .padding(start = 20.dp, end = 10.dp)
-                                    .size(15.dp)
-                            )
-                            Text(text = product.count_dislikes ?: "")
-                        }
-                    }
                 }
 
                 if (product.users_permissions_user != null) {
                     Divider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 5.dp),
+                            .padding(bottom = 5.dp),
                         colors.grayDivider
                     )
 
@@ -162,56 +147,108 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                             painter = painterResource(id = R.drawable.avatarka),
                             contentDescription = "avatarka",
                             modifier = Modifier
-                                .size(30.dp)
-                                .padding(end = 10.dp)
+                                .size(16.dp)
+                                .clip(RoundedCornerShape(2.dp))
                         )
-                        Text(text = product.users_permissions_user!!.username ?: "")
+                        Text(
+                            text = product.users_permissions_user!!.username ?: "",
+                            style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 9.sp,
+                                color = Color(0xFF000000)
+                            ), modifier = Modifier.padding(start = 6.dp)
+                        )
                     }
                 }
 
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 5.dp),
+                        .padding(top = 6.dp, bottom = 10.dp),
                     colors.grayDivider
                 )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_comment),
-                        contentDescription = "ic_comment",
-                        modifier = Modifier
-                            .padding(end = 10.dp)
-                            .size(15.dp)
-                    )
-                    Text(
-                        text = product.count_comments.toString(),
-                        style = TextStyle(
-                            fontFamily = fontQanelas,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 15.sp,
-                            color = colors.black
-                        ),
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_views),
-                        contentDescription = "ic_views",
-                        modifier = Modifier
-                            .padding(start = 20.dp, end = 10.dp)
-                            .size(15.dp)
-                    )
-                    Text(
-                        text = product.count_views ?: "",
-                        style = TextStyle(
-                            fontFamily = fontQanelas,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 15.sp,
-                            color = colors.black
-                        ),
-                    )
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_comment),
+                            contentDescription = "ic_comment",
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .size(14.dp)
+                        )
+                        Text(
+                            text = product.count_comments.toString(),
+                            style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 10.sp,
+                                color = colors.black
+                            ),
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_views),
+                            contentDescription = "ic_views",
+                            modifier = Modifier
+                                .padding(start = 10.dp, end = 8.dp)
+                                .size(width = 13.dp, height = 8.dp)
+                        )
+                        Text(
+                            text = product.count_views ?: "",
+                            style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 10.sp,
+                                color = colors.black
+                            ),
+                        )
+                    }
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (product.count_likes != null) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_like),
+                                contentDescription = "ic_like",
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .size(width = 14.dp, height = 11.dp)
+                            )
+                            Text(
+                                text = product.count_likes ?: "",
+                                style = TextStyle(
+                                    fontFamily = fontQanelas,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 10.sp,
+                                    color = colors.black
+                                ),
+                            )
+                        }
+
+                        if (product.count_dislikes != null) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_dislike),
+                                contentDescription = "ic_dislike",
+                                modifier = Modifier
+                                    .padding(start = 10.dp, end = 8.dp)
+                                    .size(width = 14.dp, height = 11.dp)
+                            )
+                            Text(
+                                text = product.count_dislikes ?: "",
+                                style = TextStyle(
+                                    fontFamily = fontQanelas,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 10.sp,
+                                    color = colors.black
+                                ),
+                            )
+                        }
+                    }
                 }
             }
         }
