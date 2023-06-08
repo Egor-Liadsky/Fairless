@@ -135,7 +135,7 @@ fun FaqItem(modifier: Modifier = Modifier, title: String, expanded: Boolean, onC
             .background(colors.white, shape = RoundedCornerShape(10.dp))
             .clickable { onClick() },
         onClick = { onClick() },
-        elevation = if (expanded) 0.dp else 2.dp,
+        elevation = if (expanded) 0.dp else 1.dp,
         shape = RoundedCornerShape(10.dp)
     ) {
         Row(Modifier.padding(horizontal = 16.dp, vertical = 24.dp),
