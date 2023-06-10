@@ -49,7 +49,7 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(items = state.value.products.data ?: emptyList()) { product ->
-                    Column {
+                    Column(Modifier.padding(horizontal = 16.dp)) {
                         ProductItem(product = product) {
                             viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
                         }

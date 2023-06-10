@@ -157,7 +157,7 @@ fun SearchLayout(
                     items(items = state.value.products ?: emptyList()) { product ->
                         Column {
                             ProductItem(product = product) {
-                                viewModelWrapper.viewModel.onDocumentClick(product)
+                                viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
                             }
                         }
                     }

@@ -39,8 +39,7 @@ import com.mobile.fairless.features.main.models.ProductData
 fun ProductItem(product: ProductData, onClick: () -> Unit) {
     Card(
         modifier = Modifier
-            .padding(vertical = 10.dp, horizontal = 10.dp)
-            .width(350.dp),
+            .padding(vertical = 10.dp, horizontal = 10.dp),
         onClick = { onClick() },
         elevation = 2.dp,
         shape = RoundedCornerShape(10.dp)
@@ -134,7 +133,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                     )
                 }
 
-                if (product.users_permissions_user != null) {
+//                if (product.users_permissions_user != null) {
                     Divider(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -142,25 +141,40 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                         colors.grayDivider
                     )
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = R.drawable.avatarka),
-                            contentDescription = "avatarka",
-                            modifier = Modifier
-                                .size(16.dp)
-                                .clip(RoundedCornerShape(2.dp))
-                        )
-                        Text(
-                            text = product.users_permissions_user!!.username ?: "",
-                            style = TextStyle(
-                                fontFamily = fontQanelas,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 9.sp,
-                                color = Color(0xFF000000)
-                            ), modifier = Modifier.padding(start = 6.dp)
-                        )
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        if(product.users_permissions_user != null){
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.avatarka),
+                                    contentDescription = "avatarka",
+                                    modifier = Modifier
+                                        .size(16.dp)
+                                        .clip(RoundedCornerShape(2.dp))
+                                )
+                                Text(
+                                    text = product.users_permissions_user!!.username ?: "",
+                                    style = TextStyle(
+                                        fontFamily = fontQanelas,
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 9.sp,
+                                        color = Color(0xFF000000)
+                                    ), modifier = Modifier.padding(start = 6.dp)
+                                )
+                            }
+                        }
+
+                        if (product.count_dislikes != "0" || product.count_likes != "0"){
+                            RatingView(
+                                likes = product.count_likes?.toInt() ?: 0,
+                                dislikes = product.count_dislikes?.toInt() ?: 0
+                            )
+                        }
                     }
-                }
+//                }
 
                 Divider(
                     modifier = Modifier
@@ -181,7 +195,8 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                             contentDescription = "ic_comment",
                             modifier = Modifier
                                 .padding(end = 8.dp)
-                                .size(14.dp)
+                                .size(14.dp),
+                            tint = colors.black
                         )
                         Text(
                             text = product.count_comments.toString(),
@@ -197,7 +212,8 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                             contentDescription = "ic_views",
                             modifier = Modifier
                                 .padding(start = 10.dp, end = 8.dp)
-                                .size(width = 13.dp, height = 8.dp)
+                                .size(width = 13.dp, height = 8.dp),
+                            tint = colors.black
                         )
                         Text(
                             text = product.count_views ?: "",
@@ -217,7 +233,8 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                                 contentDescription = "ic_like",
                                 modifier = Modifier
                                     .padding(end = 8.dp)
-                                    .size(width = 14.dp, height = 11.dp)
+                                    .size(width = 14.dp, height = 11.dp),
+                                tint = colors.black
                             )
                             Text(
                                 text = product.count_likes ?: "",
@@ -236,7 +253,8 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                                 contentDescription = "ic_dislike",
                                 modifier = Modifier
                                     .padding(start = 10.dp, end = 8.dp)
-                                    .size(width = 14.dp, height = 11.dp)
+                                    .size(width = 14.dp, height = 11.dp),
+                                tint = colors.black
                             )
                             Text(
                                 text = product.count_dislikes ?: "",

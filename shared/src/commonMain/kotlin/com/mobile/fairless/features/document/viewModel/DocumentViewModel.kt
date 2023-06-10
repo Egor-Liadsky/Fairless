@@ -84,7 +84,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     _state.update { it.copy(product = document) }
                 },
                 failureBlock = {
-                    errorService.showError("Проверьте соеденение с интернетом.")
+                    errorService.showError("Ошибка")
                 }
             )
         }

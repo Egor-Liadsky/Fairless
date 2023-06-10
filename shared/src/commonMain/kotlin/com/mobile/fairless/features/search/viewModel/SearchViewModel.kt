@@ -32,7 +32,7 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun selectFilters(name: String)
     fun popularFilterOpen()
     fun filtersOpen()
-    fun onDocumentClick(product: ProductData)
+    fun onDocumentClick(product: String)
     fun getCategories()
     fun selectCategory(category: Category)
 }
@@ -95,7 +95,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
         _state.update { it.copy(filtersOpen = !it.filtersOpen) }
     }
 
-    override fun onDocumentClick(product: ProductData) {
+    override fun onDocumentClick(product: String) {
         val document = Json.encodeToString(product)
         val encodeUrl = urlEncode.encodeToUrl(document)
         navigator.navigateToDocument(encodeUrl)
