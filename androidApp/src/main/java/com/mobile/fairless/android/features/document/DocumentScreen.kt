@@ -107,9 +107,7 @@ fun DocumentScreen(
                 .background(colors.backgroundWelcome)
         ) {
             item {
-                Column(Modifier.padding(top = 28.dp)) {
-                    DocumentTopBar(product = state.value.product, viewModelWrapper = viewModelWrapper)
-                }
+                DocumentTopBar(product = state.value.product, viewModelWrapper = viewModelWrapper)
             }
             item {
                 DocumentLayout(

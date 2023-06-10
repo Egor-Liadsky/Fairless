@@ -78,6 +78,58 @@ fun DocumentLayout(
             )
         )
 
+        if (product.promo_code != null) {
+            Column(modifier = Modifier
+                .padding(top = 20.dp)
+                .border(0.5.dp, colors.black, RoundedCornerShape(5.dp))
+                .clip(RoundedCornerShape(5.dp))
+                .clickable {
+                    val clipboard =
+                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    clipboard.setPrimaryClip(
+                        ClipData.newPlainText(
+                            "Промокод",
+                            product.promo_code
+                        )
+                    )
+                    Toast
+                        .makeText(context, "Скопировано", Toast.LENGTH_SHORT)
+                        .show()
+                }) {
+                Row(
+                    modifier = Modifier
+                        .padding(5.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = product.promo_code!!,
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = colors.black
+                        ),
+                        modifier = Modifier.padding(end = 10.dp)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_copy),
+                        contentDescription = "ic_copy",
+                        modifier = Modifier.size(20.dp),
+                        tint = colors.black
+                    )
+                }
+            }
+
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp)
+                    .height(0.35.dp),
+                Color(0xFFB9B9B9)
+            )
+        }
+
         if (product.sale_price != null) {
             Row(
                 modifier = Modifier
@@ -162,10 +214,6 @@ fun DocumentLayout(
                     ),
                 )
             }
-//            RatingView(
-//                likes = product.count_likes?.toInt() ?: 0,
-//                dislikes = product.count_dislikes?.toInt() ?: 0
-//            )
         }
 
         Divider(
@@ -194,14 +242,14 @@ fun DocumentLayout(
                 if (product.count_likes != null) {
                     IconButton(
                         modifier = Modifier
-                            .width(16.dp)
-                            .height(12.dp),
+                            .width(32.dp)
+                            .height(24.dp),
                         onClick = { viewModelWrapper.viewModel.reactionDocument(true) }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_like),
                             contentDescription = "ic_like",
                             modifier = Modifier
-                                .size(width = 16.dp, height = 12.dp)
+                                .size(width = 32.dp, height = 24.dp)
                         )
                     }
                     Text(
@@ -209,31 +257,31 @@ fun DocumentLayout(
                         style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
+                            fontSize = 20.sp,
                             color = colors.black
                         ),
-                        modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+                        modifier = Modifier.padding(start = 8.dp, end = 16.dp),
                     )
                 }
 
                 if (product.count_dislikes != null) {
                     IconButton(
                         modifier = Modifier
-                            .width(16.dp)
-                            .height(12.dp),
+                            .width(32.dp)
+                            .height(24.dp),
                         onClick = { viewModelWrapper.viewModel.reactionDocument(false) }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_dislike),
                             contentDescription = "ic_dislike",
                             modifier = Modifier
-                                .size(width = 16.dp, height = 12.dp)
+                                .size(width = 32.dp, height = 24.dp)
                         )
                     }
                     Text(
                         text = product.count_dislikes ?: "", style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
+                            fontSize = 20.sp,
                             color = colors.black
                         ), modifier = Modifier.padding(start = 8.dp)
                     )
@@ -270,51 +318,5 @@ fun DocumentLayout(
                 viewModelWrapper.viewModel.openProductUrl(product)
             }
         }
-
-
-//        if (product.promo_code != null) {
-//            Column(modifier = Modifier
-//                .border(0.5.dp, colors.black, RoundedCornerShape(5.dp))
-//                .clip(
-//                    RoundedCornerShape(5.dp)
-//                )
-//                .clickable {
-//                    val clipboard =
-//                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-//                    clipboard.setPrimaryClip(
-//                        ClipData.newPlainText(
-//                            "Промокод",
-//                            product.promo_code
-//                        )
-//                    )
-//                    Toast
-//                        .makeText(context, "Скопировано", Toast.LENGTH_SHORT)
-//                        .show()
-//                }) {
-//                Row(
-//                    modifier = Modifier
-//                        .padding(5.dp),
-//                    verticalAlignment = Alignment.CenterVertically,
-//                    horizontalArrangement = Arrangement.SpaceBetween
-//                ) {
-//                    Text(
-//                        text = product.promo_code!!,
-//                        style = TextStyle(
-//                            fontFamily = fontQanelas,
-//                            fontWeight = FontWeight.SemiBold,
-//                            fontSize = 15.sp,
-//                            color = colors.black
-//                        ),
-//                        modifier = Modifier.padding(end = 10.dp)
-//                    )
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.ic_copy),
-//                        contentDescription = "ic_copy",
-//                        modifier = Modifier.size(20.dp),
-//                        tint = colors.black
-//                    )
-//                }
-//            }
-//        }
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -55,7 +56,7 @@ fun FireButton(
                 .fillMaxWidth()
                 .padding(top = 7.dp)
                 .background(colors.navBar, shape = RoundedCornerShape(5.dp))
-                .border(0.5.dp, colors.black, RoundedCornerShape(5.dp))
+                .border(0.5.dp, Color(0xFFA7ACAF), RoundedCornerShape(5.dp))
                 .clip(RoundedCornerShape(5.dp))
                 .clickable {
                     periodClick()
@@ -68,7 +69,7 @@ fun FireButton(
                     fontFamily = fontQanelas,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
-                    color = colors.black
+                    color = Color(0xFFA7ACAF)
                 ), modifier = Modifier.padding(horizontal = 10.dp, vertical = 12.dp)
             )
             Row(
@@ -78,10 +79,10 @@ fun FireButton(
                 horizontalArrangement = Arrangement.End
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_next),
-                    contentDescription = "ic_next",
-                    modifier = Modifier.size(width = 5.dp, height = 11.dp),
-                    tint = colors.black
+                    painter = painterResource(id = R.drawable.ic_arrow_bottom),
+                    contentDescription = "ic_arrow_bottom",
+                    modifier = Modifier.size(10.dp),
+                    tint = Color(0xFFA7ACAF)
                 )
             }
 
