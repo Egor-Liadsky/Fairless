@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -105,7 +106,9 @@ fun DocumentScreen(
                 .background(colors.backgroundWelcome)
         ) {
             item {
-                DocumentTopBar(product = state.value.product, viewModelWrapper = viewModelWrapper)
+                Column(Modifier.padding(top = 28.dp)) {
+                    DocumentTopBar(product = state.value.product, viewModelWrapper = viewModelWrapper)
+                }
             }
             item {
                 DocumentLayout(

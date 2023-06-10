@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -21,11 +22,16 @@ import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 
 @Composable
-fun DefaultButton(modifier: Modifier = Modifier, title: String, onClick: () -> Unit) {
+fun DefaultButton(
+    modifier: Modifier = Modifier,
+    background: Color = colors.navBar,
+    title: String,
+    onClick: () -> Unit
+) {
     Column {
         Button(
             onClick = { onClick() },
-            colors = ButtonDefaults.buttonColors(backgroundColor = colors.navBar),
+            colors = ButtonDefaults.buttonColors(backgroundColor = background),
             elevation = ButtonDefaults.elevation(defaultElevation = 0.dp, pressedElevation = 0.dp),
             contentPadding = PaddingValues(),
         ) {
@@ -37,7 +43,8 @@ fun DefaultButton(modifier: Modifier = Modifier, title: String, onClick: () -> U
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = title, style = TextStyle(
+                    text = title,
+                    style = TextStyle(
                         fontFamily = fontQanelas,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,

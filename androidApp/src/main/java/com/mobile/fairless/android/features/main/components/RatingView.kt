@@ -15,10 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun RatingView(
+    width: Dp = 68.dp,
+    height: Dp = 13.dp,
+    boxSize: Dp = 10.dp,
     likes: Int,
     dislikes: Int
 ) {
@@ -35,8 +39,8 @@ fun RatingView(
 
     Row(
         Modifier
-            .width(68.dp)
-            .height(13.dp)
+            .width(width)
+            .height(height)
             .border(1.dp, Color(0xFFDDDDDD), shape = RoundedCornerShape(2.dp)),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -52,7 +56,7 @@ fun RatingView(
                     Box(
                         modifier = Modifier
                             .background(colors[item], shape = RoundedCornerShape(2.dp))
-                            .size(10.dp)
+                            .size(boxSize)
                     )
                 }
             }

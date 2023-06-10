@@ -1,6 +1,7 @@
 package com.mobile.fairless.android.features.main.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,9 +39,11 @@ import com.mobile.fairless.features.main.models.ProductData
 @Composable
 fun ProductItem(product: ProductData, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.padding(vertical = 10.dp),
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .border(0.5.dp, Color(0xFFE1E1E1), RoundedCornerShape(10.dp)),
         onClick = { onClick() },
-        elevation = 2.dp,
+//        elevation = 2.dp,
         shape = RoundedCornerShape(10.dp)
     ) {
         Row(
@@ -135,7 +138,8 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 5.dp),
+                        .padding(bottom = 5.dp)
+                        .height(0.35.dp),
                     colors.grayDivider
                 )
 
@@ -159,15 +163,12 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                                     fontFamily = fontQanelas,
                                     fontWeight = FontWeight.SemiBold,
                                     fontSize = 9.sp,
-                                    color = Color(0xFF000000)
+                                    color = colors.black
                                 ), modifier = Modifier.padding(start = 6.dp)
                             )
                         }
                     }
 
-//                    if (product.count_dislikes != "0" || product.count_likes != "0") {
-//
-//                    }
                     RatingView(
                         likes = product.count_likes?.toInt() ?: 0,
                         dislikes = product.count_dislikes?.toInt() ?: 0
@@ -177,7 +178,8 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 6.dp, bottom = 10.dp),
+                        .padding(top = 6.dp, bottom = 10.dp)
+                        .height(0.35.dp),
                     colors.grayDivider
                 )
 

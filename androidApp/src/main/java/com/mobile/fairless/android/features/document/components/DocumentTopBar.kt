@@ -32,7 +32,7 @@ fun DocumentTopBar(
         modifier = Modifier
             .background(
                 colors.white,
-                shape = RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp)
+                shape = RoundedCornerShape(15.dp)
             )
             .fillMaxSize()
             .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 40.dp),
@@ -40,7 +40,7 @@ fun DocumentTopBar(
     ) {
         SquareButton(
             icon = painterResource(id = R.drawable.ic_back_button),
-            backgroundColor = colors.backgroundWelcome
+            backgroundColor = colors.backgroundWelcome, iconSize = 15.dp
         ) {
             viewModelWrapper.viewModel.onBackButtonClick()
         }
