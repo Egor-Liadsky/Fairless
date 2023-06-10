@@ -53,7 +53,6 @@ fun RatingView(
                         modifier = Modifier
                             .background(colors[item], shape = RoundedCornerShape(2.dp))
                             .size(10.dp)
-                            .padding(horizontal = 3.dp)
                     )
                 }
             }

@@ -38,8 +38,7 @@ import com.mobile.fairless.features.main.models.ProductData
 @Composable
 fun ProductItem(product: ProductData, onClick: () -> Unit) {
     Card(
-        modifier = Modifier
-            .padding(vertical = 10.dp, horizontal = 10.dp),
+        modifier = Modifier.padding(vertical = 10.dp),
         onClick = { onClick() },
         elevation = 2.dp,
         shape = RoundedCornerShape(10.dp)
@@ -133,48 +132,47 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                     )
                 }
 
-//                if (product.users_permissions_user != null) {
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 5.dp),
-                        colors.grayDivider
-                    )
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 5.dp),
+                    colors.grayDivider
+                )
 
-                    Row(
-                        Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        if(product.users_permissions_user != null){
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.avatarka),
-                                    contentDescription = "avatarka",
-                                    modifier = Modifier
-                                        .size(16.dp)
-                                        .clip(RoundedCornerShape(2.dp))
-                                )
-                                Text(
-                                    text = product.users_permissions_user!!.username ?: "",
-                                    style = TextStyle(
-                                        fontFamily = fontQanelas,
-                                        fontWeight = FontWeight.SemiBold,
-                                        fontSize = 9.sp,
-                                        color = Color(0xFF000000)
-                                    ), modifier = Modifier.padding(start = 6.dp)
-                                )
-                            }
-                        }
-
-                        if (product.count_dislikes != "0" || product.count_likes != "0"){
-                            RatingView(
-                                likes = product.count_likes?.toInt() ?: 0,
-                                dislikes = product.count_dislikes?.toInt() ?: 0
+                Row(
+                    Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = if (product.users_permissions_user != null) Arrangement.SpaceBetween else Arrangement.End
+                ) {
+                    if (product.users_permissions_user != null) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Image(
+                                painter = painterResource(id = R.drawable.avatarka),
+                                contentDescription = "avatarka",
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .clip(RoundedCornerShape(2.dp))
+                            )
+                            Text(
+                                text = product.users_permissions_user!!.username ?: "",
+                                style = TextStyle(
+                                    fontFamily = fontQanelas,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 9.sp,
+                                    color = Color(0xFF000000)
+                                ), modifier = Modifier.padding(start = 6.dp)
                             )
                         }
                     }
-//                }
+
+//                    if (product.count_dislikes != "0" || product.count_likes != "0") {
+//
+//                    }
+                    RatingView(
+                        likes = product.count_likes?.toInt() ?: 0,
+                        dislikes = product.count_dislikes?.toInt() ?: 0
+                    )
+                }
 
                 Divider(
                     modifier = Modifier

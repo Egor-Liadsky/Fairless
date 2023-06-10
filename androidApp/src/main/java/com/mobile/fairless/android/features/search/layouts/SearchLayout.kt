@@ -155,7 +155,7 @@ fun SearchLayout(
                         .background(colors.white)
                 ) {
                     items(items = state.value.products ?: emptyList()) { product ->
-                        Column {
+                        Column(Modifier.padding(horizontal = 16.dp)) {
                             ProductItem(product = product) {
                                 viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
                             }
