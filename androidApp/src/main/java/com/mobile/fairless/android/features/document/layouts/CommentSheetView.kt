@@ -46,6 +46,7 @@ import kotlinx.coroutines.launch
 fun CommentSheetView(
     sheetState: ModalBottomSheetState,
     state: State<DocumentState>,
+    getChat: () -> Unit,
     sendCommentOnClick: () -> Unit,
     onValueChanged: (String) -> Unit,
 ) {
@@ -55,6 +56,8 @@ fun CommentSheetView(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
+
+    getChat()
 
     ModalBottomSheetLayout(
         modifier = Modifier.fillMaxSize(),

@@ -84,7 +84,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 17.dp),
+                        .padding(top = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -123,7 +123,15 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                             )
                         }
                     }
+                }
 
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
                         text = product.shop?.name ?: "",
                         style = TextStyle(
@@ -133,7 +141,50 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                             color = colors.black
                         ),
                     )
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (product.count_likes != null) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_like),
+                                contentDescription = "ic_like",
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .size(width = 14.dp, height = 11.dp),
+                                tint = colors.black
+                            )
+                            Text(
+                                text = product.count_likes ?: "",
+                                style = TextStyle(
+                                    fontFamily = fontQanelas,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 10.sp,
+                                    color = colors.black
+                                ),
+                            )
+                        }
+
+                        if (product.count_dislikes != null) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_dislike),
+                                contentDescription = "ic_dislike",
+                                modifier = Modifier
+                                    .padding(start = 10.dp, end = 8.dp)
+                                    .size(width = 14.dp, height = 11.dp),
+                                tint = colors.black
+                            )
+                            Text(
+                                text = product.count_dislikes ?: "",
+                                style = TextStyle(
+                                    fontFamily = fontQanelas,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 10.sp,
+                                    color = colors.black
+                                ),
+                            )
+                        }
+                    }
                 }
+
 
                 Divider(
                     modifier = Modifier
@@ -227,45 +278,20 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                     }
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        if (product.count_likes != null) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_like),
-                                contentDescription = "ic_like",
-                                modifier = Modifier
-                                    .padding(end = 8.dp)
-                                    .size(width = 14.dp, height = 11.dp),
-                                tint = colors.black
-                            )
-                            Text(
-                                text = product.count_likes ?: "",
-                                style = TextStyle(
-                                    fontFamily = fontQanelas,
-                                    fontWeight = FontWeight.Normal,
-                                    fontSize = 10.sp,
-                                    color = colors.black
-                                ),
-                            )
-                        }
-
-                        if (product.count_dislikes != null) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_dislike),
-                                contentDescription = "ic_dislike",
-                                modifier = Modifier
-                                    .padding(start = 10.dp, end = 8.dp)
-                                    .size(width = 14.dp, height = 11.dp),
-                                tint = colors.black
-                            )
-                            Text(
-                                text = product.count_dislikes ?: "",
-                                style = TextStyle(
-                                    fontFamily = fontQanelas,
-                                    fontWeight = FontWeight.Normal,
-                                    fontSize = 10.sp,
-                                    color = colors.black
-                                ),
-                            )
-                        }
+                        Text(
+                            text = product.stock_type?.name ?: "", style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 10.sp,
+                                color = colors.orangeMain
+                            ), modifier = Modifier.padding(end = 2.dp)
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_thunder),
+                            contentDescription = "ic_thunder",
+                            modifier = Modifier.size(width = 8.dp, height = 11.dp),
+                            tint = colors.orangeMain
+                        )
                     }
                 }
             }
