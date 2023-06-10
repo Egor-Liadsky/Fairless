@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -42,8 +45,11 @@ import com.mobile.fairless.android.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.document.components.FireProductItem
+import com.mobile.fairless.android.features.main.components.RatingView
+import com.mobile.fairless.android.features.profile.components.DefaultButton
 import com.mobile.fairless.android.features.views.buttons.CommonButton
 import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
+import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.features.views.buttons.ShapeButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
@@ -63,106 +69,20 @@ fun DocumentLayout(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)) {
+    Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 16.dp)) {
         Text(
             text = product.name ?: "", style = TextStyle(
                 fontFamily = fontQanelas,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
                 fontSize = 20.sp
             )
         )
 
-        if (product.sale_price != null) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "${product.sale_price} ₽",
-                    style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                        color = colors.orangeMain
-                    )
-                )
-                Text(
-                    text = "${product.sale_old_price} ₽",
-                    style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = colors.black,
-                        textDecoration = TextDecoration.LineThrough
-                    ),
-                    modifier = Modifier.padding(start = 15.dp)
-                )
-                Text(
-                    text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
-                    style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = colors.black,
-                    ),
-                    modifier = Modifier.padding(start = 15.dp)
-                )
-            }
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = product.shop?.name ?: "",
-                style = TextStyle(
-                    fontFamily = fontQanelas,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
-                    color = colors.black
-                ),
-            )
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                if (product.count_likes != null) {
-                    IconButton(
-                        modifier = Modifier.padding(end = 3.dp),
-                        onClick = { viewModelWrapper.viewModel.reactionDocument(true) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_like),
-                            contentDescription = "ic_like",
-                            modifier = Modifier
-                                .size(20.dp)
-                        )
-                    }
-                    Text(text = product.count_likes ?: "")
-                }
-
-                if (product.count_dislikes != null) {
-                    IconButton(
-                        modifier = Modifier.padding(start = 20.dp, end = 3.dp),
-                        onClick = { viewModelWrapper.viewModel.reactionDocument(false) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_dislike),
-                            contentDescription = "ic_dislike",
-                            modifier = Modifier
-                                .size(20.dp)
-                        )
-                    }
-                    Text(text = product.count_dislikes ?: "")
-                }
-            }
-        }
-
         if (product.promo_code != null) {
             Column(modifier = Modifier
+                .padding(top = 20.dp)
                 .border(0.5.dp, colors.black, RoundedCornerShape(5.dp))
-                .clip(
-                    RoundedCornerShape(5.dp)
-                )
+                .clip(RoundedCornerShape(5.dp))
                 .clickable {
                     val clipboard =
                         context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -200,53 +120,203 @@ fun DocumentLayout(
                     )
                 }
             }
+
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp)
+                    .height(0.35.dp),
+                Color(0xFFB9B9B9)
+            )
+        }
+
+        if (product.sale_price != null) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "${product.sale_price} ₽",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        color = colors.orangeMain
+                    )
+                )
+                Text(
+                    text = "${product.sale_old_price} ₽",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp,
+                        color = colors.black,
+                        textDecoration = TextDecoration.LineThrough
+                    ),
+                    modifier = Modifier.padding(start = 10.dp)
+                )
+                Text(
+                    text = "(-${100 - ((product.sale_price!! * 100) / product.sale_old_price!!)}%)",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp,
+                        color = colors.black,
+                    ),
+                    modifier = Modifier.padding(start = 10.dp)
+                )
+            }
         }
 
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 5.dp, top = 10.dp),
-            colors.grayDivider
+                .padding(vertical = 20.dp)
+                .height(0.35.dp),
+            Color(0xFFB9B9B9)
         )
 
-        if (product.users_permissions_user != null) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = R.drawable.avatarka),
-                    contentDescription = "avatarka",
-                    modifier = Modifier
-                        .size(30.dp)
-                        .padding(end = 10.dp)
+
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = if (product.users_permissions_user != null) Arrangement.SpaceBetween else Arrangement.End
+        ) {
+            if (product.users_permissions_user != null) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.avatarka),
+                        contentDescription = "avatarka",
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clip(RoundedCornerShape(2.dp))
+                    )
+                    Text(
+                        text = product.users_permissions_user!!.username ?: "",
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colors.black
+                        ), modifier = Modifier.padding(start = 6.dp)
+                    )
+                }
+
+                Text(
+                    text = product.shop?.name ?: "",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp,
+                        color = colors.black
+                    ),
                 )
-                Text(text = product.users_permissions_user!!.username ?: "")
             }
         }
 
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            ShapeButton(title = "Комментарии", modifier = Modifier.padding(top = 10.dp)) {
-                scope.launch { sheetState.show() }
-            }
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp)
+                .height(0.35.dp),
+            Color(0xFFB9B9B9)
+        )
 
-            CommonButton(
-                commonButtonParams = CommonButtonParams(
-                    title = "Перейти к скидке",
-                    titleColor = colors.white,
-                    background = colors.orangeMain
-                ), modifier = Modifier.padding(top = 10.dp)
-            ) {
-                viewModelWrapper.viewModel.openProductUrl(product)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+
+            RatingView(
+                width = 127.dp,
+                height = 25.dp,
+                boxSize = 20.dp,
+                likes = product.count_likes?.toInt() ?: 0,
+                dislikes = product.count_dislikes?.toInt() ?: 0
+            )
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (product.count_likes != null) {
+                    IconButton(
+                        modifier = Modifier
+                            .width(32.dp)
+                            .height(24.dp),
+                        onClick = { viewModelWrapper.viewModel.reactionDocument(true) }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_like),
+                            contentDescription = "ic_like",
+                            modifier = Modifier
+                                .size(width = 32.dp, height = 24.dp)
+                        )
+                    }
+                    Text(
+                        text = product.count_likes ?: "",
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 20.sp,
+                            color = colors.black
+                        ),
+                        modifier = Modifier.padding(start = 8.dp, end = 16.dp),
+                    )
+                }
+
+                if (product.count_dislikes != null) {
+                    IconButton(
+                        modifier = Modifier
+                            .width(32.dp)
+                            .height(24.dp),
+                        onClick = { viewModelWrapper.viewModel.reactionDocument(false) }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_dislike),
+                            contentDescription = "ic_dislike",
+                            modifier = Modifier
+                                .size(width = 32.dp, height = 24.dp)
+                        )
+                    }
+                    Text(
+                        text = product.count_dislikes ?: "", style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 20.sp,
+                            color = colors.black
+                        ), modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
             }
         }
+
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 15.dp)
+                .height(0.35.dp),
+            Color(0xFFB9B9B9)
+        )
 
         Text(
             text = product.description ?: "",
             style = TextStyle(
                 fontFamily = fontQanelas,
                 fontWeight = FontWeight.Normal,
-                fontSize = 15.sp,
+                fontSize = 12.sp,
                 color = colors.black,
             ),
-            modifier = Modifier.padding(top = 25.dp)
         )
+
+        Column(Modifier.padding(top = 15.dp)) {
+            DefaultButton(title = "Комментарии", background = colors.white) {
+                scope.launch { sheetState.show() }
+            }
+        }
+
+        Column(Modifier.padding(top = 10.dp)) {
+            GradientButton(Modifier.fillMaxWidth(), title = "Перейти к скидке") {
+                viewModelWrapper.viewModel.openProductUrl(product)
+            }
+        }
     }
 }

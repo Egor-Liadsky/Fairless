@@ -22,6 +22,11 @@ interface MenuViewModel : StatefulKmpViewModel<MenuState>, SubScreenViewModel {
 
     fun navigateToProfile()
     fun getProfile()
+    fun navigateToAboutFairLess()
+    fun navigateToRules()
+    fun navigateToFaq()
+    fun navigateToFeedback()
+    fun navigateToAboutApp()
 }
 
 class MenuViewModelImpl(override val navigator: Navigator) : StatefulKmpViewModelImpl<MenuState>(), KoinComponent,
@@ -43,6 +48,26 @@ class MenuViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
 
     override fun getProfile() {
         _state.update { it.copy(user = prefService.getUserInfo() ?: UserReceive()) }
+    }
+
+    override fun navigateToAboutFairLess() {
+        navigator.navigateToAboutFairLess()
+    }
+
+    override fun navigateToRules() {
+        navigator.navigateToRules()
+    }
+
+    override fun navigateToFaq() {
+        navigator.navigateToFaq()
+    }
+
+    override fun navigateToFeedback() {
+        navigator.navigateToFeedback()
+    }
+
+    override fun navigateToAboutApp() {
+        navigator.navigateToAboutApp()
     }
 }
 

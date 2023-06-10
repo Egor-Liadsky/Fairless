@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Product(
     val data: List<ProductData>? = null,
-    val count: Int = 0
+    val count: Int? = null
 )
 
 @Serializable

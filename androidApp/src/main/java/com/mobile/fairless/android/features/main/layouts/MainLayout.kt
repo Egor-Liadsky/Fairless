@@ -3,6 +3,7 @@ package com.mobile.fairless.android.features.main.layouts
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -49,11 +50,14 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(items = state.value.products.data ?: emptyList()) { product ->
-                    Column {
+                    Column(Modifier.padding(horizontal = 16.dp)) {
                         ProductItem(product = product) {
                             viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
                         }
                     }
+                }
+                item{
+                    Spacer(modifier = Modifier.padding(bottom = 16.dp))
                 }
             }
         }

@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -33,6 +35,7 @@ import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.document.components.FireButton
 import com.mobile.fairless.android.features.document.components.FireProductItem
+import com.mobile.fairless.android.features.main.components.ProductItem
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.document.state.DocumentState
@@ -79,44 +82,16 @@ fun FireProductsLayout(viewModelWrapper: StatefulViewModelWrapper<DocumentViewMo
             viewModelWrapper.viewModel.selectFirePeriod(it)
         }
 
-        Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.SpaceBetween) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                FireProductItem(product = state.value.fireProduct[0]) {
-                    viewModelWrapper.viewModel.onDocumentClick(
-                        state.value.fireProduct[0].name ?: ""
-                    )
-                }
-                if (state.value.fireProduct.size > 1) {
-                    FireProductItem(product = state.value.fireProduct[1]) {
-                        viewModelWrapper.viewModel.onDocumentClick(
-                            state.value.fireProduct[1].name ?: ""
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                if (state.value.fireProduct.size > 2) {
-                    FireProductItem(product = state.value.fireProduct[2]) {
-                        viewModelWrapper.viewModel.onDocumentClick(
-                            state.value.fireProduct[2].name ?: ""
-                        )
-                    }
-                }
-                if (state.value.fireProduct.size > 3) {
-                    FireProductItem(product = state.value.fireProduct[3]) {
-                        viewModelWrapper.viewModel.onDocumentClick(
-                            state.value.fireProduct[3].name ?: ""
-                        )
+        Column(Modifier.padding(bottom = 16.dp)) {
+            state.value.fireProduct.forEach { product ->
+                Column(Modifier.padding(horizontal = 16.dp)) {
+                    ProductItem(product = product) {
+                        viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
                     }
                 }
             }
         }
+
     } else {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             CircularProgressIndicator(

@@ -58,6 +58,26 @@ class NavigatorImpl(
         navController.navigate("${ScreenRoute.Document.name}/$product")
     }
 
+    override fun navigateToAboutFairLess() {
+        navController.navigate(ScreenRoute.AboutFairLess.name)
+    }
+
+    override fun navigateToRules() {
+        navController.navigate(ScreenRoute.Rules.name)
+    }
+
+    override fun navigateToFeedback() {
+        navController.navigate(ScreenRoute.Feedback.name)
+    }
+
+    override fun navigateToFaq() {
+        navController.navigate(ScreenRoute.Faq.name)
+    }
+
+    override fun navigateToAboutApp() {
+        navController.navigate(ScreenRoute.AboutApp.name)
+    }
+
     private fun navigateToNavBarDestination(root: ScreenRoute) {
         navController.navigate(root.name) {
             popUpTo(navController.graph.id) {

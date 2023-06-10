@@ -72,7 +72,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         super.onViewShown()
         getDocument()
         getFireProducts(state.value.selectFirePeriod.period)
-        getCommentsByDocument(state.value.product._id ?: "")
+//        getCommentsByDocument(state.value.product._id ?: "")
         checkUser()
     }
 
@@ -84,7 +84,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     _state.update { it.copy(product = document) }
                 },
                 failureBlock = {
-                    errorService.showError("Проверьте соеденение с интернетом.")
+                    errorService.showError("Ошибка")
                 }
             )
         }

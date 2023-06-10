@@ -78,6 +78,7 @@ fun SearchTopBar(
             value = state.value.searchString,
             onValueChange = {
                 onSearchChange(it)
+                onSearchClick()
             },
             singleLine = true,
             textStyle = TextStyle(

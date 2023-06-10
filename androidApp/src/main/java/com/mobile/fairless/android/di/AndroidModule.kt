@@ -4,6 +4,16 @@ import com.mobile.fairless.android.navigation.AndroidNavigator
 import com.mobile.fairless.android.navigation.NavigatorImpl
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.AboutAppViewModel
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.AboutAppViewModelImpl
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.AboutFairLessViewModel
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.AboutFairLessViewModelImpl
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FaqViewModel
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FaqViewModelImpl
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FeedbackViewModel
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FeedbackViewModelImpl
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.RulesViewModel
+import com.mobile.fairless.features.additional.aboutFairLess.viewModel.RulesViewModelImpl
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.document.viewModel.DocumentViewModelImpl
@@ -42,6 +52,27 @@ fun androidModule() = module {
 
     viewModel(named("AuthViewModel")) {
         ViewModelWrapper<AuthViewModel>(AuthViewModelImpl(get()))
+    }
+
+    viewModel(named("AboutFairLessViewModel")) {
+        ViewModelWrapper<AboutFairLessViewModel>(AboutFairLessViewModelImpl(get()))
+    }
+
+    viewModel(named("RulesViewModel")) {
+        ViewModelWrapper<RulesViewModel>(RulesViewModelImpl(get()))
+    }
+
+
+    viewModel(named("FeedbackViewModel")) {
+        ViewModelWrapper<FeedbackViewModel>(FeedbackViewModelImpl(get()))
+    }
+
+    viewModel(named("FaqViewModel")) {
+        ViewModelWrapper<FaqViewModel>(FaqViewModelImpl(get()))
+    }
+
+    viewModel(named("AboutAppViewModel")) {
+        ViewModelWrapper<AboutAppViewModel>(AboutAppViewModelImpl(get()))
     }
 
     viewModel(named("RegisterViewModel")) {

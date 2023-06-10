@@ -26,6 +26,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
+import com.mobile.fairless.android.features.additional.AboutApp.AboutAppScreen
+import com.mobile.fairless.android.features.additional.AboutFairLess.AboutFairLess
+import com.mobile.fairless.android.features.additional.Faq.FaqScreen
+import com.mobile.fairless.android.features.additional.Feedback.FeedbackScreen
+import com.mobile.fairless.android.features.additional.Rules.RulesScreen
 import com.mobile.fairless.android.features.document.DocumentScreen
 import com.mobile.fairless.android.features.main.MainScreen
 import com.mobile.fairless.android.features.menu.MenuScreen
@@ -134,6 +139,21 @@ fun MainNavigationScreen(
             }
             composable(route = ScreenRoute.Register.name) {
                 RegisterScreen()
+            }
+            composable(route = ScreenRoute.AboutFairLess.name){
+                AboutFairLess()
+            }
+            composable(route = ScreenRoute.Rules.name){
+                RulesScreen()
+            }
+            composable(route = ScreenRoute.Faq.name){
+                FaqScreen()
+            }
+            composable(route = ScreenRoute.Feedback.name){
+                FeedbackScreen()
+            }
+            composable(route = ScreenRoute.AboutApp.name){
+                AboutAppScreen()
             }
             composable(
                 route = "${ScreenRoute.Document.name}/{product}",

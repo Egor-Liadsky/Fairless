@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -155,11 +156,14 @@ fun SearchLayout(
                         .background(colors.white)
                 ) {
                     items(items = state.value.products ?: emptyList()) { product ->
-                        Column {
+                        Column(Modifier.padding(horizontal = 16.dp)) {
                             ProductItem(product = product) {
-                                viewModelWrapper.viewModel.onDocumentClick(product)
+                                viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
                             }
                         }
+                    }
+                    item{
+                        Spacer(modifier = Modifier.padding(bottom = 16.dp))
                     }
                 }
             }

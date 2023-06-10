@@ -28,6 +28,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun getProductsByCategory()
     fun selectCategory(category: Category)
     fun onDocumentClick(product: String)
+    fun onProfileClick()
 }
 
 class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
@@ -100,6 +101,15 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         val document = Json.encodeToString(product)
         val encodeUrl = urlEncode.encodeToUrl(document)
         navigator.navigateToDocument(encodeUrl)
+    }
+
+    override fun onProfileClick() {
+        val data = prefService.getUserInfo()
+        if (data?.user == null) {
+            navigator.navigateToAuth()
+        } else {
+            navigator.navigateToProfile()
+        }
     }
 
     private fun setLoading(isLoading: Boolean) {

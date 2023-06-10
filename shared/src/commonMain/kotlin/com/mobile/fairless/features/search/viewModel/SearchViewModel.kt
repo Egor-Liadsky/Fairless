@@ -10,6 +10,8 @@ import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.service.SearchService
 import com.mobile.fairless.features.search.state.SearchState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,7 +32,7 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun selectFilters(name: String)
     fun popularFilterOpen()
     fun filtersOpen()
-    fun onDocumentClick(product: ProductData)
+    fun onDocumentClick(product: String)
     fun getCategories()
     fun selectCategory(category: Category)
 }
@@ -45,18 +47,21 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
     private val _state = MutableStateFlow(SearchState())
     override val state: StateFlow<SearchState> = _state.asStateFlow()
 
+    private var job: Job? = null
+
     override fun onViewShown() {
         super.onViewShown()
         getCategories()
     }
 
     override fun searchProducts(name: String) {
-        scope.launch {
+        job?.cancel()
+        job = scope.launch {
             exceptionHandleable(
                 executionBlock = {
+                    delay(300)
                     setLoading(true)
                     _state.update { it.copy(products = searchService.searchProducts(name)) }
-                    println("kjhsdkjfhkjsdf        ||       $name")
                     setLoading(false)
                 },
                 failureBlock = {
@@ -90,7 +95,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
         _state.update { it.copy(filtersOpen = !it.filtersOpen) }
     }
 
-    override fun onDocumentClick(product: ProductData) {
+    override fun onDocumentClick(product: String) {
         val document = Json.encodeToString(product)
         val encodeUrl = urlEncode.encodeToUrl(document)
         navigator.navigateToDocument(encodeUrl)

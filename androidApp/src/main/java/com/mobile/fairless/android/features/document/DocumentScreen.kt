@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -90,6 +91,7 @@ fun DocumentScreen(
             CommentSheetView(
                 sheetState = sheetState,
                 state = state,
+                getChat = { viewModelWrapper.viewModel.getCommentsByDocument(state.value.product.id ?: "") },
                 sendCommentOnClick = {
                     viewModelWrapper.viewModel.sendComment(
                         state.value.commentText?.lines()?.joinToString(" ") ?: ""
