@@ -1,6 +1,5 @@
 package com.mobile.fairless.android.features.document.layouts
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -35,10 +34,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.features.views.buttons.GradientButton
+import com.mobile.fairless.android.features.views.layouts.EmptyLayout
+import com.mobile.fairless.android.features.views.layouts.ErrorLayout
+import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.document.state.DocumentState
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -72,54 +76,98 @@ fun CommentSheetView(
             )
         },
     ) {
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp, bottom = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
 
-            ) {
-            Divider(
-                Modifier
-                    .width(30.dp)
-                    .clip(RoundedCornerShape(2.dp))
-                    .padding(top = 10.dp, bottom = 10.dp),
-                color = colors.navBar,
-                thickness = 3.dp
+        when (state.value.loadingStateComment) {
+            LoadingState.Loading -> {
+                LoadingLayout()
+            }
+
+            LoadingState.Success -> {
+                CommentSheetLayout(state, scope, sheetStateSendComment, refreshClick = { getChat() })
+            }
+
+            LoadingState.Empty -> {
+                CommentSheetLayout(state, scope, sheetStateSendComment, refreshClick = { getChat() })
+            }
+
+            is LoadingState.Error -> {
+                CommentSheetLayout(state, scope, sheetStateSendComment, refreshClick = { getChat() })
+            }
+
+            else -> {}
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun CommentSheetLayout(
+    state: State<DocumentState>,
+    scope: CoroutineScope,
+    sheetStateSendComment: ModalBottomSheetState,
+    refreshClick: () -> Unit
+) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(start = 16.dp, end = 16.dp, bottom = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+
+        ) {
+        Divider(
+            Modifier
+                .width(30.dp)
+                .clip(RoundedCornerShape(2.dp))
+                .padding(top = 10.dp, bottom = 10.dp),
+            color = colors.navBar,
+            thickness = 3.dp
+        )
+
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "Комментарии", style = TextStyle(
+                    fontFamily = fontQanelas,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 20.sp,
+                    color = colors.black
+                ), modifier = Modifier.padding(bottom = 20.dp)
             )
 
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "Комментарии", style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 20.sp,
-                        color = colors.black
-                    ), modifier = Modifier.padding(bottom = 20.dp)
-                )
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+
+                if (state.value.loadingStateComment == LoadingState.Empty) {
+                    Column(Modifier.align(Alignment.Center)) {
+                        EmptyLayout()
+                    }
+                } else if (state.value.loadingStateComment == LoadingState.Success) {
+                    LazyColumn(
+                        Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(bottom = 60.dp)
+                    ) {
+                        items(items = state.value.comments ?: emptyList()) { comment ->
+                            CommentItem(
+                                modifier = Modifier.padding(bottom = 5.dp),
+                                comment = comment
+                            )
+                        }
+                    }
+                } else {
+                    ErrorLayout(onClick = { refreshClick() })
+                }
 
                 if (state.value.authUser) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.BottomCenter
+                    GradientButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter),
+                        title = "Добавить комментарий"
                     ) {
-                        LazyColumn(
-                            Modifier
-                                .align(Alignment.TopCenter)
-                                .padding(bottom = 60.dp)) {
-                            items(items = state.value.comments ?: emptyList()) { comment ->
-                                CommentItem(modifier = Modifier.padding(bottom = 5.dp), comment = comment)
-                            }
-                        }
-
-                        GradientButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.BottomCenter),
-                            title = "Добавить комментарий"
-                        ) {
-                            scope.launch { sheetStateSendComment.show() }
-                        }
+                        scope.launch { sheetStateSendComment.show() }
                     }
                 }
             }

@@ -36,8 +36,12 @@ import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.document.components.FireButton
 import com.mobile.fairless.android.features.document.components.FireProductItem
 import com.mobile.fairless.android.features.main.components.ProductItem
+import com.mobile.fairless.android.features.views.layouts.EmptyLayout
+import com.mobile.fairless.android.features.views.layouts.ErrorLayout
+import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.main.models.DateFilter
@@ -47,57 +51,67 @@ fun FireProductsLayout(viewModelWrapper: StatefulViewModelWrapper<DocumentViewMo
 
     val state = viewModelWrapper.state
 
-    // TODO найти другой способ реализации Grid
-    if (state.value.fireProduct.isNotEmpty()) {
-        Row(
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 10.dp),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_shape_fire),
+            contentDescription = "ic_fire",
+            tint = colors.orangeMain,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 10.dp, end = 10.dp),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_shape_fire),
-                contentDescription = "ic_fire",
-                tint = colors.orangeMain,
-                modifier = Modifier
-                    .size(40.dp)
-                    .padding(end = 10.dp)
+                .size(40.dp)
+                .padding(end = 10.dp)
+        )
+        Text(
+            text = "Огненные предложения",
+            style = TextStyle(
+                fontFamily = fontQanelas,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp,
+                color = colors.black
             )
-            Text(
-                text = "Огненные предложения",
-                style = TextStyle(
-                    fontFamily = fontQanelas,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp,
-                    color = colors.black
-                )
-            )
+        )
+    }
+
+    when (state.value.loadingStateFire) {
+
+        LoadingState.Loading -> {
+            LoadingLayout()
         }
 
-        FireButton(Modifier.padding(horizontal = 16.dp, vertical = 10.dp), state,
-        periodOpen = state.value.periodMenuOpen,
-        periodClick = { viewModelWrapper.viewModel.periodClick() }
-        ) {
-            viewModelWrapper.viewModel.selectFirePeriod(it)
-        }
+        LoadingState.Success -> {
+            FireButton(Modifier.padding(horizontal = 16.dp, vertical = 10.dp), state,
+                periodOpen = state.value.periodMenuOpen,
+                periodClick = { viewModelWrapper.viewModel.periodClick() }
+            ) {
+                viewModelWrapper.viewModel.selectFirePeriod(it)
+            }
 
-        Column(Modifier.padding(bottom = 16.dp)) {
-            state.value.fireProduct.forEach { product ->
-                Column(Modifier.padding(horizontal = 16.dp)) {
-                    ProductItem(product = product) {
-                        viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
+            Column(Modifier.padding(bottom = 16.dp)) {
+                state.value.fireProduct.forEach { product ->
+                    Column(Modifier.padding(horizontal = 16.dp)) {
+                        ProductItem(product = product) {
+                            viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
+                        }
                     }
                 }
             }
         }
 
-    } else {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            CircularProgressIndicator(
-                modifier = Modifier.size(30.dp),
-                color = colors.orangeMain
-            )
+        is LoadingState.Error -> {
+            ErrorLayout {
+                viewModelWrapper.viewModel.getFireProducts(DateFilter.TODAY)
+            }
         }
+
+        LoadingState.Empty -> {
+            EmptyLayout()
+        }
+
+        else -> {}
     }
 }
