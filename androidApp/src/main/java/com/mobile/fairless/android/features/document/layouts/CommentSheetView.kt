@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.document.layouts
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -49,17 +50,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun CommentSheetView(
     sheetState: ModalBottomSheetState,
+    sheetStateSendComment: ModalBottomSheetState,
     state: State<DocumentState>,
     getChat: () -> Unit,
     sendCommentOnClick: () -> Unit,
     onValueChanged: (String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-
-    val sheetStateSendComment = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
 
     getChat()
 
