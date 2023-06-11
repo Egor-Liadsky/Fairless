@@ -144,7 +144,7 @@ fun CommentSheetLayout(
                     LazyColumn(
                         Modifier
                             .align(Alignment.TopCenter)
-                            .padding(bottom = 60.dp)
+                            .padding(bottom = if (state.value.authUser) 60.dp else 0.dp)
                     ) {
                         items(items = state.value.comments ?: emptyList()) { comment ->
                             CommentItem(
