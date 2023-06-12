@@ -87,6 +87,11 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
 //        }
     }
 
+    override fun onViewHidden() {
+        super.onViewHidden()
+        pager.onViewHidden()
+    }
+
     override fun getCategories() {
         scope.launch {
             exceptionHandleable(

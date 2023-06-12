@@ -11,11 +11,12 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.component.inject
+import kotlin.math.roundToInt
 
 interface MainRepository {
 
     suspend fun getCategories(): List<Category>
-    suspend fun getProductsByCategory(page: Int, limit: Int, category: String): ProductResponse
+    suspend fun getProductsByCategory(page: Int, category: String): ProductResponse
 }
 
 class MainRepositoryImpl : MainRepository, BaseRepository() {
@@ -28,7 +29,7 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
         return Json.decodeFromString(response)
     }
 
-    override suspend fun getProductsByCategory(page: Int, limit: Int, category: String): ProductResponse {
+    override suspend fun getProductsByCategory(page: Int, category: String): ProductResponse {
 
         val params = HashMap<String, String>()
         params["_sort"] = "createdAt:DESC"
@@ -43,7 +44,11 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
             headers = mapOf("Content-Type" to "application/json"),
             path = "stocks/stocks-index"
         )
-        return Json.decodeFromString(ProductResponse.serializer(), response)
+
+        val list = Json.decodeFromString<Product>(response).data
+        val total = Json.decodeFromString<Product>(response).count?.div(30.0)?.roundToInt() // Получение количества страниц для пагинации
+
+        return ProductResponse(list = list ?: emptyList(), total = total)
     }
 }
 

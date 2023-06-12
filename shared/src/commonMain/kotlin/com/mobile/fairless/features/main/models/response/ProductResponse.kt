@@ -9,9 +9,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ProductResponse(
     override val page: Int? = 1,
+    @SerialName("count")
     override val total: Int? = 1,
     @SerialName("data")
     override val list: List<ProductData>,
-    override val count: Int
 ): PaginatedResult<ProductData>
 

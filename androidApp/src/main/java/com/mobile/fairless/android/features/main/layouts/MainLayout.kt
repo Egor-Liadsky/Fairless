@@ -40,7 +40,7 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
         derivedStateOf {
             lazyColumnState.layoutInfo.totalItemsCount >= 10 &&
                     (lazyColumnState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
-                        ?: Int.MIN_VALUE) >= lazyColumnState.layoutInfo.totalItemsCount - 9
+                        ?: Int.MIN_VALUE) >= lazyColumnState.layoutInfo.totalItemsCount - 5
         }
     }
 

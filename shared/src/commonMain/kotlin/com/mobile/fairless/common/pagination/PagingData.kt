@@ -12,9 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-/**
- *
- */
+
 class Pager<T : Any>(
     private val source: PagingDataSource<T>
 ) {
@@ -28,7 +26,7 @@ class Pager<T : Any>(
     private var job: Job? = null
 
     private var page: Int = 1
-    private var total: Int = 100
+    private var total: Int = 1
     private var appending: Boolean = false
 
     init {
@@ -44,16 +42,18 @@ class Pager<T : Any>(
                             e.description ?: "We know"
                         )
                     )
-                }//TODO
+                }
             }
         }
     }
 
     private suspend fun getPage(): List<T> {
-        println("asdasdasdasdas   $page")
+        total = source.getPage(page).total ?: 1 // Получение количества страниц
 
         mutex.withLock {
-            if (page > total) return listOf()
+            if (page > total) {
+                return listOf()
+            }
             val response = source.getPage(page)
             if (response.list.isNotEmpty())
                 page++
@@ -63,7 +63,8 @@ class Pager<T : Any>(
 
     fun onAppend() {
         if (appending) return
-        appending = true
+        appending = true //TODO
+
         job = scope.launch {
             mutableState.update { it.copy(isAppending = true) }
             try {
@@ -117,7 +118,6 @@ interface PaginatedResult<T : Any> {
     val page: Int?
     val total: Int?
     val list: List<T>
-    val count: Int
 }
 
 data class PagingData<T : Any>(

@@ -19,5 +19,5 @@ class MainServiceImpl(private val mainRepository: MainRepository) : MainService 
 
     override suspend fun getCategories(): List<Category> = mainRepository.getCategories()
     override suspend fun getProductsByCategory(page: Int, category: String): ProductResponse =
-        mainRepository.getProductsByCategory(page = page, 10, category)
+        mainRepository.getProductsByCategory(page = page, category = category)
 }
