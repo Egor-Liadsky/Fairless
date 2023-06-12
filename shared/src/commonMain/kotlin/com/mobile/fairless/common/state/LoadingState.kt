@@ -4,5 +4,5 @@ sealed class LoadingState {
     object Loading: LoadingState()
     object Success: LoadingState()
     object Empty: LoadingState()
-    data class Error(val error: Throwable): LoadingState()
+    data class Error(val error: String): LoadingState()
 }

@@ -94,7 +94,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     setLoading(false)
                 },
                 failureBlock = { throwable ->
-                    _state.update { it.copy(loadingState = LoadingState.Error(throwable)) }
+                    _state.update { it.copy(loadingState = LoadingState.Error(throwable.toString())) }
                 }
             )
         }
@@ -140,7 +140,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     }
                 },
                 failureBlock = { throwable ->
-                    _state.update { it.copy(loadingStateFire = LoadingState.Error(throwable)) }
+                    _state.update { it.copy(loadingStateFire = LoadingState.Error(throwable.toString())) }
                 }
             )
         }
@@ -182,7 +182,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     }
                 },
                 failureBlock = { throwable ->
-                    _state.update { it.copy(loadingStateComment = LoadingState.Error(throwable)) }
+                    _state.update { it.copy(loadingStateComment = LoadingState.Error(throwable.toString())) }
                 }
             )
         }
