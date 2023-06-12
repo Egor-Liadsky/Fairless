@@ -2,6 +2,7 @@ package com.mobile.fairless.android.features.main.layouts
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,12 @@ import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.main.components.MainTopBar
 import com.mobile.fairless.android.features.main.components.ProductItem
+import com.mobile.fairless.android.features.views.Refreshable
+import com.mobile.fairless.android.features.views.layouts.EmptyLayout
+import com.mobile.fairless.android.features.views.layouts.ErrorLayout
+import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 
 
@@ -50,33 +56,57 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
 
     Column {
         MainTopBar(viewModelWrapper = viewModelWrapper)
-        Log.e("qwklejqkwe", state.value.productsLoading.toString())
 
-        if (state.value.productsLoading){
-            Column(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(bottom = 20.dp)
-                        .size(40.dp),
-                    color = colors.orangeMain,
-                )
-            }
-        } else {
+        Refreshable(
+            isRefreshing = statePaging.value.pagingData.isRefreshing,
+            onRefresh = { viewModelWrapper.viewModel.onRefresh() }
+        ) {
             LazyColumn(
                 state = lazyColumnState,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxSize()
             ) {
-                items(items = statePaging.value.pagingData.data ?: emptyList()) { product ->
-                    Column(Modifier.padding(horizontal = 16.dp)) {
-                        ProductItem(product = product.product) {
-                            viewModelWrapper.viewModel.onDocumentClick(product.product.name ?: "")
+
+                when (statePaging.value.pagingData.loadingState) {
+                    LoadingState.Loading -> {
+                        item {
+                            LoadingLayout()
                         }
                     }
+
+                    LoadingState.Success -> {
+                        items(
+                            items = statePaging.value.pagingData.data ?: emptyList()
+                        ) { product ->
+                            Column(Modifier.padding(horizontal = 16.dp)) {
+                                ProductItem(product = product.product) {
+                                    viewModelWrapper.viewModel.onDocumentClick(
+                                        product.product.name ?: ""
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    LoadingState.Empty -> {
+                        item {
+                            EmptyLayout()
+                        }
+                    }
+
+                    is LoadingState.Error -> {
+                        item {
+                            ErrorLayout {
+
+                            }
+                        }
+                    }
+
+                    else -> {}
                 }
 
-                if (statePaging .value.pagingData.isAppending)
+                if (statePaging.value.pagingData.isAppending)
                     item {
                         CircularProgressIndicator(
                             color = colors.orangeMain,
@@ -86,7 +116,7 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                         )
                     }
 
-                item{
+                item {
                     Spacer(modifier = Modifier.padding(bottom = 16.dp))
                 }
             }

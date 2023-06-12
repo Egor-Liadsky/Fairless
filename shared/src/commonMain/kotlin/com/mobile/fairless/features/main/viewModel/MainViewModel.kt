@@ -38,7 +38,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun onDocumentClick(product: String)
     fun onProfileClick()
     fun onAppend()
-
+    fun onRefresh()
 }
 
 data class ProductModel(
@@ -60,11 +60,9 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
 
     override val statePaging: StateFlow<MainState> =
         pager.state.map { pagingData ->
-            setLoading(true)
             val list = pagingData.data.map {
                 ProductModel(it)
             }.toMutableList()
-            setLoading(false)
             MainState(
                 PagingData<ProductModel>(
                     loadingState = pagingData.loadingState,
@@ -77,6 +75,10 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
 
     override fun onAppend() {
         pager.onAppend()
+    }
+
+    override fun onRefresh() {
+        pager.onRefresh()
     }
 
     override fun onViewShown() {

@@ -22,9 +22,6 @@ import org.koin.core.qualifier.named
 fun MainScreen(viewModelWrapper: ViewModelWrapper<MainViewModel> = getViewModel(named("MainViewModel"))) {
 
     val state = viewModelWrapper.viewModel.state.collectAsState()
-    val products = state.value.pagingData.data
-
-    Log.e("fasdas", products.toString())
 
     DisposableEffect(key1 = viewModelWrapper, effect = {
         viewModelWrapper.viewModel.onViewShown()
