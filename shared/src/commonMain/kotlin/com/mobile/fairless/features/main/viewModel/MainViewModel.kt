@@ -31,7 +31,6 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     val state: StateFlow<MainState>
 
     fun getCategories()
-    fun getProductsByCategory()
     fun selectCategory(category: Category)
     fun onDocumentClick(product: String)
     fun onProfileClick()
@@ -84,9 +83,6 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     override fun onViewShown() {
         super.onViewShown()
         getCategories()
-//        if (_state.value.products.data == null) {
-//            getProductsByCategory()
-//        }
     }
 
     override fun onViewHidden() {
@@ -121,26 +117,9 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         }
     }
 
-    override fun getProductsByCategory() {
-//        jobs.add(
-//            scope.launch {
-//                exceptionHandleable(
-//                    executionBlock = {
-//                        val data = ProductModel(mainService.getProductsByCategory: "all"))
-//
-//                    }
-//                )
-//            }
-//        )
-    }
-
     override fun selectCategory(category: Category) {
-        pager.updateCategory(category.type?: "all")
         _state.update { it.copy(selectCategory = category) }
-//        getProductsByCategory()
-        println("asdasd    ${state.value.selectCategory.type}")
-        pager.onRefresh()
-        //pager = Pager<ProductData>(state.value.selectCategory.type ?: "all", mainService)
+        pager.updateCategory(category.type?: "all")
     }
 
     override fun onDocumentClick(product: String) {

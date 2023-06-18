@@ -49,7 +49,7 @@ class Pager<T : Any>(
 
     private suspend fun getPage(): List<T> {
         val category = mutableState.value.category
-        println("asdasd    ${category}")
+        println("asdasd    ${page}")
 
         total = source.getPage(page, category).total ?: 1 // Получение количества страниц
 
@@ -66,6 +66,31 @@ class Pager<T : Any>(
 
     fun updateCategory(category: String){
         mutableState.update { it.copy(category = category) }
+        job?.cancel()
+        appending = false
+        job = scope.launch {
+            page = 1
+            mutableState.value.data.clear()
+            mutableState.update {
+                it.copy(
+                    loadingState = LoadingState.Loading,
+                    isRefreshing = false
+                )
+            }
+            try {
+                val data = getPage()
+                mutableState.value.data.addAll(data)
+                mutableState.update { it.copy(loadingState = if (data.isEmpty()) LoadingState.Empty else LoadingState.Success) }
+            } catch (e: AppError) {
+                mutableState.update {
+                    it.copy(
+                        loadingState = LoadingState.Error(
+                            e.description ?: "We know"
+                        )
+                    )
+                }//TODO
+            }
+        }
     }
 
     fun onAppend() {
@@ -90,7 +115,7 @@ class Pager<T : Any>(
         job?.cancel()
         appending = false
         job = scope.launch {
-            page = 0
+            page = 1
             mutableState.value.data.clear()
             mutableState.update {
                 it.copy(
