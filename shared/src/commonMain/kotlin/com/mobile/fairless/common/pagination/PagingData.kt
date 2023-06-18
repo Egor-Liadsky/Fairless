@@ -2,7 +2,6 @@ package com.mobile.fairless.common.pagination
 
 import com.mobile.fairless.common.errors.AppError
 import com.mobile.fairless.common.state.LoadingState
-import com.mobile.fairless.features.main.models.Category
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -63,6 +62,10 @@ class Pager<T : Any>(
                 page++
             return response.list
         }
+    }
+
+    fun updateCategory(category: String){
+        mutableState.update { it.copy(category = category) }
     }
 
     fun onAppend() {

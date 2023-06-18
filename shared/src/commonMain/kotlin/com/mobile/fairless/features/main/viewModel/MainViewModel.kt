@@ -135,6 +135,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     }
 
     override fun selectCategory(category: Category) {
+        pager.updateCategory(category.type?: "all")
         _state.update { it.copy(selectCategory = category) }
 //        getProductsByCategory()
         println("asdasd    ${state.value.selectCategory.type}")
