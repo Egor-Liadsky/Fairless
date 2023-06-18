@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.document.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.KmpViewModel
@@ -77,14 +78,23 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
     }
 
     private fun getDocument() {
+        if (state.value.product.name == null) {
+            setLoading(true)
+        }
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
                     val document = documentService.getDocument(state.value.productName)[0]
-                    _state.update { it.copy(product = document) }
+                    _state.update {
+                        it.copy(
+                            loadingState = LoadingState.Success,
+                            product = document
+                        )
+                    }
+                    setLoading(false)
                 },
-                failureBlock = {
-                    errorService.showError("Ошибка")
+                failureBlock = { throwable ->
+                    _state.update { it.copy(loadingState = LoadingState.Error(throwable.toString())) }
                 }
             )
         }
@@ -117,22 +127,20 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
     }
 
     override fun getFireProducts(period: DateFilter) {
-        setFireLoadingProducts(true)
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
                     val data = documentService.getFireProducts(4, period)
                     if (data.isEmpty()) {
                         selectFirePeriod(DateFilter.WEEK)
-                        _state.update { it.copy(todayNull = true) }
+                        _state.update { it.copy(loadingStateFire = LoadingState.Success,todayNull = true) }
                     }
                     _state.update {
-                        it.copy(fireProduct = data)
+                        it.copy(loadingStateFire = LoadingState.Success, fireProduct = data)
                     }
-                    setFireLoadingProducts(false)
                 },
-                failureBlock = {
-                    errorService.showError("Проверьте подключение с интернетом")
+                failureBlock = { throwable ->
+                    _state.update { it.copy(loadingStateFire = LoadingState.Error(throwable.toString())) }
                 }
             )
         }
@@ -165,10 +173,16 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    _state.update { it.copy(comments = documentService.getComments(documentId)) }
+                    _state.update { it.copy(
+                        loadingStateComment = LoadingState.Success,
+                        comments = documentService.getComments(documentId)
+                    ) }
+                    if (state.value.comments?.isEmpty() == true) {
+                        _state.update { it.copy(loadingStateComment = LoadingState.Empty) }
+                    }
                 },
-                failureBlock = {
-                    errorService.showError("Проверьте соеденение с интернетом.")
+                failureBlock = { throwable ->
+                    _state.update { it.copy(loadingStateComment = LoadingState.Error(throwable.toString())) }
                 }
             )
         }
@@ -187,7 +201,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     getCommentsByDocument(state.value.product.id ?: "")
                 },
                 failureBlock = {
-                    errorService.showError("Проверьте соеденение с интернетом.")
+                   errorService.showError("Ошибка")
                 }
             )
         }
@@ -209,11 +223,11 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                         )
                         getDocument()
                     } else {
-                        errorService.showError("Необходимо авторизоваться.")
+                        errorService.showError("Необходимо авторизоваться")
                     }
                 },
                 failureBlock = {
-                    errorService.showError("Проверьте соеденение с интернетом.")
+                    errorService.showError("Ошибка")
                 }
             )
         }
@@ -227,7 +241,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         }
     }
 
-    private fun setFireLoadingProducts(status: Boolean) {
-        _state.update { it.copy(fireProductsLoading = status) }
+    private fun setLoading(status: Boolean) {
+        _state.update { it.copy(isLoading = status) }
     }
 }

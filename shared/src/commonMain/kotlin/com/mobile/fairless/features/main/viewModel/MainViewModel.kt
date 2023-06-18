@@ -1,6 +1,8 @@
 package com.mobile.fairless.features.main.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.pagination.Pager
+import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.KmpViewModel
@@ -12,8 +14,11 @@ import com.mobile.fairless.features.main.service.MainService
 import com.mobile.fairless.features.main.state.MainState
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -22,14 +27,21 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 interface MainViewModel : KmpViewModel, SubScreenViewModel {
+    val statePaging: StateFlow<MainState>
     val state: StateFlow<MainState>
 
     fun getCategories()
-    fun getProductsByCategory()
     fun selectCategory(category: Category)
     fun onDocumentClick(product: String)
     fun onProfileClick()
+    fun onAppend()
+    fun onRefresh()
 }
+
+data class ProductModel(
+    val product: ProductData,
+    val category: String
+)
 
 class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
     MainViewModel {
@@ -42,12 +54,40 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     private val _state = MutableStateFlow(MainState())
     override val state: StateFlow<MainState> = _state.asStateFlow()
 
+    private val pager = Pager<ProductData>(mainService)
+
+    override val statePaging: StateFlow<MainState> =
+        pager.state.map { pagingData ->
+            val list = pagingData.data.map {
+                ProductModel(it, state.value.selectCategory.type ?: "consoles")
+            }.toMutableList()
+            MainState(
+                PagingData<ProductModel>(
+                    loadingState = pagingData.loadingState,
+                    isRefreshing = pagingData.isRefreshing,
+                    isAppending = pagingData.isAppending,
+                    data = list,
+                    category = state.value.selectCategory.type ?: "consoles"
+                )
+            )
+        }.stateIn(scope, SharingStarted.WhileSubscribed(), MainState())
+
+    override fun onAppend() {
+        pager.onAppend()
+    }
+
+    override fun onRefresh() {
+        pager.onRefresh()
+    }
+
     override fun onViewShown() {
         super.onViewShown()
         getCategories()
-        if (_state.value.products.data == null) {
-            getProductsByCategory()
-        }
+    }
+
+    override fun onViewHidden() {
+        super.onViewHidden()
+        pager.onViewHidden()
     }
 
     override fun getCategories() {
@@ -77,24 +117,9 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         }
     }
 
-    override fun getProductsByCategory() {
-        setLoading(true)
-        scope.launch {
-            exceptionHandleable(
-                executionBlock = {
-                    val data = mainService.getProductsByCategory(_state.value.selectCategory.url ?: "all")
-                    if (data.data != null) {
-                        _state.update { it.copy(products = data) }
-                    }
-                },
-                completionBlock = { setLoading(false) }
-            )
-        }
-    }
-
     override fun selectCategory(category: Category) {
         _state.update { it.copy(selectCategory = category) }
-        getProductsByCategory()
+        pager.updateCategory(category.type?: "all")
     }
 
     override fun onDocumentClick(product: String) {

@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.views
+package com.mobile.fairless.android.features.views.layouts
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.ExperimentalMaterialApi
@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.mobile.fairless.android.theme.colors
-import org.koin.androidx.compose.get
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -27,7 +26,7 @@ fun Refreshable(
             isRefreshing,
             pullRefreshState,
             Modifier.align(Alignment.TopCenter),
-            contentColor = colors.orangeMain,
+            contentColor = colors.orangeMain
         )
     }
 }

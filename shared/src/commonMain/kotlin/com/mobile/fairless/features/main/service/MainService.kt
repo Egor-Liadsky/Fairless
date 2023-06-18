@@ -1,16 +1,23 @@
 package com.mobile.fairless.features.main.service
 
+import com.mobile.fairless.common.pagination.PagingDataSourceMain
 import com.mobile.fairless.features.main.models.Category
-import com.mobile.fairless.features.main.models.Product
+import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.response.ProductResponse
 import com.mobile.fairless.features.main.repository.MainRepository
 
-interface MainService {
+interface MainService : PagingDataSourceMain<ProductData> {
     suspend fun getCategories(): List<Category>
-    suspend fun getProductsByCategory(category: String): Product
+    suspend fun getProductsByCategory(page: Int, category: String): ProductResponse
 }
 
 class MainServiceImpl(private val mainRepository: MainRepository) : MainService {
 
+    override suspend fun getPage(page: Int, category: String): ProductResponse {
+        return getProductsByCategory(page, category)
+    }
+
     override suspend fun getCategories(): List<Category> = mainRepository.getCategories()
-    override suspend fun getProductsByCategory(category: String): Product = mainRepository.getProductsByCategory(category)
+    override suspend fun getProductsByCategory(page: Int, category: String): ProductResponse =
+        mainRepository.getProductsByCategory(page = page, category = category)
 }
