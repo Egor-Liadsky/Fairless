@@ -2,6 +2,7 @@ package com.mobile.fairless.common.pagination
 
 import com.mobile.fairless.common.errors.AppError
 import com.mobile.fairless.common.state.LoadingState
+import com.mobile.fairless.features.main.models.Category
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,7 +15,7 @@ import kotlinx.coroutines.sync.withLock
 
 
 class Pager<T : Any>(
-    private val source: PagingDataSource<T>
+    private val source: PagingDataSourceMain<T>
 ) {
     private val mutableState: MutableStateFlow<PagingData<T>> = MutableStateFlow(PagingData())
 
@@ -48,13 +49,16 @@ class Pager<T : Any>(
     }
 
     private suspend fun getPage(): List<T> {
-        total = source.getPage(page).total ?: 1 // Получение количества страниц
+        val category = mutableState.value.category
+        println("asdasd    ${category}")
+
+        total = source.getPage(page, category).total ?: 1 // Получение количества страниц
 
         mutex.withLock {
             if (page > total) {
                 return listOf()
             }
-            val response = source.getPage(page)
+            val response = source.getPage(page, category)
             if (response.list.isNotEmpty())
                 page++
             return response.list
@@ -124,6 +128,7 @@ data class PagingData<T : Any>(
     var loadingState: LoadingState = LoadingState.Loading,
     var isRefreshing: Boolean = false,
     var isAppending: Boolean = false,
+    var category: String = "all",
 
     val data: MutableList<T> = mutableListOf()
 )
@@ -132,3 +137,6 @@ interface PagingDataSource<T : Any> {
     suspend fun getPage(page: Int): PaginatedResult<T>
 }
 
+interface PagingDataSourceMain<T : Any> {
+    suspend fun getPage(page: Int, category: String): PaginatedResult<T>
+}
