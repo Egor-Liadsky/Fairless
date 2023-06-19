@@ -1,20 +1,29 @@
 package com.mobile.fairless.features.search.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.pagination.Pager
+import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.state.MainState
+import com.mobile.fairless.features.main.viewModel.ProductModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
+import com.mobile.fairless.features.search.pagination.SearchPager
+import com.mobile.fairless.features.search.pagination.SearchPagingData
 import com.mobile.fairless.features.search.service.SearchService
 import com.mobile.fairless.features.search.state.SearchState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -24,8 +33,8 @@ import org.koin.core.component.inject
 
 interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewModel {
     override val state: StateFlow<SearchState>
+    val statePaging: StateFlow<SearchState>
 
-    fun searchProducts(name: String)
     fun searchChanged(search: String)
     fun onDeleteSearchClick()
     fun selectPopularFilter(name: String)
@@ -35,9 +44,17 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun onDocumentClick(product: String)
     fun getCategories()
     fun selectCategory(category: Category)
+    fun onAppend()
+    fun onRefresh()
 }
 
-class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, StatefulKmpViewModelImpl<SearchState>(),
+data class SearchProductModel(
+    val product: ProductData,
+    val name: String
+)
+
+class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
+    StatefulKmpViewModelImpl<SearchState>(),
     SearchViewModel {
 
     private val searchService: SearchService by inject()
@@ -49,30 +66,32 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
 
     private var job: Job? = null
 
+    private val pager = SearchPager<ProductData>(searchService)
+
+    override val statePaging: StateFlow<SearchState> =
+        pager.state.map { pagingData ->
+            val list = pagingData.data.map {
+                SearchProductModel(it, "а")
+            }.toMutableList()
+            SearchState(
+                SearchPagingData<SearchProductModel>(
+                    loadingState = pagingData.loadingState,
+                    isRefreshing = pagingData.isRefreshing,
+                    isAppending = pagingData.isAppending,
+                    data = list,
+                    name = "а"
+                )
+            )
+        }.stateIn(scope, SharingStarted.WhileSubscribed(), SearchState())
+
     override fun onViewShown() {
         super.onViewShown()
         getCategories()
     }
 
-    override fun searchProducts(name: String) {
-        job?.cancel()
-        job = scope.launch {
-            exceptionHandleable(
-                executionBlock = {
-                    delay(300)
-                    setLoading(true)
-                    _state.update { it.copy(products = searchService.searchProducts(name)) }
-                    setLoading(false)
-                },
-                failureBlock = {
-                    errorService.showError("Ошибка с подключение с интернетом")
-                }
-            )
-        }
-    }
-
     override fun searchChanged(search: String) {
         _state.update { it.copy(searchString = search) }
+        pager.updateName(state.value.searchString)
     }
 
     override fun onDeleteSearchClick() {
@@ -132,7 +151,15 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent, St
         _state.update { it.copy(selectCategory = category) }
     }
 
-    private fun setLoading(status: Boolean){
+    override fun onAppend() {
+        pager.onAppend()
+    }
+
+    override fun onRefresh() {
+        pager.onRefresh()
+    }
+
+    private fun setLoading(status: Boolean) {
         _state.update { it.copy(productsLoading = status) }
     }
 }

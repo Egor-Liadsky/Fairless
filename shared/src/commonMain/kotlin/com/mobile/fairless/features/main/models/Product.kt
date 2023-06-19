@@ -11,6 +11,11 @@ data class Product(
 )
 
 @Serializable
+data class SearchProduct(
+    val data: List<ProductData>? = null,
+)
+
+@Serializable
 data class ProductData(
     val count_likes: String? = null,
     val count_dislikes: String? = null,

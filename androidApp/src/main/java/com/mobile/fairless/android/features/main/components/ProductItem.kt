@@ -89,7 +89,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
 
-                    if (product.sale_price != null) {
+                    if ((product.sale_price != null) && (product.sale_old_price != null)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = "${product.sale_price} ₽",
