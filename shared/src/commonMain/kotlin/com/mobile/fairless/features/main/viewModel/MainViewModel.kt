@@ -77,7 +77,13 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     }
 
     override fun onRefresh() {
+        setLoadingRefreshable(true)
         pager.onRefresh()
+        setLoadingRefreshable(false)
+    }
+
+    private fun setLoadingRefreshable(status: Boolean) {
+        _state.update { it.copy(refreshable = status) }
     }
 
     override fun onViewShown() {
@@ -135,9 +141,5 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         } else {
             navigator.navigateToProfile()
         }
-    }
-
-    private fun setLoading(isLoading: Boolean) {
-        _state.update { it.copy(productsLoading = isLoading) }
     }
 }

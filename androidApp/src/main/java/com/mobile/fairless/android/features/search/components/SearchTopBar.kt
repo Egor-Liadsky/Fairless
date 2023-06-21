@@ -54,7 +54,6 @@ fun SearchTopBar(
     searchString: String,
     onClearText: () -> Unit,
     onMicClick: () -> Unit,
-    onSearchClick: () -> Unit,
     onSearchChange: (String) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
@@ -78,7 +77,6 @@ fun SearchTopBar(
             value = state.value.searchString,
             onValueChange = {
                 onSearchChange(it)
-                onSearchClick()
             },
             singleLine = true,
             textStyle = TextStyle(
@@ -158,7 +156,6 @@ fun SearchTopBar(
             ),
             keyboardActions = KeyboardActions(onSearch = {
                 focusManager.clearFocus()
-                onSearchClick()
             }),
             modifier = Modifier
                 .fillMaxSize()

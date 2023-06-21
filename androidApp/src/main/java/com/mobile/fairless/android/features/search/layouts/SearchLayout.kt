@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
@@ -24,6 +25,10 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +38,12 @@ import com.mobile.fairless.android.features.main.components.ProductItem
 import com.mobile.fairless.android.features.search.components.FilterView
 import com.mobile.fairless.android.features.search.components.FiltersSheet
 import com.mobile.fairless.android.features.search.components.SearchTopBar
+import com.mobile.fairless.android.features.views.Refreshable
+import com.mobile.fairless.android.features.views.layouts.EmptyLayout
+import com.mobile.fairless.android.features.views.layouts.ErrorLayout
+import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.state.SearchState
 import com.mobile.fairless.features.search.viewModel.SearchViewModel
@@ -50,6 +60,7 @@ fun SearchLayout(
 ) {
 
     val state = viewModelWrapper.state
+    val statePaging = viewModelWrapper.viewModel.statePaging.collectAsState()
 
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -65,6 +76,19 @@ fun SearchLayout(
             val result = it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             viewModelWrapper.viewModel.searchChanged(result?.get(0) ?: "")
         }
+    }
+
+    val lazyColumnState = rememberLazyListState()
+    val needAppend = remember {
+        derivedStateOf {
+            lazyColumnState.layoutInfo.totalItemsCount >= 10 &&
+                    (lazyColumnState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+                        ?: Int.MIN_VALUE) >= lazyColumnState.layoutInfo.totalItemsCount - 5
+        }
+    }
+
+    LaunchedEffect(needAppend.value) {
+        if (needAppend.value) viewModelWrapper.viewModel.onAppend()
     }
 
     Log.e("sdfkjsdf", state.value.searchString)
@@ -103,7 +127,6 @@ fun SearchLayout(
                             }
                         }
                     },
-                    onSearchClick = { viewModelWrapper.viewModel.searchProducts(state.value.searchString) },
                     onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
                 )
                 Column {
@@ -128,6 +151,71 @@ fun SearchLayout(
                             viewModelWrapper.viewModel.filtersOpen()
                         }
                     )
+                }
+            }
+
+            Refreshable(
+                isRefreshing = state.value.refreshable,
+                onRefresh = { viewModelWrapper.viewModel.onRefresh() }
+            ) {
+                LazyColumn(
+                    state = lazyColumnState,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+
+                    when (statePaging.value.pagingData.loadingState) {
+                        LoadingState.Loading -> {
+                            item {
+                                LoadingLayout()
+                            }
+                        }
+
+                        LoadingState.Success -> {
+                            items(
+                                items = statePaging.value.pagingData.data ?: emptyList()
+                            ) { product ->
+                                Column(Modifier.padding(horizontal = 16.dp)) {
+                                    ProductItem(product = product.product) {
+                                        viewModelWrapper.viewModel.onDocumentClick(
+                                            product.product.name ?: ""
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        LoadingState.Empty -> {
+                            item {
+                                EmptyLayout()
+                            }
+                        }
+
+                        is LoadingState.Error -> {
+                            item {
+                                ErrorLayout {
+
+                                }
+                            }
+                        }
+
+                        else -> {}
+                    }
+
+                    if (statePaging.value.pagingData.isAppending)
+                        item {
+                            CircularProgressIndicator(
+                                color = colors.orangeMain,
+                                modifier = Modifier
+                                    .padding(top = 8.dp)
+                                    .size(24.dp)
+                            )
+                        }
+
+                    item {
+                        Spacer(modifier = Modifier.padding(bottom = 16.dp))
+                    }
                 }
             }
 
