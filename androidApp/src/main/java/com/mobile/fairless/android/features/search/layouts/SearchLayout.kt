@@ -155,7 +155,7 @@ fun SearchLayout(
             }
 
             Refreshable(
-                isRefreshing = statePaging.value.pagingData.isRefreshing,
+                isRefreshing = state.value.refreshable,
                 onRefresh = { viewModelWrapper.viewModel.onRefresh() }
             ) {
                 LazyColumn(

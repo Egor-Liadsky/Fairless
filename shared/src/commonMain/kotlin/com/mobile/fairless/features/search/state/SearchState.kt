@@ -13,6 +13,8 @@ data class SearchState(
     val products: List<ProductData>? = null,
     val categories: List<Category>? = null,
 
+    val refreshable: Boolean = false,
+
     val searchString: String = "",
     val selectedPopularFilter: String = "По популярности",
     val selectedFilters: String = "",

@@ -11,6 +11,8 @@ data class MainState(
     val pagingData: PagingData<ProductModel> = PagingData(),
     val categories: List<Category>? = null,
 
+    val refreshable: Boolean = false,
+
     val categoriesLoading: Boolean = false,
     val productsLoading: Boolean = false,
 

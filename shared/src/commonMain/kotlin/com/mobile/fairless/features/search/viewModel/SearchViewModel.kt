@@ -151,6 +151,12 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     }
 
     override fun onRefresh() {
+        setLoadingRefreshable(true)
         pager.onRefresh()
+        setLoadingRefreshable(false)
+    }
+
+    private fun setLoadingRefreshable(status: Boolean) {
+        _state.update { it.copy(refreshable = status) }
     }
 }
