@@ -5,6 +5,7 @@ import com.mobile.fairless.common.state.LoadingState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -15,7 +16,8 @@ import kotlinx.coroutines.sync.withLock
 class SearchPager<T : Any>(
     private val source: SearchPagingDataSource<T>
 ) {
-    private val mutableState: MutableStateFlow<SearchPagingData<T>> = MutableStateFlow(SearchPagingData())
+    private val mutableState: MutableStateFlow<SearchPagingData<T>> =
+        MutableStateFlow(SearchPagingData())
 
     val state: StateFlow<SearchPagingData<T>>
         get() = mutableState
@@ -25,7 +27,6 @@ class SearchPager<T : Any>(
     private var job: Job? = null
 
     private var page: Int = 0
-//    private var total: Int = 100
     private var appending: Boolean = false
 
     init {
@@ -33,6 +34,7 @@ class SearchPager<T : Any>(
             try {
                 val data = getPage()
                 mutableState.value.data.addAll(data)
+                println("Asdjhasdjhagsdjh    ${mutableState.value.data}")
                 mutableState.update { it.copy(loadingState = if (data.isEmpty()) LoadingState.Empty else LoadingState.Success) }
             } catch (e: AppError) {
                 mutableState.update {
@@ -48,23 +50,23 @@ class SearchPager<T : Any>(
 
     private suspend fun getPage(): List<T> {
         val name = mutableState.value.name
-        println("asdasd    ${page}")
-
-//        total = 100 //source.getPage(page, name).total ?: 0 // Получение количества страниц
-
-        mutex.withLock {
-            try {
-                val response = source.getPage(page, name)
-                if (response.list.isNotEmpty())
-                    repeat(30){ page++ }
-                return response.list
-            }catch (ex: Exception){
-                return emptyList()
+        if (name != "") {
+            mutex.withLock {
+                try {
+                    val response = source.getPage(page, name)
+                    if (response.list.isNotEmpty())
+                        repeat(30) { page++ }
+                    return response.list
+                } catch (ex: Exception) {
+                    return emptyList()
+                }
             }
+        } else {
+            return emptyList()
         }
     }
 
-    fun updateName(name: String){
+    fun updateName(name: String) {
         mutableState.update { it.copy(name = name) }
         job?.cancel()
         appending = false
@@ -80,7 +82,12 @@ class SearchPager<T : Any>(
             try {
                 val data = getPage()
                 mutableState.value.data.addAll(data)
-                mutableState.update { it.copy(loadingState = if (data.isEmpty()) LoadingState.Empty else LoadingState.Success) }
+                if (data.isEmpty()){
+                    delay(200)
+                    mutableState.update { it.copy(loadingState = LoadingState.Empty) }
+                } else {
+                    mutableState.update { it.copy(loadingState = LoadingState.Success) }
+                }
             } catch (e: AppError) {
                 mutableState.update {
                     it.copy(
@@ -88,7 +95,7 @@ class SearchPager<T : Any>(
                             e.description ?: "We know"
                         )
                     )
-                }//TODO
+                }
             }
         }
     }

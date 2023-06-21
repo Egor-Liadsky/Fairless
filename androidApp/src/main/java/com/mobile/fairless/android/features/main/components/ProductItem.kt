@@ -43,7 +43,6 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
             .padding(top = 10.dp)
             .border(0.5.dp, Color(0xFFE1E1E1), RoundedCornerShape(10.dp)),
         onClick = { onClick() },
-//        elevation = 2.dp,
         shape = RoundedCornerShape(10.dp)
     ) {
         Row(

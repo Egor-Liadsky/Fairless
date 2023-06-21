@@ -1,23 +1,18 @@
 package com.mobile.fairless.features.search.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
-import com.mobile.fairless.common.pagination.Pager
-import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
-import com.mobile.fairless.features.main.state.MainState
-import com.mobile.fairless.features.main.viewModel.ProductModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.pagination.SearchPager
 import com.mobile.fairless.features.search.pagination.SearchPagingData
 import com.mobile.fairless.features.search.service.SearchService
 import com.mobile.fairless.features.search.state.SearchState
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -71,7 +66,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     override val statePaging: StateFlow<SearchState> =
         pager.state.map { pagingData ->
             val list = pagingData.data.map {
-                SearchProductModel(it, "а")
+                SearchProductModel(it, state.value.searchString)
             }.toMutableList()
             SearchState(
                 SearchPagingData<SearchProductModel>(
@@ -79,7 +74,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
                     isRefreshing = pagingData.isRefreshing,
                     isAppending = pagingData.isAppending,
                     data = list,
-                    name = "а"
+                    name = state.value.searchString
                 )
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), SearchState())
@@ -157,9 +152,5 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun onRefresh() {
         pager.onRefresh()
-    }
-
-    private fun setLoading(status: Boolean) {
-        _state.update { it.copy(productsLoading = status) }
     }
 }
