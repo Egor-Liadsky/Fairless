@@ -4,6 +4,14 @@ import com.mobile.fairless.features.welcome.dto.City
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+
+enum class ProductStockType {
+    SALE,
+    FREE,
+    PROMOCODE,
+    ALL
+}
+
 @Serializable
 data class Product(
     val data: List<ProductData>? = null,
@@ -128,7 +136,7 @@ data class Shop(
     val createdAt: String? = null,
     val updatedAt: String? = null,
     val __v: Int? = null,
-    val image: ImageX? = null,
+    val image: Image? = null,
     val seo_text: String? = null,
     val id: String? = null,
 )

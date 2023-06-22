@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.document.layouts
+package com.mobile.fairless.android.features.document.sheets
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement

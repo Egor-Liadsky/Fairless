@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.profile.layouts
+package com.mobile.fairless.android.features.profile.sheets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,12 +28,12 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun LoginSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>) {
+fun EmailSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>) {
     val scope = rememberCoroutineScope()
 
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = "Изменение логина", style = TextStyle(
+            text = "Изменение E-mail", style = TextStyle(
                 fontFamily = fontQanelas,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 20.sp,
@@ -41,10 +41,21 @@ fun LoginSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>
             )
         )
 
+        Text(
+            text = "Вы получите письмо со ссылкой для подтверждения нового адреса электронной почты.",
+            style = TextStyle(
+                fontFamily = fontQanelas,
+                fontWeight = FontWeight.Normal,
+                fontSize = 12.sp,
+                color = colors.black
+            ),
+            modifier = Modifier.padding(top = 20.dp)
+        )
+
         MiniTextField(
             modifier = Modifier.padding(vertical = 20.dp),
             onValueChanged = {},
-            placeholder = "Новый логин"
+            placeholder = "Новый E-mail"
         )
 
         Row(

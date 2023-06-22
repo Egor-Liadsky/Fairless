@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.document.components.DocumentTopBar
-import com.mobile.fairless.android.features.document.layouts.CommentSheetView
+import com.mobile.fairless.android.features.document.sheets.CommentSheetView
 import com.mobile.fairless.android.features.document.layouts.DocumentLayout
 import com.mobile.fairless.android.features.document.layouts.FireProductsLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
