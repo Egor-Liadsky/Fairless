@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.profile.layouts
+package com.mobile.fairless.android.features.profile.sheets
 
 import android.app.Activity
 import android.content.ActivityNotFoundException

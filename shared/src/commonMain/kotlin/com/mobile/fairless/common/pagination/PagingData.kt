@@ -69,7 +69,7 @@ class Pager<T : Any>(
             }
         } else {
             println("asdkjahsd   " + name)
-            if (name != ""){
+            if (name.replace(" ", "") != ""){
                 total = source.getPage(page, name, type).total ?: 1 // Получение количества страниц
 
                 mutex.withLock {
@@ -82,6 +82,7 @@ class Pager<T : Any>(
                     return response.list
                 }
             } else {
+                println("asdkjahsd   " + name)
                 return emptyList()
             }
         }

@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.profile.layouts
+package com.mobile.fairless.android.features.profile.sheets
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
@@ -28,10 +28,6 @@ fun ProfileSheet(
     content: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()
-
-    BackHandler {
-        scope.launch { sheetState.hide() }
-    }
 
     Column(
         Modifier

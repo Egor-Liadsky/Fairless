@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.profile.layouts
+package com.mobile.fairless.android.features.profile.sheets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,12 +28,12 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun EmailSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>) {
+fun PasswordSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>) {
     val scope = rememberCoroutineScope()
 
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = "Изменение E-mail", style = TextStyle(
+            text = "Изменение пароля", style = TextStyle(
                 fontFamily = fontQanelas,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 20.sp,
@@ -41,25 +41,29 @@ fun EmailSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>
             )
         )
 
-        Text(
-            text = "Вы получите письмо со ссылкой для подтверждения нового адреса электронной почты.",
-            style = TextStyle(
-                fontFamily = fontQanelas,
-                fontWeight = FontWeight.Normal,
-                fontSize = 12.sp,
-                color = colors.black
-            ),
-            modifier = Modifier.padding(top = 20.dp)
+        MiniTextField(
+            modifier = Modifier.padding(top = 20.dp),
+            onValueChanged = {},
+            isPassword = true,
+            placeholder = "Текущий пароль"
         )
 
         MiniTextField(
-            modifier = Modifier.padding(vertical = 20.dp),
+            modifier = Modifier.padding(top = 20.dp),
             onValueChanged = {},
-            placeholder = "Новый E-mail"
+            isPassword = true,
+            placeholder = "Новый пароль"
+        )
+
+        MiniTextField(
+            modifier = Modifier.padding(top = 20.dp),
+            onValueChanged = {},
+            isPassword = true,
+            placeholder = "Повторите пароль"
         )
 
         Row(
-            Modifier.fillMaxWidth(),
+            Modifier.fillMaxWidth().padding(top = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

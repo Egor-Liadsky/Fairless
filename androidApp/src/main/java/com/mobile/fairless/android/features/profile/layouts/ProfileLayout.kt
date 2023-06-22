@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.profile.layouts
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,11 @@ import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.profile.components.ExitButton
+import com.mobile.fairless.android.features.profile.sheets.CitySheetView
+import com.mobile.fairless.android.features.profile.sheets.EmailSheetView
+import com.mobile.fairless.android.features.profile.sheets.LoginSheetView
+import com.mobile.fairless.android.features.profile.sheets.PasswordSheetView
+import com.mobile.fairless.android.features.profile.sheets.ProfileSheet
 import com.mobile.fairless.android.features.views.buttons.SquareButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.features.profile.state.ProfileButton
@@ -37,6 +43,14 @@ fun ProfileLayout(viewModelWrapper: StatefulViewModelWrapper<ProfileViewModel, P
     )
 
     val scope = rememberCoroutineScope()
+
+    BackHandler {
+        if (sheetState.isVisible) {
+           scope.launch { sheetState.hide() }
+        } else {
+            viewModelWrapper.viewModel.onBackButtonClick()
+        }
+    }
 
     val personalDataButtonList = listOf(
         ProfileCategoryItem(title = "Логин", placeholder = state.value.user?.user?.username ?: "Пусто", onClick = {
