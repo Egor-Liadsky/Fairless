@@ -1,23 +1,28 @@
 package com.mobile.fairless.features.search.service
 
+import com.mobile.fairless.common.pagination.PagingDataSourceMain
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
-import com.mobile.fairless.features.search.models.SearchProductResponse
-import com.mobile.fairless.features.search.pagination.SearchPagingDataSource
+import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.response.ProductResponse
 import com.mobile.fairless.features.search.repository.SearchRepository
 
-interface SearchService : SearchPagingDataSource<ProductData> {
+interface SearchService : PagingDataSourceMain<ProductData> {
     suspend fun getCategories(): List<Category>
-    suspend fun searchProducts(page: Int, name: String): SearchProductResponse
+    suspend fun searchProducts(page: Int, name: String, type: ProductStockType): ProductResponse
 }
 
 class SearchServiceImpl(private val searchRepository: SearchRepository) : SearchService {
 
-    override suspend fun getPage(page: Int, name: String): SearchProductResponse {
-        return searchProducts(page, name)
+    override suspend fun getPage(page: Int, name: String, type: ProductStockType): ProductResponse {
+        return searchProducts(page, name, type)
     }
 
     override suspend fun getCategories(): List<Category> = searchRepository.getCategories()
-    override suspend fun searchProducts(page: Int, name: String): SearchProductResponse =
-        searchRepository.searchProducts(page, name)
+    override suspend fun searchProducts(
+        page: Int,
+        name: String,
+        type: ProductStockType
+    ): ProductResponse =
+        searchRepository.searchProducts(page, name, type)
 }

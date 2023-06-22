@@ -56,7 +56,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     private val _state = MutableStateFlow(MainState())
     override val state: StateFlow<MainState> = _state.asStateFlow()
 
-    private val pager = Pager<ProductData>(mainService)
+    private val pager = Pager<ProductData>(true, mainService)
 
     override val statePaging: StateFlow<MainState> =
         pager.state.map { pagingData ->

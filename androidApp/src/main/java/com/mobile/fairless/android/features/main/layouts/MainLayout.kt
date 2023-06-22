@@ -1,13 +1,9 @@
 package com.mobile.fairless.android.features.main.layouts
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,8 +19,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.main.components.MainTopBar
@@ -61,6 +55,24 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
     Column {
         MainTopBar(viewModelWrapper = viewModelWrapper)
 
+        Column(verticalArrangement = Arrangement.Center) {
+            Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.ALL) }) {
+                Text(text = "Промокоды и скидки")
+            }
+
+            Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.PROMOCODE) }) {
+                Text(text = "Промокоды")
+            }
+
+            Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.SALE) }) {
+                Text(text = "Скидки")
+            }
+
+            Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.FREE) }) {
+                Text(text = "Бесплатно")
+            }
+        }
+
         Refreshable(
             isRefreshing = state.value.refreshable,
             onRefresh = { viewModelWrapper.viewModel.onRefresh() }
@@ -80,28 +92,6 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                     }
 
                     LoadingState.Success -> {
-                        
-                        item {
-                            Column(verticalArrangement = Arrangement.Center) {
-                                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.ALL) }) {
-                                    Text(text = "Промокоды и скидки")
-                                }
-
-                                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.PROMOCODE) }) {
-                                    Text(text = "Промокоды")
-                                }
-
-                                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.SALE) }) {
-                                    Text(text = "Скидки")
-                                }
-
-                                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.FREE) }) {
-                                    Text(text = "Бесплатно")
-                                }
-                            }
-                            Log.e("asdasdasdasdads", state.value.selectType.toString())
-                        }
-                        
                         items(
                             items = statePaging.value.pagingData.data ?: emptyList()
                         ) { product ->

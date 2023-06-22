@@ -1,15 +1,17 @@
 package com.mobile.fairless.features.search.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.pagination.Pager
+import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.viewModel.ProductModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
-import com.mobile.fairless.features.search.pagination.SearchPager
-import com.mobile.fairless.features.search.pagination.SearchPagingData
 import com.mobile.fairless.features.search.service.SearchService
 import com.mobile.fairless.features.search.state.SearchState
 import kotlinx.coroutines.Job
@@ -41,12 +43,8 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun selectCategory(category: Category)
     fun onAppend()
     fun onRefresh()
+    fun selectType(type: ProductStockType)
 }
-
-data class SearchProductModel(
-    val product: ProductData,
-    val name: String
-)
 
 class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     StatefulKmpViewModelImpl<SearchState>(),
@@ -61,20 +59,20 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     private var job: Job? = null
 
-    private val pager = SearchPager<ProductData>(searchService)
+    private val pager = Pager<ProductData>(false, searchService)
 
     override val statePaging: StateFlow<SearchState> =
         pager.state.map { pagingData ->
             val list = pagingData.data.map {
-                SearchProductModel(it, state.value.searchString)
+                ProductModel(it, state.value.searchString)
             }.toMutableList()
             SearchState(
-                SearchPagingData<SearchProductModel>(
+                PagingData<ProductModel>(
                     loadingState = pagingData.loadingState,
                     isRefreshing = pagingData.isRefreshing,
                     isAppending = pagingData.isAppending,
                     data = list,
-                    name = state.value.searchString
+                    name = state.value.searchString,
                 )
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), SearchState())
@@ -86,7 +84,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun searchChanged(search: String) {
         _state.update { it.copy(searchString = search) }
-        pager.updateName(state.value.searchString)
+        pager.updateSearchText(state.value.searchString)
     }
 
     override fun onDeleteSearchClick() {
@@ -154,6 +152,11 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
         setLoadingRefreshable(true)
         pager.onRefresh()
         setLoadingRefreshable(false)
+    }
+
+    override fun selectType(type: ProductStockType) {
+        _state.update { it.copy(selectType = type) }
+        pager.changeType(type)
     }
 
     private fun setLoadingRefreshable(status: Boolean) {

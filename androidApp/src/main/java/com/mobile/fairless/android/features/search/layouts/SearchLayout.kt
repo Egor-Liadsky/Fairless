@@ -19,10 +19,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,6 +46,7 @@ import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
+import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.state.SearchState
 import com.mobile.fairless.features.search.viewModel.SearchViewModel
@@ -90,8 +93,6 @@ fun SearchLayout(
     LaunchedEffect(needAppend.value) {
         if (needAppend.value) viewModelWrapper.viewModel.onAppend()
     }
-
-    Log.e("sdfkjsdf", state.value.searchString)
 
     ModalBottomSheetLayout(
         modifier = Modifier.fillMaxSize(),
@@ -151,6 +152,22 @@ fun SearchLayout(
                             viewModelWrapper.viewModel.filtersOpen()
                         }
                     )
+                }
+
+                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.ALL) }) {
+                    Text(text = "Промокоды и скидки")
+                }
+
+                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.PROMOCODE) }) {
+                    Text(text = "Промокоды")
+                }
+
+                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.SALE) }) {
+                    Text(text = "Скидки")
+                }
+
+                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.FREE) }) {
+                    Text(text = "Бесплатно")
                 }
             }
 
@@ -214,43 +231,6 @@ fun SearchLayout(
                         }
 
                     item {
-                        Spacer(modifier = Modifier.padding(bottom = 16.dp))
-                    }
-                }
-            }
-
-
-            if (state.value.productsLoading) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(colors.white),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .padding(bottom = 20.dp)
-                            .size(40.dp),
-                        color = colors.orangeMain,
-                    )
-                }
-            } else {
-                LazyColumn(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(colors.white)
-                ) {
-                    items(items = state.value.products ?: emptyList()) { product ->
-                        Column(Modifier.padding(horizontal = 16.dp)) {
-                            ProductItem(product = product) {
-                                viewModelWrapper.viewModel.onDocumentClick(product.name ?: "")
-                            }
-                        }
-                    }
-                    item{
                         Spacer(modifier = Modifier.padding(bottom = 16.dp))
                     }
                 }
