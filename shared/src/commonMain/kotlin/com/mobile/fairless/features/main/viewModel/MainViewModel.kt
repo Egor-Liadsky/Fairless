@@ -10,6 +10,7 @@ import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.service.MainService
 import com.mobile.fairless.features.main.state.MainState
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
@@ -36,6 +37,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun onProfileClick()
     fun onAppend()
     fun onRefresh()
+    fun selectType(type: ProductStockType)
 }
 
 data class ProductModel(
@@ -67,7 +69,8 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                     isRefreshing = pagingData.isRefreshing,
                     isAppending = pagingData.isAppending,
                     data = list,
-                    category = state.value.selectCategory.type ?: "consoles"
+                    category = state.value.selectCategory.type ?: "all",
+                    type = state.value.selectType
                 )
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), MainState())
@@ -80,6 +83,11 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         setLoadingRefreshable(true)
         pager.onRefresh()
         setLoadingRefreshable(false)
+    }
+
+    override fun selectType(type: ProductStockType) {
+        _state.update { it.copy(selectType = type) }
+        pager.changeType(type)
     }
 
     private fun setLoadingRefreshable(status: Boolean) {

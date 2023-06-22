@@ -2,6 +2,7 @@ package com.mobile.fairless.common.pagination
 
 import com.mobile.fairless.common.errors.AppError
 import com.mobile.fairless.common.state.LoadingState
+import com.mobile.fairless.features.main.models.ProductStockType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -49,18 +50,48 @@ class Pager<T : Any>(
 
     private suspend fun getPage(): List<T> {
         val category = mutableState.value.category
-        println("asdasd    ${page}")
+        val type = mutableState.value.type
+        println("asdasd    ${type}")
 
-        total = source.getPage(page, category).total ?: 1 // Получение количества страниц
+        total = source.getPage(page, category, type).total ?: 1 // Получение количества страниц
 
         mutex.withLock {
             if (page > total) {
                 return listOf()
             }
-            val response = source.getPage(page, category)
+            val response = source.getPage(page, category, type)
             if (response.list.isNotEmpty())
                 page++
             return response.list
+        }
+    }
+
+    fun changeType(type: ProductStockType){
+        mutableState.update { it.copy(type = type) }
+        job?.cancel()
+        appending = false
+        job = scope.launch {
+            page = 1
+            mutableState.value.data.clear()
+            mutableState.update {
+                it.copy(
+                    loadingState = LoadingState.Loading,
+                    isRefreshing = false
+                )
+            }
+            try {
+                val data = getPage()
+                mutableState.value.data.addAll(data)
+                mutableState.update { it.copy(loadingState = if (data.isEmpty()) LoadingState.Empty else LoadingState.Success) }
+            } catch (e: AppError) {
+                mutableState.update {
+                    it.copy(
+                        loadingState = LoadingState.Error(
+                            e.description ?: "We know"
+                        )
+                    )
+                }//TODO
+            }
         }
     }
 
@@ -157,14 +188,11 @@ data class PagingData<T : Any>(
     var isRefreshing: Boolean = false,
     var isAppending: Boolean = false,
     var category: String = "all",
+    var type: ProductStockType = ProductStockType.ALL,
 
     val data: MutableList<T> = mutableListOf()
 )
 
-interface PagingDataSource<T : Any> {
-    suspend fun getPage(page: Int): PaginatedResult<T>
-}
-
 interface PagingDataSourceMain<T : Any> {
-    suspend fun getPage(page: Int, category: String): PaginatedResult<T>
+    suspend fun getPage(page: Int, category: String, type: ProductStockType): PaginatedResult<T>
 }

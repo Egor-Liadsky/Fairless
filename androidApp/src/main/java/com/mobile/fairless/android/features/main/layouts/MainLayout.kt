@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -32,6 +35,7 @@ import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
+import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 
 
@@ -76,6 +80,28 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                     }
 
                     LoadingState.Success -> {
+                        
+                        item {
+                            Column(verticalArrangement = Arrangement.Center) {
+                                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.ALL) }) {
+                                    Text(text = "Промокоды и скидки")
+                                }
+
+                                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.PROMOCODE) }) {
+                                    Text(text = "Промокоды")
+                                }
+
+                                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.SALE) }) {
+                                    Text(text = "Скидки")
+                                }
+
+                                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.FREE) }) {
+                                    Text(text = "Бесплатно")
+                                }
+                            }
+                            Log.e("asdasdasdasdads", state.value.selectType.toString())
+                        }
+                        
                         items(
                             items = statePaging.value.pagingData.data ?: emptyList()
                         ) { product ->

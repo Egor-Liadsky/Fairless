@@ -4,6 +4,7 @@ import com.mobile.fairless.common.network.BaseRepository
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.response.ProductResponse
 import io.ktor.http.HttpMethod
 import kotlinx.serialization.KSerializer
@@ -16,7 +17,7 @@ import kotlin.math.roundToInt
 interface MainRepository {
 
     suspend fun getCategories(): List<Category>
-    suspend fun getProductsByCategory(page: Int, category: String): ProductResponse
+    suspend fun getProductsByCategory(page: Int, category: String, type: ProductStockType): ProductResponse
 }
 
 class MainRepositoryImpl : MainRepository, BaseRepository() {
@@ -29,11 +30,11 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
         return Json.decodeFromString(response)
     }
 
-    override suspend fun getProductsByCategory(page: Int, category: String): ProductResponse {
+    override suspend fun getProductsByCategory(page: Int, category: String, type: ProductStockType): ProductResponse {
 
         val params = HashMap<String, String>()
         params["_sort"] = "createdAt:DESC"
-        params["stock_type"] = "all"
+        params["stock_type"] = type.name.lowercase()
         params["category"] = category
         params["page"] = page.toString()
 //        params["limit"] = limit.toString()
