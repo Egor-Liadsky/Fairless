@@ -11,11 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,7 +34,6 @@ import com.mobile.fairless.features.main.models.Category
 fun CategoriesView(
     categories: List<Category>?,
     modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
     categoryOpened: Category,
     isPadding: Boolean = true,
     selectCategory: (Category) -> Unit,
@@ -46,33 +43,24 @@ fun CategoriesView(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(20.dp)
-                    .fillMaxWidth()
-                    .padding(top = 15.dp),
-                color = colors.black,
-            )
-        } else {
-            LazyRow(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = modifier
-            ) {
-                if (categories != null) {
-                    item { Spacer(modifier = Modifier.padding(start = if (isPadding) 17.dp else 0.dp)) }
-                    items(items = categories) { category ->
-                        CategoryItem(
-                            category = category,
-                            selected = categoryOpened.url == category.url,
-                            modifier = Modifier.padding(horizontal = 3.dp)
-                        ) {
-                            selectCategory(category)
-                        }
+
+        LazyRow(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = modifier
+        ) {
+            if (categories != null) {
+                item { Spacer(modifier = Modifier.padding(start = if (isPadding) 17.dp else 0.dp)) }
+                items(items = categories) { category ->
+                    CategoryItem(
+                        category = category,
+                        selected = categoryOpened.url == category.url,
+                        modifier = Modifier.padding(horizontal = 3.dp)
+                    ) {
+                        selectCategory(category)
                     }
-                    item { Spacer(modifier = Modifier.padding(end = 17.dp)) }
                 }
+                item { Spacer(modifier = Modifier.padding(end = 17.dp)) }
             }
         }
     }

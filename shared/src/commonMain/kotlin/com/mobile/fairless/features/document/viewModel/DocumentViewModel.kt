@@ -48,6 +48,8 @@ interface DocumentViewModel : StatefulKmpViewModel<DocumentState>, SubScreenView
     fun reactionDocument(like: Boolean)
     fun getNameProduct(productName: String)
     fun periodClick()
+    fun navigateToShop(name: String)
+    fun reloadDocument()
 }
 
 class DocumentViewModelImpl(override val navigator: Navigator) :
@@ -73,14 +75,10 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         super.onViewShown()
         getDocument()
         getFireProducts(state.value.selectFirePeriod.period)
-//        getCommentsByDocument(state.value.product._id ?: "")
         checkUser()
     }
 
     private fun getDocument() {
-        if (state.value.product.name == null) {
-            setLoading(true)
-        }
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
@@ -91,7 +89,6 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                             product = document
                         )
                     }
-                    setLoading(false)
                 },
                 failureBlock = { throwable ->
                     _state.update { it.copy(loadingState = LoadingState.Error(throwable.toString())) }
@@ -107,6 +104,16 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
 
     override fun periodClick() {
         _state.update { it.copy(periodMenuOpen = !it.periodMenuOpen) }
+    }
+
+    override fun navigateToShop(name: String) {
+        navigator.navigateToShop()
+    }
+
+    override fun reloadDocument() {
+        _state.update { it.copy(refreshable = true) }
+        getDocument()
+        _state.update { it.copy(refreshable = false) }
     }
 
     override fun onShareClick(product: ProductData) {
@@ -239,9 +246,5 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         } else {
             _state.update { it.copy(authUser = false) }
         }
-    }
-
-    private fun setLoading(status: Boolean) {
-        _state.update { it.copy(isLoading = status) }
     }
 }

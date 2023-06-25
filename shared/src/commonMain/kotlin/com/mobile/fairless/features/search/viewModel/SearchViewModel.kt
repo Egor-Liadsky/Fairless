@@ -57,8 +57,6 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     private val _state = MutableStateFlow(SearchState())
     override val state: StateFlow<SearchState> = _state.asStateFlow()
 
-    private var job: Job? = null
-
     private val pager = Pager<ProductData>(false, searchService)
 
     override val statePaging: StateFlow<SearchState> =

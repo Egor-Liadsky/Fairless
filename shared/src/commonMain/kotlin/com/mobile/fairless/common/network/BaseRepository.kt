@@ -1,6 +1,7 @@
 package com.mobile.fairless.common.network
 
 import com.mobile.fairless.common.config.ConfigService
+import com.mobile.fairless.common.errors.ApiError
 import com.mobile.fairless.common.errors.AppError
 import com.mobile.fairless.common.errors.Code
 import com.mobile.fairless.common.exception.ServerException
@@ -14,6 +15,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
 import io.ktor.http.appendPathSegments
 import io.ktor.util.StringValues
+import io.ktor.utils.io.errors.IOException
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -65,6 +67,8 @@ abstract class BaseRepository : KoinComponent {
                 body?.let { setBody(it) }
             }
         } catch (e: SocketTimeoutException) {
+            throw SocketException()
+        } catch (e: IOException){
             throw SocketException()
         }
         if (response.status.value !in 200..299){

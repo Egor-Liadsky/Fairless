@@ -114,7 +114,7 @@ fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                     is LoadingState.Error -> {
                         item {
                             ErrorLayout {
-
+                                viewModelWrapper.viewModel.onRefreshClick()
                             }
                         }
                     }

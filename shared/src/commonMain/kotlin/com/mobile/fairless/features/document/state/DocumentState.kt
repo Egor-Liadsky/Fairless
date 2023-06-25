@@ -23,7 +23,7 @@ data class DocumentState(
     val comments: List<Comment>? = null,
     val authUser: Boolean = false,
     val productName: String = "",
+    val refreshable: Boolean = false,
 
     val periodMenuOpen: Boolean = false,
-    val isLoading: Boolean = false
 )

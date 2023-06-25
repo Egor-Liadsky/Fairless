@@ -18,8 +18,8 @@ interface MainService : PagingDataSourceMain<ProductData> {
 
 class MainServiceImpl(private val mainRepository: MainRepository) : MainService {
 
-    override suspend fun getPage(page: Int, category: String, type: ProductStockType): ProductResponse {
-        return getProductsByCategory(page, category, type)
+    override suspend fun getPage(page: Int, name: String, type: ProductStockType): ProductResponse {
+        return getProductsByCategory(page, name, type)
     }
 
     override suspend fun getCategories(): List<Category> = mainRepository.getCategories()

@@ -68,7 +68,6 @@ class Pager<T : Any>(
                 return response.list
             }
         } else {
-            println("asdkjahsd   " + name)
             if (name.replace(" ", "") != ""){
                 total = source.getPage(page, name, type).total ?: 1 // Получение количества страниц
 
@@ -82,7 +81,6 @@ class Pager<T : Any>(
                     return response.list
                 }
             } else {
-                println("asdkjahsd   " + name)
                 return emptyList()
             }
         }

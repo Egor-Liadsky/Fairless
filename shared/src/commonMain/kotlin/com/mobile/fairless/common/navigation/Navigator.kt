@@ -9,6 +9,7 @@ enum class ScreenRoute(val isMain: Boolean) {
     Menu(true),
     Search(true),
 
+    Shop(false),
     Document(false),
     Profile(false),
     Auth(false),
@@ -37,4 +38,5 @@ interface Navigator {
     fun navigateToFeedback()
     fun navigateToFaq()
     fun navigateToAboutApp()
+    fun navigateToShop()
 }
