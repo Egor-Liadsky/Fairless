@@ -35,7 +35,7 @@ fun CollapsingToolbar(
     onShareClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    val minImageSize = 50
+    val minImageSize = 100
     val maxImageSize = 200
 
     CollapsingToolbarScaffold(
@@ -59,7 +59,7 @@ fun CollapsingToolbar(
                 Modifier
                     .fillMaxSize()
                     .background(colors.white, shape = RoundedCornerShape(15.dp))
-                    .shadow(if (imageSize == 50.dp) 0.8.dp else 0.dp)
+                    .shadow(if (imageSize == 100.dp) 0.8.dp else 0.dp)
                     .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp),
             ) {
                 Box(
