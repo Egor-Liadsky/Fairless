@@ -59,6 +59,9 @@ dependencies {
     // Adfox
     implementation("com.yandex.android:mobileads:5.6.0")
 
+    // Ui
+    implementation("me.onebone:toolbar-compose:2.3.5")
+
     implementation("androidx.compose.ui:ui:1.4.0")
     implementation("androidx.compose.ui:ui-tooling:1.4.0")
     implementation("androidx.compose.ui:ui-tooling-preview:1.4.0")
