@@ -49,6 +49,7 @@ interface DocumentViewModel : StatefulKmpViewModel<DocumentState>, SubScreenView
     fun getNameProduct(productName: String)
     fun periodClick()
     fun navigateToShop(name: String)
+    fun reloadDocument()
 }
 
 class DocumentViewModelImpl(override val navigator: Navigator) :
@@ -111,6 +112,10 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
 
     override fun navigateToShop(name: String) {
         navigator.navigateToShop()
+    }
+
+    override fun reloadDocument() {
+        getDocument()
     }
 
     override fun onShareClick(product: ProductData) {

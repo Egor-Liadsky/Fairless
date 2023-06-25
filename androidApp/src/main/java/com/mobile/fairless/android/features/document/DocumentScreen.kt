@@ -24,6 +24,8 @@ import com.mobile.fairless.android.features.document.components.DocumentTopBar
 import com.mobile.fairless.android.features.document.sheets.CommentSheetView
 import com.mobile.fairless.android.features.document.layouts.DocumentLayout
 import com.mobile.fairless.android.features.document.layouts.FireProductsLayout
+import com.mobile.fairless.android.features.views.layouts.EmptyLayout
+import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
@@ -142,9 +144,13 @@ fun DocumentScreen(
                 }
             }
 
-            LoadingState.Empty -> {}
+            LoadingState.Empty -> {
+                EmptyLayout()
+            }
             is LoadingState.Error -> {
-                Text(text = "error")
+                ErrorLayout {
+                    viewModelWrapper.viewModel.reloadDocument()
+                }
             }
 
             else -> {}
