@@ -74,7 +74,6 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         super.onViewShown()
         getDocument()
         getFireProducts(state.value.selectFirePeriod.period)
-//        getCommentsByDocument(state.value.product._id ?: "")
         checkUser()
     }
 

@@ -96,9 +96,8 @@ fun DocumentScreen(
         sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
         sheetContent = {
             CommentSheetView(
-                sheetState = sheetState,
+                viewModelWrapper = viewModelWrapper,
                 sheetStateSendComment = sheetStateSendComment,
-                state = state,
                 getChat = {
                     viewModelWrapper.viewModel.getCommentsByDocument(
                         state.value.product.id ?: ""
