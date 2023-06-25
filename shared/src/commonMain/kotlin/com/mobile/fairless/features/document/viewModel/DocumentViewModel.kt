@@ -79,9 +79,6 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
     }
 
     private fun getDocument() {
-        if (state.value.product.name == null) {
-            setLoading(true)
-        }
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
@@ -92,7 +89,6 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                             product = document
                         )
                     }
-                    setLoading(false)
                 },
                 failureBlock = { throwable ->
                     _state.update { it.copy(loadingState = LoadingState.Error(throwable.toString())) }
@@ -115,7 +111,9 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
     }
 
     override fun reloadDocument() {
+        _state.update { it.copy(refreshable = true) }
         getDocument()
+        _state.update { it.copy(refreshable = false) }
     }
 
     override fun onShareClick(product: ProductData) {
@@ -248,9 +246,5 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         } else {
             _state.update { it.copy(authUser = false) }
         }
-    }
-
-    private fun setLoading(status: Boolean) {
-        _state.update { it.copy(isLoading = status) }
     }
 }
