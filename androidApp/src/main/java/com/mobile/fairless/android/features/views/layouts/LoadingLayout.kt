@@ -8,18 +8,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.theme.colors
 
 @Composable
-fun LoadingLayout() {
+fun LoadingLayout(size: Dp = 30.dp, color: Color = colors.orangeMain) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.size(30.dp),
-            color = colors.orangeMain
+            modifier = Modifier.size(size),
+            color = color
         )
     }
 }

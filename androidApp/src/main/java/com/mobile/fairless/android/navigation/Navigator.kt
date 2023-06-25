@@ -78,6 +78,10 @@ class NavigatorImpl(
         navController.navigate(ScreenRoute.AboutApp.name)
     }
 
+    override fun navigateToShop() {
+        navController.navigate(ScreenRoute.Shop.name)
+    }
+
     private fun navigateToNavBarDestination(root: ScreenRoute) {
         navController.navigate(root.name) {
             popUpTo(navController.graph.id) {

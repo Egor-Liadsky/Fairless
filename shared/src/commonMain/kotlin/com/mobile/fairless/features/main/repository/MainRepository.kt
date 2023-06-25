@@ -49,7 +49,7 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
         val list = Json.decodeFromString<Product>(response).data
         val total = Json.decodeFromString<Product>(response).count?.div(30.0)?.roundToInt() // Получение количества страниц для пагинации
 
-        return ProductResponse(list = list ?: emptyList(), total = total)
+        return ProductResponse(list = list ?: emptyList(), total = total ?: 1)
     }
 }
 

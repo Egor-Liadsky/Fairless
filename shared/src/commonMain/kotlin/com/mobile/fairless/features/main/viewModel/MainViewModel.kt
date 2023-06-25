@@ -3,6 +3,7 @@ package com.mobile.fairless.features.main.viewModel
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.pagination.Pager
 import com.mobile.fairless.common.pagination.PagingData
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.KmpViewModel
@@ -37,6 +38,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun onProfileClick()
     fun onAppend()
     fun onRefresh()
+    fun onRefreshClick()
     fun selectType(type: ProductStockType)
 }
 
@@ -85,6 +87,11 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         setLoadingRefreshable(false)
     }
 
+    override fun onRefreshClick() {
+        getCategories()
+        pager.onRefresh()
+    }
+
     override fun selectType(type: ProductStockType) {
         _state.update { it.copy(selectType = type) }
         pager.changeType(type)
@@ -108,8 +115,8 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    _state.update { it.copy(categoriesLoading = true) }
                     if (_state.value.categories == null) {
+                        _state.update { it.copy(categoriesLoading = LoadingState.Loading) }
                         val categories = mainService.getCategories().toMutableList()
                         val indexAllCategory = categories.indexOfFirst { it.url == "all" }
 
@@ -119,13 +126,17 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                             categories.add(0, elementToMove)
                         }
                         _state.update { it.copy(categories = categories) }
+                        _state.update { it.copy(categoriesLoading = LoadingState.Success) }
                     }
                 },
-                failureBlock = {
-                    errorService.showError("Ошибка загрузки. Проверьте подключение к сети и повторите попытку.")
-                },
-                completionBlock = {
-                    _state.update { it.copy(categoriesLoading = false) }
+                failureBlock = { throwable ->
+                    _state.update {
+                        it.copy(
+                            categoriesLoading = LoadingState.Error(
+                                throwable.message ?: "error"
+                            )
+                        )
+                    }
                 }
             )
         }
@@ -133,7 +144,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
 
     override fun selectCategory(category: Category) {
         _state.update { it.copy(selectCategory = category) }
-        pager.updateCategory(category.type?: "all")
+        pager.updateCategory(category.type ?: "all")
     }
 
     override fun onDocumentClick(product: String) {

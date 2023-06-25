@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.search.layouts
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -52,9 +53,11 @@ import com.mobile.fairless.features.search.state.SearchState
 import com.mobile.fairless.features.search.viewModel.SearchViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SearchLayout(
@@ -205,14 +208,19 @@ fun SearchLayout(
 
                         LoadingState.Empty -> {
                             item {
-                                EmptyLayout()
+                                if (state.value.searchString != "") {
+                                    scope.launch { delay(100) }
+                                    EmptyLayout()
+                                }
+                                else SearchEmptyLayout()
                             }
                         }
 
                         is LoadingState.Error -> {
                             item {
+                                scope.launch { delay(300) }
                                 ErrorLayout {
-
+                                    viewModelWrapper.viewModel.onRefresh()
                                 }
                             }
                         }

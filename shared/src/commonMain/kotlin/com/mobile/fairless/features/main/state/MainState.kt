@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.main.state
 
 import com.mobile.fairless.common.pagination.PagingData
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductData
@@ -14,7 +15,7 @@ data class MainState(
 
     val refreshable: Boolean = false,
 
-    val categoriesLoading: Boolean = false,
+    val categoriesLoading: LoadingState = LoadingState.Loading,
     val productsLoading: Boolean = false,
 
     val user: UserReceive? = UserReceive(),

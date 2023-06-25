@@ -21,12 +21,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.di.ViewModelWrapper
+import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 
 @Composable
@@ -36,6 +39,7 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
     Column(
         modifier = Modifier
             .background(colors.backgroundWelcome)
+            .fillMaxWidth()
             .padding(vertical = 20.dp)
             .height(110.dp),
     ) {
@@ -71,13 +75,49 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                 )
             }
         }
-        CategoriesView(
-            categories = state.value.categories,
-            isLoading = state.value.categoriesLoading,
-            categoryOpened = state.value.selectCategory,
-            modifier = Modifier.padding(top = 10.dp),
-        ) {
-            viewModelWrapper.viewModel.selectCategory(it)
+
+        when (state.value.categoriesLoading) {
+
+            LoadingState.Loading -> LoadingLayout(size = 20.dp, color = colors.black)
+            LoadingState.Success -> {
+                CategoriesView(
+                    categories = state.value.categories,
+                    isLoading = false,
+                    categoryOpened = state.value.selectCategory,
+                    modifier = Modifier.padding(top = 10.dp),
+                ) {
+                    viewModelWrapper.viewModel.selectCategory(it)
+                }
+            }
+
+            LoadingState.Empty -> {
+                Text(
+                    text = "Пусто", style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.SemiBold,
+                        color = colors.black,
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Center
+                    ),
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+                )
+            }
+
+            is LoadingState.Error -> {
+                Text(
+                    text = "Ошибка", style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.SemiBold,
+                        color = colors.black,
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Center
+                    ),
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+                )
+            }
+
+            else -> {}
+
         }
     }
 }

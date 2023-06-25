@@ -38,6 +38,7 @@ import com.mobile.fairless.android.features.message.MessageScreen
 import com.mobile.fairless.android.features.notification.NotificationScreen
 import com.mobile.fairless.android.features.profile.ProfileScreen
 import com.mobile.fairless.android.features.search.SearchScreen
+import com.mobile.fairless.android.features.shop.ShopScreen
 import com.mobile.fairless.android.features.views.snackbar.DefaultSnackbar
 import com.mobile.fairless.android.features.welcome.auth.AuthScreen
 import com.mobile.fairless.android.features.welcome.register.RegisterScreen
@@ -154,6 +155,9 @@ fun MainNavigationScreen(
             }
             composable(route = ScreenRoute.AboutApp.name){
                 AboutAppScreen()
+            }
+            composable(route = ScreenRoute.Shop.name){
+                ShopScreen()
             }
             composable(
                 route = "${ScreenRoute.Document.name}/{product}",

@@ -1,6 +1,7 @@
 package com.mobile.fairless.common.network
 
 import com.mobile.fairless.common.config.ConfigService
+import com.mobile.fairless.common.errors.ApiError
 import com.mobile.fairless.common.errors.AppError
 import com.mobile.fairless.common.errors.Code
 import com.mobile.fairless.common.exception.ServerException
@@ -42,6 +43,8 @@ abstract class BaseRepository : KoinComponent {
             throw AppError(code = Code.SERVER_ERROR, description = e.message)
         } catch (e: ServerException){
             throw AppError(code = Code.SERVER_ERROR, description = e.message)
+        } catch (e: ApiError) {
+            throw AppError(code = Code.SERVER_ERROR, description = e.message)
         }
     }
 
@@ -65,6 +68,8 @@ abstract class BaseRepository : KoinComponent {
                 body?.let { setBody(it) }
             }
         } catch (e: SocketTimeoutException) {
+            throw SocketException()
+        } catch (e: Exception) {
             throw SocketException()
         }
         if (response.status.value !in 200..299){
