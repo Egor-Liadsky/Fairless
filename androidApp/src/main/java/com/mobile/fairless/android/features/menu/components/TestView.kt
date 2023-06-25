@@ -39,7 +39,7 @@ fun TestView(onClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-                .padding(top = 35.dp),
+                .padding(top = 20.dp),
             onClick = { onClick() },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
             elevation = ButtonDefaults.elevation(defaultElevation = 0.dp, pressedElevation = 0.dp),

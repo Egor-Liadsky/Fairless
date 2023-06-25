@@ -157,21 +157,21 @@ fun SearchLayout(
                     )
                 }
 
-                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.ALL) }) {
-                    Text(text = "Промокоды и скидки")
-                }
-
-                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.PROMOCODE) }) {
-                    Text(text = "Промокоды")
-                }
-
-                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.SALE) }) {
-                    Text(text = "Скидки")
-                }
-
-                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.FREE) }) {
-                    Text(text = "Бесплатно")
-                }
+//                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.ALL) }) {
+//                    Text(text = "Промокоды и скидки")
+//                }
+//
+//                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.PROMOCODE) }) {
+//                    Text(text = "Промокоды")
+//                }
+//
+//                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.SALE) }) {
+//                    Text(text = "Скидки")
+//                }
+//
+//                Button(onClick = { viewModelWrapper.viewModel.selectType(ProductStockType.FREE) }) {
+//                    Text(text = "Бесплатно")
+//                }
             }
 
             Refreshable(

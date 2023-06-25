@@ -45,7 +45,7 @@ fun AdditionalView(viewModelWrapper: StatefulViewModelWrapper<MenuViewModel, Men
 
     Column(
         Modifier
-            .padding(top = 25.dp, start = 16.dp, end = 16.dp)
+            .padding(top = 20.dp, start = 16.dp, end = 16.dp)
             .border(1.dp, colors.navBar, RoundedCornerShape(5.dp))
     ) {
         Column(

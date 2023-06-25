@@ -51,7 +51,6 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     MainViewModel {
 
     private val mainService: MainService by inject()
-    private val errorService: ErrorService by inject()
     private val prefService: PrefService by inject()
     private val urlEncode: UrlEncode by inject()
 
@@ -63,7 +62,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     override val statePaging: StateFlow<MainState> =
         pager.state.map { pagingData ->
             val list = pagingData.data.map {
-                ProductModel(it, state.value.selectCategory.type ?: "consoles")
+                ProductModel(it, state.value.selectCategory.type ?: "all")
             }.toMutableList()
             MainState(
                 PagingData<ProductModel>(

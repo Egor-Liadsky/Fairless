@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -58,6 +59,7 @@ fun CollapsingToolbar(
                 Modifier
                     .fillMaxSize()
                     .background(colors.white, shape = RoundedCornerShape(15.dp))
+                    .shadow(if (imageSize == 50.dp) 0.8.dp else 0.dp)
                     .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp),
             ) {
                 Box(
