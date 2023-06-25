@@ -218,14 +218,11 @@ fun SearchLayout(
 
                         is LoadingState.Error -> {
                             item {
-                                scope.launch { delay(300) }
                                 ErrorLayout {
                                     viewModelWrapper.viewModel.onRefresh()
                                 }
                             }
                         }
-
-                        else -> {}
                     }
 
                     if (statePaging.value.pagingData.isAppending)

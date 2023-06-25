@@ -15,6 +15,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
 import io.ktor.http.appendPathSegments
 import io.ktor.util.StringValues
+import io.ktor.utils.io.errors.IOException
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -43,8 +44,6 @@ abstract class BaseRepository : KoinComponent {
             throw AppError(code = Code.SERVER_ERROR, description = e.message)
         } catch (e: ServerException){
             throw AppError(code = Code.SERVER_ERROR, description = e.message)
-        } catch (e: ApiError) {
-            throw AppError(code = Code.SERVER_ERROR, description = e.message)
         }
     }
 
@@ -69,7 +68,7 @@ abstract class BaseRepository : KoinComponent {
             }
         } catch (e: SocketTimeoutException) {
             throw SocketException()
-        } catch (e: Exception) {
+        } catch (e: IOException){
             throw SocketException()
         }
         if (response.status.value !in 200..299){
