@@ -15,7 +15,7 @@ import kotlinx.coroutines.sync.withLock
 
 
 class Pager<T : Any>(
-    val isMain: Boolean,
+    private val isMain: Boolean,
     private val source: PagingDataSourceMain<T>
 ) {
     private val mutableState: MutableStateFlow<PagingData<T>> = MutableStateFlow(PagingData())

@@ -19,6 +19,7 @@ class MainActivity : ComponentActivity() {
     private val rootNavigation: AndroidNavigator by inject { parametersOf(startDestination) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.FirelessTheme)
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()

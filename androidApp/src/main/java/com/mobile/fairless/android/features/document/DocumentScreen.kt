@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
-import com.mobile.fairless.android.features.document.components.DocumentTopBar
 import com.mobile.fairless.android.features.document.layouts.DocumentLayout
 import com.mobile.fairless.android.features.document.layouts.FireProductsLayout
 import com.mobile.fairless.android.features.document.sheets.CommentSheetView
@@ -27,6 +26,7 @@ import com.mobile.fairless.android.features.views.layouts.EmptyLayout
 import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.features.views.layouts.Refreshable
+import com.mobile.fairless.android.features.views.topBars.CollapsingToolbar
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.document.state.DocumentState
@@ -123,26 +123,26 @@ fun DocumentScreen(
                 Refreshable(
                     isRefreshing = state.value.refreshable,
                     onRefresh = { viewModelWrapper.viewModel.reloadDocument() }) {
-                    LazyColumn(
-                        Modifier
-                            .fillMaxSize()
-                            .background(colors.backgroundWelcome)
+
+                    CollapsingToolbar(
+                        imageUrl = state.value.product.image?.url ?: "",
+                        onBackClick = { viewModelWrapper.viewModel.onBackButtonClick() },
+                        onShareClick = { viewModelWrapper.viewModel.onShareClick(state.value.product) }
                     ) {
-                        item {
-                            DocumentTopBar(
-                                product = state.value.product,
-                                viewModelWrapper = viewModelWrapper
-                            )
-                        }
-                        item {
-                            DocumentLayout(
-                                product = state.value.product,
-                                viewModelWrapper = viewModelWrapper,
-                                sheetState = sheetState,
-                            )
-                        }
-                        item {
-                            FireProductsLayout(viewModelWrapper = viewModelWrapper)
+                        LazyColumn(
+                            Modifier
+                                .fillMaxSize()
+                                .background(colors.backgroundWelcome)
+                        ) {
+                            item {
+                                DocumentLayout(
+                                    product = state.value.product,
+                                    viewModelWrapper = viewModelWrapper,
+                                    sheetState = sheetState,
+                                )
+
+                                FireProductsLayout(viewModelWrapper = viewModelWrapper)
+                            }
                         }
                     }
                 }
