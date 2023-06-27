@@ -6,6 +6,8 @@ import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.viewModel.ProductModel
+import com.mobile.fairless.features.search.models.PopularFilter
+import com.mobile.fairless.features.search.models.Sort
 
 data class SearchState(
     val pagingData: PagingData<ProductModel> = PagingData(),
@@ -16,7 +18,7 @@ data class SearchState(
     val refreshable: Boolean = false,
 
     val searchString: String = "",
-    val selectedPopularFilter: String = "По популярности",
+    val selectedPopularFilter: PopularFilter = PopularFilter("По дате создания", Sort.CREATE),
     val selectedFilters: String = "",
     val selectCategory: Category = Category(url = "all"),
     val selectType: Type = Type("Промокоды и скидки", ProductStockType.ALL),

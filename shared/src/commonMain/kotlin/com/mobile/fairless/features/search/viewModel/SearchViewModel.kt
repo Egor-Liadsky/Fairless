@@ -13,6 +13,7 @@ import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.viewModel.ProductModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
+import com.mobile.fairless.features.search.models.PopularFilter
 import com.mobile.fairless.features.search.service.SearchService
 import com.mobile.fairless.features.search.state.SearchState
 import kotlinx.coroutines.Job
@@ -35,7 +36,7 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
 
     fun searchChanged(search: String)
     fun onDeleteSearchClick()
-    fun selectPopularFilter(name: String)
+    fun selectPopularFilter(popularFilter: PopularFilter)
     fun popularFilterOpen()
     fun filtersOpen()
     fun onDocumentClick(product: String)
@@ -89,8 +90,9 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
         searchChanged("")
     }
 
-    override fun selectPopularFilter(name: String) {
-        _state.update { it.copy(selectedPopularFilter = name) }
+    override fun selectPopularFilter(popularFilter: PopularFilter) {
+        _state.update { it.copy(selectedPopularFilter = popularFilter) }
+        pager.changeFilter(popularFilter.sort)
     }
 
     override fun popularFilterOpen() {

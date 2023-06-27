@@ -15,9 +15,6 @@ import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,32 +25,32 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.PopupProperties
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
-import com.mobile.fairless.features.search.state.SearchState
+import com.mobile.fairless.features.search.models.PopularFilter
+import com.mobile.fairless.features.search.models.Sort
 
 @Composable
 fun FilterView(
     modifier: Modifier = Modifier,
-    selectPopularsFilter: String,
+    selectPopularsFilter: PopularFilter,
     selectTypeFilter: Type,
     popularFilterOpen: Boolean,
     typeFilterOpen: Boolean,
     popularFilterClick: () -> Unit,
-    popularFilterItemClick: (String) -> Unit,
+    popularFilterItemClick: (PopularFilter) -> Unit,
     typeFilterClick: () -> Unit,
     typeFilterItemClick: (Type) -> Unit
 ) {
     val popularList = listOf(
-        "По популярности",
-        "По рейтингу",
-        "По возрастанию цены",
-        "По убыванию цены",
-        "По скидке"
+        PopularFilter("По дате создания", Sort.CREATE),
+        PopularFilter("По популярности", Sort.LIKES),
+        PopularFilter("По просмотрам", Sort.VIEWS),
+        PopularFilter("По возрастанию цены", Sort.SALE_ASCENDING),
+        PopularFilter("По убыванию цены", Sort.SALE_DESCENDING)
     )
 
     val filterListType = listOf(
@@ -83,7 +80,7 @@ fun FilterView(
                 )
 
                 Text(
-                    text = selectPopularsFilter, style = TextStyle(
+                    text = selectPopularsFilter.title, style = TextStyle(
                         fontFamily = fontQanelas,
                         fontWeight = FontWeight.SemiBold,
                         color = colors.gray,
@@ -95,6 +92,7 @@ fun FilterView(
             FiltersDropDownMenu(
                 expanded = popularFilterOpen,
                 list = popularList,
+                isSelect = selectPopularsFilter,
                 onCloseClick = { popularFilterClick() }) {
                 popularFilterItemClick(it)
             }
@@ -138,24 +136,41 @@ fun FilterView(
 @Composable
 fun FiltersDropDownMenu(
     expanded: Boolean,
-    list: List<String>,
+    list: List<PopularFilter>,
+    isSelect: PopularFilter,
     onCloseClick: () -> Unit,
-    onClick: (String) -> Unit
+    onClick: (PopularFilter) -> Unit
 ) {
+    val orangeGradient = Brush.horizontalGradient(
+        colors = listOf(
+            Color(0xFFF51B00),
+            Color(0xFFFF8D00)
+        )
+    )
     DropdownMenu(
         modifier = Modifier.clip(RoundedCornerShape(5.dp)),
         expanded = expanded,
         onDismissRequest = { onCloseClick() },
     ) {
         list.forEach {
-            DropdownMenuItem(onClick = { onClick(it) }) {
+            val isSelected: Boolean = isSelect.sort == it.sort
+            DropdownMenuItem(
+                modifier = Modifier
+                    .background(
+                        brush = if (isSelected) orangeGradient
+                        else Brush.horizontalGradient(listOf(colors.white, colors.white)),
+                        shape = RoundedCornerShape(size = 5.dp)
+                    ),
+                onClick = { onClick(it) }
+            ) {
                 Text(
-                    text = it, style = TextStyle(
+                    text = it.title,
+                    style = TextStyle(
                         fontFamily = fontQanelas,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 12.sp,
-                        color = colors.gray
-                    )
+                        color = if (isSelected) colors.white else colors.gray
+                    ),
                 )
             }
         }

@@ -3,6 +3,7 @@ package com.mobile.fairless.common.pagination
 import com.mobile.fairless.common.errors.AppError
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.search.models.Sort
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -53,29 +54,29 @@ class Pager<T : Any>(
         val category = mutableState.value.category
         val name = mutableState.value.name
         val type = mutableState.value.type
-
+        val sort = mutableState.value.sort
 
         if (isMain){
-            total = source.getPage(page, category, type).total ?: 1 // Получение количества страниц
+            total = source.getPage(page, category, type, sort).total ?: 1
 
             mutex.withLock {
                 if (page > total) {
                     return listOf()
                 }
-                val response = source.getPage(page, category, type)
+                val response = source.getPage(page, category, type, sort)
                 if (response.list.isNotEmpty())
                     page++
                 return response.list
             }
         } else {
             if (name.replace(" ", "") != ""){
-                total = source.getPage(page, name, type).total ?: 1 // Получение количества страниц
+                total = source.getPage(page, name, type, sort).total ?: 1
 
                 mutex.withLock {
                     if (page > total) {
                         return listOf()
                     }
-                    val response = source.getPage(page, name, type)
+                    val response = source.getPage(page, name, type, sort)
                     if (response.list.isNotEmpty())
                         page++
                     return response.list
@@ -88,6 +89,11 @@ class Pager<T : Any>(
 
     fun changeType(type: ProductStockType){
         mutableState.update { it.copy(type = type) }
+        reloadData()
+    }
+
+    fun changeFilter(sort: Sort){
+        mutableState.update { it.copy(sort = sort) }
         reloadData()
     }
 
@@ -172,10 +178,10 @@ data class PagingData<T : Any>(
     var category: String = "all",
     var name: String = "",
     var type: ProductStockType = ProductStockType.ALL,
-
+    var sort: Sort = Sort.CREATE,
     val data: MutableList<T> = mutableListOf()
 )
 
 interface PagingDataSourceMain<T : Any> {
-    suspend fun getPage(page: Int, name: String, type: ProductStockType): PaginatedResult<T>
+    suspend fun getPage(page: Int, name: String, type: ProductStockType, sort: Sort): PaginatedResult<T>
 }
