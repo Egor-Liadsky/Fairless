@@ -10,6 +10,7 @@ import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.viewModel.ProductModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.service.SearchService
@@ -35,7 +36,6 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun searchChanged(search: String)
     fun onDeleteSearchClick()
     fun selectPopularFilter(name: String)
-    fun selectFilters(name: String)
     fun popularFilterOpen()
     fun filtersOpen()
     fun onDocumentClick(product: String)
@@ -43,7 +43,7 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun selectCategory(category: Category)
     fun onAppend()
     fun onRefresh()
-    fun selectType(type: ProductStockType)
+    fun selectType(type: Type)
 }
 
 class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
@@ -91,10 +91,6 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun selectPopularFilter(name: String) {
         _state.update { it.copy(selectedPopularFilter = name) }
-    }
-
-    override fun selectFilters(name: String) {
-        _state.update { it.copy(selectedFilters = name) }
     }
 
     override fun popularFilterOpen() {
@@ -152,9 +148,9 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
         setLoadingRefreshable(false)
     }
 
-    override fun selectType(type: ProductStockType) {
+    override fun selectType(type: Type) {
         _state.update { it.copy(selectType = type) }
-        pager.changeType(type)
+        pager.changeType(type.type)
     }
 
     private fun setLoadingRefreshable(status: Boolean) {

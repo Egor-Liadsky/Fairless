@@ -49,7 +49,7 @@ fun TypeView(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = modifier
         ) {
-            item { Spacer(modifier = Modifier.padding(start = if (isPadding) 17.dp else 0.dp)) }
+            item { Spacer(modifier = Modifier.padding(start = if (isPadding) 13.dp else 0.dp)) }
             items(items = types) { type ->
                 TypeItem(
                     type = type,
@@ -59,7 +59,7 @@ fun TypeView(
                     selectType(type)
                 }
             }
-            item { Spacer(modifier = Modifier.padding(end = 17.dp)) }
+            item { Spacer(modifier = Modifier.padding(end = 13.dp)) }
         }
     }
 }

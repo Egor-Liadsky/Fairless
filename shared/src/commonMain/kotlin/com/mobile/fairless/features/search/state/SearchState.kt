@@ -4,6 +4,7 @@ import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.viewModel.ProductModel
 
 data class SearchState(
@@ -18,7 +19,7 @@ data class SearchState(
     val selectedPopularFilter: String = "По популярности",
     val selectedFilters: String = "",
     val selectCategory: Category = Category(url = "all"),
-    val selectType: ProductStockType = ProductStockType.ALL,
+    val selectType: Type = Type("Промокоды и скидки", ProductStockType.ALL),
 
     val popularFilterOpen: Boolean = false,
     val filtersOpen: Boolean = false,
