@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.additional.AboutApp.AboutAppScreen
 import com.mobile.fairless.android.features.additional.AboutFairLess.AboutFairLess
@@ -42,6 +43,7 @@ import com.mobile.fairless.android.features.shop.ShopScreen
 import com.mobile.fairless.android.features.views.snackbar.DefaultSnackbar
 import com.mobile.fairless.android.features.welcome.auth.AuthScreen
 import com.mobile.fairless.android.features.welcome.register.RegisterScreen
+import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.navigation.ScreenRoute
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
@@ -64,8 +66,6 @@ fun MainNavigationScreen(
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     val currentRoute = backStackState.value
         ?.destination?.route ?: startDestination.name
-
-    Log.e("currentScreenTAGTAG", currentRoute)
 
     DisposableEffect(key1 = viewModelWrapper) {
         viewModelWrapper.viewModel.onViewShown()
@@ -96,6 +96,8 @@ fun MainNavigationScreen(
             doubleBackPressed.value = false
         }, 3000)
     }
+
+    rememberSystemUiController().setNavigationBarColor(color = colors.navBar)
 
     Scaffold(
         scaffoldState = scaffoldState,

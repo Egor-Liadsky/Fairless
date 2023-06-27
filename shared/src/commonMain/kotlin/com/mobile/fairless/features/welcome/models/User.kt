@@ -1,8 +1,6 @@
-package com.mobile.fairless.features.welcome.dto
+package com.mobile.fairless.features.welcome.models
 
-import com.mobile.fairless.common.utils.DateTimeSerializer
-import com.mobile.fairless.common.utils.isToday
-import com.mobile.fairless.common.utils.isYesterday
+import com.mobile.fairless.common.utils.DateTimeTzSerializer
 import com.soywiz.klock.DateTimeTz
 import kotlinx.serialization.Serializable
 
@@ -35,7 +33,7 @@ data class User(
     val email: String,
     val username: String,
     val provider: String,
-    @Serializable(with = DateTimeSerializer::class)
+    @Serializable(with = DateTimeTzSerializer::class)
     val createdAt: DateTimeTz,
     val updatedAt: String,
     val __v: Int,

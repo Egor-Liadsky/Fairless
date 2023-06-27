@@ -2,10 +2,10 @@ package com.mobile.fairless.features.document.repository
 
 import com.mobile.fairless.common.network.BaseRepository
 import com.mobile.fairless.features.document.model.Comment
+import com.mobile.fairless.features.document.model.Like
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.ProductData
-import com.mobile.fairless.features.welcome.dto.User
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.UserReceive
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.ISO8601
@@ -21,6 +21,7 @@ interface DocumentRepository {
     suspend fun sendComment(user: UserReceive, text: String, documentId: String)
     suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive)
     suspend fun getDocument(name: String): List<ProductData>
+    suspend fun checkLike(documentId: String, userId: String): List<Like>
 }
 
 class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
@@ -132,6 +133,19 @@ class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
             parameters = params,
             headers = mapOf("Content-Type" to "application/json"),
             path = "stocks"
+        )
+        return Json.decodeFromString(response)
+    }
+
+    override suspend fun checkLike(documentId: String, userId: String): List<Like> {
+        val params = HashMap<String, String>()
+        params["stock_id"] = documentId
+        params["user_id"] = userId
+        val response = executeCall(
+            type = HttpMethod.Get,
+            parameters = params,
+            headers = mapOf("Content-Type" to "application/json"),
+            path = "likes"
         )
         return Json.decodeFromString(response)
     }

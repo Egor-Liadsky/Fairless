@@ -42,7 +42,9 @@ import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
+import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -50,6 +52,7 @@ fun CommentSheetView(
     viewModelWrapper: StatefulViewModelWrapper<DocumentViewModel, DocumentState>,
     sheetStateSendComment: ModalBottomSheetState,
     getChat: () -> Unit,
+    errorService: ErrorService = get(),
     sendCommentOnClick: () -> Unit,
     onValueChanged: (String) -> Unit,
 ) {
@@ -114,7 +117,7 @@ fun CommentSheetView(
                             LazyColumn(
                                 Modifier
                                     .align(Alignment.TopCenter)
-                                    .padding(bottom = if (state.value.authUser) 60.dp else 0.dp)
+                                    .padding(bottom = 60.dp)
                             ) {
                                 items(items = state.value.comments ?: emptyList()) { comment ->
                                     CommentItem(
@@ -124,29 +127,32 @@ fun CommentSheetView(
                                 }
                             }
 
-                            if (state.value.authUser) {
-                                GradientButton(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .align(Alignment.BottomCenter),
-                                    title = "Добавить комментарий"
-                                ) {
+                            GradientButton(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.BottomCenter),
+                                title = "Добавить комментарий"
+                            ) {
+                                if (state.value.authUser) {
                                     scope.launch { sheetStateSendComment.show() }
+                                } else {
+                                    scope.launch { errorService.showError("Необходимо авторизоваться") }
                                 }
                             }
                         }
 
                         LoadingState.Empty -> {
-                            CommentsEmptyLayout()
-
-                            if (state.value.authUser) {
-                                GradientButton(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .align(Alignment.BottomCenter),
-                                    title = "Добавить комментарий"
-                                ) {
+                            CommentsEmptyLayout(state.value.authUser)
+                            GradientButton(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.BottomCenter),
+                                title = "Добавить комментарий"
+                            ) {
+                                if (state.value.authUser) {
                                     scope.launch { sheetStateSendComment.show() }
+                                } else {
+                                   scope.launch { errorService.showError("Необходимо авторизоваться") }
                                 }
                             }
                         }

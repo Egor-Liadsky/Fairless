@@ -50,7 +50,7 @@ fun CategoriesView(
             modifier = modifier
         ) {
             if (categories != null) {
-                item { Spacer(modifier = Modifier.padding(start = if (isPadding) 17.dp else 0.dp)) }
+                item { Spacer(modifier = Modifier.padding(start = if (isPadding) 13.dp else 0.dp)) }
                 items(items = categories) { category ->
                     CategoryItem(
                         category = category,
@@ -60,7 +60,7 @@ fun CategoriesView(
                         selectCategory(category)
                     }
                 }
-                item { Spacer(modifier = Modifier.padding(end = 17.dp)) }
+                item { Spacer(modifier = Modifier.padding(end = 13.dp)) }
             }
         }
     }

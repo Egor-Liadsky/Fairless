@@ -24,6 +24,6 @@ data class DocumentState(
     val authUser: Boolean = false,
     val productName: String = "",
     val refreshable: Boolean = false,
-
+    val isLike: Boolean? = null,
     val periodMenuOpen: Boolean = false,
 )

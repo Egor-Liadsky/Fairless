@@ -2,17 +2,15 @@ package com.mobile.fairless.features.welcome.register.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.storage.PrefService
-import com.mobile.fairless.common.viewModel.KmpViewModel
-import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.welcome.auth.service.AuthService
-import com.mobile.fairless.features.welcome.dto.City
-import com.mobile.fairless.features.welcome.dto.UserAuthResponse
-import com.mobile.fairless.features.welcome.dto.UserReceive
-import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
+import com.mobile.fairless.features.welcome.models.City
+import com.mobile.fairless.features.welcome.models.UserAuthResponse
+import com.mobile.fairless.features.welcome.models.UserReceive
+import com.mobile.fairless.features.welcome.models.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.service.RegisterService
 import com.mobile.fairless.features.welcome.register.state.RegisterState
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,7 +1,7 @@
 package com.mobile.fairless.features.mainNavigation.state
 
 import com.mobile.fairless.common.navigation.ScreenRoute
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.UserReceive
 
 data class MainNavigationState(
     val screenRoute: ScreenRoute,

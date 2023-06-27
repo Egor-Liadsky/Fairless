@@ -1,6 +1,6 @@
 package com.mobile.fairless.common.storage
 
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.UserReceive
 
 const val USER = "USER"
 

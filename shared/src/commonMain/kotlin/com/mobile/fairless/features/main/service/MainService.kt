@@ -6,6 +6,7 @@ import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.response.ProductResponse
 import com.mobile.fairless.features.main.repository.MainRepository
+import com.mobile.fairless.features.search.models.Sort
 
 interface MainService : PagingDataSourceMain<ProductData> {
     suspend fun getCategories(): List<Category>
@@ -18,7 +19,7 @@ interface MainService : PagingDataSourceMain<ProductData> {
 
 class MainServiceImpl(private val mainRepository: MainRepository) : MainService {
 
-    override suspend fun getPage(page: Int, name: String, type: ProductStockType): ProductResponse {
+    override suspend fun getPage(page: Int, name: String, type: ProductStockType, sort: Sort): ProductResponse {
         return getProductsByCategory(page, name, type)
     }
 

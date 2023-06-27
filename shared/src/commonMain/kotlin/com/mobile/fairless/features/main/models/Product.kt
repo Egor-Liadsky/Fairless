@@ -1,6 +1,10 @@
 package com.mobile.fairless.features.main.models
 
-import com.mobile.fairless.features.welcome.dto.City
+import com.mobile.fairless.common.utils.DateTimeTzSerializer
+import com.mobile.fairless.common.utils.isToday
+import com.mobile.fairless.common.utils.isYesterday
+import com.mobile.fairless.features.welcome.models.City
+import com.soywiz.klock.DateTimeTz
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -39,7 +43,8 @@ data class ProductData(
     val description: String? = null,
     val published_at: String? = null,
     val SEO: Seo? = null,
-    val createdAt: String? = null,
+    @Serializable(with = DateTimeTzSerializer::class)
+    val createdAt: DateTimeTz? = null,
     val updatedAt: String? = null,
     val __v: Int? = null,
     val category: Category? = null,
@@ -54,7 +59,17 @@ data class ProductData(
     val promo_code: String? = null, //
     val promo_price: Int? = null, //
     val free_text: String? = null
-)
+) {
+    private val createDate = createdAt?.format("dd.MM.yyyy")
+    private val time = createdAt?.format("HH:mm, ")
+
+    val createDateTime = if (createdAt?.isToday() == true) "сегодня"
+    else if (createdAt?.isYesterday() == true) "вчера"
+    else createDate
+
+    val dateTime: String? =
+        if (time != null && createDateTime != null) time + createDateTime else null
+}
 
 @Serializable
 data class Seo(

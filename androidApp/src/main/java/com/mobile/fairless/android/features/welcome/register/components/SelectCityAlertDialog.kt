@@ -22,7 +22,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,12 +37,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
-import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.topBars.SelectCityTopBar
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
-import com.mobile.fairless.features.welcome.dto.City
+import com.mobile.fairless.features.welcome.models.City
 import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 import kotlinx.coroutines.CoroutineScope

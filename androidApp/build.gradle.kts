@@ -61,6 +61,7 @@ dependencies {
 
     // Ui
     implementation("me.onebone:toolbar-compose:2.3.5")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.29.2-rc")
 
     implementation("androidx.compose.ui:ui:1.4.0")
     implementation("androidx.compose.ui:ui-tooling:1.4.0")
