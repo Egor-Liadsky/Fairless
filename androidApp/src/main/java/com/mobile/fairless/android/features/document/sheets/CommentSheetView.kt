@@ -142,7 +142,7 @@ fun CommentSheetView(
                         }
 
                         LoadingState.Empty -> {
-                            CommentsEmptyLayout()
+                            CommentsEmptyLayout(state.value.authUser)
                             GradientButton(
                                 modifier = Modifier
                                     .fillMaxWidth()
