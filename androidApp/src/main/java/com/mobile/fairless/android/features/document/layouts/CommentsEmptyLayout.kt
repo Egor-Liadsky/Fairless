@@ -27,13 +27,13 @@ fun CommentsEmptyLayout() {
     ) {
         Column(Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_empty), contentDescription = "ic_empty",
-                modifier = Modifier.size(width = 83.dp, height = 110.dp),
+                painter = painterResource(id = R.drawable.ic_empty_comments), contentDescription = "ic_empty",
+                modifier = Modifier.size(width = 83.dp, height = 83.dp),
                 tint = Color(0xFFA7ACAF)
             )
 
             Text(
-                text = "Напишите первый комментарий!",
+                text = "Поделитесь мнением, оставьте\nпервый комментарий!",
                 style = TextStyle(
                     fontFamily = fontQanelas,
                     fontWeight = FontWeight.SemiBold,

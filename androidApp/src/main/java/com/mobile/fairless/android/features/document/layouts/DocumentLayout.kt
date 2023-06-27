@@ -110,13 +110,15 @@ fun DocumentLayout(
                 }
             }
 
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp)
-                    .height(0.35.dp),
-                Color(0xFFB9B9B9)
-            )
+            if (product.sale_price != null) {
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp)
+                        .height(0.35.dp),
+                    Color(0xFFB9B9B9)
+                )
+            }
         }
 
         if (product.sale_price != null) {
@@ -167,7 +169,6 @@ fun DocumentLayout(
             Color(0xFFB9B9B9)
         )
 
-
         Row(
             Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -192,20 +193,20 @@ fun DocumentLayout(
                         ), modifier = Modifier.padding(start = 6.dp)
                     )
                 }
-
-                Text(
-                    text = product.shop?.name ?: "",
-                    style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 16.sp,
-                        color = colors.black
-                    ),
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp))
-                        .clickable { viewModelWrapper.viewModel.navigateToShop("Aliexpress") }
-                )
             }
+
+            Text(
+                text = product.shop?.name ?: "",
+                style = TextStyle(
+                    fontFamily = fontQanelas,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    color = colors.black
+                ),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(4.dp))
+                    .clickable { viewModelWrapper.viewModel.navigateToShop("Aliexpress") }
+            )
         }
 
         Divider(
