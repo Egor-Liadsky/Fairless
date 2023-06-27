@@ -9,8 +9,8 @@ import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.profile.service.ProfileService
 import com.mobile.fairless.features.profile.state.ProfileButton
 import com.mobile.fairless.features.profile.state.ProfileState
-import com.mobile.fairless.features.welcome.dto.City
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.City
+import com.mobile.fairless.features.welcome.models.UserReceive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

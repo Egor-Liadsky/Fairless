@@ -6,10 +6,10 @@ import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
-import com.mobile.fairless.features.welcome.dto.UserAuthResponse
+import com.mobile.fairless.features.welcome.models.UserAuthResponse
 import com.mobile.fairless.features.welcome.auth.service.AuthService
 import com.mobile.fairless.features.welcome.auth.state.AuthState
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.UserReceive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

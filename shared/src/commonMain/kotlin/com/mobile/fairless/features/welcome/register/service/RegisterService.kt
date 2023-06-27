@@ -1,9 +1,8 @@
 package com.mobile.fairless.features.welcome.register.service
 
-import com.mobile.fairless.features.document.model.Comment
-import com.mobile.fairless.features.welcome.dto.City
-import com.mobile.fairless.features.welcome.dto.UserReceive
-import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
+import com.mobile.fairless.features.welcome.models.City
+import com.mobile.fairless.features.welcome.models.UserReceive
+import com.mobile.fairless.features.welcome.models.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.repository.RegisterRepository
 
 interface RegisterService {

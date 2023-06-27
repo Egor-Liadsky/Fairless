@@ -1,8 +1,8 @@
 package com.mobile.fairless.features.welcome.auth.repository
 
 import com.mobile.fairless.common.network.BaseRepository
-import com.mobile.fairless.features.welcome.dto.UserReceive
-import com.mobile.fairless.features.welcome.dto.UserAuthResponse
+import com.mobile.fairless.features.welcome.models.UserReceive
+import com.mobile.fairless.features.welcome.models.UserAuthResponse
 import io.ktor.http.HttpMethod
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

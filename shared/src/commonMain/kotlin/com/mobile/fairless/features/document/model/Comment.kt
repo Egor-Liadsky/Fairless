@@ -1,6 +1,6 @@
 package com.mobile.fairless.features.document.model
 
-import com.mobile.fairless.common.utils.DateTimeSerializer
+import com.mobile.fairless.common.utils.DateTimeTzSerializer
 import com.soywiz.klock.DateTimeTz
 import kotlinx.serialization.Serializable
 
@@ -9,7 +9,7 @@ data class Comment(
     val _id: String? = null,
     val text: String? = null,
     val stock_id: String? = null,
-    @Serializable(with = DateTimeSerializer::class)
+    @Serializable(with = DateTimeTzSerializer::class)
     val createdAt: DateTimeTz? = null,
     val updatedAt: String? = null,
     val __v: Int? = null,
@@ -29,7 +29,7 @@ data class UsersPermissionsUser(
     val email: String? = null,
     val username: String? = null,
     val provider: String? = null,
-    @Serializable(with = DateTimeSerializer::class)
+    @Serializable(with = DateTimeTzSerializer::class)
     val createdAt: DateTimeTz? = null,
     val updatedAt: String? = null,
     val __v: Int? = null,

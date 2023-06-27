@@ -4,11 +4,10 @@ import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.Product
-import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.viewModel.ProductModel
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.UserReceive
 
 data class MainState(
     val pagingData: PagingData<ProductModel> = PagingData(),

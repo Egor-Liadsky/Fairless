@@ -5,7 +5,7 @@ import com.mobile.fairless.features.document.model.Like
 import com.mobile.fairless.features.document.repository.DocumentRepository
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.ProductData
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.UserReceive
 
 interface DocumentService {
     suspend fun getFireProducts(limit: Int, last: DateFilter): List<ProductData>

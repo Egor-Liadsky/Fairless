@@ -1,9 +1,9 @@
 package com.mobile.fairless.features.welcome.register.repository
 
 import com.mobile.fairless.common.network.BaseRepository
-import com.mobile.fairless.features.welcome.dto.City
-import com.mobile.fairless.features.welcome.dto.UserReceive
-import com.mobile.fairless.features.welcome.dto.UserRegisterResponse
+import com.mobile.fairless.features.welcome.models.City
+import com.mobile.fairless.features.welcome.models.UserReceive
+import com.mobile.fairless.features.welcome.models.UserRegisterResponse
 import io.ktor.http.HttpMethod
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

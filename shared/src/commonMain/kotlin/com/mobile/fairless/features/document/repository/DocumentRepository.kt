@@ -5,7 +5,7 @@ import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.document.model.Like
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.ProductData
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.UserReceive
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.ISO8601

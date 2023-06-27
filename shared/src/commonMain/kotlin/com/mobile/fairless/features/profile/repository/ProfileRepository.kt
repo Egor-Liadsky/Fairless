@@ -1,7 +1,7 @@
 package com.mobile.fairless.features.profile.repository
 
 import com.mobile.fairless.common.network.BaseRepository
-import com.mobile.fairless.features.welcome.dto.City
+import com.mobile.fairless.features.welcome.models.City
 import io.ktor.http.HttpMethod
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

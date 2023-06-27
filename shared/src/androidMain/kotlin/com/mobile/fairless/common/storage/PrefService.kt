@@ -3,9 +3,8 @@ package com.mobile.fairless.common.storage
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.UserReceive
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

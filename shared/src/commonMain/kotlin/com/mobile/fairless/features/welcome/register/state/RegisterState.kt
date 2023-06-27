@@ -1,7 +1,7 @@
 package com.mobile.fairless.features.welcome.register.state
 
-import com.mobile.fairless.features.welcome.dto.City
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.City
+import com.mobile.fairless.features.welcome.models.UserReceive
 
 data class RegisterState(
     val email: String? = null,

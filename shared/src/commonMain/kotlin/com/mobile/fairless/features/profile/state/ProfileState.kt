@@ -1,7 +1,7 @@
 package com.mobile.fairless.features.profile.state
 
-import com.mobile.fairless.features.welcome.dto.City
-import com.mobile.fairless.features.welcome.dto.UserReceive
+import com.mobile.fairless.features.welcome.models.City
+import com.mobile.fairless.features.welcome.models.UserReceive
 
 data class ProfileState(
     val user: UserReceive? = null,

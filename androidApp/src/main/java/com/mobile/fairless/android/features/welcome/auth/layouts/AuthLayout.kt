@@ -24,7 +24,7 @@ import com.mobile.fairless.android.features.views.buttons.SquareButton
 import com.mobile.fairless.android.features.views.textFields.CommonTextField
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.welcome.dto.UserAuthResponse
+import com.mobile.fairless.features.welcome.models.UserAuthResponse
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 
 @Composable

@@ -1,6 +1,6 @@
 package com.mobile.fairless.features.profile.service
 
-import com.mobile.fairless.features.welcome.dto.City
+import com.mobile.fairless.features.welcome.models.City
 import com.mobile.fairless.features.welcome.register.repository.RegisterRepository
 
 interface ProfileService {
