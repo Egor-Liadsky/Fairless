@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.document.service
 
 import com.mobile.fairless.features.document.model.Comment
+import com.mobile.fairless.features.document.model.Like
 import com.mobile.fairless.features.document.repository.DocumentRepository
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.ProductData
@@ -12,6 +13,7 @@ interface DocumentService {
     suspend fun sendComment(user: UserReceive, text: String, documentId: String)
     suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive)
     suspend fun getDocument(name: String): List<ProductData>
+    suspend fun checkLike(documentId: String, userId: String): List<Like>
 }
 
 class DocumentServiceImpl(private val documentRepository: DocumentRepository) : DocumentService {
@@ -32,4 +34,7 @@ class DocumentServiceImpl(private val documentRepository: DocumentRepository) : 
 
     override suspend fun getDocument(name: String): List<ProductData> =
         documentRepository.getDocument(name)
+
+    override suspend fun checkLike(documentId: String, userId: String): List<Like> =
+        documentRepository.checkLike(documentId, userId)
 }

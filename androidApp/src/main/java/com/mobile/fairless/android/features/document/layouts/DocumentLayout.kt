@@ -56,6 +56,7 @@ fun DocumentLayout(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val state = viewModelWrapper.viewModel.state
 
     Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 16.dp)) {
         Text(
@@ -236,11 +237,17 @@ fun DocumentLayout(
                             .width(32.dp)
                             .height(24.dp),
                         onClick = { viewModelWrapper.viewModel.reactionDocument(true) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_like),
+                        Image(
+                            painter = painterResource(
+                                id = when (state.value.isLike) {
+                                    true -> R.drawable.ic_like_orange
+                                    false -> R.drawable.ic_like
+                                    else -> R.drawable.ic_like
+                                }
+                            ),
                             contentDescription = "ic_like",
                             modifier = Modifier
-                                .size(width = 32.dp, height = 24.dp)
+                                .size(width = 32.dp, height = 24.dp),
                         )
                     }
                     Text(
@@ -261,11 +268,17 @@ fun DocumentLayout(
                             .width(32.dp)
                             .height(24.dp),
                         onClick = { viewModelWrapper.viewModel.reactionDocument(false) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_dislike),
+                        Image(
+                            painter = painterResource(
+                                id = when (state.value.isLike) {
+                                    true -> R.drawable.ic_dislike
+                                    false -> R.drawable.ic_dislike_orange
+                                    else -> R.drawable.ic_dislike
+                                }
+                            ),
                             contentDescription = "ic_dislike",
                             modifier = Modifier
-                                .size(width = 32.dp, height = 24.dp)
+                                .size(width = 32.dp, height = 24.dp),
                         )
                     }
                     Text(

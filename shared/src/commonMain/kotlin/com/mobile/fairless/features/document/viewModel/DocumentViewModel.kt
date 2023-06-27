@@ -19,6 +19,7 @@ import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.welcome.dto.UserReceive
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -83,13 +84,11 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
             exceptionHandleable(
                 executionBlock = {
                     val document = documentService.getDocument(state.value.productName)[0]
-                    _state.update {
-                        it.copy(
-                            loadingState = LoadingState.Success,
-                            product = document
-                        )
-                    }
-                },
+                    _state.update { it.copy(product = document) }
+                    checkLike()
+                    delay(200)
+                    _state.update { it.copy(loadingState = LoadingState.Success)}
+                    },
                 failureBlock = { throwable ->
                     _state.update { it.copy(loadingState = LoadingState.Error(throwable.toString())) }
                 }
@@ -116,6 +115,20 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         _state.update { it.copy(refreshable = false) }
     }
 
+    private fun checkLike() {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    val isLike = documentService.checkLike(
+                        state.value.product.id ?: "",
+                        prefService.getUserInfo()?.user?.id ?: ""
+                    )[0].like
+                    _state.update { it.copy(isLike = isLike) }
+                }
+            )
+        }
+    }
+
     override fun onShareClick(product: ProductData) {
         scope.launch {
             mutableShareText.emit(
@@ -140,7 +153,12 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     val data = documentService.getFireProducts(4, period)
                     if (data.isEmpty()) {
                         selectFirePeriod(DateFilter.WEEK)
-                        _state.update { it.copy(loadingStateFire = LoadingState.Success,todayNull = true) }
+                        _state.update {
+                            it.copy(
+                                loadingStateFire = LoadingState.Success,
+                                todayNull = true
+                            )
+                        }
                     }
                     _state.update {
                         it.copy(loadingStateFire = LoadingState.Success, fireProduct = data)
@@ -180,10 +198,12 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    _state.update { it.copy(
-                        loadingStateComment = LoadingState.Success,
-                        comments = documentService.getComments(documentId)
-                    ) }
+                    _state.update {
+                        it.copy(
+                            loadingStateComment = LoadingState.Success,
+                            comments = documentService.getComments(documentId)
+                        )
+                    }
                     if (state.value.comments?.isEmpty() == true) {
                         _state.update { it.copy(loadingStateComment = LoadingState.Empty) }
                     }
@@ -208,7 +228,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     getCommentsByDocument(state.value.product.id ?: "")
                 },
                 failureBlock = {
-                   errorService.showError("Ошибка")
+                    errorService.showError("Ошибка")
                 }
             )
         }
@@ -228,10 +248,10 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                             state.value.product._id ?: "",
                             prefService.getUserInfo() ?: UserReceive()
                         )
-                        getDocument()
                     } else {
                         errorService.showError("Необходимо авторизоваться")
                     }
+                    getDocument()
                 },
                 failureBlock = {
                     errorService.showError("Ошибка")
