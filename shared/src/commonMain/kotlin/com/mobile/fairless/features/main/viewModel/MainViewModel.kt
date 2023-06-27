@@ -63,7 +63,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     override val statePaging: StateFlow<MainState> =
         pager.state.map { pagingData ->
             val list = pagingData.data.map {
-                ProductModel(it, state.value.selectCategory.type ?: "all")
+                ProductModel(it, state.value.selectCategory.type ?: "news")
             }.toMutableList()
             MainState(
                 PagingData<ProductModel>(
@@ -71,7 +71,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                     isRefreshing = pagingData.isRefreshing,
                     isAppending = pagingData.isAppending,
                     data = list,
-                    category = state.value.selectCategory.type ?: "all",
+                    category = state.value.selectCategory.type ?: "news",
                     type = state.value.selectType.type
                 )
             )
@@ -118,12 +118,13 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                     if (_state.value.categories == null) {
                         _state.update { it.copy(categoriesLoading = LoadingState.Loading) }
                         val categories = mainService.getCategories().toMutableList()
+                        categories.add(0, Category(name = "Новое", type = "news", url = "news"))
                         val indexAllCategory = categories.indexOfFirst { it.url == "all" }
 
                         if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
                             val elementToMove = categories[indexAllCategory]
                             categories.removeAt(indexAllCategory)
-                            categories.add(0, elementToMove)
+                            categories.add(1, elementToMove)
                         }
                         _state.update { it.copy(categories = categories) }
                         _state.update { it.copy(categoriesLoading = LoadingState.Success) }
@@ -144,7 +145,11 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
 
     override fun selectCategory(category: Category) {
         _state.update { it.copy(selectCategory = category) }
-        pager.updateCategory(category.type ?: "all")
+        if (state.value.selectCategory.name != "Новое") {
+            pager.updateCategory(category.type ?: "news")
+        } else {
+            pager.updateCategory(category.type ?: "news")
+        }
     }
 
     override fun onDocumentClick(product: String) {

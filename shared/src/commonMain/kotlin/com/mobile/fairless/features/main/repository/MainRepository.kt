@@ -35,9 +35,10 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
         val params = HashMap<String, String>()
         params["_sort"] = "createdAt:DESC"
         params["stock_type"] = type.name.lowercase()
-        params["category"] = category
+        if (category != "news"){
+            params["category"] = category
+        }
         params["page"] = page.toString()
-//        params["limit"] = limit.toString()
 
         val response = executeCall(
             type = HttpMethod.Get,
