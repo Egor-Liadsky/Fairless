@@ -30,6 +30,8 @@ import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.common.state.LoadingState
+import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 
 @Composable
@@ -40,14 +42,13 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
         modifier = Modifier
             .background(colors.backgroundWelcome)
             .fillMaxWidth()
-            .padding(vertical = 20.dp)
-            .height(110.dp),
+            .padding(top = 30.dp, bottom = 10.dp),
     ) {
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 20.dp)
+            modifier = Modifier.padding(horizontal = 16.dp)
         ) {
             Text(
                 text = "Выберите нужную вам категорию",
@@ -80,12 +81,29 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
 
             LoadingState.Loading -> LoadingLayout(size = 20.dp, color = colors.black)
             LoadingState.Success -> {
-                CategoriesView(
-                    categories = state.value.categories,
-                    categoryOpened = state.value.selectCategory,
-                    modifier = Modifier.padding(top = 10.dp),
-                ) {
-                    viewModelWrapper.viewModel.selectCategory(it)
+
+                val types = listOf(
+                    Type("Промокоды и скидки", ProductStockType.ALL),
+                    Type("Скидки", ProductStockType.SALE),
+                    Type("Промокоды", ProductStockType.PROMOCODE),
+                    Type("Бесплатно", ProductStockType.FREE)
+                )
+
+                Column {
+                    CategoriesView(
+                        categories = state.value.categories,
+                        categoryOpened = state.value.selectCategory,
+                        modifier = Modifier.padding(top = 15.dp),
+                    ) {
+                        viewModelWrapper.viewModel.selectCategory(it)
+                    }
+
+                    TypeView(
+                       modifier = Modifier.padding(top = 10.dp) ,
+                        types = types,
+                        typeOpened = state.value.selectType,
+                        selectType = { viewModelWrapper.viewModel.selectType(it) }
+                    )
                 }
             }
 
@@ -98,7 +116,9 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center
                     ),
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp)
                 )
             }
 
@@ -111,7 +131,9 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
                         fontSize = 15.sp,
                         textAlign = TextAlign.Center
                     ),
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp)
                 )
             }
 
