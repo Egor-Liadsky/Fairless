@@ -5,6 +5,7 @@ import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.Shop
 
 data class Period(
     val title: String,
@@ -26,4 +27,14 @@ data class DocumentState(
     val refreshable: Boolean = false,
     val isLike: Boolean? = null,
     val periodMenuOpen: Boolean = false,
+    val shop: Shop? = null,
+    val shopLoading: LoadingState = LoadingState.Loading,
+    val userLike: Boolean? = null,
+
+    val sheetOpen: DocumentSheet = DocumentSheet.Comments
 )
+
+enum class DocumentSheet {
+    Comments,
+    Shop
+}

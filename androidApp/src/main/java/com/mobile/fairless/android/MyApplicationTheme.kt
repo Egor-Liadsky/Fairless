@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.fairless.android.theme.colors
 
 @Composable
 fun MyApplicationTheme(
@@ -28,9 +29,9 @@ fun MyApplicationTheme(
         )
     } else {
         lightColors(
-            primary = Color(0xFF6200EE),
-            primaryVariant = Color(0xFF3700B3),
-            secondary = Color(0xFF03DAC5)
+            primary = colors.orangeMain,
+            primaryVariant = colors.orangeMain,
+            secondary = colors.orangeMain
         )
     }
     val typography = Typography(

@@ -9,6 +9,7 @@ import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.document.model.ShareInfo
 import com.mobile.fairless.features.document.service.DocumentService
+import com.mobile.fairless.features.document.state.DocumentSheet
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.state.Period
 import com.mobile.fairless.features.main.models.DateFilter
@@ -47,6 +48,8 @@ interface DocumentViewModel : StatefulKmpViewModel<DocumentState>, SubScreenView
     fun periodClick()
     fun navigateToShop(name: String)
     fun reloadDocument()
+    fun getShop(code: String)
+    fun openSheet(sheet: DocumentSheet)
 }
 
 class DocumentViewModelImpl(override val navigator: Navigator) :
@@ -83,8 +86,8 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     _state.update { it.copy(product = document) }
                     checkLike()
                     delay(200)
-                    _state.update { it.copy(loadingState = LoadingState.Success)}
-                    },
+                    _state.update { it.copy(loadingState = LoadingState.Success) }
+                },
                 failureBlock = { throwable ->
                     _state.update { it.copy(loadingState = LoadingState.Error(throwable.toString())) }
                 }
@@ -109,6 +112,28 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         _state.update { it.copy(refreshable = true) }
         getDocument()
         _state.update { it.copy(refreshable = false) }
+    }
+
+    override fun getShop(code: String) {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    _state.update {
+                        it.copy(
+                            shop = documentService.getShop(code)[0],
+                            shopLoading = LoadingState.Success
+                        )
+                    }
+                },
+                failureBlock = { throwable ->
+                    _state.update { it.copy(shopLoading = LoadingState.Error(throwable.toString())) }
+                }
+            )
+        }
+    }
+
+    override fun openSheet(sheet: DocumentSheet) {
+        _state.update { it.copy(sheetOpen = sheet) }
     }
 
     private fun checkLike() {
@@ -244,10 +269,10 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                             state.value.product._id ?: "",
                             prefService.getUserInfo() ?: UserReceive()
                         )
+                        getDocument()
                     } else {
                         errorService.showError("Необходимо авторизоваться")
                     }
-                    getDocument()
                 },
                 failureBlock = {
                     errorService.showError("Ошибка")

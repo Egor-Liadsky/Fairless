@@ -5,6 +5,7 @@ import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.document.model.Like
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.welcome.models.UserReceive
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.DateTimeTz
@@ -22,6 +23,7 @@ interface DocumentRepository {
     suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive)
     suspend fun getDocument(name: String): List<ProductData>
     suspend fun checkLike(documentId: String, userId: String): List<Like>
+    suspend fun getShop(code: String): List<Shop>
 }
 
 class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
@@ -146,6 +148,18 @@ class DocumentRepositoryImpl : DocumentRepository, BaseRepository() {
             parameters = params,
             headers = mapOf("Content-Type" to "application/json"),
             path = "likes"
+        )
+        return Json.decodeFromString(response)
+    }
+
+    override suspend fun getShop(code: String): List<Shop> {
+        val params = HashMap<String, String>()
+        params["code"] = code
+        val response = executeCall(
+            type = HttpMethod.Get,
+            parameters = params,
+            headers = mapOf("Content-Type" to "application/json"),
+            path = "shops"
         )
         return Json.decodeFromString(response)
     }

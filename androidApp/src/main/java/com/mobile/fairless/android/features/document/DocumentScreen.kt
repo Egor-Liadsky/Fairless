@@ -22,6 +22,7 @@ import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.document.layouts.DocumentLayout
 import com.mobile.fairless.android.features.document.layouts.FireProductsLayout
 import com.mobile.fairless.android.features.document.sheets.CommentSheetView
+import com.mobile.fairless.android.features.document.sheets.ShopInfoSheetView
 import com.mobile.fairless.android.features.views.layouts.EmptyLayout
 import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
@@ -29,6 +30,7 @@ import com.mobile.fairless.android.features.views.layouts.Refreshable
 import com.mobile.fairless.android.features.views.topBars.CollapsingToolbar
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
+import com.mobile.fairless.features.document.state.DocumentSheet
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -97,21 +99,27 @@ fun DocumentScreen(
         sheetState = sheetState,
         sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
         sheetContent = {
-            CommentSheetView(
-                viewModelWrapper = viewModelWrapper,
-                sheetStateSendComment = sheetStateSendComment,
-                getChat = {
-                    viewModelWrapper.viewModel.getCommentsByDocument(
-                        state.value.product.id ?: ""
+            when(state.value.sheetOpen){
+                DocumentSheet.Comments -> {
+                    CommentSheetView(
+                        viewModelWrapper = viewModelWrapper,
+                        sheetStateSendComment = sheetStateSendComment,
+                        getChat = {
+                            viewModelWrapper.viewModel.getCommentsByDocument(
+                                state.value.product.id ?: ""
+                            )
+                        },
+                        sendCommentOnClick = {
+                            viewModelWrapper.viewModel.sendComment(
+                                state.value.commentText?.lines()?.joinToString(" ") ?: ""
+                            )
+                        },
+                        onValueChanged = { viewModelWrapper.viewModel.changeCommentText(it) },
                     )
-                },
-                sendCommentOnClick = {
-                    viewModelWrapper.viewModel.sendComment(
-                        state.value.commentText?.lines()?.joinToString(" ") ?: ""
-                    )
-                },
-                onValueChanged = { viewModelWrapper.viewModel.changeCommentText(it) },
-            )
+                }
+                DocumentSheet.Shop -> { ShopInfoSheetView(viewModelWrapper = viewModelWrapper) }
+                else -> {}
+            }
         },
     ) {
         when (state.value.loadingState) {

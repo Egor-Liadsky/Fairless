@@ -26,6 +26,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -47,6 +48,7 @@ import com.mobile.fairless.android.features.profile.components.DefaultButton
 import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.document.state.DocumentSheet
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.main.models.ProductData
@@ -251,18 +253,22 @@ fun DocumentLayout(
                 }
             }
 
-            Text(
-                text = product.shop?.name ?: "",
-                style = TextStyle(
-                    fontFamily = fontQanelas,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
-                    color = colors.black
-                ),
-                modifier = Modifier
-                    .clip(RoundedCornerShape(4.dp))
-                    .clickable { viewModelWrapper.viewModel.navigateToShop("Aliexpress") }
-            )
+            TextButton(onClick = {
+                viewModelWrapper.viewModel.openSheet(DocumentSheet.Shop)
+                /*viewModelWrapper.viewModel.navigateToShop("Aliexpress")*/
+                scope.launch { sheetState.show() }
+            }) {
+                Text(
+                    text = product.shop?.name ?: "",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.W500,
+                        fontSize = 16.sp,
+                        textDecoration = TextDecoration.Underline,
+                        color = colors.black
+                    ),
+                )
+            }
         }
 
         Divider(
@@ -370,6 +376,7 @@ fun DocumentLayout(
 
         Column(Modifier.padding(top = 15.dp)) {
             DefaultButton(title = "Комментарии", background = colors.white) {
+                viewModelWrapper.viewModel.openSheet(DocumentSheet.Comments)
                 scope.launch { sheetState.show() }
             }
         }

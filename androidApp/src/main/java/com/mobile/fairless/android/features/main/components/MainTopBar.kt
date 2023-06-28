@@ -3,6 +3,7 @@ package com.mobile.fairless.android.features.main.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -79,7 +81,17 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
 
         when (state.value.categoriesLoading) {
 
-            LoadingState.Loading -> LoadingLayout(size = 20.dp, color = colors.black)
+            LoadingState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxWidth().height(80.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        color = colors.black
+                    )
+                }
+            }
             LoadingState.Success -> {
 
                 val types = listOf(
@@ -108,33 +120,39 @@ fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
             }
 
             LoadingState.Empty -> {
-                Text(
-                    text = "Пусто", style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colors.black,
-                        fontSize = 15.sp,
-                        textAlign = TextAlign.Center
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
-                )
+                Box(
+                    modifier = Modifier.fillMaxWidth().height(80.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Пусто", style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.black,
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
 
             is LoadingState.Error -> {
-                Text(
-                    text = "Ошибка", style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        color = colors.black,
-                        fontSize = 15.sp,
-                        textAlign = TextAlign.Center
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
-                )
+                Box(
+                    modifier = Modifier.fillMaxWidth().height(80.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Ошибка", style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.black,
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
 
             else -> {}
