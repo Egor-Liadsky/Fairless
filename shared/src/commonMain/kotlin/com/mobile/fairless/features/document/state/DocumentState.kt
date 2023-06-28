@@ -27,14 +27,5 @@ data class DocumentState(
     val refreshable: Boolean = false,
     val isLike: Boolean? = null,
     val periodMenuOpen: Boolean = false,
-    val shop: Shop? = null,
-    val shopLoading: LoadingState = LoadingState.Loading,
     val userLike: Boolean? = null,
-
-    val sheetOpen: DocumentSheet = DocumentSheet.Comments
 )
-
-enum class DocumentSheet {
-    Comments,
-    Shop
-}

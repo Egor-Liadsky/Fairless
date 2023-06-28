@@ -136,7 +136,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                         style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = 9.sp,
+                            fontSize = 12.sp,
                             color = colors.black
                         ),
                     )
@@ -212,7 +212,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                                 style = TextStyle(
                                     fontFamily = fontQanelas,
                                     fontWeight = FontWeight.SemiBold,
-                                    fontSize = 9.sp,
+                                    fontSize = 12.sp,
                                     color = colors.black
                                 ), modifier = Modifier.padding(start = 6.dp)
                             )
@@ -281,7 +281,7 @@ fun ProductItem(product: ProductData, onClick: () -> Unit) {
                             text = product.stock_type?.name ?: "", style = TextStyle(
                                 fontFamily = fontQanelas,
                                 fontWeight = FontWeight.Normal,
-                                fontSize = 10.sp,
+                                fontSize = 12.sp,
                                 color = colors.orangeMain
                             ), modifier = Modifier.padding(end = 2.dp)
                         )

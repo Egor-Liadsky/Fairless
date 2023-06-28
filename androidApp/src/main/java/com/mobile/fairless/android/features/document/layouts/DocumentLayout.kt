@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.os.Build
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -48,21 +46,20 @@ import com.mobile.fairless.android.features.profile.components.DefaultButton
 import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.document.state.DocumentSheet
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.Shop
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DocumentLayout(
     product: ProductData,
-    sheetState: ModalBottomSheetState,
+    sheetStateComment: ModalBottomSheetState,
+    sheetStateShop: ModalBottomSheetState,
     viewModelWrapper: StatefulViewModelWrapper<DocumentViewModel, DocumentState>
 ) {
     val context = LocalContext.current
@@ -254,9 +251,11 @@ fun DocumentLayout(
             }
 
             TextButton(onClick = {
-                viewModelWrapper.viewModel.openSheet(DocumentSheet.Shop)
-                /*viewModelWrapper.viewModel.navigateToShop("Aliexpress")*/
-                scope.launch { sheetState.show() }
+                if (product.shop?.seo_text != null){
+                    scope.launch { sheetStateShop.show() }
+                } else {
+                    viewModelWrapper.viewModel.navigateToShop(product.shop ?: Shop())
+                }
             }) {
                 Text(
                     text = product.shop?.name ?: "",
@@ -376,8 +375,7 @@ fun DocumentLayout(
 
         Column(Modifier.padding(top = 15.dp)) {
             DefaultButton(title = "Комментарии", background = colors.white) {
-                viewModelWrapper.viewModel.openSheet(DocumentSheet.Comments)
-                scope.launch { sheetState.show() }
+                scope.launch { sheetStateComment.show() }
             }
         }
 

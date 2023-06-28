@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
@@ -27,6 +28,7 @@ interface ShopViewModel : StatefulKmpViewModel<ShopState>, SubScreenViewModel {
     override val state: StateFlow<ShopState>
 //    val statePaging: StateFlow<ShopState>
 
+    fun getShop(shop: String)
     fun selectPopularFilter(popularFilter: PopularFilter)
     fun popularFilterOpen()
     fun filtersOpen()
@@ -36,6 +38,7 @@ interface ShopViewModel : StatefulKmpViewModel<ShopState>, SubScreenViewModel {
     fun onAppend()
     fun onRefresh()
     fun selectType(type: Type)
+    fun categoryDropDownMenuOpen()
 }
 
 class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
@@ -48,6 +51,11 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     private val _state = MutableStateFlow(ShopState())
     override val state: StateFlow<ShopState> = _state.asStateFlow()
+
+    override fun getShop(shop: String) {
+        val decodeShop = urlEncode.decodeToUrl(shop)
+        _state.update { it.copy(shop = Json.decodeFromString(decodeShop)) }
+    }
 
     private val pager = Pager<ProductData>(false, searchService)
 
@@ -135,6 +143,10 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
     override fun selectType(type: Type) {
         _state.update { it.copy(selectType = type) }
         pager.changeType(type.type)
+    }
+
+    override fun categoryDropDownMenuOpen() {
+        _state.update { it.copy(categoryOpen = !it.categoryOpen) }
     }
 
     private fun setLoadingRefreshable(status: Boolean) {

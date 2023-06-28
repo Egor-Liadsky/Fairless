@@ -15,7 +15,6 @@ interface DocumentService {
     suspend fun reactionDocument(like: Boolean, documentId: String, user: UserReceive)
     suspend fun getDocument(name: String): List<ProductData>
     suspend fun checkLike(documentId: String, userId: String): List<Like>
-    suspend fun getShop(code: String): List<Shop>
 }
 
 class DocumentServiceImpl(private val documentRepository: DocumentRepository) : DocumentService {
@@ -39,7 +38,4 @@ class DocumentServiceImpl(private val documentRepository: DocumentRepository) : 
 
     override suspend fun checkLike(documentId: String, userId: String): List<Like> =
         documentRepository.checkLike(documentId, userId)
-
-    override suspend fun getShop(code: String): List<Shop> =
-        documentRepository.getShop(code)
 }

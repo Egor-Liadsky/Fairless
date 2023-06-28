@@ -45,6 +45,7 @@ import com.mobile.fairless.android.features.welcome.auth.AuthScreen
 import com.mobile.fairless.android.features.welcome.register.RegisterScreen
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.navigation.ScreenRoute
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
@@ -158,8 +159,10 @@ fun MainNavigationScreen(
             composable(route = ScreenRoute.AboutApp.name){
                 AboutAppScreen()
             }
-            composable(route = ScreenRoute.Shop.name){
-                ShopScreen()
+            composable(route = "${ScreenRoute.Shop.name}/{shop}",
+            arguments = listOf(navArgument("shop") {type = NavType.StringType})){
+                val shop = it.arguments?.getString("shop")
+                ShopScreen(shop = shop ?: "")
             }
             composable(
                 route = "${ScreenRoute.Document.name}/{product}",

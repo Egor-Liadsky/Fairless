@@ -22,22 +22,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.GradientButton
-import com.mobile.fairless.android.features.views.layouts.EmptyLayout
-import com.mobile.fairless.android.features.views.layouts.ErrorLayout
-import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
+import com.mobile.fairless.features.main.models.Shop
 
 @Composable
 fun ShopInfoSheetView(
     viewModelWrapper: StatefulViewModelWrapper<DocumentViewModel, DocumentState>,
+    shop: Shop
 ) {
-    val state = viewModelWrapper.state
-
-    viewModelWrapper.viewModel.getShop(state.value.product.shop?.code ?: "sbermegamarket")
 
     Column(
         Modifier
@@ -57,7 +52,7 @@ fun ShopInfoSheetView(
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = state.value.shop?.name ?: "", style = TextStyle(
+                text = shop.name ?: "Aliexpress", style = TextStyle(
                     fontFamily = fontQanelas,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 20.sp,
@@ -77,46 +72,31 @@ fun ShopInfoSheetView(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter
             ) {
-
-                when (state.value.shopLoading) {
-                    LoadingState.Loading -> LoadingLayout()
-
-                    LoadingState.Success -> {
-                        LazyColumn(
-                            Modifier
-                                .align(Alignment.TopCenter)
-                                .padding(bottom = 60.dp)
-                        ) {
-                            item {
-                                Text(
-                                    text = state.value.shop?.seo_text ?: "",
-                                    style = TextStyle(
-                                        fontFamily = fontQanelas,
-                                        fontWeight = FontWeight.Normal,
-                                        fontSize = 12.sp,
-                                        color = colors.black,
-                                    )
-                                )
-                            }
-                        }
-
-                        GradientButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.BottomCenter),
-                            title = "Перейти в каталог"
-                        ) {
-                            viewModelWrapper.viewModel.navigateToShop(state.value.shop?.code ?: "")
-                        }
-                    }
-
-                    is LoadingState.Error -> ErrorLayout {
-                        viewModelWrapper.viewModel.getShop(
-                            state.value.product.shop?.code ?: "sbermegamarket"
+                LazyColumn(
+                    Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(bottom = 60.dp)
+                ) {
+                    item {
+                        Text(
+                            text = shop.seo_text ?: "",
+                            style = TextStyle(
+                                fontFamily = fontQanelas,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 12.sp,
+                                color = colors.black,
+                            )
                         )
                     }
+                }
 
-                    else -> {}
+                GradientButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter),
+                    title = "Перейти в каталог"
+                ) {
+                    viewModelWrapper.viewModel.navigateToShop(shop ?: Shop())
                 }
             }
         }
