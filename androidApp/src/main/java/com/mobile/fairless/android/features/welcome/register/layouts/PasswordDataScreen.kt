@@ -50,7 +50,7 @@ fun PasswordDataScreen(
     BackHandler {
         viewModelWrapper.viewModel.onBackAction()
     }
-    val context = LocalContext.current
+
     val focusManager = LocalFocusManager.current
 
     val focusRequester = remember { FocusRequester() }
