@@ -54,6 +54,7 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
                     _state.update { it.copy(isLoading = true) }
                     val data = authService.authUser(userAuthResponse)
                     _state.update { it.copy(user = data) }
+                    onBackButtonClick()
                 },
                 failureBlock = {
                     errorService.showError("Логин или email неверны")

@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +25,12 @@ import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 
 @Composable
-fun GradientButton(modifier: Modifier = Modifier,title: String, onClick: () -> Unit) {
+fun GradientButton(
+    modifier: Modifier = Modifier,
+    title: String,
+    isLoading: Boolean = false,
+    onClick: () -> Unit,
+) {
     val orangeGradient = Brush.horizontalGradient(
         colors = listOf(
             Color(0xFFF51B00),
@@ -45,14 +52,23 @@ fun GradientButton(modifier: Modifier = Modifier,title: String, onClick: () -> U
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = title, style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 16.sp,
+                if (!isLoading) {
+                    Text(
+                        text = title,
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colors.white
+                        ),
+                    )
+                } else {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(20.dp),
                         color = colors.white
-                    ),
-                )
+                    )
+                }
             }
         }
     }
