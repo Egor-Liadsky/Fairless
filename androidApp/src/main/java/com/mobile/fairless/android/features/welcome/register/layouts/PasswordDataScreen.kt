@@ -83,11 +83,7 @@ fun PasswordDataScreen(viewModelWrapper: StatefulViewModelWrapper<RegisterViewMo
             contentAlignment = Alignment.BottomCenter
         ) {
             CommonButton(
-                commonButtonParams = CommonButtonParams(
-                    title = "Зарегистрироваться",
-                    titleColor = colors.white,
-                    background = colors.orangeMain
-                ),
+                title = "Далее",
                 isLoading = state.value.isLoading,
                 modifier = Modifier.padding(top = 20.dp)
             ) {

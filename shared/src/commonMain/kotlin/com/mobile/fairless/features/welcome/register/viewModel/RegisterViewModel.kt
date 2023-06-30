@@ -32,7 +32,7 @@ interface RegisterViewModel : StatefulKmpViewModel<RegisterState>, SubScreenView
     fun searchChanged(search: String)
     fun onDeleteSearchClick()
     fun registerUser(userRegisterResponse: UserRegisterResponse)
-    fun selectCityClick()
+    fun getCity()
     fun onNextClick()
     fun onBackAction()
     fun checkUser(userAuthResponse: UserAuthResponse)
@@ -96,11 +96,11 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
         }
     }
 
-    override fun selectCityClick() {
+    override fun getCity() {
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    _state.update { it.copy(isLoading = true) }
+                    _state.update { it.copy(isLoadingCity = true) }
                     if (_state.value.cities == null) {
                         _state.update { it.copy(cities = registerService.getCities()) }
                     }
@@ -112,7 +112,7 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
                     _state.update {
                         it.copy(
                             alertDialogOpen = !it.alertDialogOpen,
-                            isLoading = false
+                            isLoadingCity = false
                         )
                     }
                 }

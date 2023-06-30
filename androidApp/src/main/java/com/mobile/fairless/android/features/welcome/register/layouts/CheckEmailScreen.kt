@@ -70,11 +70,7 @@ fun CheckEmailScreen(
             contentAlignment = Alignment.BottomCenter
         ) {
             CommonButton(
-                commonButtonParams = CommonButtonParams(
-                    "Далее",
-                    background = colors.orangeMain,
-                    titleColor = colors.white
-                ),
+               title = "Завершить",
                 modifier = Modifier.padding(top = 30.dp)
             ) {
                 viewModelWrapper.viewModel.checkUser(

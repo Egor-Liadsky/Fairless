@@ -59,7 +59,7 @@ fun CommonTextField(
     isPassword: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     onDone: (() -> Unit)? = null,
-    focusManager: FocusManager = LocalFocusManager.current,
+    enabled: Boolean = true,
     onValueChanged: (String) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
@@ -102,6 +102,7 @@ fun CommonTextField(
                     fontWeight = FontWeight.SemiBold,
                     color = colors.black,
                 ),
+                enabled = enabled,
                 keyboardOptions = keyboardOptions,
                 keyboardActions = KeyboardActions(onNext = {
                     focusManager.moveFocus(FocusDirection.Down)

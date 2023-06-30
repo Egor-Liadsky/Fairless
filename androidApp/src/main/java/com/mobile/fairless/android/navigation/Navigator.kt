@@ -51,10 +51,6 @@ class NavigatorImpl(
         navController.navigate(ScreenRoute.Auth.name)
     }
 
-    override fun navigateToRegister() {
-        navController.navigate(ScreenRoute.Register.name)
-    }
-
     override fun navigateToDocument(product: String) {
         navController.navigate("${ScreenRoute.Document.name}/$product")
     }

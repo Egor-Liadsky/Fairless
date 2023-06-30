@@ -54,17 +54,12 @@ import org.koin.androidx.compose.get
 fun SelectCityAlertDialog(
     viewModelWrapper: StatefulViewModelWrapper<RegisterViewModel, RegisterState>,
     cities: List<City>?,
-    isOpen: Boolean,
     errorService: ErrorService = get(),
     cityChanged: (City) -> Unit,
     onValueChanged: () -> Unit
 ) {
 
     val state = viewModelWrapper.state
-
-    var status by remember {
-        mutableStateOf(isOpen)
-    }
 
     val startLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -75,50 +70,40 @@ fun SelectCityAlertDialog(
         }
     }
 
-    if (isOpen) {
-        Dialog(
-            onDismissRequest = {
-                status = false
-                onValueChanged()
-            },
-            properties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
-            Surface(
-                color = colors.backgroundWelcome, modifier = Modifier.fillMaxSize()
-            ) {
-                Column(Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp)) {
-                    SelectCityTopBar(
-                        state = state,
-                        placeholder = "Введите название города",
-                        searchString = state.value.search,
-                        onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
-                        onMicClick = {
-                            try {
-                                startLauncher.launch(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH))
-                            } catch (e: ActivityNotFoundException) {
-                                CoroutineScope(Dispatchers.Main).launch {
-                                    errorService.showError("Нет сервиса распознавания речи")
-                                }
-                            }
-                        },
-                        onSearchClick = {},
-                        onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) },
-                    )
-                    Spacer(modifier = Modifier.padding(bottom = 15.dp))
+    Surface(
+        color = colors.backgroundWelcome, modifier = Modifier.fillMaxSize()
+    ) {
+        Column(Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp)) {
+            SelectCityTopBar(
+                state = state,
+                placeholder = "Введите название города",
+                searchString = state.value.search,
+                onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
+                onMicClick = {
+                    try {
+                        startLauncher.launch(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH))
+                    } catch (e: ActivityNotFoundException) {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            errorService.showError("Нет сервиса распознавания речи")
+                        }
+                    }
+                },
+                onSearchClick = {},
+                onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) },
+            )
+            Spacer(modifier = Modifier.padding(bottom = 15.dp))
 
-                    LazyColumn {
-                        if (cities != null) {
-                            items(items = cities.map {
-                                if (it.name.lowercase()
-                                        .contains(state.value.search.toString().lowercase())
-                                ) it else null
-                            }) { item ->
-                                if (item != null) {
-                                    CityCardView(city = item.name) {
-                                        cityChanged(item)
-                                        onValueChanged()
-                                    }
-                                }
+            LazyColumn {
+                if (cities != null) {
+                    items(items = cities.map {
+                        if (it.name.lowercase()
+                                .contains(state.value.search.toString().lowercase())
+                        ) it else null
+                    }) { item ->
+                        if (item != null) {
+                            CityCardView(city = item.name) {
+                                cityChanged(item)
+                                onValueChanged()
                             }
                         }
                     }

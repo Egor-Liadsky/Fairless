@@ -141,9 +141,6 @@ fun MainNavigationScreen(
             composable(route = ScreenRoute.Auth.name) {
                 AuthScreen()
             }
-            composable(route = ScreenRoute.Register.name) {
-                RegisterScreen()
-            }
             composable(route = ScreenRoute.AboutFairLess.name){
                 AboutFairLess()
             }

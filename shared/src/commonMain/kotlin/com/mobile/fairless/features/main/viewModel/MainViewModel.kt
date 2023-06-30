@@ -41,6 +41,7 @@ interface MainViewModel : KmpViewModel, SubScreenViewModel {
     fun onRefresh()
     fun onRefreshClick()
     fun selectType(type: Type)
+    fun authDialogOpen()
 }
 
 data class ProductModel(
@@ -95,6 +96,10 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     override fun selectType(type: Type) {
         _state.update { it.copy(selectType = type) }
         pager.changeType(type.type)
+    }
+
+    override fun authDialogOpen() {
+        _state.update { it.copy(authDialogOpen = !it.authDialogOpen) }
     }
 
     private fun setLoadingRefreshable(status: Boolean) {

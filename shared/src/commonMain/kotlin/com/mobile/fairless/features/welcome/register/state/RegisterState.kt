@@ -15,6 +15,7 @@ data class RegisterState(
     val stage: Int = 1,
 
     val isLoading: Boolean = false,
+    val isLoadingCity: Boolean = false,
     val alertDialogOpen: Boolean = false,
 
     val user: UserReceive? = null

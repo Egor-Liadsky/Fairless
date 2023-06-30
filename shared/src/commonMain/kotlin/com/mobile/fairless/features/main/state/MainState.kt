@@ -14,7 +14,7 @@ data class MainState(
     val categories: List<Category>? = null,
 
     val refreshable: Boolean = false,
-
+    val authDialogOpen: Boolean = false,
     val categoriesLoading: LoadingState = LoadingState.Loading,
     val productsLoading: Boolean = false,
 
