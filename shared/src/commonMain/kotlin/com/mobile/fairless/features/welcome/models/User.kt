@@ -51,15 +51,15 @@ data class User(
 
 @Serializable
 data class City(
-    val _id: String,
-    val name: String,
-    val code: String,
-    val published_at: String,
-    val createdAt: String,
-    val updatedAt: String,
-    val __v: Int,
-    val sort: Int,
-    val id: String,
+    val _id: String? = null,
+    val name: String? = null,
+    val code: String? = null,
+    val published_at: String? = null,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val __v: Int? = null,
+    val sort: Int? = null,
+    val id: String? = null,
 )
 
 @Serializable

@@ -29,6 +29,7 @@ import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.profile.state.ProfileState
 import com.mobile.fairless.features.profile.viewModel.ProfileViewModel
+import com.mobile.fairless.features.welcome.models.City
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -91,12 +92,12 @@ fun CitySheetView(
             LazyColumn {
                 if (cities != null) {
                     items(items = cities.map {
-                        if (it.name.lowercase()
-                                .contains(state.value.search.lowercase())
+                        if (it.name?.lowercase()
+                                ?.contains(state.value.search.lowercase()) == true
                         ) it else null
                     }) { item ->
                         if (item != null) {
-                            CityItem(city = item.name) {
+                            CityItem(city = item.name!!) {
                                 viewModelWrapper.viewModel.cityChanged(item)
                                 scope.launch { sheetState.hide() }
                             }

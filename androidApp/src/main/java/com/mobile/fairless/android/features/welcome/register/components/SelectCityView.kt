@@ -122,12 +122,12 @@ fun SelectCityView(
                     if (cities != null) {
                         item { Spacer(modifier = Modifier.padding(top = 12.5.dp)) }
                         items(items = cities.map {
-                            if (it.name.lowercase()
-                                    .contains(state.value.search.toString().lowercase())
+                            if (it.name?.lowercase()
+                                    ?.contains(state.value.search.toString().lowercase()) == true
                             ) it else null
                         }) { item ->
                             if (item != null) {
-                                CityItem(city = item.name) {
+                                CityItem(city = item.name!!) {
                                     cityChanged(item)
                                     onValueChanged()
                                 }
