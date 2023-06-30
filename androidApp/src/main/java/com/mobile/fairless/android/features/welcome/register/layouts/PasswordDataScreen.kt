@@ -77,8 +77,7 @@ fun PasswordDataScreen(
                     fontSize = 40.sp,
                     textAlign = TextAlign.Center,
                     color = colors.black
-                ),
-                modifier = Modifier.padding(top = 80.dp)
+                )
             )
 
             CommonTextField(

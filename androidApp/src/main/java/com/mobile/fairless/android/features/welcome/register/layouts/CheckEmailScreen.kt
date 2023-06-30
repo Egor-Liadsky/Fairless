@@ -57,7 +57,6 @@ fun CheckEmailScreen(
                     textAlign = TextAlign.Center,
                     color = colors.black
                 ),
-                modifier = Modifier.padding(top = 80.dp)
             )
 
             Text(
@@ -70,7 +69,7 @@ fun CheckEmailScreen(
                     textAlign = TextAlign.Center,
                     color = colors.black
                 ),
-                modifier = Modifier.padding(top = 30.dp, start = 16.dp, end = 16.dp)
+                modifier = Modifier.padding(top = 35.dp)
             )
         }
 
