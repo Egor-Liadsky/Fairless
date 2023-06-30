@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.profile.components.ProfileSelectCitySearchTopBar
-import com.mobile.fairless.android.features.welcome.register.components.CityCardView
+import com.mobile.fairless.android.features.welcome.register.components.CityItem
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.profile.state.ProfileState
@@ -96,7 +96,7 @@ fun CitySheetView(
                         ) it else null
                     }) { item ->
                         if (item != null) {
-                            CityCardView(city = item.name) {
+                            CityItem(city = item.name) {
                                 viewModelWrapper.viewModel.cityChanged(item)
                                 scope.launch { sheetState.hide() }
                             }

@@ -1,5 +1,6 @@
 package com.mobile.fairless.features.welcome.register.state
 
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.welcome.models.City
 import com.mobile.fairless.features.welcome.models.UserReceive
 
@@ -15,7 +16,7 @@ data class RegisterState(
     val stage: Int = 1,
 
     val isLoading: Boolean = false,
-    val isLoadingCity: Boolean = false,
+    val isLoadingCity: LoadingState = LoadingState.Loading,
     val alertDialogOpen: Boolean = false,
 
     val user: UserReceive? = null

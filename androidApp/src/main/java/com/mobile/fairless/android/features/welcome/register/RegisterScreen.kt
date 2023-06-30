@@ -10,23 +10,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
-import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.topBars.StageBar
-import com.mobile.fairless.android.features.welcome.register.components.SelectCityAlertDialog
+import com.mobile.fairless.android.features.welcome.register.components.SelectCityView
 import com.mobile.fairless.android.features.welcome.register.layouts.CheckEmailScreen
 import com.mobile.fairless.android.features.welcome.register.layouts.PasswordDataScreen
 import com.mobile.fairless.android.features.welcome.register.layouts.UserDataScreen
 import com.mobile.fairless.android.theme.colors
-import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
 import kotlinx.coroutines.launch
@@ -45,7 +40,7 @@ fun RegisterScreen(
     val scope = rememberCoroutineScope()
 
     BackHandler {
-        if (sheetStateSelectCity.isVisible){
+        if (sheetStateSelectCity.isVisible) {
             scope.launch { sheetStateSelectCity.hide() }
         } else {
             scope.launch { sheetState.hide() }
@@ -57,11 +52,14 @@ fun RegisterScreen(
         sheetState = sheetStateSelectCity,
         sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
         sheetContent = {
-            SelectCityAlertDialog(
+            SelectCityView(
                 viewModelWrapper,
                 cities = state.value.cities,
-                cityChanged = { viewModelWrapper.viewModel.cityChanged(it) },
-                onValueChanged = { viewModelWrapper.viewModel.getCity() }
+                cityChanged = {
+                    viewModelWrapper.viewModel.cityChanged(it)
+                    scope.launch { sheetStateSelectCity.hide() }
+                },
+                onValueChanged = { viewModelWrapper.viewModel.getCities() }
             )
         },
     ) {

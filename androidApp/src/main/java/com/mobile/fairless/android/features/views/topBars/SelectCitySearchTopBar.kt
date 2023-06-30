@@ -2,6 +2,7 @@ package com.mobile.fairless.android.features.views.topBars
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -27,11 +28,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
@@ -57,15 +60,14 @@ fun SelectCityTopBar(
         onSearchChange(state.value.search)
     }
 
-    Log.e("sdfkjsdf", searchString)
-
     Row(
         modifier = Modifier
-            .height(60.dp)
+            .height(48.dp)
             .fillMaxWidth()
-            .shadow(
-                elevation = 2.dp,
-                shape = RoundedCornerShape(8.dp)
+            .border(
+                width = 1.dp,
+                color = Color(0xFFD9D9D9),
+                shape = RoundedCornerShape(size = 10.dp)
             )
     ) {
         BasicTextField(
@@ -76,9 +78,10 @@ fun SelectCityTopBar(
             singleLine = true,
             textStyle = TextStyle(
                 fontFamily = fontQanelas,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W500,
                 color = colors.black,
+                textDecoration = TextDecoration.None
             ),
             decorationBox = { innerTextField ->
                 Row(
@@ -102,7 +105,7 @@ fun SelectCityTopBar(
                             Icon(
                                 painter = painterResource(R.drawable.ic_close),
                                 contentDescription = "ic_close",
-                                tint = colors.black.copy(alpha = 0.6f),
+                                tint = colors.gray,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -110,7 +113,7 @@ fun SelectCityTopBar(
                         Icon(
                             painter = painterResource(R.drawable.ic_search),
                             contentDescription = "ic_search",
-                            tint = colors.black.copy(alpha = 0.6f),
+                            tint = colors.gray,
                             modifier = Modifier.size(24.dp)
                         )
 
@@ -127,10 +130,10 @@ fun SelectCityTopBar(
                                 text = placeholder ?: "",
                                 style = TextStyle(
                                     fontFamily = fontQanelas,
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = colors.grayMain,
-                                )
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.W500,
+                                    color = colors.gray,
+                                ),
                             )
                         innerTextField()
                     }
@@ -141,7 +144,8 @@ fun SelectCityTopBar(
                         Icon(
                             painter = painterResource(id = R.drawable.ic_mic),
                             contentDescription = "ic_mic",
-                            tint = colors.black.copy(alpha = 0.6f)
+                            tint = colors.gray,
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                 }

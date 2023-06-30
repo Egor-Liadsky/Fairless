@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.welcome.register.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
@@ -32,7 +33,7 @@ interface RegisterViewModel : StatefulKmpViewModel<RegisterState>, SubScreenView
     fun searchChanged(search: String)
     fun onDeleteSearchClick()
     fun registerUser(userRegisterResponse: UserRegisterResponse)
-    fun getCity()
+    fun getCities()
     fun onNextClick()
     fun onBackAction()
     fun checkUser(userAuthResponse: UserAuthResponse)
@@ -96,26 +97,19 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
         }
     }
 
-    override fun getCity() {
+    override fun getCities() {
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    _state.update { it.copy(isLoadingCity = true) }
                     if (_state.value.cities == null) {
                         _state.update { it.copy(cities = registerService.getCities()) }
                     }
+                    _state.update { it.copy(isLoadingCity = LoadingState.Success) }
                 },
                 failureBlock = {
                     errorService.showError("Ошибка при получении данных")
+                    _state.update { it.copy(isLoadingCity = LoadingState.Error(it.toString())) }
                 },
-                completionBlock = {
-                    _state.update {
-                        it.copy(
-                            alertDialogOpen = !it.alertDialogOpen,
-                            isLoadingCity = false
-                        )
-                    }
-                }
             )
         }
     }

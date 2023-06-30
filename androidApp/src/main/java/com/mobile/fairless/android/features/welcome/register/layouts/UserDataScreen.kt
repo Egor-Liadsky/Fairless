@@ -1,20 +1,14 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
-import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -23,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,11 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.CommonButton
-import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.features.views.textFields.CommonTextField
-import com.mobile.fairless.android.features.welcome.register.RegisterScreen
-import com.mobile.fairless.android.features.welcome.register.components.SelectCityAlertDialog
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
@@ -113,11 +103,9 @@ fun UserDataScreen(
 
             CommonButton(
                 title = state.value.city?.name ?: "Выберите свой город",
-                isLoading = state.value.isLoadingCity,
-                modifier = Modifier.padding(top = 15.dp)
+                modifier = Modifier.padding(top = 15.dp),
             ) {
                 focusManager.clearFocus()
-                viewModelWrapper.viewModel.getCity()
                 scope.launch { sheetStateSelectCity.show() }
             }
         }
