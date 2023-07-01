@@ -84,6 +84,7 @@ fun SearchLayout(
     LaunchedEffect(needAppend.value) {
         if (needAppend.value) viewModelWrapper.viewModel.onAppend()
     }
+
     Column(
         Modifier
             .fillMaxWidth()
@@ -94,6 +95,7 @@ fun SearchLayout(
             SearchTopBar(
                 state = state,
                 placeholder = "Введите название товара",
+                lazyColumnState = lazyColumnState,
                 searchString = state.value.searchString,
                 onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
                 onMicClick = {
@@ -105,7 +107,10 @@ fun SearchLayout(
                         }
                     }
                 },
-                onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
+                onSearchChange = {
+                    viewModelWrapper.viewModel.searchChanged(it)
+                    scope.launch { lazyColumnState.scrollToItem(0) }
+                }
             )
             Column {
                 FilterView(
@@ -136,7 +141,6 @@ fun SearchLayout(
             isRefreshing = state.value.refreshable,
             onRefresh = { viewModelWrapper.viewModel.onRefresh() }
         ) {
-            Column(Modifier.fillMaxSize()) {
                 when (statePaging.value.pagingData.loadingState) {
                     LoadingState.Loading -> {
                         LoadingLayout()
@@ -190,7 +194,6 @@ fun SearchLayout(
                             viewModelWrapper.viewModel.onRefresh()
                         }
                     }
-                }
             }
         }
     }

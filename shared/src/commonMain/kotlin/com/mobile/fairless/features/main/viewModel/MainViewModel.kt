@@ -81,6 +81,9 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     override fun onViewShown() {
         super.onViewShown()
         getCategories()
+        if (statePaging.value.pagingData.data.isEmpty()){
+            pager.onRefresh()
+        }
     }
 
     override fun onViewHidden() {

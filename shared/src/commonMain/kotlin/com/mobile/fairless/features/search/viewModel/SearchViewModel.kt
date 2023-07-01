@@ -77,6 +77,9 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun onViewShown() {
         super.onViewShown()
+        if (statePaging.value.pagingData.data.isEmpty()){
+            pager.onRefresh()
+        }
     }
 
     override fun onViewHidden() {
