@@ -2,6 +2,7 @@ package com.mobile.fairless.features.main.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.pagination.Pager
+import com.mobile.fairless.common.pagination.PaginationType
 import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
@@ -59,7 +60,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     private val _state = MutableStateFlow(MainState())
     override val state: StateFlow<MainState> = _state.asStateFlow()
 
-    private val pager = Pager<ProductData>(true, mainService)
+    private val pager = Pager<ProductData>(PaginationType.MAIN, mainService)
 
     override val statePaging: StateFlow<MainState> =
         pager.state.map { pagingData ->

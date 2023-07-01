@@ -24,7 +24,8 @@ class SearchServiceImpl(private val searchRepository: SearchRepository) : Search
         page: Int,
         name: String,
         type: ProductStockType,
-        sort: Sort
+        sort: Sort,
+        shop: String?
     ): ProductResponse {
         return searchProducts(page, name, type, sort)
     }

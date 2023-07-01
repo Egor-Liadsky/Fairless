@@ -2,6 +2,8 @@ package com.mobile.fairless.features.shop.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.pagination.Pager
+import com.mobile.fairless.common.pagination.PaginationType
+import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
@@ -9,13 +11,21 @@ import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.Type
+import com.mobile.fairless.features.main.state.MainState
+import com.mobile.fairless.features.main.viewModel.ProductModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.models.PopularFilter
 import com.mobile.fairless.features.search.service.SearchService
+import com.mobile.fairless.features.search.state.SearchState
+import com.mobile.fairless.features.shop.service.ShopService
 import com.mobile.fairless.features.shop.state.ShopState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
@@ -26,7 +36,7 @@ import org.koin.core.component.inject
 
 interface ShopViewModel : StatefulKmpViewModel<ShopState>, SubScreenViewModel {
     override val state: StateFlow<ShopState>
-//    val statePaging: StateFlow<ShopState>
+    val statePaging: StateFlow<ShopState>
 
     fun getShop(shop: String)
     fun selectPopularFilter(popularFilter: PopularFilter)
@@ -39,13 +49,14 @@ interface ShopViewModel : StatefulKmpViewModel<ShopState>, SubScreenViewModel {
     fun onRefresh()
     fun selectType(type: Type)
     fun categoryDropDownMenuOpen()
+    fun onRefreshClick()
 }
 
 class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
     StatefulKmpViewModelImpl<ShopState>(),
     ShopViewModel {
 
-    private val searchService: SearchService by inject()
+    private val shopService: ShopService by inject()
     private val errorService: ErrorService by inject()
     private val urlEncode: UrlEncode by inject()
 
@@ -57,23 +68,26 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
         _state.update { it.copy(shop = Json.decodeFromString(decodeShop)) }
     }
 
-    private val pager = Pager<ProductData>(false, searchService)
+    private val pager = Pager<ProductData>(PaginationType.SHOP, shopService)
 
-//    override val statePaging: StateFlow<SearchState> =
-//        pager.state.map { pagingData ->
-//            val list = pagingData.data.map {
-//                ProductModel(it, state.value.searchString)
-//            }.toMutableList()
-//            SearchState(
-//                PagingData<ProductModel>(
-//                    loadingState = pagingData.loadingState,
-//                    isRefreshing = pagingData.isRefreshing,
-//                    isAppending = pagingData.isAppending,
-//                    data = list,
-//                    name = state.value.searchString,
-//                )
-//            )
-//        }.stateIn(scope, SharingStarted.WhileSubscribed(), SearchState())
+    override val statePaging: StateFlow<ShopState> =
+        pager.state.map { pagingData ->
+            val list = pagingData.data.map {
+                ProductModel(it, state.value.selectCategory.type ?: "all")
+            }.toMutableList()
+            ShopState(
+                PagingData<ProductModel>(
+                    loadingState = pagingData.loadingState,
+                    isRefreshing = pagingData.isRefreshing,
+                    isAppending = pagingData.isAppending,
+                    data = list,
+                    category = state.value.selectCategory.type ?: "all",
+                    type = state.value.selectType.type,
+                    sort = state.value.selectedPopularFilter.sort,
+                    shop = state.value.shop?.code ?: "yandeks-market",
+                )
+            )
+        }.stateIn(scope, SharingStarted.WhileSubscribed(), ShopState())
 
     override fun onViewShown() {
         super.onViewShown()
@@ -105,7 +119,7 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
                 executionBlock = {
                     _state.update { it.copy(categoriesLoading = true) }
                     if (_state.value.categories == null) {
-                        val categories = searchService.getCategories().toMutableList()
+                        val categories = shopService.getCategories().toMutableList()
                         val indexAllCategory = categories.indexOfFirst { it.url == "all" }
 
                         if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
@@ -128,6 +142,7 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun selectCategory(category: Category) {
         _state.update { it.copy(selectCategory = category) }
+        pager.updateCategory(category.type ?: "all")
     }
 
     override fun onAppend() {
@@ -147,6 +162,11 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun categoryDropDownMenuOpen() {
         _state.update { it.copy(categoryOpen = !it.categoryOpen) }
+    }
+
+    override fun onRefreshClick() {
+        getCategories()
+        pager.onRefresh()
     }
 
     private fun setLoadingRefreshable(status: Boolean) {

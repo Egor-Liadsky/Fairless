@@ -30,9 +30,8 @@ fun ShopScreen(
     ),
     shop: String
 ) {
-    viewModelWrapper.viewModel.getShop(shop)
-
     DisposableEffect(key1 = viewModelWrapper, effect = {
+        viewModelWrapper.viewModel.getShop(shop)
         viewModelWrapper.viewModel.onViewShown()
         onDispose { viewModelWrapper.viewModel.onViewHidden() }
     })

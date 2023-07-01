@@ -1,48 +1,50 @@
-package com.mobile.fairless.features.main.repository
+package com.mobile.fairless.features.shop.repository
 
 import com.mobile.fairless.common.network.BaseRepository
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.main.models.response.ProductResponse
 import io.ktor.http.HttpMethod
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.math.roundToInt
 
-interface MainRepository {
+interface ShopRepository {
 
-    suspend fun getCategories(): List<Category>
+    suspend fun getShops(): List<Shop>
     suspend fun getProductsByCategory(
         page: Int,
         category: String,
-        type: ProductStockType
+        type: ProductStockType,
+        shop: String
     ): ProductResponse
+    suspend fun getCategories(): List<Category>
 }
 
-class MainRepositoryImpl : MainRepository, BaseRepository() {
+class ShopRepositoryImpl() : ShopRepository, BaseRepository() {
 
-    override suspend fun getCategories(): List<Category> {
+    override suspend fun getShops(): List<Shop> {
         val response = executeCall(
             type = HttpMethod.Get,
-            path = "categories",
+            headers = mapOf("Content-Type" to "application/json"),
+            path = "shops"
         )
-        return Json.decodeFromString(response)
+        return Json.decodeFromString<List<Shop>>(response)
     }
 
     override suspend fun getProductsByCategory(
         page: Int,
         category: String,
-        type: ProductStockType
+        type: ProductStockType,
+        shop: String
     ): ProductResponse {
-
         val params = HashMap<String, String>()
         params["_sort"] = "createdAt:DESC"
         params["stock_type"] = type.name.lowercase()
-        if (category != "news") {
-            params["category"] = category
-        }
         params["page"] = page.toString()
+        params["shops"] = shop
 
         val response = executeCall(
             type = HttpMethod.Get,
@@ -57,5 +59,12 @@ class MainRepositoryImpl : MainRepository, BaseRepository() {
 
         return ProductResponse(list = list ?: emptyList(), total = total ?: 1)
     }
-}
 
+    override suspend fun getCategories(): List<Category> {
+        val response = executeCall(
+            type = HttpMethod.Get,
+            path = "categories",
+        )
+        return Json.decodeFromString(response)
+    }
+}

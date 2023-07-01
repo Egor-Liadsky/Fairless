@@ -2,6 +2,7 @@ package com.mobile.fairless.features.search.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.pagination.Pager
+import com.mobile.fairless.common.pagination.PaginationType
 import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
@@ -57,7 +58,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     private val _state = MutableStateFlow(SearchState())
     override val state: StateFlow<SearchState> = _state.asStateFlow()
 
-    private val pager = Pager<ProductData>(false, searchService)
+    private val pager = Pager<ProductData>(PaginationType.SEARCH, searchService)
 
     override val statePaging: StateFlow<SearchState> =
         pager.state.map { pagingData ->
