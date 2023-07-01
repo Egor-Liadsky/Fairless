@@ -3,9 +3,7 @@ package com.mobile.fairless.features.document.state
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.document.model.Comment
 import com.mobile.fairless.features.main.models.DateFilter
-import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductData
-import com.mobile.fairless.features.main.models.Shop
 
 data class Period(
     val title: String,

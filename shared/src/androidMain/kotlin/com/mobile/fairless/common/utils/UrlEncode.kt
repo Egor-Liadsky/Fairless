@@ -1,6 +1,5 @@
 package com.mobile.fairless.common.utils
 
-import android.util.Log
 import java.net.URLDecoder
 import java.net.URLEncoder
 

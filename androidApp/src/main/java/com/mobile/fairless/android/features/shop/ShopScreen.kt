@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -15,15 +14,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
-import com.mobile.fairless.android.features.document.sheets.ShopInfoSheetView
 import com.mobile.fairless.android.features.shop.layouts.ShopLayout
 import com.mobile.fairless.android.features.shop.sheets.TypeFilterSheet
-import com.mobile.fairless.features.main.models.Shop
-import com.mobile.fairless.features.search.state.SearchState
-import com.mobile.fairless.features.search.viewModel.SearchViewModel
 import com.mobile.fairless.features.shop.state.ShopState
 import com.mobile.fairless.features.shop.viewModel.ShopViewModel
-import com.mobile.fairless.features.shop.viewModel.ShopViewModelImpl
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.qualifier.named

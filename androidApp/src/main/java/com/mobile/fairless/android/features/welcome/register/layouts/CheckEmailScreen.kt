@@ -1,7 +1,6 @@
 package com.mobile.fairless.android.features.welcome.register.layouts
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,17 +16,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
-import com.mobile.fairless.android.features.views.buttons.CommonButton
-import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.welcome.models.City
 import com.mobile.fairless.features.welcome.models.UserAuthResponse
-import com.mobile.fairless.features.welcome.models.UserRegisterResponse
 import com.mobile.fairless.features.welcome.register.state.RegisterState
 import com.mobile.fairless.features.welcome.register.viewModel.RegisterViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun CheckEmailScreen(

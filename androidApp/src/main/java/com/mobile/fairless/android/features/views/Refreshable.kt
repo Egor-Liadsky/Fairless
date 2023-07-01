@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.mobile.fairless.android.theme.colors
-import org.koin.androidx.compose.get
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

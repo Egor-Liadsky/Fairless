@@ -6,10 +6,10 @@ plugins {
 }
 
 android {
-    namespace = "com.mobile.fairless.android"
+    namespace = "com.mobile.fairless"
     compileSdk = 33
     defaultConfig {
-        applicationId = "com.mobile.fairless.android"
+        applicationId = "com.mobile.fairless"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

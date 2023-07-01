@@ -3,15 +3,11 @@ package com.mobile.fairless.features.main.repository
 import com.mobile.fairless.common.network.BaseRepository
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.Product
-import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.response.ProductResponse
 import io.ktor.http.HttpMethod
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.koin.core.component.inject
 import kotlin.math.roundToInt
 
 interface MainRepository {

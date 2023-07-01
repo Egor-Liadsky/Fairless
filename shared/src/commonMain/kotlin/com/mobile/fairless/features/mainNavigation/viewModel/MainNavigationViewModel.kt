@@ -4,13 +4,10 @@ import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
-import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 
 interface MainNavigationViewModel : StatefulKmpViewModel<MainNavigationState> {
