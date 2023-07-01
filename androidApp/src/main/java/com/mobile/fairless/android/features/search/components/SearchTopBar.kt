@@ -44,7 +44,6 @@ fun SearchTopBar(
     state: State<SearchState>,
     placeholder: String? = "",
     searchString: String,
-    lazyColumnState: LazyListState,
     onClearText: () -> Unit,
     onMicClick: () -> Unit,
     onSearchChange: (String) -> Unit

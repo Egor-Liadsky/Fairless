@@ -95,7 +95,6 @@ fun SearchLayout(
             SearchTopBar(
                 state = state,
                 placeholder = "Введите название товара",
-                lazyColumnState = lazyColumnState,
                 searchString = state.value.searchString,
                 onClearText = { viewModelWrapper.viewModel.onDeleteSearchClick() },
                 onMicClick = {
@@ -141,59 +140,59 @@ fun SearchLayout(
             isRefreshing = state.value.refreshable,
             onRefresh = { viewModelWrapper.viewModel.onRefresh() }
         ) {
-                when (statePaging.value.pagingData.loadingState) {
-                    LoadingState.Loading -> {
-                        LoadingLayout()
-                    }
+            when (statePaging.value.pagingData.loadingState) {
+                LoadingState.Loading -> {
+                    LoadingLayout()
+                }
 
-                    LoadingState.Success -> {
-                        LazyColumn(
-                            state = lazyColumnState,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier
-                                .fillMaxSize()
-                        ) {
-                            items(
-                                items = statePaging.value.pagingData.data ?: emptyList()
-                            ) { product ->
-                                Column(Modifier.padding(horizontal = 16.dp)) {
-                                    ProductItem(product = product.product) {
-                                        viewModelWrapper.viewModel.onDocumentClick(
-                                            product.product.name ?: ""
-                                        )
-                                    }
-                                }
-                            }
-
-                            if (statePaging.value.pagingData.isAppending) {
-                                item {
-                                    CircularProgressIndicator(
-                                        color = colors.orangeMain,
-                                        modifier = Modifier
-                                            .padding(top = 8.dp)
-                                            .size(24.dp)
+                LoadingState.Success -> {
+                    LazyColumn(
+                        state = lazyColumnState,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        items(
+                            items = statePaging.value.pagingData.data ?: emptyList()
+                        ) { product ->
+                            Column(Modifier.padding(horizontal = 16.dp)) {
+                                ProductItem(product = product.product) {
+                                    viewModelWrapper.viewModel.onDocumentClick(
+                                        product.product.name ?: ""
                                     )
                                 }
                             }
+                        }
 
+                        if (statePaging.value.pagingData.isAppending) {
                             item {
-                                Spacer(modifier = Modifier.padding(bottom = 16.dp))
+                                CircularProgressIndicator(
+                                    color = colors.orangeMain,
+                                    modifier = Modifier
+                                        .padding(top = 8.dp)
+                                        .size(24.dp)
+                                )
                             }
                         }
-                    }
 
-                    LoadingState.Empty -> {
-                        if (state.value.searchString != "") {
-                            scope.launch { delay(100) }
-                            EmptyLayout()
-                        } else SearchEmptyLayout()
-                    }
-
-                    is LoadingState.Error -> {
-                        ErrorLayout {
-                            viewModelWrapper.viewModel.onRefresh()
+                        item {
+                            Spacer(modifier = Modifier.padding(bottom = 16.dp))
                         }
                     }
+                }
+
+                LoadingState.Empty -> {
+                    if (state.value.searchString != "") {
+                        scope.launch { delay(100) }
+                        EmptyLayout()
+                    } else SearchEmptyLayout()
+                }
+
+                is LoadingState.Error -> {
+                    ErrorLayout {
+                        viewModelWrapper.viewModel.onRefresh()
+                    }
+                }
             }
         }
     }
