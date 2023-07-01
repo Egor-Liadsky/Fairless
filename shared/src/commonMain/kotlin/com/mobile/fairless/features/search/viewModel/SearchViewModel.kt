@@ -71,7 +71,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
                     isRefreshing = pagingData.isRefreshing,
                     isAppending = pagingData.isAppending,
                     data = list,
-                    name = state.value.searchString,
+                    name = state.value.searchString
                 )
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), SearchState())

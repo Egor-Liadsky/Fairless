@@ -74,7 +74,7 @@ fun DocumentLayout(
     )
     val inputFormat = SimpleDateFormat("yyyy-MM-dd")
     val outputFormat = SimpleDateFormat("dd.MM.yyyy")
-    val date = inputFormat.parse(product.date_end ?: "2006.09.08")
+    val date = inputFormat.parse(product.date_end ?: "2006-09-08")
     val formattedDateEnd =
         outputFormat.format(date ?: "2006.09.08") // парсит число по которое будет идти скидка
 

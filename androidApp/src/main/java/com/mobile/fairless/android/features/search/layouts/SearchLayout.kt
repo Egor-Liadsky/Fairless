@@ -51,7 +51,6 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 
 @SuppressLint("CoroutineCreationDuringComposition")
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SearchLayout(
     viewModelWrapper: StatefulViewModelWrapper<SearchViewModel, SearchState>,
@@ -60,11 +59,6 @@ fun SearchLayout(
 
     val state = viewModelWrapper.state
     val statePaging = viewModelWrapper.viewModel.statePaging.collectAsState()
-
-    val sheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
 
     val scope = rememberCoroutineScope()
 
@@ -123,7 +117,6 @@ fun SearchLayout(
                         viewModelWrapper.viewModel.popularFilterOpen()
                     },
                     typeFilterClick = {
-                        scope.launch { sheetState.show() }
                         viewModelWrapper.viewModel.filtersOpen()
                     },
                     popularFilterItemClick = {
