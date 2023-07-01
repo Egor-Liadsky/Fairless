@@ -37,9 +37,9 @@ import com.mobile.fairless.features.main.models.ProductData
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ProductItem(product: ProductData, onClick: () -> Unit) {
+fun ProductItem(modifier: Modifier = Modifier, product: ProductData, onClick: () -> Unit) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(top = 10.dp)
             .border(0.5.dp, Color(0xFFE1E1E1), RoundedCornerShape(10.dp)),
         onClick = { onClick() },

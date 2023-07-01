@@ -9,6 +9,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -135,64 +136,60 @@ fun SearchLayout(
             isRefreshing = state.value.refreshable,
             onRefresh = { viewModelWrapper.viewModel.onRefresh() }
         ) {
-            LazyColumn(
-                state = lazyColumnState,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()
-            ) {
-
+            Column(Modifier.fillMaxSize()) {
                 when (statePaging.value.pagingData.loadingState) {
                     LoadingState.Loading -> {
-                        item {
-                            LoadingLayout()
-                        }
+                        LoadingLayout()
                     }
 
                     LoadingState.Success -> {
-                        items(
-                            items = statePaging.value.pagingData.data ?: emptyList()
-                        ) { product ->
-                            Column(Modifier.padding(horizontal = 16.dp)) {
-                                ProductItem(product = product.product) {
-                                    viewModelWrapper.viewModel.onDocumentClick(
-                                        product.product.name ?: ""
+                        LazyColumn(
+                            state = lazyColumnState,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            items(
+                                items = statePaging.value.pagingData.data ?: emptyList()
+                            ) { product ->
+                                Column(Modifier.padding(horizontal = 16.dp)) {
+                                    ProductItem(product = product.product) {
+                                        viewModelWrapper.viewModel.onDocumentClick(
+                                            product.product.name ?: ""
+                                        )
+                                    }
+                                }
+                            }
+
+                            if (statePaging.value.pagingData.isAppending) {
+                                item {
+                                    CircularProgressIndicator(
+                                        color = colors.orangeMain,
+                                        modifier = Modifier
+                                            .padding(top = 8.dp)
+                                            .size(24.dp)
                                     )
                                 }
+                            }
+
+                            item {
+                                Spacer(modifier = Modifier.padding(bottom = 16.dp))
                             }
                         }
                     }
 
                     LoadingState.Empty -> {
-                        item {
-                            if (state.value.searchString != "") {
-                                scope.launch { delay(100) }
-                                EmptyLayout()
-                            } else SearchEmptyLayout()
-                        }
+                        if (state.value.searchString != "") {
+                            scope.launch { delay(100) }
+                            EmptyLayout()
+                        } else SearchEmptyLayout()
                     }
 
                     is LoadingState.Error -> {
-                        item {
-                            ErrorLayout {
-                                viewModelWrapper.viewModel.onRefresh()
-                            }
+                        ErrorLayout {
+                            viewModelWrapper.viewModel.onRefresh()
                         }
                     }
-                }
-
-                if (statePaging.value.pagingData.isAppending)
-                    item {
-                        CircularProgressIndicator(
-                            color = colors.orangeMain,
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .size(24.dp)
-                        )
-                    }
-
-                item {
-                    Spacer(modifier = Modifier.padding(bottom = 16.dp))
                 }
             }
         }

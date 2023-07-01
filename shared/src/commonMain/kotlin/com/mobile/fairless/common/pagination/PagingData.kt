@@ -159,7 +159,6 @@ class Pager<T : Any>(
         }
     }
 
-
     fun onViewHidden() {
         job?.cancel()
     }
