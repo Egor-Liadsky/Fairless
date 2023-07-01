@@ -31,6 +31,9 @@ import com.mobile.fairless.features.profile.viewModel.ProfileViewModelImpl
 import com.mobile.fairless.features.search.state.SearchState
 import com.mobile.fairless.features.search.viewModel.SearchViewModel
 import com.mobile.fairless.features.search.viewModel.SearchViewModelImpl
+import com.mobile.fairless.features.shop.state.ShopState
+import com.mobile.fairless.features.shop.viewModel.ShopViewModel
+import com.mobile.fairless.features.shop.viewModel.ShopViewModelImpl
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModelImpl
 import com.mobile.fairless.features.welcome.register.state.RegisterState
@@ -89,6 +92,10 @@ fun androidModule() = module {
 
     viewModel(named("ProfileViewModel")) {
         StatefulViewModelWrapper<ProfileViewModel, ProfileState>(ProfileViewModelImpl(get()))
+    }
+
+    viewModel(named("ShopViewModel")) {
+        StatefulViewModelWrapper<ShopViewModel, ShopState>(ShopViewModelImpl(get()))
     }
 
     viewModel(named("MenuViewModel")) {

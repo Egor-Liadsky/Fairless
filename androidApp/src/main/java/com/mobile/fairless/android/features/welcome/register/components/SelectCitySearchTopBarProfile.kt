@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.search.components
+package com.mobile.fairless.android.features.welcome.register.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -19,10 +18,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -35,25 +34,29 @@ import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.search.state.SearchState
+import com.mobile.fairless.features.profile.state.ProfileState
+import com.mobile.fairless.features.welcome.register.state.RegisterState
 
 
 @Composable
-fun SearchTopBar(
-    modifier: Modifier = Modifier,
-    state: State<SearchState>,
+fun SelectCitySearchTopBarProfile(
+    state: State<ProfileState>,
     placeholder: String? = "",
     searchString: String,
     onClearText: () -> Unit,
     onMicClick: () -> Unit,
+    onSearchClick: () -> Unit,
     onSearchChange: (String) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
+    LaunchedEffect(key1 = state.value.search) {
+        onSearchChange(state.value.search)
+    }
+
     Row(
         modifier = Modifier
             .height(48.dp)
-            .clip(RoundedCornerShape(size = 10.dp))
             .fillMaxWidth()
             .border(
                 width = 1.dp,
@@ -62,7 +65,7 @@ fun SearchTopBar(
             )
     ) {
         BasicTextField(
-            value = state.value.searchString,
+            value = state.value.search,
             onValueChange = {
                 onSearchChange(it)
             },
@@ -146,6 +149,7 @@ fun SearchTopBar(
             ),
             keyboardActions = KeyboardActions(onSearch = {
                 focusManager.clearFocus()
+                onSearchClick()
             }),
             modifier = Modifier
                 .fillMaxSize()

@@ -25,7 +25,6 @@ interface AuthViewModel : KmpViewModel, SubScreenViewModel {
     fun passwordChanged(password: String)
     fun authUser(userAuthResponse: UserAuthResponse)
     fun navigateToMenu()
-    fun navigateToRegister()
 }
 
 class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpViewModelImpl(),
@@ -54,6 +53,7 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
                     _state.update { it.copy(isLoading = true) }
                     val data = authService.authUser(userAuthResponse)
                     _state.update { it.copy(user = data) }
+                    onBackButtonClick()
                 },
                 failureBlock = {
                     errorService.showError("Логин или email неверны")
@@ -70,10 +70,6 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
 
     override fun navigateToMenu() {
         navigator.navigateToMenu()
-    }
-
-    override fun navigateToRegister() {
-        navigator.navigateToRegister()
     }
 }
 

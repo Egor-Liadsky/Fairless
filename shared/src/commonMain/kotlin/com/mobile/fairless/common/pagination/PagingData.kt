@@ -159,7 +159,6 @@ class Pager<T : Any>(
         }
     }
 
-
     fun onViewHidden() {
         job?.cancel()
     }
@@ -175,7 +174,7 @@ data class PagingData<T : Any>(
     var loadingState: LoadingState = LoadingState.Loading,
     var isRefreshing: Boolean = false,
     var isAppending: Boolean = false,
-    var category: String = "all",
+    var category: String = "news",
     var name: String = "",
     var type: ProductStockType = ProductStockType.ALL,
     var sort: Sort = Sort.CREATE,

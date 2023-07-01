@@ -22,6 +22,7 @@ import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.document.layouts.DocumentLayout
 import com.mobile.fairless.android.features.document.layouts.FireProductsLayout
 import com.mobile.fairless.android.features.document.sheets.CommentSheetView
+import com.mobile.fairless.android.features.document.sheets.ShopInfoSheetView
 import com.mobile.fairless.android.features.views.layouts.EmptyLayout
 import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
@@ -31,6 +32,7 @@ import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
+import com.mobile.fairless.features.main.models.Shop
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -59,6 +61,11 @@ fun DocumentScreen(
         skipHalfExpanded = true
     )
 
+    val sheetStateShop = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+
     val scope = rememberCoroutineScope()
 
     BackHandler {
@@ -66,7 +73,10 @@ fun DocumentScreen(
             scope.launch { sheetState.hide() }
         } else if (sheetStateSendComment.isVisible) {
             scope.launch { sheetStateSendComment.hide() }
-        } else {
+        } else if(sheetStateShop.isVisible) {
+            scope.launch { sheetStateShop.hide() }
+        }
+        else {
             viewModelWrapper.viewModel.onBackButtonClick()
         }
     }
@@ -114,51 +124,62 @@ fun DocumentScreen(
             )
         },
     ) {
-        when (state.value.loadingState) {
-            LoadingState.Loading -> {
-                LoadingLayout()
-            }
 
-            LoadingState.Success -> {
-                Refreshable(
-                    isRefreshing = state.value.refreshable,
-                    onRefresh = { viewModelWrapper.viewModel.reloadDocument() }) {
+        ModalBottomSheetLayout(
+            modifier = Modifier.fillMaxSize(),
+            sheetState = sheetStateShop,
+            sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
+            sheetContent = {
+                ShopInfoSheetView(viewModelWrapper = viewModelWrapper, state.value.product.shop ?: Shop())
+            },
+        ) {
+            when (state.value.loadingState) {
+                LoadingState.Loading -> {
+                    LoadingLayout()
+                }
 
-                    CollapsingToolbar(
-                        imageUrl = state.value.product.image?.url ?: "",
-                        onBackClick = { viewModelWrapper.viewModel.onBackButtonClick() },
-                        onShareClick = { viewModelWrapper.viewModel.onShareClick(state.value.product) }
-                    ) {
-                        LazyColumn(
-                            Modifier
-                                .fillMaxSize()
-                                .background(colors.backgroundWelcome)
+                LoadingState.Success -> {
+                    Refreshable(
+                        isRefreshing = state.value.refreshable,
+                        onRefresh = { viewModelWrapper.viewModel.reloadDocument() }) {
+
+                        CollapsingToolbar(
+                            imageUrl = state.value.product.image?.url ?: "",
+                            onBackClick = { viewModelWrapper.viewModel.onBackButtonClick() },
+                            onShareClick = { viewModelWrapper.viewModel.onShareClick(state.value.product) }
                         ) {
-                            item {
-                                DocumentLayout(
-                                    product = state.value.product,
-                                    viewModelWrapper = viewModelWrapper,
-                                    sheetState = sheetState,
-                                )
+                            LazyColumn(
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(colors.backgroundWelcome)
+                            ) {
+                                item {
+                                    DocumentLayout(
+                                        product = state.value.product,
+                                        viewModelWrapper = viewModelWrapper,
+                                        sheetStateComment = sheetState,
+                                        sheetStateShop = sheetStateShop
+                                    )
 
-                                FireProductsLayout(viewModelWrapper = viewModelWrapper)
+                                    FireProductsLayout(viewModelWrapper = viewModelWrapper)
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            LoadingState.Empty -> {
-                EmptyLayout()
-            }
-
-            is LoadingState.Error -> {
-                ErrorLayout {
-                    viewModelWrapper.viewModel.reloadDocument()
+                LoadingState.Empty -> {
+                    EmptyLayout()
                 }
-            }
 
-            else -> {}
+                is LoadingState.Error -> {
+                    ErrorLayout {
+                        viewModelWrapper.viewModel.reloadDocument()
+                    }
+                }
+
+                else -> {}
+            }
         }
     }
 }

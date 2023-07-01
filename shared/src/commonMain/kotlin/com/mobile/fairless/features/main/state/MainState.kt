@@ -14,13 +14,13 @@ data class MainState(
     val categories: List<Category>? = null,
 
     val refreshable: Boolean = false,
-
+    val authDialogOpen: Boolean = false,
     val categoriesLoading: LoadingState = LoadingState.Loading,
     val productsLoading: Boolean = false,
 
     val user: UserReceive? = UserReceive(),
     val products: Product = Product(),
 
-    val selectCategory: Category = Category(url = "all", type = "all"),
+    val selectCategory: Category = Category(url = "news", type = "news"),
     val selectType: Type = Type("Промокоды и скидки", ProductStockType.ALL),
 )

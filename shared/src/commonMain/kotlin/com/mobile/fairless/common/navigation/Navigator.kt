@@ -1,5 +1,7 @@
 package com.mobile.fairless.common.navigation
 
+import com.mobile.fairless.features.main.models.Shop
+
 
 enum class ScreenRoute(val isMain: Boolean) {
     //NavBar
@@ -13,7 +15,6 @@ enum class ScreenRoute(val isMain: Boolean) {
     Document(false),
     Profile(false),
     Auth(false),
-    Register(false),
     AboutFairLess(false),
     Rules(false),
     Feedback(false),
@@ -31,12 +32,11 @@ interface Navigator {
     fun navigateToMessage()
     fun navigateToMenu()
     fun navigateToAuth()
-    fun navigateToRegister()
     fun navigateToDocument(product: String)
     fun navigateToAboutFairLess()
     fun navigateToRules()
     fun navigateToFeedback()
     fun navigateToFaq()
     fun navigateToAboutApp()
-    fun navigateToShop()
+    fun navigateToShop(shop: String)
 }

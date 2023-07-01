@@ -3,6 +3,7 @@ package com.mobile.fairless.android.navigation
 import androidx.navigation.NavHostController
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.navigation.ScreenRoute
+import com.mobile.fairless.features.main.models.Shop
 
 interface AndroidNavigator : Navigator {
     fun init(navHostController: NavHostController)
@@ -50,10 +51,6 @@ class NavigatorImpl(
         navController.navigate(ScreenRoute.Auth.name)
     }
 
-    override fun navigateToRegister() {
-        navController.navigate(ScreenRoute.Register.name)
-    }
-
     override fun navigateToDocument(product: String) {
         navController.navigate("${ScreenRoute.Document.name}/$product")
     }
@@ -78,8 +75,8 @@ class NavigatorImpl(
         navController.navigate(ScreenRoute.AboutApp.name)
     }
 
-    override fun navigateToShop() {
-        navController.navigate(ScreenRoute.Shop.name)
+    override fun navigateToShop(shop: String) {
+        navController.navigate("${ScreenRoute.Shop.name}/$shop")
     }
 
     private fun navigateToNavBarDestination(root: ScreenRoute) {

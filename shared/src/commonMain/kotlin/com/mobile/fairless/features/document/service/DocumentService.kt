@@ -5,6 +5,7 @@ import com.mobile.fairless.features.document.model.Like
 import com.mobile.fairless.features.document.repository.DocumentRepository
 import com.mobile.fairless.features.main.models.DateFilter
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.welcome.models.UserReceive
 
 interface DocumentService {

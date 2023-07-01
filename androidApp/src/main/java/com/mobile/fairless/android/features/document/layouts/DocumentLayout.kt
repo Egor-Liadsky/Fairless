@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.os.Build
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,6 +24,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -50,17 +49,17 @@ import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.Shop
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DocumentLayout(
     product: ProductData,
-    sheetState: ModalBottomSheetState,
+    sheetStateComment: ModalBottomSheetState,
+    sheetStateShop: ModalBottomSheetState,
     viewModelWrapper: StatefulViewModelWrapper<DocumentViewModel, DocumentState>
 ) {
     val context = LocalContext.current
@@ -75,7 +74,7 @@ fun DocumentLayout(
     )
     val inputFormat = SimpleDateFormat("yyyy-MM-dd")
     val outputFormat = SimpleDateFormat("dd.MM.yyyy")
-    val date = inputFormat.parse(product.date_end ?: "2006.09.08")
+    val date = inputFormat.parse(product.date_end ?: "2006-09-08")
     val formattedDateEnd =
         outputFormat.format(date ?: "2006.09.08") // парсит число по которое будет идти скидка
 
@@ -251,18 +250,24 @@ fun DocumentLayout(
                 }
             }
 
-            Text(
-                text = product.shop?.name ?: "",
-                style = TextStyle(
-                    fontFamily = fontQanelas,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
-                    color = colors.black
-                ),
-                modifier = Modifier
-                    .clip(RoundedCornerShape(4.dp))
-                    .clickable { viewModelWrapper.viewModel.navigateToShop("Aliexpress") }
-            )
+            TextButton(onClick = {
+                if (product.shop?.seo_text != null){
+                    scope.launch { sheetStateShop.show() }
+                } else {
+                    viewModelWrapper.viewModel.navigateToShop(product.shop ?: Shop())
+                }
+            }) {
+                Text(
+                    text = product.shop?.name ?: "",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight.W500,
+                        fontSize = 16.sp,
+                        textDecoration = TextDecoration.Underline,
+                        color = colors.black
+                    ),
+                )
+            }
         }
 
         Divider(
@@ -370,7 +375,7 @@ fun DocumentLayout(
 
         Column(Modifier.padding(top = 15.dp)) {
             DefaultButton(title = "Комментарии", background = colors.white) {
-                scope.launch { sheetState.show() }
+                scope.launch { sheetStateComment.show() }
             }
         }
 

@@ -9,6 +9,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,7 +52,6 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 
 @SuppressLint("CoroutineCreationDuringComposition")
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SearchLayout(
     viewModelWrapper: StatefulViewModelWrapper<SearchViewModel, SearchState>,
@@ -60,11 +60,6 @@ fun SearchLayout(
 
     val state = viewModelWrapper.state
     val statePaging = viewModelWrapper.viewModel.statePaging.collectAsState()
-
-    val sheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
 
     val scope = rememberCoroutineScope()
 
@@ -89,6 +84,7 @@ fun SearchLayout(
     LaunchedEffect(needAppend.value) {
         if (needAppend.value) viewModelWrapper.viewModel.onAppend()
     }
+
     Column(
         Modifier
             .fillMaxWidth()
@@ -110,7 +106,10 @@ fun SearchLayout(
                         }
                     }
                 },
-                onSearchChange = { viewModelWrapper.viewModel.searchChanged(it) }
+                onSearchChange = {
+                    viewModelWrapper.viewModel.searchChanged(it)
+                    scope.launch { lazyColumnState.scrollToItem(0) }
+                }
             )
             Column {
                 FilterView(
@@ -123,7 +122,6 @@ fun SearchLayout(
                         viewModelWrapper.viewModel.popularFilterOpen()
                     },
                     typeFilterClick = {
-                        scope.launch { sheetState.show() }
                         viewModelWrapper.viewModel.filtersOpen()
                     },
                     popularFilterItemClick = {
@@ -142,21 +140,18 @@ fun SearchLayout(
             isRefreshing = state.value.refreshable,
             onRefresh = { viewModelWrapper.viewModel.onRefresh() }
         ) {
-            LazyColumn(
-                state = lazyColumnState,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()
-            ) {
+            when (statePaging.value.pagingData.loadingState) {
+                LoadingState.Loading -> {
+                    LoadingLayout()
+                }
 
-                when (statePaging.value.pagingData.loadingState) {
-                    LoadingState.Loading -> {
-                        item {
-                            LoadingLayout()
-                        }
-                    }
-
-                    LoadingState.Success -> {
+                LoadingState.Success -> {
+                    LazyColumn(
+                        state = lazyColumnState,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
                         items(
                             items = statePaging.value.pagingData.data ?: emptyList()
                         ) { product ->
@@ -168,38 +163,35 @@ fun SearchLayout(
                                 }
                             }
                         }
-                    }
 
-                    LoadingState.Empty -> {
-                        item {
-                            if (state.value.searchString != "") {
-                                scope.launch { delay(100) }
-                                EmptyLayout()
-                            } else SearchEmptyLayout()
-                        }
-                    }
-
-                    is LoadingState.Error -> {
-                        item {
-                            ErrorLayout {
-                                viewModelWrapper.viewModel.onRefresh()
+                        if (statePaging.value.pagingData.isAppending) {
+                            item {
+                                CircularProgressIndicator(
+                                    color = colors.orangeMain,
+                                    modifier = Modifier
+                                        .padding(top = 8.dp)
+                                        .size(24.dp)
+                                )
                             }
+                        }
+
+                        item {
+                            Spacer(modifier = Modifier.padding(bottom = 16.dp))
                         }
                     }
                 }
 
-                if (statePaging.value.pagingData.isAppending)
-                    item {
-                        CircularProgressIndicator(
-                            color = colors.orangeMain,
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .size(24.dp)
-                        )
-                    }
+                LoadingState.Empty -> {
+                    if (state.value.searchString != "") {
+                        scope.launch { delay(100) }
+                        EmptyLayout()
+                    } else SearchEmptyLayout()
+                }
 
-                item {
-                    Spacer(modifier = Modifier.padding(bottom = 16.dp))
+                is LoadingState.Error -> {
+                    ErrorLayout {
+                        viewModelWrapper.viewModel.onRefresh()
+                    }
                 }
             }
         }

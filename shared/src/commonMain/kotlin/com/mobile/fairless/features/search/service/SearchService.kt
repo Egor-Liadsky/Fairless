@@ -36,5 +36,5 @@ class SearchServiceImpl(private val searchRepository: SearchRepository) : Search
         type: ProductStockType,
         sort: Sort
     ): ProductResponse =
-        searchRepository.searchProducts(page, name, type, sort)
+        searchRepository.searchProducts(page, name.trim(), type, sort)
 }

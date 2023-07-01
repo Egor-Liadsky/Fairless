@@ -61,10 +61,10 @@ class SearchRepositoryImpl : SearchRepository, BaseRepository() {
         )
 
         val list = Json.decodeFromString<Product>(response).data
-        val total = Json.decodeFromString<Product>(response).count?.div(40.0)
+        var total = Json.decodeFromString<Product>(response).count?.div(40.0)
             ?.roundToInt() // Получение количества страниц для пагинации
 
-        println("asdajsdhajkshd   " + ProductResponse(list = list ?: emptyList(), total = total))
+        if (total == 0)  total += 1
 
         return ProductResponse(list = list ?: emptyList(), total = total)
     }

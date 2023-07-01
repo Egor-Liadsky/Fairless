@@ -18,7 +18,11 @@ import org.koin.androidx.compose.getViewModel
 import org.koin.core.qualifier.named
 
 @Composable
-fun SearchScreen(viewModelWrapper: StatefulViewModelWrapper<SearchViewModel, SearchState> = getViewModel(named("SearchViewModel"))) {
+fun SearchScreen(
+    viewModelWrapper: StatefulViewModelWrapper<SearchViewModel, SearchState> = getViewModel(
+        named("SearchViewModel")
+    )
+) {
     DisposableEffect(key1 = viewModelWrapper, effect = {
         viewModelWrapper.viewModel.onViewShown()
         onDispose { viewModelWrapper.viewModel.onViewHidden() }
@@ -26,7 +30,8 @@ fun SearchScreen(viewModelWrapper: StatefulViewModelWrapper<SearchViewModel, Sea
     Column(
         Modifier
             .fillMaxSize()
-            .background(colors.white)) {
+            .background(colors.white)
+    ) {
         SearchLayout(viewModelWrapper = viewModelWrapper)
     }
 }
