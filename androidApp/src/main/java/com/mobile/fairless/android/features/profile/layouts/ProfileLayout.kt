@@ -159,8 +159,9 @@ fun ProfileLayout(viewModelWrapper: StatefulViewModelWrapper<ProfileViewModel, P
                 contentAlignment = Alignment.BottomCenter
             ) {
                 ExitButton {
-                    viewModelWrapper.viewModel.exitUser()
-                    viewModelWrapper.viewModel.onBackButtonClick()
+                    viewModelWrapper.viewModel.openExitAlertDialog()
+//                    viewModelWrapper.viewModel.exitUser()
+//                    viewModelWrapper.viewModel.onBackButtonClick()
                 }
             }
         }

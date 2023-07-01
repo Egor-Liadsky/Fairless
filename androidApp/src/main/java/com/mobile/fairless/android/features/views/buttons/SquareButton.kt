@@ -31,7 +31,7 @@ fun SquareButton(
         onClick = { onClick() },
         modifier = modifier
             .size(48.dp)
-            .clip(RoundedCornerShape(10.dp)),
+            .clip(RoundedCornerShape(5.dp)),
         colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor)
     ) {
         Column(

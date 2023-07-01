@@ -30,6 +30,7 @@ interface ProfileViewModel : StatefulKmpViewModel<ProfileState>, SubScreenViewMo
     fun cityChanged(city: City)
     fun getCities()
     fun exitUser()
+    fun openExitAlertDialog()
 }
 
 class ProfileViewModelImpl(override val navigator: Navigator) : StatefulKmpViewModelImpl<ProfileState>(), KoinComponent,
@@ -90,5 +91,9 @@ class ProfileViewModelImpl(override val navigator: Navigator) : StatefulKmpViewM
                 failureBlock = { errorService.showError("Произошла ошибка") },
             )
         }
+    }
+
+    override fun openExitAlertDialog() {
+        _state.update { it.copy(exitAlertDialogIsOpen = !it.exitAlertDialogIsOpen) }
     }
 }
