@@ -1,6 +1,5 @@
 package com.mobile.fairless.android.features.welcome.register
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,14 +37,6 @@ fun RegisterScreen(
 
     val state = viewModelWrapper.state
     val scope = rememberCoroutineScope()
-
-    BackHandler {
-        if (sheetStateSelectCity.isVisible) {
-            scope.launch { sheetStateSelectCity.hide() }
-        } else {
-            scope.launch { sheetState.hide() }
-        }
-    }
 
     ModalBottomSheetLayout(
         modifier = Modifier.fillMaxSize(),

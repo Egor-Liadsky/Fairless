@@ -46,28 +46,37 @@ fun ProfileLayout(viewModelWrapper: StatefulViewModelWrapper<ProfileViewModel, P
 
     BackHandler {
         if (sheetState.isVisible) {
-           scope.launch { sheetState.hide() }
+            scope.launch { sheetState.hide() }
         } else {
             viewModelWrapper.viewModel.onBackButtonClick()
         }
     }
 
     val personalDataButtonList = listOf(
-        ProfileCategoryItem(title = "Логин", placeholder = state.value.user?.user?.username ?: "Пусто", onClick = {
+        ProfileCategoryItem(
+            title = "Логин",
+            placeholder = state.value.user?.user?.username ?: "Пусто",
+            onClick = {
                 viewModelWrapper.viewModel.selectButton(ProfileButton.LOGIN)
                 scope.launch { sheetState.show() }
             }),
-        ProfileCategoryItem(title = "Город", placeholder = state.value.user?.user?.city?.name ?: "Пусто", onClick = {
-            viewModelWrapper.viewModel.selectButton(ProfileButton.CITY)
-            scope.launch { sheetState.show() }
-        }),
+        ProfileCategoryItem(
+            title = "Город",
+            placeholder = state.value.user?.user?.city?.name ?: "Пусто",
+            onClick = {
+                viewModelWrapper.viewModel.selectButton(ProfileButton.CITY)
+                scope.launch { sheetState.show() }
+            }),
     )
 
     val accountButtonList = listOf(
-        ProfileCategoryItem(title = "E-mail", placeholder = state.value.user?.user?.email ?: "Пусто", onClick = {
-            viewModelWrapper.viewModel.selectButton(ProfileButton.EMAIL)
-            scope.launch { sheetState.show() }
-        }),
+        ProfileCategoryItem(
+            title = "E-mail",
+            placeholder = state.value.user?.user?.email ?: "Пусто",
+            onClick = {
+                viewModelWrapper.viewModel.selectButton(ProfileButton.EMAIL)
+                scope.launch { sheetState.show() }
+            }),
         ProfileCategoryItem(title = "Пароль", placeholder = "••••••••••••••••••", onClick = {
             viewModelWrapper.viewModel.selectButton(ProfileButton.PASSWORD)
             scope.launch { sheetState.show() }
@@ -92,7 +101,17 @@ fun ProfileLayout(viewModelWrapper: StatefulViewModelWrapper<ProfileViewModel, P
                     ProfileSheet(
                         sheetState = sheetState,
                         state = state,
-                        content = { CitySheetView(sheetState, viewModelWrapper) })
+                        content = {
+                            CitySheetView(
+                                viewModelWrapper = viewModelWrapper,
+                                cities = state.value.cities,
+                                cityChanged = {
+                                    viewModelWrapper.viewModel.cityChanged(it)
+                                    scope.launch { sheetState.hide() }
+                                },
+                                onValueChanged = { viewModelWrapper.viewModel.getCities() }
+                            )
+                        })
                 }
 
                 ProfileButton.EMAIL -> {

@@ -1,6 +1,7 @@
 package com.mobile.fairless.features.profile.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
@@ -69,21 +70,15 @@ class ProfileViewModelImpl(override val navigator: Navigator) : StatefulKmpViewM
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    _state.update { it.copy(isLoading = true) }
                     if (_state.value.cities == null) {
                         _state.update { it.copy(cities = profileService.getCities()) }
                     }
+                    _state.update { it.copy(isLoadingCity = LoadingState.Success) }
                 },
                 failureBlock = {
                     errorService.showError("Ошибка при получении данных")
+                    _state.update { it.copy(isLoadingCity = LoadingState.Error(it.toString())) }
                 },
-                completionBlock = {
-                    _state.update {
-                        it.copy(
-                            isLoading = false
-                        )
-                    }
-                }
             )
         }
     }
