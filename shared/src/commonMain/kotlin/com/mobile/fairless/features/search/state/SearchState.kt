@@ -11,18 +11,13 @@ import com.mobile.fairless.features.search.models.Sort
 
 data class SearchState(
     val pagingData: PagingData<ProductModel> = PagingData(),
-
     val products: List<ProductData>? = null,
-    val categories: List<Category>? = null,
-
     val refreshable: Boolean = false,
-
     val searchString: String = "",
     val selectedPopularFilter: PopularFilter = PopularFilter("По дате создания", Sort.CREATE),
     val selectedFilters: String = "",
     val selectCategory: Category = Category(url = "all"),
     val selectType: Type = Type("Промокоды и скидки", ProductStockType.ALL),
-
     val popularFilterOpen: Boolean = false,
     val filtersOpen: Boolean = false,
     val productsLoading: Boolean = false,

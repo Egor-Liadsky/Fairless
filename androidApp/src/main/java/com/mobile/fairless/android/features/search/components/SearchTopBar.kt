@@ -61,10 +61,6 @@ fun SearchTopBar(
 ) {
     val focusManager = LocalFocusManager.current
 
-    LaunchedEffect(key1 = state.value.searchString) {
-        onSearchChange(state.value.searchString)
-    }
-
     Row(
         modifier = Modifier
             .height(48.dp)

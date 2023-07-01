@@ -40,7 +40,6 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun popularFilterOpen()
     fun filtersOpen()
     fun onDocumentClick(product: String)
-    fun getCategories()
     fun selectCategory(category: Category)
     fun onAppend()
     fun onRefresh()
@@ -78,7 +77,11 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun onViewShown() {
         super.onViewShown()
-        getCategories()
+    }
+
+    override fun onViewHidden() {
+        super.onViewHidden()
+        pager.onViewHidden()
     }
 
     override fun searchChanged(search: String) {
@@ -107,33 +110,6 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
         val document = Json.encodeToString(product)
         val encodeUrl = urlEncode.encodeToUrl(document)
         navigator.navigateToDocument(encodeUrl)
-    }
-
-    override fun getCategories() {
-        scope.launch {
-            exceptionHandleable(
-                executionBlock = {
-                    _state.update { it.copy(categoriesLoading = true) }
-                    if (_state.value.categories == null) {
-                        val categories = searchService.getCategories().toMutableList()
-                        val indexAllCategory = categories.indexOfFirst { it.url == "all" }
-
-                        if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
-                            val elementToMove = categories[indexAllCategory]
-                            categories.removeAt(indexAllCategory)
-                            categories.add(0, elementToMove)
-                        }
-                        _state.update { it.copy(categories = categories) }
-                    }
-                },
-                failureBlock = {
-                    errorService.showError("Ошибка загрузки. Проверьте подключение к сети и повторите попытку.")
-                },
-                completionBlock = {
-                    _state.update { it.copy(categoriesLoading = false) }
-                }
-            )
-        }
     }
 
     override fun selectCategory(category: Category) {

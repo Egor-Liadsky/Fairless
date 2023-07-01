@@ -78,6 +78,16 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), MainState())
 
+    override fun onViewShown() {
+        super.onViewShown()
+        getCategories()
+    }
+
+    override fun onViewHidden() {
+        super.onViewHidden()
+        pager.onViewHidden()
+    }
+
     override fun onAppend() {
         pager.onAppend()
     }
@@ -104,16 +114,6 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
 
     private fun setLoadingRefreshable(status: Boolean) {
         _state.update { it.copy(refreshable = status) }
-    }
-
-    override fun onViewShown() {
-        super.onViewShown()
-        getCategories()
-    }
-
-    override fun onViewHidden() {
-        super.onViewHidden()
-        pager.onViewHidden()
     }
 
     override fun getCategories() {
