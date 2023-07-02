@@ -20,7 +20,7 @@ data class ShopState(
     val refreshable: Boolean = false,
     val selectedPopularFilter: PopularFilter = PopularFilter("По дате создания", Sort.CREATE),
     val selectedFilters: String = "",
-    val selectCategory: Category = Category(url = "news"),
+    val selectCategory: Category = Category(url = "all"),
     val selectType: Type = Type("Промокоды и скидки", ProductStockType.ALL),
     val popularFilterOpen: Boolean = false,
     val typeFilterOpen: Boolean = false,

@@ -60,7 +60,10 @@ class ShopRepositoryImpl() : ShopRepository, BaseRepository() {
         params["stock_type"] = type.name.lowercase()
         params["page"] = page.toString()
         params["shops"] = shop.code ?: "aliexpress"
-        params["category"] = category
+
+        if (category != "all") {
+            params["category"] = category
+        }
 
         val response = executeCall(
             type = HttpMethod.Get,
@@ -70,7 +73,7 @@ class ShopRepositoryImpl() : ShopRepository, BaseRepository() {
         )
 
         val list = Json.decodeFromString<Product>(response).data
-        var total = Json.decodeFromString<Product>(response).count?.div(30.0)
+        var total = Json.decodeFromString<Product>(response).count?.div(40.0)
             ?.roundToInt() // Получение количества страниц для пагинации
 
         if (total == 0) total += 1

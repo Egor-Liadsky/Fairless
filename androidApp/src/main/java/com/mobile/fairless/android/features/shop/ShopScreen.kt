@@ -17,7 +17,6 @@ import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.shop.layouts.ShopLayout
 import com.mobile.fairless.android.features.shop.sheets.SelectShopSheet
 import com.mobile.fairless.android.features.shop.sheets.TypeFilterSheet
-import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.shop.state.ShopState
 import com.mobile.fairless.features.shop.viewModel.ShopViewModel
 import kotlinx.coroutines.launch
@@ -35,13 +34,9 @@ fun ShopScreen(
     val state = viewModelWrapper.state
 
     DisposableEffect(key1 = viewModelWrapper, effect = {
-
-        if (state.value.products == null){
-            if (state.value.shop == null) {
-                viewModelWrapper.viewModel.getMainShop(shop)
-            } else viewModelWrapper.viewModel.getShop(state.value.shop!![0])
+        if (state.value.shop == null) {
+            viewModelWrapper.viewModel.getMainShop(shop)
         }
-
         viewModelWrapper.viewModel.onViewShown()
         onDispose { viewModelWrapper.viewModel.onViewHidden() }
     })

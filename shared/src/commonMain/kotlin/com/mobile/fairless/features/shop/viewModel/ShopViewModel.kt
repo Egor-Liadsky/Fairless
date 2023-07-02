@@ -59,7 +59,6 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
     ShopViewModel {
 
     private val shopService: ShopService by inject()
-    private val errorService: ErrorService by inject()
     private val urlEncode: UrlEncode by inject()
 
     private val _state = MutableStateFlow(ShopState())
@@ -154,15 +153,13 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
             exceptionHandleable(
                 executionBlock = {
                     if (_state.value.categories == null) {
-                        _state.update { it.copy(categoriesLoading = LoadingState.Loading) }
                         val categories = shopService.getCategories().toMutableList()
-                        categories.add(0, Category(name = "Новое", type = "news", url = "news"))
                         val indexAllCategory = categories.indexOfFirst { it.url == "all" }
 
                         if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
                             val elementToMove = categories[indexAllCategory]
                             categories.removeAt(indexAllCategory)
-                            categories.add(1, elementToMove)
+                            categories.add(0, elementToMove)
                         }
                         _state.update { it.copy(categories = categories) }
                         _state.update { it.copy(categoriesLoading = LoadingState.Success) }

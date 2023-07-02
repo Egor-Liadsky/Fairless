@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import com.mobile.fairless.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.search.state.SearchState
 import com.mobile.fairless.features.shop.state.ShopState
 
 @Composable

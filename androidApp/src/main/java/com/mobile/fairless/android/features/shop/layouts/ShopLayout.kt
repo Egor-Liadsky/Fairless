@@ -65,21 +65,15 @@ fun ShopLayout(
             isRefreshing = state.value.refreshable,
             onRefresh = { viewModelWrapper.viewModel.onRefresh() }
         ) {
-            LazyColumn(
-                state = lazyColumnState,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()
-            ) {
+            when (statePaging.value.pagingData.loadingState) {
+                LoadingState.Loading -> LoadingLayout()
 
-                when (statePaging.value.pagingData.loadingState) {
-                    LoadingState.Loading -> {
-                        item {
-                            LoadingLayout()
-                        }
-                    }
-
-                    LoadingState.Success -> {
+                LoadingState.Success -> {
+                    LazyColumn(
+                        state = lazyColumnState,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
                         items(
                             items = statePaging.value.pagingData.data ?: emptyList()
                         ) { product ->
@@ -91,38 +85,31 @@ fun ShopLayout(
                                 }
                             }
                         }
-                    }
-
-                    LoadingState.Empty -> {
-                        item {
-                            EmptyLayout()
-                        }
-                    }
-
-                    is LoadingState.Error -> {
-                        item {
-                            ErrorLayout {
-                                viewModelWrapper.viewModel.onRefreshClick()
+                        if (statePaging.value.pagingData.isAppending)
+                            item {
+                                CircularProgressIndicator(
+                                    color = colors.orangeMain,
+                                    modifier = Modifier
+                                        .padding(top = 8.dp)
+                                        .size(24.dp)
+                                )
                             }
+
+                        item {
+                            Spacer(modifier = Modifier.padding(bottom = 16.dp))
                         }
                     }
-
-                    else -> {}
                 }
 
-                if (statePaging.value.pagingData.isAppending)
-                    item {
-                        CircularProgressIndicator(
-                            color = colors.orangeMain,
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .size(24.dp)
-                        )
+                LoadingState.Empty -> EmptyLayout()
+
+                is LoadingState.Error -> {
+                    ErrorLayout {
+                        viewModelWrapper.viewModel.onRefreshClick()
                     }
-
-                item {
-                    Spacer(modifier = Modifier.padding(bottom = 16.dp))
                 }
+
+                else -> {}
             }
         }
     }
