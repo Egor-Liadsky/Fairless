@@ -3,6 +3,7 @@ package com.mobile.fairless.common.pagination
 import com.mobile.fairless.common.errors.AppError
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.search.models.Sort
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +16,15 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 
+enum class PaginationType {
+    MAIN,
+    SEARCH,
+    SHOP
+}
+
 class Pager<T : Any>(
-    private val isMain: Boolean,
-    private val source: PagingDataSourceMain<T>
+    private val typePagination: PaginationType,
+    private val source: PagingDataSourceMain<T>,
 ) {
     private val mutableState: MutableStateFlow<PagingData<T>> = MutableStateFlow(PagingData())
 
@@ -55,49 +62,75 @@ class Pager<T : Any>(
         val name = mutableState.value.name
         val type = mutableState.value.type
         val sort = mutableState.value.sort
+        val shop = mutableState.value.shop
 
-        if (isMain){
-            total = source.getPage(page, category, type, sort).total ?: 1
+        total = source.getPage(page, category, type, sort).total ?: 1
 
-            mutex.withLock {
-                if (page > total) {
-                    return listOf()
-                }
-                val response = source.getPage(page, category, type, sort)
-                if (response.list.isNotEmpty())
-                    page++
-                return response.list
-            }
-        } else {
-            if (name.replace(" ", "") != ""){
-                total = source.getPage(page, name, type, sort).total ?: 1
+        when (typePagination) {
 
+            PaginationType.MAIN -> {
                 mutex.withLock {
                     if (page > total) {
                         return listOf()
                     }
-                    val response = source.getPage(page, name, type, sort)
+                    val response = source.getPage(page, category, type, sort)
                     if (response.list.isNotEmpty())
                         page++
                     return response.list
                 }
-            } else {
+            }
+
+            PaginationType.SHOP -> {
+                mutex.withLock {
+                    if (page > total) {
+                        return listOf()
+                    }
+                    val response = source.getPage(page, category, type, sort, shop)
+                    if (response.list.isNotEmpty())
+                        page++
+                    return response.list
+                }
+            }
+
+            PaginationType.SEARCH -> {
+                if (name.replace(" ", "") != "") {
+                    mutex.withLock {
+                        if (page > total) {
+                            return listOf()
+                        }
+                        val response = source.getPage(page, name, type, sort)
+                        if (response.list.isNotEmpty())
+                            page++
+                        return response.list
+                    }
+                } else {
+                    return emptyList()
+                }
+            }
+
+            else -> {
                 return emptyList()
             }
         }
     }
 
-    fun changeType(type: ProductStockType){
+    fun changeShop(shop: Shop){
+        mutableState.update { it.copy(shop = shop) }
+        reloadData()
+    }
+
+
+    fun changeType(type: ProductStockType) {
         mutableState.update { it.copy(type = type) }
         reloadData()
     }
 
-    fun changeFilter(sort: Sort){
+    fun changeFilter(sort: Sort) {
         mutableState.update { it.copy(sort = sort) }
         reloadData()
     }
 
-    fun updateCategory(category: String){
+    fun updateCategory(category: String) {
         mutableState.update { it.copy(category = category) }
         reloadData()
     }
@@ -178,9 +211,16 @@ data class PagingData<T : Any>(
     var name: String = "",
     var type: ProductStockType = ProductStockType.ALL,
     var sort: Sort = Sort.CREATE,
-    val data: MutableList<T> = mutableListOf()
+    val data: MutableList<T> = mutableListOf(),
+    val shop: Shop? = null
 )
 
 interface PagingDataSourceMain<T : Any> {
-    suspend fun getPage(page: Int, name: String, type: ProductStockType, sort: Sort): PaginatedResult<T>
+    suspend fun getPage(
+        page: Int,
+        name: String,
+        type: ProductStockType,
+        sort: Sort,
+        shop: Shop? = null
+    ): PaginatedResult<T>
 }

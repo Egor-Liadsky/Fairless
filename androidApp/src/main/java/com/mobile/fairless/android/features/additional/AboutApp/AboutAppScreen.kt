@@ -16,7 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.additional.AboutFairLess.AboutBlockView
 import com.mobile.fairless.android.features.views.topBars.CommonTopBar
@@ -28,7 +28,7 @@ import org.koin.core.qualifier.named
 
 @Composable
 fun AboutAppScreen(viewModelWrapper: ViewModelWrapper<AboutAppViewModel> = get(named("AboutAppViewModel"))) {
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(colors.white)) {
         Column(Modifier.background(colors.navBar)) {
             CommonTopBar(
                 title = stringResource(id = R.string.about_app),

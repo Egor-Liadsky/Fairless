@@ -6,10 +6,10 @@ plugins {
 }
 
 android {
-    namespace = "com.mobile.fairless.android"
+    namespace = "com.mobile.fairless"
     compileSdk = 33
     defaultConfig {
-        applicationId = "com.mobile.fairless.android"
+        applicationId = "com.mobile.fairless"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
@@ -62,6 +62,9 @@ dependencies {
     // Ui
     implementation("me.onebone:toolbar-compose:2.3.5")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.29.2-rc")
+    implementation("com.halilibo.compose-richtext:richtext-ui:0.16.0")
+    implementation("com.halilibo.compose-richtext:richtext-commonmark:0.16.0")
+
 
     implementation("androidx.compose.ui:ui:1.4.0")
     implementation("androidx.compose.ui:ui-tooling:1.4.0")

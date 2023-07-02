@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.features.views.topBars.CommonTopBar
@@ -36,7 +36,7 @@ fun FeedbackScreen(viewModelWrapper: ViewModelWrapper<FeedbackViewModel> = get(n
 
     val context = LocalContext.current
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(colors.white)) {
         Column(Modifier.background(colors.navBar)) {
             CommonTopBar(
                 title = stringResource(id = R.string.feedback),

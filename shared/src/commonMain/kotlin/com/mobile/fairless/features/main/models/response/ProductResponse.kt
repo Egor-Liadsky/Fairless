@@ -1,7 +1,6 @@
 package com.mobile.fairless.features.main.models.response
 
 import com.mobile.fairless.common.pagination.PaginatedResult
-import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

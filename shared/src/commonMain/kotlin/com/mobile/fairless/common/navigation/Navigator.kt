@@ -1,7 +1,5 @@
 package com.mobile.fairless.common.navigation
 
-import com.mobile.fairless.features.main.models.Shop
-
 
 enum class ScreenRoute(val isMain: Boolean) {
     //NavBar

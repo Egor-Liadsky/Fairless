@@ -1,6 +1,7 @@
 package com.mobile.fairless.android.features.document.sheets
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +30,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.document.layouts.CommentsEmptyLayout
 import com.mobile.fairless.android.features.views.buttons.GradientButton
@@ -79,6 +80,7 @@ fun CommentSheetView(
         Column(
             Modifier
                 .fillMaxSize()
+                .background(colors.white)
                 .padding(start = 16.dp, end = 16.dp, bottom = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
 

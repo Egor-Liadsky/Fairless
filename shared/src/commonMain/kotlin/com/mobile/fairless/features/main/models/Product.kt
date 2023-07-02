@@ -73,12 +73,12 @@ data class ProductData(
 
 @Serializable
 data class Seo(
-    val _id: String,
-    val title: String,
-    val meta_name: String,
-    val meta_description: String,
-    val __v: Int,
-    val id: String,
+    val _id: String? = null,
+    val title: String? = null,
+    val meta_name: String? = null,
+    val meta_description: String? = null,
+    val __v: Int? = null,
+    val id: String? = null,
 )
 
 @Serializable
@@ -142,7 +142,7 @@ data class Shop(
     val top: Boolean? = null,
     val _id: String? = null,
     @SerialName("Name")
-    val Name2: String? = null, //
+    val Name2: String? = null,
     val name: String? = null,
     val icon: String? = null,
     val code: String? = null,

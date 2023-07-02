@@ -36,10 +36,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.main.components.RatingView
 import com.mobile.fairless.android.features.profile.components.DefaultButton
@@ -92,7 +93,7 @@ fun DocumentLayout(
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
                         color = colors.black
-                    )
+                    ), modifier = Modifier.padding(end = 16.dp)
                 )
 
                 Row(
@@ -105,7 +106,8 @@ fun DocumentLayout(
                             fontSize = 16.sp,
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
-                            color = colors.white
+                            color = colors.white,
+                            textAlign = TextAlign.Center
                         ), modifier = Modifier.padding(vertical = 6.dp, horizontal = 16.dp)
                     )
                 }
@@ -117,7 +119,8 @@ fun DocumentLayout(
             style = TextStyle(
                 fontFamily = fontQanelas,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                color = colors.black
             ),
             modifier = Modifier.padding(top = 15.dp),
         )

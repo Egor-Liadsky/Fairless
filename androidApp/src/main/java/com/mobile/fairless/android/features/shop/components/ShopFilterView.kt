@@ -25,7 +25,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.main.models.ProductStockType
@@ -48,13 +48,6 @@ fun ShopFilterView(
         PopularFilter("По просмотрам", Sort.VIEWS),
         PopularFilter("По возрастанию цены", Sort.SALE_ASCENDING),
         PopularFilter("По убыванию цены", Sort.SALE_DESCENDING)
-    )
-
-    val filterListType = listOf(
-        Type("Промокоды и скидки", ProductStockType.ALL),
-        Type("Скидки", ProductStockType.SALE),
-        Type("Промокоды", ProductStockType.PROMOCODE),
-        Type("Бесплатно", ProductStockType.FREE)
     )
 
     Row(
@@ -137,7 +130,9 @@ fun ShopFiltersDropDownMenu(
         )
     )
     DropdownMenu(
-        modifier = Modifier.clip(RoundedCornerShape(5.dp)),
+        modifier = Modifier
+            .clip(RoundedCornerShape(5.dp))
+            .background(colors.white),
         expanded = expanded,
         onDismissRequest = { onCloseClick() },
     ) {

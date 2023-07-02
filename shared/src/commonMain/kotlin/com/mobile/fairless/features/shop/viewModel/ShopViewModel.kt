@@ -2,20 +2,27 @@ package com.mobile.fairless.features.shop.viewModel
 
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.pagination.Pager
+import com.mobile.fairless.common.pagination.PaginationType
+import com.mobile.fairless.common.pagination.PagingData
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.main.models.Category
-import com.mobile.fairless.features.main.models.ProductData
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.main.models.Type
+import com.mobile.fairless.features.main.viewModel.ProductModel
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.models.PopularFilter
-import com.mobile.fairless.features.search.service.SearchService
+import com.mobile.fairless.features.shop.service.ShopService
 import com.mobile.fairless.features.shop.state.ShopState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
@@ -26,9 +33,11 @@ import org.koin.core.component.inject
 
 interface ShopViewModel : StatefulKmpViewModel<ShopState>, SubScreenViewModel {
     override val state: StateFlow<ShopState>
-//    val statePaging: StateFlow<ShopState>
+    val statePaging: StateFlow<ShopState>
 
-    fun getShop(shop: String)
+    fun getMainShop(shop: String)
+    fun getShop(code: Shop)
+    fun getShops()
     fun selectPopularFilter(popularFilter: PopularFilter)
     fun popularFilterOpen()
     fun filtersOpen()
@@ -39,41 +48,81 @@ interface ShopViewModel : StatefulKmpViewModel<ShopState>, SubScreenViewModel {
     fun onRefresh()
     fun selectType(type: Type)
     fun categoryDropDownMenuOpen()
+    fun onRefreshClick()
+    fun typeFilterOpen()
+    fun searchChanged(search: String)
+    fun onDeleteSearchClick()
 }
 
 class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
     StatefulKmpViewModelImpl<ShopState>(),
     ShopViewModel {
 
-    private val searchService: SearchService by inject()
-    private val errorService: ErrorService by inject()
+    private val shopService: ShopService by inject()
     private val urlEncode: UrlEncode by inject()
 
     private val _state = MutableStateFlow(ShopState())
     override val state: StateFlow<ShopState> = _state.asStateFlow()
 
-    override fun getShop(shop: String) {
-        val decodeShop = urlEncode.decodeToUrl(shop)
-        _state.update { it.copy(shop = Json.decodeFromString(decodeShop)) }
+    private val pager = Pager(PaginationType.SHOP, shopService)
+
+    override val statePaging: StateFlow<ShopState> =
+        pager.state.map { pagingData ->
+            val list = pagingData.data.map {
+                ProductModel(it, state.value.selectCategory.type ?: "news")
+            }.toMutableList()
+            ShopState(
+                PagingData<ProductModel>(
+                    loadingState = pagingData.loadingState,
+                    isRefreshing = pagingData.isRefreshing,
+                    isAppending = pagingData.isAppending,
+                    data = list,
+                    category = state.value.selectCategory.type ?: "news",
+                    type = state.value.selectType.type,
+                    sort = state.value.selectedPopularFilter.sort,
+                    shop = state.value.shop?.get(0),
+                )
+            )
+        }.stateIn(scope, SharingStarted.WhileSubscribed(), ShopState())
+
+    override fun getMainShop(shop: String) {
+        scope.launch {
+            val decodeShop = urlEncode.decodeToUrl(shop)
+            _state.update { it.copy(shop = listOf(Json.decodeFromString(decodeShop))) }
+            pager.changeShop(state.value.shop?.get(0) ?: listOf(Shop())[0])
+        }
     }
 
-    private val pager = Pager<ProductData>(false, searchService)
+    override fun getShop(code: Shop) {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    _state.update { it.copy(shop = shopService.getShop(code.code ?: "")) }
+                    if (state.value.products == null){
+                        pager.changeShop(state.value.shop?.get(0) ?: listOf(Shop())[0])
+                    }
+                },
+            )
+        }
+    }
 
-//    override val statePaging: StateFlow<SearchState> =
-//        pager.state.map { pagingData ->
-//            val list = pagingData.data.map {
-//                ProductModel(it, state.value.searchString)
-//            }.toMutableList()
-//            SearchState(
-//                PagingData<ProductModel>(
-//                    loadingState = pagingData.loadingState,
-//                    isRefreshing = pagingData.isRefreshing,
-//                    isAppending = pagingData.isAppending,
-//                    data = list,
-//                    name = state.value.searchString,
-//                )
-//            )
-//        }.stateIn(scope, SharingStarted.WhileSubscribed(), SearchState())
+    override fun getShops() {
+        scope.launch {
+            exceptionHandleable(
+                executionBlock = {
+                    _state.update {
+                        it.copy(
+                            shopList = shopService.getShops(),
+                            shopsLoadingState = LoadingState.Success
+                        )
+                    }
+                },
+                failureBlock = {
+                    _state.update { it.copy(shopsLoadingState = LoadingState.Error(it.toString())) }
+                }
+            )
+        }
+    }
 
     override fun onViewShown() {
         super.onViewShown()
@@ -103,9 +152,8 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    _state.update { it.copy(categoriesLoading = true) }
                     if (_state.value.categories == null) {
-                        val categories = searchService.getCategories().toMutableList()
+                        val categories = shopService.getCategories().toMutableList()
                         val indexAllCategory = categories.indexOfFirst { it.url == "all" }
 
                         if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
@@ -114,13 +162,17 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
                             categories.add(0, elementToMove)
                         }
                         _state.update { it.copy(categories = categories) }
+                        _state.update { it.copy(categoriesLoading = LoadingState.Success) }
                     }
                 },
-                failureBlock = {
-                    errorService.showError("Ошибка загрузки. Проверьте подключение к сети и повторите попытку.")
-                },
-                completionBlock = {
-                    _state.update { it.copy(categoriesLoading = false) }
+                failureBlock = { throwable ->
+                    _state.update {
+                        it.copy(
+                            categoriesLoading = LoadingState.Error(
+                                throwable.message ?: "error"
+                            )
+                        )
+                    }
                 }
             )
         }
@@ -128,6 +180,7 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun selectCategory(category: Category) {
         _state.update { it.copy(selectCategory = category) }
+        pager.updateCategory(category.type ?: "all")
     }
 
     override fun onAppend() {
@@ -147,6 +200,24 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     override fun categoryDropDownMenuOpen() {
         _state.update { it.copy(categoryOpen = !it.categoryOpen) }
+    }
+
+    override fun onRefreshClick() {
+        getCategories()
+        pager.onRefresh()
+    }
+
+    override fun typeFilterOpen() {
+        _state.update { it.copy(typeFilterOpen = !it.typeFilterOpen) }
+    }
+
+    override fun searchChanged(search: String) {
+        _state.update { it.copy(searchString = search) }
+        pager.updateSearchText(state.value.searchString)
+    }
+
+    override fun onDeleteSearchClick() {
+        searchChanged("")
     }
 
     private fun setLoadingRefreshable(status: Boolean) {

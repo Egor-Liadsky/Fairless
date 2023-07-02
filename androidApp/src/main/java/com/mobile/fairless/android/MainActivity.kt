@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
+import com.mobile.fairless.R
 import com.mobile.fairless.android.features.mainNavigation.MainNavigationScreen
 import com.mobile.fairless.android.navigation.AndroidNavigator
 import com.mobile.fairless.common.navigation.ScreenRoute

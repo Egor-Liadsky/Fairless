@@ -7,6 +7,5 @@ data class AppError(
 
 enum class Code {
     SERVER_ERROR,
-    TIMEOUT,
     INTERNAL_ERROR
 }

@@ -27,7 +27,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.features.document.state.DocumentState
@@ -107,7 +107,10 @@ fun PeriodDropDownMenu(
 ) {
     Box(modifier = Modifier, contentAlignment = Alignment.TopEnd) {
         DropdownMenu(
-            modifier = Modifier.width(225.dp).clip(RoundedCornerShape(5.dp)),
+            modifier = Modifier
+                .width(225.dp)
+                .background(colors.white)
+                .clip(RoundedCornerShape(5.dp)),
             expanded = expanded,
             onDismissRequest = { onCloseClick() },
         ) {

@@ -5,16 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".App"
+        android:name=".android.App"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
         android:icon="@mipmap/ic_launcher"
-        android:screenOrientation="portrait"
         tools:ignore="LockedOrientationActivity"
         android:label="@string/app_name">
         <activity
-            android:name=".MainActivity"
+            android:name=".android.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

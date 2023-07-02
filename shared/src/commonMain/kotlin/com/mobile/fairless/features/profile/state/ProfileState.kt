@@ -7,7 +7,7 @@ import com.mobile.fairless.features.welcome.models.UserReceive
 data class ProfileState(
     val user: UserReceive? = null,
     val selectButton: ProfileButton? = null,
-
+    val exitAlertDialogIsOpen: Boolean = false,
     val cities: List<City>? = null,
     val city: City? = null, //TODO
     val search: String = "",

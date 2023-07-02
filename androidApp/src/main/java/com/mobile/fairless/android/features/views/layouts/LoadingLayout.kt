@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.views.layouts
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -13,9 +14,9 @@ import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.theme.colors
 
 @Composable
-fun LoadingLayout(size: Dp = 30.dp, color: Color = colors.orangeMain) {
+fun LoadingLayout(size: Dp = 30.dp, color: Color = colors.orangeMain, background: Color = colors.white) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(background),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(

@@ -1,7 +1,6 @@
 package com.mobile.fairless.android.features.welcome.auth.layouts
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,14 +11,10 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -29,19 +24,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.profile.components.DefaultButton
-import com.mobile.fairless.android.features.views.buttons.CommonButton
-import com.mobile.fairless.android.features.views.buttons.CommonButtonParams
 import com.mobile.fairless.android.features.views.buttons.GradientButton
 import com.mobile.fairless.android.features.views.buttons.SquareButton
 import com.mobile.fairless.android.features.views.textFields.CommonTextField
-import com.mobile.fairless.android.features.views.textFields.MiniTextField
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.welcome.models.UserAuthResponse
 import com.mobile.fairless.features.welcome.auth.viewModel.AuthViewModel
+import com.mobile.fairless.features.welcome.models.UserAuthResponse
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)

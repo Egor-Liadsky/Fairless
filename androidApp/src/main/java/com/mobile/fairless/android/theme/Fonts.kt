@@ -3,7 +3,7 @@ package com.mobile.fairless.android.theme
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 
 val fontQanelas = FontFamily(
     Font(R.font.qanelas_light, FontWeight.Light),

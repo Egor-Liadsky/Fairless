@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.mobile.fairless.android.R
+import com.mobile.fairless.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.profile.components.ExitButton
 import com.mobile.fairless.android.features.profile.sheets.CitySheetView
@@ -159,8 +159,9 @@ fun ProfileLayout(viewModelWrapper: StatefulViewModelWrapper<ProfileViewModel, P
                 contentAlignment = Alignment.BottomCenter
             ) {
                 ExitButton {
-                    viewModelWrapper.viewModel.exitUser()
-                    viewModelWrapper.viewModel.onBackButtonClick()
+                    viewModelWrapper.viewModel.openExitAlertDialog()
+//                    viewModelWrapper.viewModel.exitUser()
+//                    viewModelWrapper.viewModel.onBackButtonClick()
                 }
             }
         }

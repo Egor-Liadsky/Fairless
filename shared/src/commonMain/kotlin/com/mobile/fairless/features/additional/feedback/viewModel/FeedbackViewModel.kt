@@ -6,7 +6,6 @@ import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
 import com.mobile.fairless.features.additional.feedback.state.FeedbackState
 import com.mobile.fairless.features.additional.feedback.state.ImageFile
-import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
