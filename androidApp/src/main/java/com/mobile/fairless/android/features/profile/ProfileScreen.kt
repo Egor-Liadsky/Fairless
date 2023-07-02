@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.profile.layouts.ExitAlertDialog
@@ -22,9 +23,17 @@ fun ProfileScreen(
 ) {
     viewModelWrapper.viewModel.getProfile()
 
+    DisposableEffect(key1 = viewModelWrapper, effect = {
+        viewModelWrapper.viewModel.onViewShown()
+        onDispose { viewModelWrapper.viewModel.onViewHidden() }
+    })
+
     val state = viewModelWrapper.state
 
-    Column(Modifier.fillMaxSize().background(colors.backgroundWelcome)) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(colors.backgroundWelcome)) {
         ProfileLayout(viewModelWrapper = viewModelWrapper)
         ExitAlertDialog(isOpen = state.value.exitAlertDialogIsOpen,
             closeAlertDialogClick = { viewModelWrapper.viewModel.openExitAlertDialog() }) {

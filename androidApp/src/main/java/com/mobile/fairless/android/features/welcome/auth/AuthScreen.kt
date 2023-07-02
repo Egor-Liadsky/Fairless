@@ -9,6 +9,7 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,6 +24,11 @@ import org.koin.core.qualifier.named
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AuthScreen(viewModelWrapper: ViewModelWrapper<AuthViewModel> = get(named("AuthViewModel"))) {
+
+    DisposableEffect(key1 = viewModelWrapper, effect = {
+        viewModelWrapper.viewModel.onViewShown()
+        onDispose { viewModelWrapper.viewModel.onViewHidden() }
+    })
 
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,

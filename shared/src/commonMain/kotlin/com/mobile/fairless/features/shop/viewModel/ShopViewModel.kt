@@ -1,5 +1,8 @@
 package com.mobile.fairless.features.shop.viewModel
 
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaService
+import com.mobile.fairless.common.analytics.appmetrica.LogEvent
+import com.mobile.fairless.common.analytics.appmetrica.LogEventParam
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.pagination.Pager
 import com.mobile.fairless.common.pagination.PaginationType
@@ -60,6 +63,7 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
 
     private val shopService: ShopService by inject()
     private val urlEncode: UrlEncode by inject()
+    private val appMetricaService: AppMetricaService by inject()
 
     private val _state = MutableStateFlow(ShopState())
     override val state: StateFlow<ShopState> = _state.asStateFlow()
@@ -84,6 +88,18 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
                 )
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), ShopState())
+
+    override fun onViewShown() {
+        super.onViewShown()
+        getCategories()
+        appMetricaService.sendEvent(
+            LogEvent.OPEN_SCREEN, mapOf(
+                LogEventParam.SCREEN_NAME to "Магазин",
+                LogEventParam.SCREEN_CLASS to "ShopScreen",
+                LogEventParam.SHOP_CODE to state.value.shop.toString()
+            )
+        )
+    }
 
     override fun getMainShop(shop: String) {
         scope.launch {
@@ -122,11 +138,6 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
                 }
             )
         }
-    }
-
-    override fun onViewShown() {
-        super.onViewShown()
-        getCategories()
     }
 
     override fun selectPopularFilter(popularFilter: PopularFilter) {

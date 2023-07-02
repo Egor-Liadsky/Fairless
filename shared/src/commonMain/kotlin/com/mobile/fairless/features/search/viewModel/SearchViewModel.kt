@@ -1,5 +1,8 @@
 package com.mobile.fairless.features.search.viewModel
 
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaService
+import com.mobile.fairless.common.analytics.appmetrica.LogEvent
+import com.mobile.fairless.common.analytics.appmetrica.LogEventParam
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.pagination.Pager
 import com.mobile.fairless.common.pagination.PaginationType
@@ -52,8 +55,8 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     SearchViewModel {
 
     private val searchService: SearchService by inject()
-    private val errorService: ErrorService by inject()
     private val urlEncode: UrlEncode by inject()
+    private val appMetricaService: AppMetricaService by inject()
 
     private val _state = MutableStateFlow(SearchState())
     override val state: StateFlow<SearchState> = _state.asStateFlow()
@@ -81,6 +84,12 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
         if (statePaging.value.pagingData.data.isEmpty()){
             pager.onRefresh()
         }
+        appMetricaService.sendEvent(
+            LogEvent.OPEN_SCREEN, mapOf(
+                LogEventParam.SCREEN_NAME to "Поиск",
+                LogEventParam.SCREEN_CLASS to "SearchScreen",
+            )
+        )
     }
 
     override fun onViewHidden() {

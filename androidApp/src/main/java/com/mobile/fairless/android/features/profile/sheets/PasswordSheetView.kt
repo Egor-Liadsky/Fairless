@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.profile.sheets
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,7 +32,11 @@ import kotlinx.coroutines.launch
 fun PasswordSheetView(sheetState: ModalBottomSheetState, state: State<ProfileState>) {
     val scope = rememberCoroutineScope()
 
-    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .background(colors.white), horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
             text = "Изменение пароля", style = TextStyle(
                 fontFamily = fontQanelas,
@@ -63,7 +68,9 @@ fun PasswordSheetView(sheetState: ModalBottomSheetState, state: State<ProfileSta
         )
 
         Row(
-            Modifier.fillMaxWidth().padding(top = 20.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

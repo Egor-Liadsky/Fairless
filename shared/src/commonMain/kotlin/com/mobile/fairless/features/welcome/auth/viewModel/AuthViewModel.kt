@@ -1,5 +1,8 @@
 package com.mobile.fairless.features.welcome.auth.viewModel
 
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaService
+import com.mobile.fairless.common.analytics.appmetrica.LogEvent
+import com.mobile.fairless.common.analytics.appmetrica.LogEventParam
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.viewModel.KmpViewModel
@@ -33,10 +36,10 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
     private val authService: AuthService by inject()
     private val errorService: ErrorService by inject()
     private val prefService: PrefService by inject()
+    private val appMetricaService: AppMetricaService by inject()
 
     private val _state = MutableStateFlow(AuthState())
     override val state: StateFlow<AuthState> = _state.asStateFlow()
-
 
     override fun emailChanged(email: String) {
         _state.update { it.copy(email = email) }
@@ -44,6 +47,16 @@ class AuthViewModelImpl(override val navigator: Navigator) : KoinComponent, KmpV
 
     override fun passwordChanged(password: String) {
         _state.update { it.copy(password = password) }
+    }
+
+    override fun onViewShown() {
+        super.onViewShown()
+        appMetricaService.sendEvent(
+            LogEvent.OPEN_SCREEN, mapOf(
+                LogEventParam.SCREEN_NAME to "Авторизация",
+                LogEventParam.SCREEN_CLASS to "AuthScreen",
+            )
+        )
     }
 
     override fun authUser(userAuthResponse: UserAuthResponse) {

@@ -1,5 +1,8 @@
 package com.mobile.fairless.features.main.viewModel
 
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaService
+import com.mobile.fairless.common.analytics.appmetrica.LogEvent
+import com.mobile.fairless.common.analytics.appmetrica.LogEventParam
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.pagination.Pager
 import com.mobile.fairless.common.pagination.PaginationType
@@ -56,6 +59,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
     private val mainService: MainService by inject()
     private val prefService: PrefService by inject()
     private val urlEncode: UrlEncode by inject()
+    private val appMetricaService: AppMetricaService by inject()
 
     private val _state = MutableStateFlow(MainState())
     override val state: StateFlow<MainState> = _state.asStateFlow()
@@ -85,6 +89,12 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         if (statePaging.value.pagingData.data.isEmpty()){
             pager.onRefresh()
         }
+        appMetricaService.sendEvent(
+            LogEvent.OPEN_SCREEN, mapOf(
+                LogEventParam.SCREEN_NAME to "Главная",
+                LogEventParam.SCREEN_CLASS to "MainScree",
+            )
+        )
     }
 
     override fun onViewHidden() {

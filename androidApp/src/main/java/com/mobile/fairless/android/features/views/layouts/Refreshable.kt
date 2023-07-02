@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.views.layouts
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -26,7 +27,8 @@ fun Refreshable(
             isRefreshing,
             pullRefreshState,
             Modifier.align(Alignment.TopCenter),
-            contentColor = colors.orangeMain
+            contentColor = colors.orangeMain,
+            backgroundColor = colors.white
         )
     }
 }

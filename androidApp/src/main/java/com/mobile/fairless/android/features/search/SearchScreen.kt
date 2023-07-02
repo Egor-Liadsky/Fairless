@@ -24,6 +24,7 @@ fun SearchScreen(
         viewModelWrapper.viewModel.onViewShown()
         onDispose { viewModelWrapper.viewModel.onViewHidden() }
     })
+
     Column(
         Modifier
             .fillMaxSize()

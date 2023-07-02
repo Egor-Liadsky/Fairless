@@ -103,6 +103,7 @@ buildkonfig {
 
     defaultConfigs() {
         buildConfigField(Type.STRING, "BASE_URL", "https://api.fairless.ru")
+        buildConfigField(Type.STRING, "APPMETRICA_KEY", "9e699ade-2774-4e21-92af-7b1838611f1a")
     }
     targetConfigs {
         create("android") {

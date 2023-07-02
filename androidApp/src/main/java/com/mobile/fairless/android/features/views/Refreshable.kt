@@ -27,6 +27,7 @@ fun Refreshable(
             pullRefreshState,
             Modifier.align(Alignment.TopCenter),
             contentColor = colors.orangeMain,
+            backgroundColor = colors.white
         )
     }
 }
