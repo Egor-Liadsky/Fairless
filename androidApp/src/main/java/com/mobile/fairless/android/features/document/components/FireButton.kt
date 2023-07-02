@@ -107,7 +107,10 @@ fun PeriodDropDownMenu(
 ) {
     Box(modifier = Modifier, contentAlignment = Alignment.TopEnd) {
         DropdownMenu(
-            modifier = Modifier.width(225.dp).clip(RoundedCornerShape(5.dp)),
+            modifier = Modifier
+                .width(225.dp)
+                .background(colors.white)
+                .clip(RoundedCornerShape(5.dp)),
             expanded = expanded,
             onDismissRequest = { onCloseClick() },
         ) {

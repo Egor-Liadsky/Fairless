@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.document.layouts
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,7 +28,9 @@ import com.mobile.fairless.android.theme.fontQanelas
 @Composable
 fun CommentsEmptyLayout(isAuth: Boolean) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colors.white),
         contentAlignment = Alignment.Center
     ) {
         Column(

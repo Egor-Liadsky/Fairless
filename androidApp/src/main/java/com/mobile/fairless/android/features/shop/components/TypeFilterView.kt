@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.search.models.PopularFilter
 import com.mobile.fairless.features.main.models.Type
 
 @Composable
@@ -34,7 +33,9 @@ fun TypeDropDownMenu(
         )
     )
     DropdownMenu(
-        modifier = Modifier.clip(RoundedCornerShape(5.dp)),
+        modifier = Modifier
+            .clip(RoundedCornerShape(5.dp))
+            .background(colors.white),
         expanded = expanded,
         onDismissRequest = { onCloseClick() },
     ) {

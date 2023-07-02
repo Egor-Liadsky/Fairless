@@ -27,7 +27,7 @@ import org.koin.core.qualifier.named
 
 @Composable
 fun AboutFairLess(viewModelWrapper: ViewModelWrapper<AboutFairLessViewModel> = get(named("AboutFairLessViewModel"))) {
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(colors.white)) {
         Column(Modifier.background(colors.navBar)) {
             CommonTopBar(
                 title = stringResource(id = R.string.about),

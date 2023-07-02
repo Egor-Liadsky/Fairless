@@ -148,7 +148,7 @@ fun FiltersDropDownMenu(
         )
     )
     DropdownMenu(
-        modifier = Modifier.clip(RoundedCornerShape(5.dp)),
+        modifier = Modifier.clip(RoundedCornerShape(5.dp)).background(colors.white),
         expanded = expanded,
         onDismissRequest = { onCloseClick() },
     ) {
@@ -192,7 +192,7 @@ fun TypeFilterDropDownMenu(
         )
     )
     DropdownMenu(
-        modifier = Modifier.clip(RoundedCornerShape(5.dp)),
+        modifier = Modifier.clip(RoundedCornerShape(5.dp)).background(colors.white),
         expanded = expanded,
         onDismissRequest = { onCloseClick() },
     ) {

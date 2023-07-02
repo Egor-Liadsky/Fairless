@@ -1,6 +1,7 @@
 package com.mobile.fairless.android.features.document.sheets
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -79,6 +80,7 @@ fun CommentSheetView(
         Column(
             Modifier
                 .fillMaxSize()
+                .background(colors.white)
                 .padding(start = 16.dp, end = 16.dp, bottom = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
 

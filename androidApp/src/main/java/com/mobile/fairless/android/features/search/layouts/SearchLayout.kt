@@ -142,7 +142,7 @@ fun SearchLayout(
         ) {
             when (statePaging.value.pagingData.loadingState) {
                 LoadingState.Loading -> {
-                    LoadingLayout()
+                    LoadingLayout(background = colors.backgroundWelcome)
                 }
 
                 LoadingState.Success -> {
@@ -184,12 +184,12 @@ fun SearchLayout(
                 LoadingState.Empty -> {
                     if (state.value.searchString != "") {
                         scope.launch { delay(100) }
-                        EmptyLayout()
+                        EmptyLayout(background = colors.backgroundWelcome)
                     } else SearchEmptyLayout()
                 }
 
                 is LoadingState.Error -> {
-                    ErrorLayout {
+                    ErrorLayout (background = colors.backgroundWelcome){
                         viewModelWrapper.viewModel.onRefresh()
                     }
                 }

@@ -28,7 +28,7 @@ import org.koin.core.qualifier.named
 
 @Composable
 fun AboutAppScreen(viewModelWrapper: ViewModelWrapper<AboutAppViewModel> = get(named("AboutAppViewModel"))) {
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(colors.white)) {
         Column(Modifier.background(colors.navBar)) {
             CommonTopBar(
                 title = stringResource(id = R.string.about_app),

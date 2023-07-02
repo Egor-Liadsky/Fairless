@@ -1,6 +1,7 @@
 package com.mobile.fairless.android.features.additional.Faq
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -37,7 +39,10 @@ fun FaqScreen(viewModelWrapper: ViewModelWrapper<FaqViewModel> = get(named("FaqV
 
     val state = viewModelWrapper.viewModel.state.collectAsState()
 
-    Column(Modifier.fillMaxSize()) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(colors.white)) {
         Column(Modifier.background(colors.navBar)) {
             CommonTopBar(
                 title = stringResource(id = R.string.faq),
@@ -46,7 +51,7 @@ fun FaqScreen(viewModelWrapper: ViewModelWrapper<FaqViewModel> = get(named("FaqV
 
         LazyColumn {
             item {
-                Column (Modifier.padding(horizontal = 16.dp, vertical = 16.dp)) {
+                Column(Modifier.padding(horizontal = 16.dp, vertical = 16.dp)) {
                     Text(
                         text = stringResource(id = R.string.common_info),
                         style = TextStyle(
@@ -130,16 +135,18 @@ fun FaqScreen(viewModelWrapper: ViewModelWrapper<FaqViewModel> = get(named("FaqV
 @Composable
 fun FaqItem(modifier: Modifier = Modifier, title: String, expanded: Boolean, onClick: () -> Unit) {
     Card(
-         modifier = modifier
+        modifier = modifier
             .fillMaxWidth()
-            .background(colors.white, shape = RoundedCornerShape(10.dp))
-            .clickable { onClick() },
-        onClick = { onClick() },
-        elevation = if (expanded) 0.dp else 1.dp,
-        shape = RoundedCornerShape(10.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .border(0.5.dp, Color(0xFFE1E1E1), RoundedCornerShape(10.dp)) ,
+        backgroundColor = colors.white,
+        onClick = { onClick() }
     ) {
-        Row(Modifier.padding(horizontal = 16.dp, vertical = 24.dp),
-        verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            Modifier
+                .padding(horizontal = 16.dp, vertical = 24.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 if (expanded) "-" else "+", style = TextStyle(
                     fontFamily = fontQanelas,
@@ -165,7 +172,8 @@ fun FaqExpandBlock(description: String) {
     Column(
         Modifier
             .padding(horizontal = 16.dp)
-            .padding(top = 10.dp)) {
+            .padding(top = 10.dp)
+    ) {
         Text(
             text = description,
             style = TextStyle(

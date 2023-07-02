@@ -3,9 +3,9 @@ package com.mobile.fairless.android.features.mainNavigation
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -42,10 +42,8 @@ import com.mobile.fairless.android.features.search.SearchScreen
 import com.mobile.fairless.android.features.shop.ShopScreen
 import com.mobile.fairless.android.features.views.snackbar.DefaultSnackbar
 import com.mobile.fairless.android.features.welcome.auth.AuthScreen
-import com.mobile.fairless.android.features.welcome.register.RegisterScreen
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.navigation.ScreenRoute
-import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
 import com.mobile.fairless.features.mainNavigation.viewModel.MainNavigationViewModel
@@ -123,7 +121,7 @@ fun MainNavigationScreen(
             composable(route = ScreenRoute.Main.name) {
                 MainScreen()
             }
-            composable(route = ScreenRoute.Search.name){
+            composable(route = ScreenRoute.Search.name) {
                 SearchScreen()
             }
             composable(route = ScreenRoute.Profile.name) {
@@ -141,23 +139,24 @@ fun MainNavigationScreen(
             composable(route = ScreenRoute.Auth.name) {
                 AuthScreen()
             }
-            composable(route = ScreenRoute.AboutFairLess.name){
+            composable(route = ScreenRoute.AboutFairLess.name) {
                 AboutFairLess()
             }
-            composable(route = ScreenRoute.Rules.name){
+            composable(route = ScreenRoute.Rules.name) {
                 RulesScreen()
             }
-            composable(route = ScreenRoute.Faq.name){
+            composable(route = ScreenRoute.Faq.name) {
                 FaqScreen()
             }
-            composable(route = ScreenRoute.Feedback.name){
+            composable(route = ScreenRoute.Feedback.name) {
                 FeedbackScreen()
             }
-            composable(route = ScreenRoute.AboutApp.name){
+            composable(route = ScreenRoute.AboutApp.name) {
                 AboutAppScreen()
             }
             composable(route = "${ScreenRoute.Shop.name}/{shop}",
-            arguments = listOf(navArgument("shop") {type = NavType.StringType})){
+                arguments = listOf(navArgument("shop") { type = NavType.StringType })
+            ) {
                 val shop = it.arguments?.getString("shop")
                 ShopScreen(shop = shop ?: "")
             }

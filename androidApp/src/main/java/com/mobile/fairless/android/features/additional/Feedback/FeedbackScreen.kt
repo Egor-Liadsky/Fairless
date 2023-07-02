@@ -36,7 +36,7 @@ fun FeedbackScreen(viewModelWrapper: ViewModelWrapper<FeedbackViewModel> = get(n
 
     val context = LocalContext.current
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(colors.white)) {
         Column(Modifier.background(colors.navBar)) {
             CommonTopBar(
                 title = stringResource(id = R.string.feedback),

@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.views.layouts
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,9 +23,9 @@ import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 
 @Composable
-fun EmptyLayout() {
+fun EmptyLayout(background: Color = colors.white) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(background),
         contentAlignment = Alignment.Center
     ) {
         Column(Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {

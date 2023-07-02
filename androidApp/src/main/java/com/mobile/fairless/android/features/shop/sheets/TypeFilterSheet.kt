@@ -1,7 +1,5 @@
 package com.mobile.fairless.android.features.shop.sheets
 
-import android.util.Log
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +21,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import com.mobile.fairless.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.main.components.CategoriesView
-import com.mobile.fairless.android.features.search.components.FiltersDropDownMenu
 import com.mobile.fairless.android.features.shop.components.TypeDropDownMenu
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
@@ -47,7 +43,6 @@ import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
-import com.mobile.fairless.features.search.models.PopularFilter
 import com.mobile.fairless.features.shop.state.ShopState
 import com.mobile.fairless.features.shop.viewModel.ShopViewModel
 import kotlinx.coroutines.launch
@@ -73,6 +68,7 @@ fun TypeFilterSheet(
     Column(
         Modifier
             .fillMaxWidth()
+            .background(colors.white)
             .padding(start = 16.dp, bottom = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -85,13 +81,6 @@ fun TypeFilterSheet(
             color = colors.navBar,
             thickness = 3.dp
         )
-        CategoryDropDownMenu(
-            expanded = state.value.categoryOpen,
-            list = state.value.categories ?: emptyList(),
-            isSelect = state.value.selectCategory,
-            onCloseClick = { viewModelWrapper.viewModel.categoryDropDownMenuOpen() }) {
-            viewModelWrapper.viewModel.selectCategory(it)
-        }
 
         Row(
             Modifier
@@ -212,7 +201,9 @@ fun TypeFilterSheet(
 
                 LoadingState.Loading -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.fillMaxWidth().size(20.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .size(20.dp),
                         color = colors.orangeMain
                     )
                 }
@@ -251,50 +242,6 @@ fun TypeFilterSheet(
                 }
 
                 else -> {}
-            }
-        }
-    }
-}
-
-@Composable
-fun CategoryDropDownMenu(
-    expanded: Boolean,
-    list: List<Category>,
-    isSelect: Category,
-    onCloseClick: () -> Unit,
-    onClick: (Category) -> Unit
-) {
-    val orangeGradient = Brush.horizontalGradient(
-        colors = listOf(
-            Color(0xFFF51B00),
-            Color(0xFFFF8D00)
-        )
-    )
-    DropdownMenu(
-        modifier = Modifier.clip(RoundedCornerShape(5.dp)),
-        expanded = expanded,
-        onDismissRequest = { onCloseClick() },
-    ) {
-        list.forEach {
-            val isSelected: Boolean = isSelect.sort == it.sort
-            DropdownMenuItem(
-                modifier = Modifier
-                    .background(
-                        brush = if (isSelected) orangeGradient
-                        else Brush.horizontalGradient(listOf(colors.white, colors.white)),
-                        shape = RoundedCornerShape(size = 5.dp)
-                    ),
-                onClick = { onClick(it) }
-            ) {
-                Text(
-                    text = it.name ?: "",
-                    style = TextStyle(
-                        fontFamily = fontQanelas,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 12.sp,
-                        color = if (isSelected) colors.white else colors.gray
-                    ),
-                )
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.shop.layouts
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -55,7 +56,7 @@ fun ShopLayout(
         if (needAppend.value) viewModelWrapper.viewModel.onAppend()
     }
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(colors.white)) {
         ShopTopBar(
             shopTitle = state.value.shop?.get(0)?.name ?: "Без названия",
             viewModelWrapper = viewModelWrapper,

@@ -26,7 +26,7 @@ import org.koin.core.qualifier.named
 
 @Composable
 fun RulesScreen(viewModelWrapper: ViewModelWrapper<RulesViewModel> = get(named("RulesViewModel"))) {
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().background(colors.white)) {
         Column(Modifier.background(colors.navBar)) {
             CommonTopBar(
                 title = stringResource(id = R.string.rules),

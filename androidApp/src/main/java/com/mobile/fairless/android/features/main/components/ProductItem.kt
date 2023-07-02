@@ -1,6 +1,7 @@
 package com.mobile.fairless.android.features.main.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,6 +49,7 @@ fun ProductItem(modifier: Modifier = Modifier, product: ProductData, onClick: ()
         Row(
             Modifier
                 .fillMaxSize()
+                .background(colors.white)
                 .padding(horizontal = 5.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically

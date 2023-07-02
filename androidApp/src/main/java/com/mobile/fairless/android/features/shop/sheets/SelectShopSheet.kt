@@ -6,6 +6,7 @@ import android.content.Intent
 import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -65,6 +66,7 @@ fun SelectShopSheet(
     Column(
         Modifier
             .fillMaxSize()
+            .background(colors.white)
             .padding(start = 16.dp, end = 16.dp, bottom = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
 
