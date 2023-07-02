@@ -15,7 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.shop.layouts.ShopLayout
+import com.mobile.fairless.android.features.shop.sheets.SelectShopSheet
 import com.mobile.fairless.android.features.shop.sheets.TypeFilterSheet
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.shop.state.ShopState
 import com.mobile.fairless.features.shop.viewModel.ShopViewModel
 import kotlinx.coroutines.launch
@@ -30,42 +32,73 @@ fun ShopScreen(
     ),
     shop: String
 ) {
+    val state = viewModelWrapper.state
+
     DisposableEffect(key1 = viewModelWrapper, effect = {
-        viewModelWrapper.viewModel.getShop(shop)
+
+        if (state.value.products == null){
+            if (state.value.shop == null) {
+                viewModelWrapper.viewModel.getMainShop(shop)
+            } else viewModelWrapper.viewModel.getShop(state.value.shop!![0])
+        }
+
         viewModelWrapper.viewModel.onViewShown()
         onDispose { viewModelWrapper.viewModel.onViewHidden() }
     })
 
     val scope = rememberCoroutineScope()
+
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
 
+    val selectShopSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+
     BackHandler {
-        if (sheetState.isVisible){
+        if (sheetState.isVisible && !selectShopSheetState.isVisible) {
             scope.launch { sheetState.hide() }
+        } else if (selectShopSheetState.isVisible) {
+            scope.launch { selectShopSheetState.hide() }
         } else {
             viewModelWrapper.viewModel.onBackButtonClick()
         }
     }
 
-    val state = viewModelWrapper.state
 
     ModalBottomSheetLayout(
         modifier = Modifier.fillMaxSize(),
-        sheetState = sheetState,
+        sheetState = selectShopSheetState,
         sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
         sheetContent = {
-            TypeFilterSheet(
-                sheetState = sheetState,
-                selectCategoryClick = { viewModelWrapper.viewModel.selectCategory(it) },
+            SelectShopSheet(
+                sheetState = selectShopSheetState,
+                selectShopClick = {
+                    viewModelWrapper.viewModel.getShop(it)
+                },
                 viewModelWrapper = viewModelWrapper
             )
         },
     ) {
-        Column {
-            ShopLayout(viewModelWrapper, sheetState)
+        ModalBottomSheetLayout(
+            modifier = Modifier.fillMaxSize(),
+            sheetState = sheetState,
+            sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
+            sheetContent = {
+                TypeFilterSheet(
+                    sheetState = sheetState,
+                    selectShopSheetState = selectShopSheetState,
+                    selectCategoryClick = { viewModelWrapper.viewModel.selectCategory(it) },
+                    viewModelWrapper = viewModelWrapper
+                )
+            },
+        ) {
+            Column {
+                ShopLayout(viewModelWrapper, sheetState)
+            }
         }
     }
 }

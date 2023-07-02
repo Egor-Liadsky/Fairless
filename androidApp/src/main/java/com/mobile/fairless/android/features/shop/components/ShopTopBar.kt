@@ -31,7 +31,8 @@ fun ShopTopBar(
     Column(
         Modifier
             .fillMaxWidth()
-            .background(colors.backgroundWelcome)) {
+            .background(colors.backgroundWelcome)
+    ) {
         CommonTopBar(title = shopTitle) {
             viewModelWrapper.viewModel.onBackButtonClick()
         }
@@ -39,8 +40,13 @@ fun ShopTopBar(
             Modifier.padding(horizontal = 16.dp),
             selectPopularsFilter = state.value.selectedPopularFilter,
             popularFilterOpen = state.value.popularFilterOpen,
-            popularFilterClick = { viewModelWrapper.viewModel.popularFilterOpen() },
-            popularFilterItemClick = { viewModelWrapper.viewModel.selectPopularFilter(it) },
+            popularFilterClick = {
+                viewModelWrapper.viewModel.popularFilterOpen()
+            },
+            popularFilterItemClick = {
+                viewModelWrapper.viewModel.selectPopularFilter(it)
+                viewModelWrapper.viewModel.popularFilterOpen()
+            },
             typeFilterClick = { scope.launch { sheetState.show() } },
         )
     }

@@ -3,6 +3,7 @@ package com.mobile.fairless.common.pagination
 import com.mobile.fairless.common.errors.AppError
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.search.models.Sort
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ enum class PaginationType {
 
 class Pager<T : Any>(
     private val typePagination: PaginationType,
-    private val source: PagingDataSourceMain<T>
+    private val source: PagingDataSourceMain<T>,
 ) {
     private val mutableState: MutableStateFlow<PagingData<T>> = MutableStateFlow(PagingData())
 
@@ -111,6 +112,11 @@ class Pager<T : Any>(
                 return emptyList()
             }
         }
+    }
+
+    fun changeShop(shop: Shop){
+        mutableState.update { it.copy(shop = shop) }
+        reloadData()
     }
 
 
@@ -206,7 +212,7 @@ data class PagingData<T : Any>(
     var type: ProductStockType = ProductStockType.ALL,
     var sort: Sort = Sort.CREATE,
     val data: MutableList<T> = mutableListOf(),
-    val shop: String? = null
+    val shop: Shop? = null
 )
 
 interface PagingDataSourceMain<T : Any> {
@@ -215,6 +221,6 @@ interface PagingDataSourceMain<T : Any> {
         name: String,
         type: ProductStockType,
         sort: Sort,
-        shop: String? = null
+        shop: Shop? = null
     ): PaginatedResult<T>
 }

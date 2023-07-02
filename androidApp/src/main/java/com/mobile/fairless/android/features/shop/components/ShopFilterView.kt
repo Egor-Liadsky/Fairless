@@ -50,13 +50,6 @@ fun ShopFilterView(
         PopularFilter("По убыванию цены", Sort.SALE_DESCENDING)
     )
 
-    val filterListType = listOf(
-        Type("Промокоды и скидки", ProductStockType.ALL),
-        Type("Скидки", ProductStockType.SALE),
-        Type("Промокоды", ProductStockType.PROMOCODE),
-        Type("Бесплатно", ProductStockType.FREE)
-    )
-
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,

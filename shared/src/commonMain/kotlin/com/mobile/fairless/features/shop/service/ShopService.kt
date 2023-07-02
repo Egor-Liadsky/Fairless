@@ -12,19 +12,22 @@ import com.mobile.fairless.features.shop.repository.ShopRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface ShopService: PagingDataSourceMain<ProductData> {
+interface ShopService : PagingDataSourceMain<ProductData> {
 
     suspend fun getShops(): List<Shop>
     suspend fun getProductsByCategory(
         page: Int,
         category: String,
         type: ProductStockType,
-        shop: String
+        sort: Sort,
+        shop: Shop
     ): ProductResponse
+
     suspend fun getCategories(): List<Category>
+    suspend fun getShop(code: String): List<Shop>
 }
 
-class ShopServiceImpl: ShopService, KoinComponent {
+class ShopServiceImpl : ShopService, KoinComponent {
 
     private val shopRepository: ShopRepository by inject()
 
@@ -35,21 +38,23 @@ class ShopServiceImpl: ShopService, KoinComponent {
         page: Int,
         category: String,
         type: ProductStockType,
-        shop: String,
+        sort: Sort,
+        shop: Shop,
     ): ProductResponse =
-        shopRepository.getProductsByCategory(page, category, type, shop)
+        shopRepository.getProductsByCategory(page, category, type, sort, shop)
 
     override suspend fun getCategories(): List<Category> = shopRepository.getCategories()
 
+    override suspend fun getShop(code: String): List<Shop> = shopRepository.getShop(code)
 
     override suspend fun getPage(
         page: Int,
         name: String,
         type: ProductStockType,
         sort: Sort,
-        shop: String?
+        shop: Shop?
     ): PaginatedResult<ProductData> {
-        return getProductsByCategory(page, name, type, shop ?: "aliexpress")
+        return getProductsByCategory(page, name, type, sort, shop ?: Shop())
     }
 }
 

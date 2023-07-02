@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -32,15 +33,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.R
 import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.main.components.CategoriesView
 import com.mobile.fairless.android.features.search.components.FiltersDropDownMenu
+import com.mobile.fairless.android.features.shop.components.TypeDropDownMenu
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.search.models.PopularFilter
 import com.mobile.fairless.features.shop.state.ShopState
 import com.mobile.fairless.features.shop.viewModel.ShopViewModel
@@ -51,10 +57,18 @@ import kotlinx.coroutines.launch
 fun TypeFilterSheet(
     sheetState: ModalBottomSheetState,
     selectCategoryClick: (Category) -> Unit,
+    selectShopSheetState: ModalBottomSheetState,
     viewModelWrapper: StatefulViewModelWrapper<ShopViewModel, ShopState>
 ) {
     val scope = rememberCoroutineScope()
     val state = viewModelWrapper.state
+
+    val filterListType = listOf(
+        Type("Промокоды и скидки", ProductStockType.ALL),
+        Type("Скидки", ProductStockType.SALE),
+        Type("Промокоды", ProductStockType.PROMOCODE),
+        Type("Бесплатно", ProductStockType.FREE)
+    )
 
     Column(
         Modifier
@@ -87,7 +101,7 @@ fun TypeFilterSheet(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Категория", style = TextStyle(
+                text = "Тип", style = TextStyle(
                     fontFamily = fontQanelas,
                     fontWeight = FontWeight.SemiBold,
                     color = colors.black,
@@ -96,7 +110,7 @@ fun TypeFilterSheet(
             )
             Button(
                 modifier = Modifier.width(225.dp),
-                onClick = { /*TODO*/ },
+                onClick = { viewModelWrapper.viewModel.typeFilterOpen() },
                 elevation = ButtonDefaults.elevation(
                     defaultElevation = 0.dp,
                     pressedElevation = 0.dp
@@ -111,7 +125,7 @@ fun TypeFilterSheet(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Выберите категорию", style = TextStyle(
+                        text = state.value.selectType.title, style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 16.sp,
@@ -125,6 +139,16 @@ fun TypeFilterSheet(
                         tint = Color(0xFFA7ACAF)
                     )
                 }
+                TypeDropDownMenu(
+                    expanded = state.value.typeFilterOpen,
+                    list = filterListType,
+                    isSelect = state.value.selectType,
+                    onCloseClick = { viewModelWrapper.viewModel.typeFilterOpen() },
+                    onClick = {
+                        viewModelWrapper.viewModel.selectType(it)
+                        viewModelWrapper.viewModel.typeFilterOpen()
+                    }
+                )
             }
         }
 
@@ -145,7 +169,7 @@ fun TypeFilterSheet(
             )
             Button(
                 modifier = Modifier.width(225.dp),
-                onClick = { /*TODO*/ },
+                onClick = { scope.launch { selectShopSheetState.show() } },
                 elevation = ButtonDefaults.elevation(
                     defaultElevation = 0.dp,
                     pressedElevation = 0.dp
@@ -160,7 +184,7 @@ fun TypeFilterSheet(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Выберите магазин", style = TextStyle(
+                        text = state.value.shop?.get(0)?.name ?: "", style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 16.sp,
@@ -183,22 +207,50 @@ fun TypeFilterSheet(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "Тип", style = TextStyle(
-                    fontFamily = fontQanelas,
-                    fontWeight = FontWeight.SemiBold,
-                    color = colors.black,
-                    fontSize = 16.sp
-                ), modifier = Modifier.padding(top = 16.dp)
-            )
-            Column(Modifier.width(240.dp)) {
-                CategoriesView(
-                    categories = state.value.categories,
-                    categoryOpened = state.value.selectCategory,
-                    isPadding = false,
-                ) {
-                    selectCategoryClick(it)
+
+            when (state.value.categoriesLoading) {
+
+                LoadingState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.fillMaxWidth().size(20.dp),
+                        color = colors.orangeMain
+                    )
                 }
+
+                LoadingState.Success -> {
+                    Text(
+                        text = "Категория", style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.black,
+                            fontSize = 16.sp
+                        ), modifier = Modifier.padding(top = 16.dp)
+                    )
+                    Column(Modifier.width(240.dp)) {
+                        CategoriesView(
+                            categories = state.value.categories,
+                            categoryOpened = state.value.selectCategory,
+                            isPadding = false,
+                        ) {
+                            selectCategoryClick(it)
+                        }
+
+                    }
+                }
+
+                is LoadingState.Error -> {
+                    Text(
+                        text = "Ошибка", style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 14.sp,
+                            color = colors.black,
+                            textAlign = TextAlign.Center
+                        ), modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+                else -> {}
             }
         }
     }

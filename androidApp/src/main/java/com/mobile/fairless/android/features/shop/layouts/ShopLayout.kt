@@ -29,6 +29,7 @@ import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.shop.state.ShopState
 import com.mobile.fairless.features.shop.viewModel.ShopViewModel
 
@@ -56,11 +57,10 @@ fun ShopLayout(
 
     Column(Modifier.fillMaxSize()) {
         ShopTopBar(
-            shopTitle = state.value.shop?.name ?: "Без названия",
+            shopTitle = state.value.shop?.get(0)?.name ?: "Без названия",
             viewModelWrapper = viewModelWrapper,
             sheetState = sheetState
         )
-
         Refreshable(
             isRefreshing = state.value.refreshable,
             onRefresh = { viewModelWrapper.viewModel.onRefresh() }

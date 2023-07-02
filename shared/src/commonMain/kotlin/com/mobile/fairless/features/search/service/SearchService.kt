@@ -4,6 +4,7 @@ import com.mobile.fairless.common.pagination.PagingDataSourceMain
 import com.mobile.fairless.features.main.models.Category
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
+import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.main.models.response.ProductResponse
 import com.mobile.fairless.features.search.models.Sort
 import com.mobile.fairless.features.search.repository.SearchRepository
@@ -25,7 +26,7 @@ class SearchServiceImpl(private val searchRepository: SearchRepository) : Search
         name: String,
         type: ProductStockType,
         sort: Sort,
-        shop: String?
+        shop: Shop?
     ): ProductResponse {
         return searchProducts(page, name, type, sort)
     }

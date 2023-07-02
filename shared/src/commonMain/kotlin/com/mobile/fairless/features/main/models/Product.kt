@@ -142,7 +142,7 @@ data class Shop(
     val top: Boolean? = null,
     val _id: String? = null,
     @SerialName("Name")
-    val Name2: String? = null, //
+    val Name2: String? = null,
     val name: String? = null,
     val icon: String? = null,
     val code: String? = null,
