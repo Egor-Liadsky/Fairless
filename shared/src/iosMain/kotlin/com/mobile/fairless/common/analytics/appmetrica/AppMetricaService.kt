@@ -2,8 +2,17 @@ package com.mobile.fairless.common.analytics.appmetrica
 
 expect interface NativeAppMetricaService
 
-interface AppMetricaService : NativeAppMetricaService {
-    fun sendEvent(event: String, params: Map<String, Any>)
+actual interface NativeAppMetricaService {
+    fun init()
 }
 
-expect class AppMetricaServiceImpl() : AppMetricaService
+actual class AppMetricaServiceImpl : KoinComponent, AppMetricaService {
+
+    override fun init() {
+        TODO ("Not implemented")
+    }
+
+    override fun sendEvent(event: LogEvent, params: Map<LogEventParam, Any>) {
+        TODO ("Not implemented")
+    }
+}

@@ -2,9 +2,9 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
     kotlin("plugin.serialization")
-    id("com.squareup.sqldelight")
     id("com.codingfeline.buildkonfig")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
@@ -20,17 +20,21 @@ kotlin {
             }
         }
     }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        version = "1.0"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
             baseName = "shared"
         }
     }
-
+    
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -46,11 +50,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-logging:2.2.2")
                 implementation("io.ktor:ktor-server-content-negotiation:2.2.2")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.2")
-
-
-                // Database
-                implementation("com.squareup.sqldelight:runtime:1.5.4")
-                implementation("com.squareup.sqldelight:coroutines-extensions:1.5.4")
 
                 // Settings
                 implementation("com.russhwolf:multiplatform-settings:1.0.0")
@@ -74,9 +73,6 @@ kotlin {
                 // Network
                 implementation("io.ktor:ktor-client-android:2.2.2")
 
-                // Database
-                implementation("com.squareup.sqldelight:android-driver:1.5.5")
-
                 // Adfox
                 implementation("com.yandex.android:mobileads:5.6.0")
 
@@ -90,10 +86,18 @@ kotlin {
             dependencies {
                 // Network
                 implementation("io.ktor:ktor-client-ios:2.2.2")
-
-                // Database
-                implementation("com.squareup.sqldelight:native-driver:1.5.5")
             }
+        }
+
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+            }
+        }
+
+        val iosX64Test by getting {
+            dependsOn(commonTest)
         }
     }
 }
