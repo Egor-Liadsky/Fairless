@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,7 +27,6 @@ import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
-import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 
 

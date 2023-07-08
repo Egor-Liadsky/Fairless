@@ -13,6 +13,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +39,11 @@ fun RegisterScreen(
     sheetState: ModalBottomSheetState,
     sheetStateSelectCity: ModalBottomSheetState
 ) {
+
+    DisposableEffect(key1 = viewModelWrapper, effect = {
+        viewModelWrapper.viewModel.onViewShown()
+        onDispose { viewModelWrapper.viewModel.onViewHidden() }
+    })
 
     val state = viewModelWrapper.state
     val scope = rememberCoroutineScope()

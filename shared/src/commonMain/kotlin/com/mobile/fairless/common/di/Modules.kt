@@ -1,5 +1,7 @@
 package com.mobile.fairless.common.di
 
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaService
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaServiceImpl
 import com.mobile.fairless.common.config.ConfigService
 import com.mobile.fairless.common.config.ConfigServiceImpl
 import com.mobile.fairless.common.storage.PrefService
@@ -69,6 +71,9 @@ fun commonModule() = module {
             }
         }
     }
+
+    // Analytics
+    single<AppMetricaService> { AppMetricaServiceImpl() }
 
     // Services
     single<ErrorService> { ErrorServiceImpl() }

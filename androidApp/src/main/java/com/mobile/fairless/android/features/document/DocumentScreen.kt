@@ -12,6 +12,7 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -50,6 +51,11 @@ fun DocumentScreen(
 
     val context = LocalContext.current
     val state = viewModelWrapper.viewModel.state.collectAsState()
+
+    DisposableEffect(key1 = viewModelWrapper, effect = {
+        viewModelWrapper.viewModel.onViewShown()
+        onDispose { viewModelWrapper.viewModel.onViewHidden() }
+    })
 
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,

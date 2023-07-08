@@ -6,6 +6,7 @@ import android.content.Intent
 import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -64,7 +65,8 @@ fun CitySheetView(
     }
     Column(
         Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(colors.white),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 

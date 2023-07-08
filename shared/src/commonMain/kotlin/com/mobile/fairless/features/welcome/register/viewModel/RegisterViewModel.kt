@@ -1,5 +1,8 @@
 package com.mobile.fairless.features.welcome.register.viewModel
 
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaService
+import com.mobile.fairless.common.analytics.appmetrica.LogEvent
+import com.mobile.fairless.common.analytics.appmetrica.LogEventParam
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
@@ -46,9 +49,20 @@ class RegisterViewModelImpl(override val navigator: Navigator) : KoinComponent, 
     private val authService: AuthService by inject()
     private val errorService: ErrorService by inject()
     private val prefService: PrefService by inject()
+    private val appMetricaService: AppMetricaService by inject()
 
     private val _state = MutableStateFlow(RegisterState())
     override val state: StateFlow<RegisterState> = _state.asStateFlow()
+
+    override fun onViewShown() {
+        super.onViewShown()
+        appMetricaService.sendEvent(
+            LogEvent.OPEN_SCREEN, mapOf(
+                LogEventParam.SCREEN_NAME to "Регистрация",
+                LogEventParam.SCREEN_CLASS to "RegisterScreen",
+            )
+        )
+    }
 
     override fun emailChanged(email: String) {
         _state.update { it.copy(email = email) }

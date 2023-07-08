@@ -1,5 +1,8 @@
 package com.mobile.fairless.features.profile.viewModel
 
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaService
+import com.mobile.fairless.common.analytics.appmetrica.LogEvent
+import com.mobile.fairless.common.analytics.appmetrica.LogEventParam
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
@@ -39,9 +42,20 @@ class ProfileViewModelImpl(override val navigator: Navigator) : StatefulKmpViewM
     private val prefService: PrefService by inject()
     private val errorService: ErrorService by inject()
     private val profileService: ProfileService by inject()
+    private val appMetricaService: AppMetricaService by inject()
 
     private val _state = MutableStateFlow(ProfileState())
     override val state: StateFlow<ProfileState> = _state.asStateFlow()
+
+    override fun onViewShown() {
+        super.onViewShown()
+        appMetricaService.sendEvent(
+            LogEvent.OPEN_SCREEN, mapOf(
+                LogEventParam.SCREEN_NAME to "Профиль",
+                LogEventParam.SCREEN_CLASS to "ProfileScreen",
+            )
+        )
+    }
 
     override fun getProfile() {
         _state.update { it.copy(user = prefService.getUserInfo() ?: UserReceive()) }

@@ -9,7 +9,6 @@ pluginManagement {
         id("com.codingfeline.buildkonfig").version("0.13.3").apply(false)
         kotlin("multiplatform").version("1.8.0").apply(false)
         kotlin("plugin.serialization").version("1.8.0").apply(false)
-        id("com.squareup.sqldelight").version("1.5.5").apply(false)
         id("com.google.gms.google-services").version("4.3.15").apply(false)
         id("com.google.firebase.crashlytics").version("2.9.5").apply(false)
 

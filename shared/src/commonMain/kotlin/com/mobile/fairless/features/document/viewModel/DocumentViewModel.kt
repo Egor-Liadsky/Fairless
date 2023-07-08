@@ -1,5 +1,8 @@
 package com.mobile.fairless.features.document.viewModel
 
+import com.mobile.fairless.common.analytics.appmetrica.AppMetricaService
+import com.mobile.fairless.common.analytics.appmetrica.LogEvent
+import com.mobile.fairless.common.analytics.appmetrica.LogEventParam
 import com.mobile.fairless.common.navigation.Navigator
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
@@ -58,6 +61,7 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
     private val errorService: ErrorService by inject()
     private val prefService: PrefService by inject()
     private val urlEncode: UrlEncode by inject()
+    private val appMetricaService: AppMetricaService by inject()
 
     private val _state = MutableStateFlow(DocumentState())
     override val state: StateFlow<DocumentState> = _state.asStateFlow()
@@ -74,6 +78,13 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         getDocument()
         getFireProducts(state.value.selectFirePeriod.period)
         checkUser()
+        appMetricaService.sendEvent(
+            LogEvent.OPEN_SCREEN, mapOf(
+                LogEventParam.SCREEN_NAME to "Продукт",
+                LogEventParam.SCREEN_CLASS to "DocumentScreen",
+                LogEventParam.PRODUCT_ID to state.value.product.id.toString(),
+            )
+        )
     }
 
     private fun getDocument() {
