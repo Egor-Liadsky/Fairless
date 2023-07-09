@@ -41,16 +41,21 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import kotlinx.serialization.json.Json
+import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
-
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
     startKoin {
         appDeclaration()
-        modules(commonModule(), platformModule())
+        modules(
+            commonModule(), platformModule()
+        )
     }
+
+// called by iOS
+fun initKoin() = initKoin {}
 
 fun commonModule() = module {
     single {
@@ -84,7 +89,7 @@ fun commonModule() = module {
     single<DocumentService> { DocumentServiceImpl(get()) }
     single<SearchService> { SearchServiceImpl(get()) }
     single<ProfileService> { ProfileServiceImpl(get()) }
-    single<ShopService> {ShopServiceImpl()}
+    single<ShopService> { ShopServiceImpl() }
 
     // Repositories
     single<AuthRepository> { AuthRepositoryImpl() }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,15 +11,37 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		658F1B55E19B9CF487F67D5C /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA4697D8C9BCE3BE13D1E40 /* Pods_iosApp.framework */; };
-		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		7401B0662A59A8DF007DBE72 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401B0652A59A8DF007DBE72 /* Color.swift */; };
+		7401B06C2A59A993007DBE72 /* Qanelas-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7401B0682A59A993007DBE72 /* Qanelas-Heavy.ttf */; };
+		7401B06D2A59A993007DBE72 /* Qanelas-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7401B0692A59A993007DBE72 /* Qanelas-Semibold.ttf */; };
+		7401B06E2A59A993007DBE72 /* Qanelas-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7401B06A2A59A993007DBE72 /* Qanelas-Light.ttf */; };
+		7401B06F2A59A993007DBE72 /* Qanelas-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7401B06B2A59A993007DBE72 /* Qanelas-Regular.ttf */; };
+		7401B0722A59AD55007DBE72 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401B0712A59AD55007DBE72 /* ColorUtils.swift */; };
+		7401B0742A59ADC5007DBE72 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401B0732A59ADC5007DBE72 /* Font.swift */; };
+		7401B0772A59BC1D007DBE72 /* ViewModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401B0762A59BC1D007DBE72 /* ViewModelWrapper.swift */; };
+		7401B0792A59BCBF007DBE72 /* StatefulViewModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401B0782A59BCBF007DBE72 /* StatefulViewModelWrapper.swift */; };
+		7401B07C2A59C079007DBE72 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401B07B2A59C079007DBE72 /* Navigator.swift */; };
+		7401B07F2A59D2FF007DBE72 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401B07E2A59D2FF007DBE72 /* ViewModelFactory.swift */; };
+		7401B0832A59D7E4007DBE72 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401B0822A59D7E4007DBE72 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		7401B0652A59A8DF007DBE72 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		7401B0682A59A993007DBE72 /* Qanelas-Heavy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Qanelas-Heavy.ttf"; sourceTree = "<group>"; };
+		7401B0692A59A993007DBE72 /* Qanelas-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Qanelas-Semibold.ttf"; sourceTree = "<group>"; };
+		7401B06A2A59A993007DBE72 /* Qanelas-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Qanelas-Light.ttf"; sourceTree = "<group>"; };
+		7401B06B2A59A993007DBE72 /* Qanelas-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Qanelas-Regular.ttf"; sourceTree = "<group>"; };
+		7401B0712A59AD55007DBE72 /* ColorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
+		7401B0732A59ADC5007DBE72 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		7401B0762A59BC1D007DBE72 /* ViewModelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWrapper.swift; sourceTree = "<group>"; };
+		7401B0782A59BCBF007DBE72 /* StatefulViewModelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulViewModelWrapper.swift; sourceTree = "<group>"; };
+		7401B07B2A59C079007DBE72 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		7401B07E2A59D2FF007DBE72 /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
+		7401B0822A59D7E4007DBE72 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CA4697D8C9BCE3BE13D1E40 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C456DCEDBC92B4432A2A5A8B /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -54,6 +76,76 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7401B0642A59A8BE007DBE72 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				7401B0652A59A8DF007DBE72 /* Color.swift */,
+				7401B0732A59ADC5007DBE72 /* Font.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		7401B0672A59A974007DBE72 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				7401B0682A59A993007DBE72 /* Qanelas-Heavy.ttf */,
+				7401B06A2A59A993007DBE72 /* Qanelas-Light.ttf */,
+				7401B06B2A59A993007DBE72 /* Qanelas-Regular.ttf */,
+				7401B0692A59A993007DBE72 /* Qanelas-Semibold.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		7401B0702A59AD3D007DBE72 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7401B0712A59AD55007DBE72 /* ColorUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		7401B0752A59BC0C007DBE72 /* init */ = {
+			isa = PBXGroup;
+			children = (
+				7401B07D2A59D2E5007DBE72 /* di */,
+				7401B0762A59BC1D007DBE72 /* ViewModelWrapper.swift */,
+				7401B0782A59BCBF007DBE72 /* StatefulViewModelWrapper.swift */,
+			);
+			path = init;
+			sourceTree = "<group>";
+		};
+		7401B07A2A59C06B007DBE72 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				7401B07B2A59C079007DBE72 /* Navigator.swift */,
+			);
+			path = navigation;
+			sourceTree = "<group>";
+		};
+		7401B07D2A59D2E5007DBE72 /* di */ = {
+			isa = PBXGroup;
+			children = (
+				7401B07E2A59D2FF007DBE72 /* ViewModelFactory.swift */,
+			);
+			path = di;
+			sourceTree = "<group>";
+		};
+		7401B0802A59D7CE007DBE72 /* features */ = {
+			isa = PBXGroup;
+			children = (
+				7401B0812A59D7D5007DBE72 /* main */,
+			);
+			path = features;
+			sourceTree = "<group>";
+		};
+		7401B0812A59D7D5007DBE72 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				7401B0822A59D7E4007DBE72 /* MainView.swift */,
+			);
+			path = main;
+			sourceTree = "<group>";
+		};
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
@@ -75,8 +167,13 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				7401B0802A59D7CE007DBE72 /* features */,
+				7401B07A2A59C06B007DBE72 /* navigation */,
+				7401B0752A59BC0C007DBE72 /* init */,
+				7401B0702A59AD3D007DBE72 /* Utils */,
+				7401B0672A59A974007DBE72 /* Font */,
+				7401B0642A59A8BE007DBE72 /* Extension */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
@@ -90,7 +187,6 @@
 				E65608296D7181D522584C3D /* Pods-iosApp.debug.xcconfig */,
 				C456DCEDBC92B4432A2A5A8B /* Pods-iosApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -155,7 +251,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
+				7401B06D2A59A993007DBE72 /* Qanelas-Semibold.ttf in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
+				7401B06C2A59A993007DBE72 /* Qanelas-Heavy.ttf in Resources */,
+				7401B06E2A59A993007DBE72 /* Qanelas-Light.ttf in Resources */,
+				7401B06F2A59A993007DBE72 /* Qanelas-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,8 +308,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7401B07C2A59C079007DBE72 /* Navigator.swift in Sources */,
+				7401B0832A59D7E4007DBE72 /* MainView.swift in Sources */,
+				7401B0772A59BC1D007DBE72 /* ViewModelWrapper.swift in Sources */,
+				7401B0742A59ADC5007DBE72 /* Font.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				7401B0662A59A8DF007DBE72 /* Color.swift in Sources */,
+				7401B07F2A59D2FF007DBE72 /* ViewModelFactory.swift in Sources */,
+				7401B0792A59BCBF007DBE72 /* StatefulViewModelWrapper.swift in Sources */,
+				7401B0722A59AD55007DBE72 /* ColorUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

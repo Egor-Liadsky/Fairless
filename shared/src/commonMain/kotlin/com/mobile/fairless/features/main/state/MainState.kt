@@ -23,4 +23,8 @@ data class MainState(
 
     val selectCategory: Category = Category(url = "news", type = "news"),
     val selectType: Type = Type("Промокоды и скидки", ProductStockType.ALL),
-)
+){
+    companion object {
+        fun getInstance() = MainState()
+    }
+}

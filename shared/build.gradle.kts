@@ -39,7 +39,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 // DI
-                implementation("io.insert-koin:koin-core:3.3.2")
+                implementation("io.insert-koin:koin-core:3.4.1")
 
                 // Kotlinx
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
@@ -86,6 +86,7 @@ kotlin {
             dependencies {
                 // Network
                 implementation("io.ktor:ktor-client-ios:2.2.2")
+                implementation("io.ktor:ktor-client-darwin:2.2.2")
             }
         }
 
