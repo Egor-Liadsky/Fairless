@@ -1,7 +1,7 @@
 package com.mobile.fairless.features.shop.repository
 
 import com.mobile.fairless.common.network.BaseRepository
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Shop
@@ -23,7 +23,7 @@ interface ShopRepository {
         shop: Shop
     ): ProductResponse
 
-    suspend fun getCategories(): List<Category>
+    suspend fun getCategories(): List<CategoryModel>
     suspend fun getShop(code: String): List<Shop>
 }
 
@@ -81,7 +81,7 @@ class ShopRepositoryImpl() : ShopRepository, BaseRepository() {
         return ProductResponse(list = list ?: emptyList(), total = total ?: 1)
     }
 
-    override suspend fun getCategories(): List<Category> {
+    override suspend fun getCategories(): List<CategoryModel> {
         val response = executeCall(
             type = HttpMethod.Get,
             path = "categories",

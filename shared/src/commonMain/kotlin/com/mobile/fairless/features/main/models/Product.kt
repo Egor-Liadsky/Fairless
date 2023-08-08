@@ -47,7 +47,7 @@ data class ProductData(
     val createdAt: DateTimeTz? = null,
     val updatedAt: String? = null,
     val __v: Int? = null,
-    val category: Category? = null,
+    val category: CategoryModel? = null,
     val city: City? = null,
     val image: Image? = null,
     val shop: Shop? = null,

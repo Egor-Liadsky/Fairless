@@ -2,7 +2,7 @@ package com.mobile.fairless.features.shop.state
 
 import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.state.LoadingState
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Shop
@@ -16,11 +16,11 @@ data class ShopState(
     val shop: List<Shop>? = null,
     val shopList: List<Shop>? = null,
     val products: List<ProductData>? = null,
-    val categories: List<Category>? = null,
+    val categories: List<CategoryModel>? = null,
     val refreshable: Boolean = false,
     val selectedPopularFilter: PopularFilter = PopularFilter("По дате создания", Sort.CREATE),
     val selectedFilters: String = "",
-    val selectCategory: Category = Category(url = "all"),
+    val selectCategory: CategoryModel = CategoryModel(url = "all"),
     val selectType: Type = Type("Промокоды и скидки", ProductStockType.ALL),
     val popularFilterOpen: Boolean = false,
     val typeFilterOpen: Boolean = false,

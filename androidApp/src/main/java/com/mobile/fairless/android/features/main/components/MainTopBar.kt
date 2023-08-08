@@ -17,7 +17,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,18 +26,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.R
-import com.mobile.fairless.android.di.ViewModelWrapper
-import com.mobile.fairless.android.features.views.layouts.LoadingLayout
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
+import com.mobile.fairless.features.main.state.MainState
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 
 @Composable
-fun MainTopBar(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
-    val state = viewModelWrapper.viewModel.state.collectAsState()
+fun MainTopBar(viewModelWrapper: StatefulViewModelWrapper<MainViewModel, MainState>) {
+    val state = viewModelWrapper.state
 
     Column(
         modifier = Modifier

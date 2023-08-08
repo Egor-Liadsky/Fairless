@@ -1,7 +1,7 @@
 package com.mobile.fairless.features.search.service
 
 import com.mobile.fairless.common.pagination.PagingDataSourceMain
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Shop
@@ -10,7 +10,7 @@ import com.mobile.fairless.features.search.models.Sort
 import com.mobile.fairless.features.search.repository.SearchRepository
 
 interface SearchService : PagingDataSourceMain<ProductData> {
-    suspend fun getCategories(): List<Category>
+    suspend fun getCategories(): List<CategoryModel>
     suspend fun searchProducts(
         page: Int,
         name: String,
@@ -31,7 +31,7 @@ class SearchServiceImpl(private val searchRepository: SearchRepository) : Search
         return searchProducts(page, name, type, sort)
     }
 
-    override suspend fun getCategories(): List<Category> = searchRepository.getCategories()
+    override suspend fun getCategories(): List<CategoryModel> = searchRepository.getCategories()
     override suspend fun searchProducts(
         page: Int,
         name: String,

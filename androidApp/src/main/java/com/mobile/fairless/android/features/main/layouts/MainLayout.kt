@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mobile.fairless.android.di.ViewModelWrapper
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.features.main.components.MainTopBar
 import com.mobile.fairless.android.features.main.components.ProductItem
 import com.mobile.fairless.android.features.views.Refreshable
@@ -27,13 +27,14 @@ import com.mobile.fairless.android.features.views.layouts.ErrorLayout
 import com.mobile.fairless.android.features.views.layouts.LoadingLayout
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.common.state.LoadingState
+import com.mobile.fairless.features.main.state.MainState
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 
 
 @Composable
-fun MainLayout(viewModelWrapper: ViewModelWrapper<MainViewModel>) {
+fun MainLayout(viewModelWrapper: StatefulViewModelWrapper<MainViewModel, MainState>) {
 
-    val state = viewModelWrapper.viewModel.state.collectAsState()
+    val state = viewModelWrapper.state
     val statePaging = viewModelWrapper.viewModel.statePaging.collectAsState()
 
     val lazyColumnState = rememberLazyListState()

@@ -14,8 +14,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetState
@@ -25,7 +23,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -40,7 +37,7 @@ import com.mobile.fairless.android.features.shop.components.TypeDropDownMenu
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.common.state.LoadingState
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.shop.state.ShopState
@@ -51,7 +48,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun TypeFilterSheet(
     sheetState: ModalBottomSheetState,
-    selectCategoryClick: (Category) -> Unit,
+    selectCategoryClick: (CategoryModel) -> Unit,
     selectShopSheetState: ModalBottomSheetState,
     viewModelWrapper: StatefulViewModelWrapper<ShopViewModel, ShopState>
 ) {

@@ -1,7 +1,7 @@
 package com.mobile.fairless.features.search.repository
 
 import com.mobile.fairless.common.network.BaseRepository
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.response.ProductResponse
@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 import kotlin.math.roundToInt
 
 interface SearchRepository {
-    suspend fun getCategories(): List<Category>
+    suspend fun getCategories(): List<CategoryModel>
     suspend fun searchProducts(
         page: Int,
         name: String,
@@ -23,7 +23,7 @@ interface SearchRepository {
 
 class SearchRepositoryImpl : SearchRepository, BaseRepository() {
 
-    override suspend fun getCategories(): List<Category> {
+    override suspend fun getCategories(): List<CategoryModel> {
         val response = executeCall(
             type = HttpMethod.Get,
             path = "categories",

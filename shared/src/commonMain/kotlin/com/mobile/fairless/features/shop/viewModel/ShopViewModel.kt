@@ -12,11 +12,10 @@ import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.Shop
 import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.viewModel.ProductModel
-import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.models.PopularFilter
 import com.mobile.fairless.features.shop.service.ShopService
 import com.mobile.fairless.features.shop.state.ShopState
@@ -46,7 +45,7 @@ interface ShopViewModel : StatefulKmpViewModel<ShopState>, SubScreenViewModel {
     fun filtersOpen()
     fun onDocumentClick(product: String)
     fun getCategories()
-    fun selectCategory(category: Category)
+    fun selectCategory(category: CategoryModel)
     fun onAppend()
     fun onRefresh()
     fun selectType(type: Type)
@@ -189,7 +188,7 @@ class ShopViewModelImpl(override val navigator: Navigator) : KoinComponent,
         }
     }
 
-    override fun selectCategory(category: Category) {
+    override fun selectCategory(category: CategoryModel) {
         _state.update { it.copy(selectCategory = category) }
         pager.updateCategory(category.type ?: "all")
     }

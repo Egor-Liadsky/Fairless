@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class Category(
+data class CategoryModel(
     val main_category: Boolean? = true,
     val _id: String? = null,
     val name: String? = null,

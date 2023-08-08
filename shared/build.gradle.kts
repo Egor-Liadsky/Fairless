@@ -20,9 +20,7 @@ kotlin {
             }
         }
     }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    ios()
 
     cocoapods {
         summary = "Some description for the Shared Module"
@@ -81,7 +79,7 @@ kotlin {
             }
         }
 
-        val iosMain by creating {
+        val iosMain by getting {
             dependsOn(commonMain)
             dependencies {
                 // Network
@@ -96,9 +94,9 @@ kotlin {
             }
         }
 
-        val iosX64Test by getting {
-            dependsOn(commonTest)
-        }
+//        val iosX64Test by getting {
+//            dependsOn(commonTest)
+//        }
     }
 }
 

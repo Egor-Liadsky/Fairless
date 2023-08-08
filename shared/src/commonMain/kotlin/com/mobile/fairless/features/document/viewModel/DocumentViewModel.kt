@@ -195,9 +195,6 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
                     DateFilter.TODAY -> Period("Сегодня", DateFilter.TODAY)
                     DateFilter.WEEK -> Period("Неделя", DateFilter.WEEK)
                     DateFilter.MONTH -> Period("Месяц", DateFilter.MONTH)
-                    else -> {
-                        Period("Сегодня", DateFilter.TODAY)
-                    }
                 }
             )
         }

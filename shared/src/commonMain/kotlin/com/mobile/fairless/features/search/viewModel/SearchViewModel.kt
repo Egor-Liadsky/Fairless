@@ -11,16 +11,13 @@ import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.ProductData
-import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.viewModel.ProductModel
-import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import com.mobile.fairless.features.search.models.PopularFilter
 import com.mobile.fairless.features.search.service.SearchService
 import com.mobile.fairless.features.search.state.SearchState
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +25,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
@@ -44,7 +40,7 @@ interface SearchViewModel : StatefulKmpViewModel<SearchState>, SubScreenViewMode
     fun popularFilterOpen()
     fun filtersOpen()
     fun onDocumentClick(product: String)
-    fun selectCategory(category: Category)
+    fun selectCategory(category: CategoryModel)
     fun onAppend()
     fun onRefresh()
     fun selectType(type: Type)
@@ -125,7 +121,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
         navigator.navigateToDocument(encodeUrl)
     }
 
-    override fun selectCategory(category: Category) {
+    override fun selectCategory(category: CategoryModel) {
         _state.update { it.copy(selectCategory = category) }
     }
 

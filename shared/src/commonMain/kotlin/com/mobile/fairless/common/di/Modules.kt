@@ -52,6 +52,11 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
         modules(commonModule(), platformModule())
     }
 
+
+// called by iOS
+fun initKoin() = initKoin {}
+
+
 fun commonModule() = module {
     single {
         Json {

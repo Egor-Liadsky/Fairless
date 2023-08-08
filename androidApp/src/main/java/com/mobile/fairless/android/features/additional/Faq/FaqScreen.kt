@@ -2,7 +2,6 @@ package com.mobile.fairless.android.features.additional.Faq
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +29,7 @@ import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.topBars.CommonTopBar
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FaqViewModel
+import com.mobile.fairless.features.additional.faq.viewModel.FaqViewModel
 import org.koin.androidx.compose.get
 import org.koin.core.qualifier.named
 
@@ -65,41 +64,29 @@ fun FaqScreen(viewModelWrapper: ViewModelWrapper<FaqViewModel> = get(named("FaqV
                     )
 
                     FaqItem(
-                        title = stringResource(R.string.how_work_title),
-                        expanded = state.value.howWork
+                        title = stringResource(R.string.common_info_1_title),
+                        expanded = state.value.common_info1
                     ) {
-                        viewModelWrapper.viewModel.howWorkClick()
+                        viewModelWrapper.viewModel.common_info1()
                     }
-                    if (state.value.howWork) {
-                        FaqExpandBlock(description = stringResource(id = R.string.how_work_description))
-                    }
-
-                    FaqItem(
-                        modifier = Modifier.padding(top = 16.dp),
-                        title = "Кто может размещать скидки",
-                        expanded = false
-                    ) {
-
+                    if (state.value.common_info1) {
+                        FaqExpandBlock(description = stringResource(id = R.string.common_info_1_description))
                     }
 
                     FaqItem(
                         modifier = Modifier.padding(top = 16.dp),
-                        title = "Модерируются ли и редактируются скидки?",
-                        expanded = false
+                        title = stringResource(R.string.common_info_2_title),
+                        expanded = state.value.common_info2
                     ) {
-
+                        viewModelWrapper.viewModel.common_info2()
                     }
 
-                    FaqItem(
-                        modifier = Modifier.padding(top = 16.dp),
-                        title = "Как FAIR LESS зарабатывает деньги?",
-                        expanded = false
-                    ) {
-
+                    if (state.value.common_info2) {
+                        FaqExpandBlock(description = stringResource(id = R.string.common_info_2_description))
                     }
 
                     Text(
-                        text = "Мой аккаунт и регистрация",
+                        text = stringResource(id = R.string.publish_info),
                         style = TextStyle(
                             fontFamily = fontQanelas,
                             fontWeight = FontWeight.SemiBold,
@@ -112,18 +99,254 @@ fun FaqScreen(viewModelWrapper: ViewModelWrapper<FaqViewModel> = get(named("FaqV
 
                     FaqItem(
                         modifier = Modifier.padding(top = 16.dp),
-                        title = "Почему я должен зарегистрироваться на FAIR LESS?",
-                        expanded = false
+                        title = stringResource(R.string.publish_info_1_title),
+                        expanded = state.value.publish_info1
                     ) {
+                        viewModelWrapper.viewModel.publish_info1()
+                    }
 
+                    if (state.value.publish_info1) {
+                        FaqExpandBlock(description = stringResource(id = R.string.publish_info_1_description))
                     }
 
                     FaqItem(
                         modifier = Modifier.padding(top = 16.dp),
-                        title = "Является ли FAIR LESS бесплатным в использовании?",
-                        expanded = false
+                        title = stringResource(R.string.publish_info_2_title),
+                        expanded = state.value.publish_info2
                     ) {
+                        viewModelWrapper.viewModel.publish_info2()
+                    }
 
+                    if (state.value.publish_info2) {
+                        FaqExpandBlock(description = stringResource(id = R.string.publish_info_2_description))
+                    }
+
+                    Text(
+                        text = stringResource(id = R.string.conf_info),
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colors.black,
+                            textAlign = TextAlign.Start
+                        ),
+                        modifier = Modifier.padding(top = 24.dp),
+                    )
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.conf_info_1_title),
+                        expanded = state.value.conf_info1
+                    ) {
+                        viewModelWrapper.viewModel.conf_info1()
+                    }
+
+                    if (state.value.conf_info1) {
+                        FaqExpandBlock(description = stringResource(id = R.string.conf_info_1_description))
+                    }
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.conf_info_2_title),
+                        expanded = state.value.conf_info2
+                    ) {
+                        viewModelWrapper.viewModel.conf_info2()
+                    }
+
+                    if (state.value.conf_info2) {
+                        FaqExpandBlock(description = stringResource(id = R.string.conf_info_2_description))
+                    }
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.conf_info_3_title),
+                        expanded = state.value.conf_info3
+                    ) {
+                        viewModelWrapper.viewModel.conf_info3()
+                    }
+
+                    if (state.value.conf_info3) {
+                        FaqExpandBlock(description = stringResource(id = R.string.conf_info_3_description))
+                    }
+
+                    Text(
+                        text = stringResource(id = R.string.search_info),
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colors.black,
+                            textAlign = TextAlign.Start
+                        ),
+                        modifier = Modifier.padding(top = 24.dp),
+                    )
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.search_info_1_title),
+                        expanded = state.value.search_info1
+                    ) {
+                        viewModelWrapper.viewModel.search_info1()
+                    }
+
+                    if (state.value.search_info1) {
+                        FaqExpandBlock(description = stringResource(id = R.string.search_info_1_description))
+                    }
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.search_info_2_title),
+                        expanded = state.value.search_info2
+                    ) {
+                        viewModelWrapper.viewModel.search_info2()
+                    }
+
+                    if (state.value.search_info2) {
+                        FaqExpandBlock(description = stringResource(id = R.string.search_info_2_description))
+                    }
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.search_info_3_title),
+                        expanded = state.value.search_info3
+                    ) {
+                        viewModelWrapper.viewModel.search_info3()
+                    }
+
+                    if (state.value.search_info3) {
+                        FaqExpandBlock(description = stringResource(id = R.string.search_info_3_description))
+                    }
+
+                    Text(
+                        text = stringResource(id = R.string.participation_info),
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colors.black,
+                            textAlign = TextAlign.Start
+                        ),
+                        modifier = Modifier.padding(top = 24.dp),
+                    )
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.participation_info_1_title),
+                        expanded = state.value.participation_info1
+                    ) {
+                        viewModelWrapper.viewModel.participation_info1()
+                    }
+
+                    if (state.value.participation_info1) {
+                        FaqExpandBlock(description = stringResource(id = R.string.participation_info_1_description))
+                    }
+
+//                    FaqItem(
+//                        modifier = Modifier.padding(top = 16.dp),
+//                        title = stringResource(R.string.participation_info_2_title),
+//                        expanded = state.value.participation_info2
+//                    ) {
+//                        viewModelWrapper.viewModel.participation_info2()
+//                    }
+//
+//                    if (state.value.participation_info2) {
+//                        FaqExpandBlock(description = stringResource(id = R.string.search_info_2_description))
+//                    }
+
+                    Text(
+                        text = stringResource(id = R.string.mobile_info),
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colors.black,
+                            textAlign = TextAlign.Start
+                        ),
+                        modifier = Modifier.padding(top = 24.dp),
+                    )
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.mobile_info_title),
+                        expanded = state.value.mobile_info
+                    ) {
+                        viewModelWrapper.viewModel.mobile_info()
+                    }
+
+                    if (state.value.mobile_info) {
+                        FaqExpandBlock(description = stringResource(id = R.string.mobile_info_description))
+                    }
+
+                    Text(
+                        text = stringResource(id = R.string.throwable_info),
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colors.black,
+                            textAlign = TextAlign.Start
+                        ),
+                        modifier = Modifier.padding(top = 24.dp),
+                    )
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.throwable_info_1_title),
+                        expanded = state.value.throwable_info1
+                    ) {
+                        viewModelWrapper.viewModel.throwable_info1()
+                    }
+
+                    if (state.value.throwable_info1) {
+                        FaqExpandBlock(description = stringResource(id = R.string.throwable_info_1_description))
+                    }
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.throwable_info_2_title),
+                        expanded = state.value.throwable_info2
+                    ) {
+                        viewModelWrapper.viewModel.throwable_info2()
+                    }
+
+                    if (state.value.throwable_info2) {
+                        FaqExpandBlock(description = stringResource(id = R.string.throwable_info_2_description))
+                    }
+
+                    Text(
+                        text = stringResource(id = R.string.soc_info),
+                        style = TextStyle(
+                            fontFamily = fontQanelas,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colors.black,
+                            textAlign = TextAlign.Start
+                        ),
+                        modifier = Modifier.padding(top = 24.dp),
+                    )
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.soc_info_1_title),
+                        expanded = state.value.soc_info1
+                    ) {
+                        viewModelWrapper.viewModel.soc_info1()
+                    }
+
+                    if (state.value.soc_info1) {
+                        FaqExpandBlock(description = stringResource(id = R.string.soc_info_1_description))
+                    }
+
+                    FaqItem(
+                        modifier = Modifier.padding(top = 16.dp),
+                        title = stringResource(R.string.soc_info_2_title),
+                        expanded = state.value.soc_info2
+                    ) {
+                        viewModelWrapper.viewModel.soc_info2()
+                    }
+
+                    if (state.value.soc_info2) {
+                        FaqExpandBlock(description = stringResource(id = R.string.soc_info_2_description))
                     }
                 }
             }

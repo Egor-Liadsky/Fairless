@@ -8,8 +8,8 @@ import com.mobile.fairless.features.additional.aboutFairLess.viewModel.AboutAppV
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.AboutAppViewModelImpl
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.AboutFairLessViewModel
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.AboutFairLessViewModelImpl
-import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FaqViewModel
-import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FaqViewModelImpl
+import com.mobile.fairless.features.additional.faq.viewModel.FaqViewModel
+import com.mobile.fairless.features.additional.faq.viewModel.FaqViewModelImpl
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FeedbackViewModel
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FeedbackViewModelImpl
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.RulesViewModel
@@ -17,6 +17,7 @@ import com.mobile.fairless.features.additional.aboutFairLess.viewModel.RulesView
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.document.viewModel.DocumentViewModelImpl
+import com.mobile.fairless.features.main.state.MainState
 import com.mobile.fairless.features.main.viewModel.MainViewModel
 import com.mobile.fairless.features.main.viewModel.MainViewModelImpl
 import com.mobile.fairless.features.mainNavigation.state.MainNavigationState
@@ -87,7 +88,7 @@ fun androidModule() = module {
     }
 
     viewModel(named("MainViewModel")) {
-        ViewModelWrapper<MainViewModel>(MainViewModelImpl(get()))
+        StatefulViewModelWrapper<MainViewModel, MainState>(MainViewModelImpl(get()))
     }
 
     viewModel(named("ProfileViewModel")) {

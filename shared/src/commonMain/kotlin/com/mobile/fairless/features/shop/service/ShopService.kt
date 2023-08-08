@@ -2,7 +2,7 @@ package com.mobile.fairless.features.shop.service
 
 import com.mobile.fairless.common.pagination.PaginatedResult
 import com.mobile.fairless.common.pagination.PagingDataSourceMain
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.ProductData
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Shop
@@ -23,7 +23,7 @@ interface ShopService : PagingDataSourceMain<ProductData> {
         shop: Shop
     ): ProductResponse
 
-    suspend fun getCategories(): List<Category>
+    suspend fun getCategories(): List<CategoryModel>
     suspend fun getShop(code: String): List<Shop>
 }
 
@@ -43,7 +43,7 @@ class ShopServiceImpl : ShopService, KoinComponent {
     ): ProductResponse =
         shopRepository.getProductsByCategory(page, category, type, sort, shop)
 
-    override suspend fun getCategories(): List<Category> = shopRepository.getCategories()
+    override suspend fun getCategories(): List<CategoryModel> = shopRepository.getCategories()
 
     override suspend fun getShop(code: String): List<Shop> = shopRepository.getShop(code)
 

@@ -28,15 +28,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 
 @Composable
 fun CategoriesView(
-    categories: List<Category>?,
+    categories: List<CategoryModel>?,
     modifier: Modifier = Modifier,
-    categoryOpened: Category,
+    categoryOpened: CategoryModel,
     isPadding: Boolean = true,
-    selectCategory: (Category) -> Unit,
+    selectCategory: (CategoryModel) -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -68,7 +68,7 @@ fun CategoriesView(
 
 @Composable
 fun CategoryItem(
-    category: Category,
+    category: CategoryModel,
     selected: Boolean,
     modifier: Modifier = Modifier,
     onClick: () -> Unit

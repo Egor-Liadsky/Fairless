@@ -1,7 +1,7 @@
 package com.mobile.fairless.features.main.repository
 
 import com.mobile.fairless.common.network.BaseRepository
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.Product
 import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.response.ProductResponse
@@ -12,7 +12,7 @@ import kotlin.math.roundToInt
 
 interface MainRepository {
 
-    suspend fun getCategories(): List<Category>
+    suspend fun getCategories(): List<CategoryModel>
     suspend fun getProductsByCategory(
         page: Int,
         category: String,
@@ -22,7 +22,7 @@ interface MainRepository {
 
 class MainRepositoryImpl : MainRepository, BaseRepository() {
 
-    override suspend fun getCategories(): List<Category> {
+    override suspend fun getCategories(): List<CategoryModel> {
         val response = executeCall(
             type = HttpMethod.Get,
             path = "categories",

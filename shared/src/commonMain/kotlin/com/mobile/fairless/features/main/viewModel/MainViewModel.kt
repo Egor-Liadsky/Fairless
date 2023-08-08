@@ -12,14 +12,14 @@ import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.utils.UrlEncode
 import com.mobile.fairless.common.viewModel.KmpViewModel
 import com.mobile.fairless.common.viewModel.KmpViewModelImpl
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
+import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
-import com.mobile.fairless.features.main.models.Category
+import com.mobile.fairless.features.main.models.CategoryModel
 import com.mobile.fairless.features.main.models.ProductData
-import com.mobile.fairless.features.main.models.ProductStockType
 import com.mobile.fairless.features.main.models.Type
 import com.mobile.fairless.features.main.service.MainService
 import com.mobile.fairless.features.main.state.MainState
-import com.mobile.fairless.features.mainNavigation.service.ErrorService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -33,12 +33,11 @@ import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface MainViewModel : KmpViewModel, SubScreenViewModel {
+interface MainViewModel : StatefulKmpViewModel<MainState>, SubScreenViewModel {
     val statePaging: StateFlow<MainState>
-    val state: StateFlow<MainState>
 
     fun getCategories()
-    fun selectCategory(category: Category)
+    fun selectCategory(category: CategoryModel)
     fun onDocumentClick(product: String)
     fun onProfileClick()
     fun onAppend()
@@ -53,7 +52,7 @@ data class ProductModel(
     val category: String
 )
 
-class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(), KoinComponent,
+class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewModelImpl<MainState>(), KoinComponent,
     MainViewModel {
 
     private val mainService: MainService by inject()
@@ -137,7 +136,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
                     if (_state.value.categories == null) {
                         _state.update { it.copy(categoriesLoading = LoadingState.Loading) }
                         val categories = mainService.getCategories().toMutableList()
-                        categories.add(0, Category(name = "Новое", type = "news", url = "news"))
+                        categories.add(0, CategoryModel(name = "Новое", type = "news", url = "news"))
                         val indexAllCategory = categories.indexOfFirst { it.url == "all" }
 
                         if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
@@ -162,7 +161,7 @@ class MainViewModelImpl(override val navigator: Navigator) : KmpViewModelImpl(),
         }
     }
 
-    override fun selectCategory(category: Category) {
+    override fun selectCategory(category: CategoryModel) {
         _state.update { it.copy(selectCategory = category) }
         if (state.value.selectCategory.name != "Новое") {
             pager.updateCategory(category.type ?: "news")
