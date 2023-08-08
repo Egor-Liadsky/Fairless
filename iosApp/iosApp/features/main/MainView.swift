@@ -15,20 +15,49 @@ struct MainView: View {
     
     var body: some View {
         
+        let state = viewModelWrapper.state
+        let statePaging = viewModelWrapper.state.pagingData
+        
         ZStack {
-            
             Color(hex: "F4F6F7").edgesIgnoringSafeArea(.all)
+            
             VStack {
-                MainTopBar()
+                MainTopBar(
+                    categoriesLoading: state.categoriesLoading,
+                    selectCategory: state.selectCategory,
+                    categories: state.categories ?? [],
+                    categoryClick: { category in viewModelWrapper.viewModel.selectCategory(category: category)
+                    },
+                    selectType: state.selectType,
+                    types: state.types,
+                    typeClick: { type in
+                        viewModelWrapper.viewModel.selectType(type: type)
+                    }
+                )
                 VStack {
-                        Text(viewModelWrapper.state.categories?.description ?? "wasd")
+//                    switch state.pagingData.loadingState {
+//
+//                    case LoadingState.Loading():
+//                        ProgressView()
+//
+//                    case LoadingState.Success():
+//                        MainLayout(viewModelWrapper: viewModelWrapper)
+//
+//                    case LoadingState.Empty():
+//                        Text("Empty")
+//
+//                    default:
+//                        Text("Error")
+//                    }
+                    MainLayout(viewModelWrapper: viewModelWrapper)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)
             }
-        }
-        .onAppear {
-            viewModelWrapper.viewModel.onViewShown()
+            .onAppear {
+                viewModelWrapper.viewModel.onViewShown()
+                print(statePaging.data.description)
+            }
         }
     }
 }
@@ -36,22 +65,5 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
-    }
-}
-
-struct MainTopBar: View {
-    
-    var body: some View {
-        
-        VStack (alignment: .leading) {
-            Text("Выберите нужную вам категорию")
-                .font(.custom("Qanelas-Semibold", size: 24))
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 16)
     }
 }

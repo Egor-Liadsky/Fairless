@@ -93,13 +93,6 @@ fun MainTopBar(viewModelWrapper: StatefulViewModelWrapper<MainViewModel, MainSta
             }
             LoadingState.Success -> {
 
-                val types = listOf(
-                    Type("Промокоды и скидки", ProductStockType.ALL),
-                    Type("Скидки", ProductStockType.SALE),
-                    Type("Промокоды", ProductStockType.PROMOCODE),
-                    Type("Бесплатно", ProductStockType.FREE)
-                )
-
                 Column {
                     CategoriesView(
                         categories = state.value.categories,
@@ -111,7 +104,7 @@ fun MainTopBar(viewModelWrapper: StatefulViewModelWrapper<MainViewModel, MainSta
 
                     TypeView(
                        modifier = Modifier.padding(top = 10.dp) ,
-                        types = types,
+                        types = state.value.types,
                         typeOpened = state.value.selectType,
                         selectType = { viewModelWrapper.viewModel.selectType(it) }
                     )

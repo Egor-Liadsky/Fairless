@@ -11,6 +11,10 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		54278377F88CD8E307ED9E4F /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D12927CA318422990801F52 /* Pods_iosApp.framework */; };
+		7486FEC52A82986F00A32051 /* MainTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7486FEC42A82986F00A32051 /* MainTopBar.swift */; };
+		7486FEC72A82C21000A32051 /* TypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7486FEC62A82C21000A32051 /* TypeView.swift */; };
+		7486FEC92A82CD8500A32051 /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7486FEC82A82CD8500A32051 /* ProductView.swift */; };
+		7486FECC2A82DB2300A32051 /* MainLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7486FECB2A82DB2300A32051 /* MainLayout.swift */; };
 		748AA5002A815CE200A5EB83 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748AA4FF2A815CE200A5EB83 /* MainView.swift */; };
 		748AA5032A815F4300A5EB83 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748AA5022A815F4300A5EB83 /* Color.swift */; };
 		748AA5092A8160E800A5EB83 /* Qanelas-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 748AA5052A8160E800A5EB83 /* Qanelas-Semibold.ttf */; };
@@ -31,6 +35,10 @@
 		0D12927CA318422990801F52 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		16C95CFF03F3B966A664EBD7 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		7486FEC42A82986F00A32051 /* MainTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTopBar.swift; sourceTree = "<group>"; };
+		7486FEC62A82C21000A32051 /* TypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeView.swift; sourceTree = "<group>"; };
+		7486FEC82A82CD8500A32051 /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
+		7486FECB2A82DB2300A32051 /* MainLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLayout.swift; sourceTree = "<group>"; };
 		748AA4FF2A815CE200A5EB83 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		748AA5022A815F4300A5EB83 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		748AA5052A8160E800A5EB83 /* Qanelas-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Qanelas-Semibold.ttf"; sourceTree = "<group>"; };
@@ -68,6 +76,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		7486FECA2A82DB1000A32051 /* layouts */ = {
+			isa = PBXGroup;
+			children = (
+				7486FECB2A82DB2300A32051 /* MainLayout.swift */,
+			);
+			path = layouts;
+			sourceTree = "<group>";
+		};
 		748AA4FD2A815C8700A5EB83 /* features */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +95,7 @@
 		748AA4FE2A815C9600A5EB83 /* main */ = {
 			isa = PBXGroup;
 			children = (
+				7486FECA2A82DB1000A32051 /* layouts */,
 				748AA50D2A81643800A5EB83 /* components */,
 				748AA4FF2A815CE200A5EB83 /* MainView.swift */,
 			);
@@ -108,6 +125,9 @@
 			isa = PBXGroup;
 			children = (
 				748AA50E2A81644C00A5EB83 /* CategoryView.swift */,
+				7486FEC42A82986F00A32051 /* MainTopBar.swift */,
+				7486FEC62A82C21000A32051 /* TypeView.swift */,
+				7486FEC82A82CD8500A32051 /* ProductView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -309,15 +329,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7486FEC52A82986F00A32051 /* MainTopBar.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				748AA5032A815F4300A5EB83 /* Color.swift in Sources */,
 				748AA51A2A8243FD00A5EB83 /* Navigator.swift in Sources */,
 				748AA5002A815CE200A5EB83 /* MainView.swift in Sources */,
+				7486FEC72A82C21000A32051 /* TypeView.swift in Sources */,
+				7486FECC2A82DB2300A32051 /* MainLayout.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				748AA5152A82407300A5EB83 /* StatefulViewModelWrapper.swift in Sources */,
 				748AA5172A82423600A5EB83 /* ViewModelFactory.swift in Sources */,
 				748AA5132A823E5B00A5EB83 /* ViewModelWrapper.swift in Sources */,
 				748AA50F2A81644C00A5EB83 /* CategoryView.swift in Sources */,
+				7486FEC92A82CD8500A32051 /* ProductView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,7 +477,7 @@
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Fairless;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,7 +502,7 @@
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Fairless;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

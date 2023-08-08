@@ -11,12 +11,20 @@ import com.mobile.fairless.features.welcome.models.UserReceive
 
 data class MainState(
     val pagingData: PagingData<ProductModel> = PagingData(),
+
     val categories: List<CategoryModel>? = null,
+    val types: List<Type> = listOf(
+        Type("Промокоды и скидки", ProductStockType.ALL),
+        Type("Скидки", ProductStockType.SALE),
+        Type("Промокоды", ProductStockType.PROMOCODE),
+        Type("Бесплатно", ProductStockType.FREE)
+    ),
 
     val refreshable: Boolean = false,
     val authDialogOpen: Boolean = false,
+
     val categoriesLoading: LoadingState = LoadingState.Loading,
-    val productsLoading: Boolean = false,
+    val productsLoading: LoadingState = LoadingState.Loading,
 
     val user: UserReceive? = UserReceive(),
     val products: Product = Product(),
