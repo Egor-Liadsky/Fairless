@@ -23,12 +23,25 @@ struct MainTopBar: View {
         
         VStack (alignment: .leading) {
                         
-            Text("Выберите нужную вам категорию")
-                .font(.custom("Qanelas-Semibold", size: 24))
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
+            HStack {
+                Text("Выберите нужную вам категорию")
+                    .font(.custom("Qanelas-Semibold", size: 24))
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Button {
+                    
+                } label: {
+                    Image("ic_profile")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding()
+                        .background(Circle().fill(.white))
+                        .overlay(Circle().stroke(Color.black, lineWidth: 0.5))
+                }
+            }
+            .padding(.top, 16)
+            .padding(.horizontal, 16)
             
             switch categoriesLoading {
                 

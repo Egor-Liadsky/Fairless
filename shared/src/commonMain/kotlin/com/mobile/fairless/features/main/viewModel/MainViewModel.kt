@@ -10,8 +10,6 @@ import com.mobile.fairless.common.pagination.PagingData
 import com.mobile.fairless.common.state.LoadingState
 import com.mobile.fairless.common.storage.PrefService
 import com.mobile.fairless.common.utils.UrlEncode
-import com.mobile.fairless.common.viewModel.KmpViewModel
-import com.mobile.fairless.common.viewModel.KmpViewModelImpl
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModel
 import com.mobile.fairless.common.viewModel.StatefulKmpViewModelImpl
 import com.mobile.fairless.common.viewModel.SubScreenViewModel
@@ -24,6 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -53,7 +52,8 @@ data class ProductModel(
     val category: String
 )
 
-class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewModelImpl<MainState>(), KoinComponent,
+class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewModelImpl<MainState>(),
+    KoinComponent,
     MainViewModel {
 
     private val mainService: MainService by inject()
@@ -61,8 +61,8 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
     private val urlEncode: UrlEncode by inject()
     private val appMetricaService: AppMetricaService by inject()
 
-    private val _state = MutableStateFlow(MainState())
-    override val state: StateFlow<MainState> = _state.asStateFlow()
+    private val mutableState = MutableStateFlow(MainState())
+    override val state: StateFlow<MainState> = mutableState.asStateFlow()
 
     private val pager = Pager<ProductData>(PaginationType.MAIN, mainService)
 
@@ -71,24 +71,39 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
             val list = pagingData.data.map {
                 ProductModel(it, state.value.selectCategory.type ?: "news")
             }.toMutableList()
+            PagingData<ProductModel>(
+                loadingState = pagingData.loadingState,
+                isRefreshing = pagingData.isRefreshing,
+                isAppending = pagingData.isAppending,
+                data = list,
+                category = state.value.selectCategory.type ?: "news",
+                type = state.value.selectType.type
+            )
+        }.combine(mutableState) { pagingData, screenData ->
             MainState(
-                PagingData<ProductModel>(
-                    loadingState = pagingData.loadingState,
-                    isRefreshing = pagingData.isRefreshing,
-                    isAppending = pagingData.isAppending,
-                    data = list,
-                    category = state.value.selectCategory.type ?: "news",
-                    type = state.value.selectType.type
-                )
+                pagingData = pagingData
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), MainState())
+
+    init {
+        scope.launch {
+            statePaging.collect { item ->
+                mutableState.update {
+                    it.copy(
+                        productsLoading = item.pagingData.loadingState,
+                        products = item.pagingData.data
+                    )
+                }
+            }
+        }
+    }
 
     override fun onViewShown() {
         super.onViewShown()
         getCategories()
-        if (statePaging.value.pagingData.data.isEmpty()){
-            pager.onRefresh()
-        }
+//        if (state.value.pagingData.data.isEmpty()) {
+//            pager.onRefresh()
+//        } //TODO fix bag
         appMetricaService.sendEvent(
             LogEvent.OPEN_SCREEN, mapOf(
                 LogEventParam.SCREEN_NAME to "Главная",
@@ -118,26 +133,29 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
     }
 
     override fun selectType(type: Type) {
-        _state.update { it.copy(selectType = type) }
+        mutableState.update { it.copy(selectType = type) }
         pager.changeType(type.type)
     }
 
     override fun authDialogOpen() {
-        _state.update { it.copy(authDialogOpen = !it.authDialogOpen) }
+        mutableState.update { it.copy(authDialogOpen = !it.authDialogOpen) }
     }
 
     private fun setLoadingRefreshable(status: Boolean) {
-        _state.update { it.copy(refreshable = status) }
+        mutableState.update { it.copy(refreshable = status) }
     }
 
     override fun getCategories() {
         scope.launch {
             exceptionHandleable(
                 executionBlock = {
-                    if (_state.value.categories == null) {
-                        _state.update { it.copy(categoriesLoading = LoadingState.Loading) }
+                    if (mutableState.value.categories == null) {
+                        mutableState.update { it.copy(categoriesLoading = LoadingState.Loading) }
                         val categories = mainService.getCategories().toMutableList()
-                        categories.add(0, CategoryModel(name = "Новое", type = "news", url = "news"))
+                        categories.add(
+                            0,
+                            CategoryModel(name = "Новое", type = "news", url = "news")
+                        )
                         val indexAllCategory = categories.indexOfFirst { it.url == "all" }
 
                         if (indexAllCategory != -1) { // Перенос "Все категории" на первую позицию в списке
@@ -145,12 +163,12 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
                             categories.removeAt(indexAllCategory)
                             categories.add(1, elementToMove)
                         }
-                        _state.update { it.copy(categories = categories) }
-                        _state.update { it.copy(categoriesLoading = LoadingState.Success) }
+                        mutableState.update { it.copy(categories = categories) }
+                        mutableState.update { it.copy(categoriesLoading = LoadingState.Success) }
                     }
                 },
                 failureBlock = { throwable ->
-                    _state.update {
+                    mutableState.update {
                         it.copy(
                             categoriesLoading = LoadingState.Error(
                                 throwable.message ?: "error"
@@ -163,7 +181,7 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
     }
 
     override fun selectCategory(category: CategoryModel) {
-        _state.update { it.copy(selectCategory = category) }
+        mutableState.update { it.copy(selectCategory = category) }
         if (state.value.selectCategory.name != "Новое") {
             pager.updateCategory(category.type ?: "news")
         } else {

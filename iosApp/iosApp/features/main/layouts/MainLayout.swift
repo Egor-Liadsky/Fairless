@@ -11,13 +11,29 @@ import shared
 
 struct MainLayout: View {
     
-    var viewModelWrapper: StatefulViewModelWrapper<MainViewModelImpl, MainState>
+    @ObservedObject var viewModelWrapper: StatefulViewModelWrapper<MainViewModelImpl, MainState>
+    
+    init(viewModelWrapper: StatefulViewModelWrapper<MainViewModelImpl, MainState>){
+        self.viewModelWrapper = viewModelWrapper
+    }
     
     var body: some View {
-        let data = viewModelWrapper.state.pagingData.data as! [ProductData]
-        List {
-            ForEach(data, id: \.self) { product in
-                ProductView(product: product)
+        let productsState = viewModelWrapper.state.products
+                
+        if let products = productsState {
+            ScrollView {
+                VStack (spacing: 10) {
+                    ForEach(products, id: \.self) { product in
+                        ProductView(product: product.product)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .inset(by: 0.25)
+                                    .stroke(Color(red: 0.88, green: 0.88, blue: 0.88), lineWidth: 0.5)
+                            )
+                            .padding(.horizontal, 16)
+                    }
+                }
+                .padding(.vertical, 10)
             }
         }
     }

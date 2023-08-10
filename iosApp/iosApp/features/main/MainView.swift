@@ -16,9 +16,9 @@ struct MainView: View {
     var body: some View {
         
         let state = viewModelWrapper.state
-        let statePaging = viewModelWrapper.state.pagingData
-        
-        ZStack {
+    
+        ZStack (alignment: .top) {
+            
             Color(hex: "F4F6F7").edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -34,30 +34,29 @@ struct MainView: View {
                         viewModelWrapper.viewModel.selectType(type: type)
                     }
                 )
-                VStack {
-//                    switch state.pagingData.loadingState {
-//
-//                    case LoadingState.Loading():
-//                        ProgressView()
-//
-//                    case LoadingState.Success():
-//                        MainLayout(viewModelWrapper: viewModelWrapper)
-//
-//                    case LoadingState.Empty():
-//                        Text("Empty")
-//
-//                    default:
-//                        Text("Error")
-//                    }
+                
+                switch viewModelWrapper.state.productsLoading {
+
+                case LoadingState.Loading():
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(alignment: .center)
+
+                case LoadingState.Success():
+                    Spacer()
                     MainLayout(viewModelWrapper: viewModelWrapper)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+
+                case LoadingState.Empty():
+                    Text("Empty")
+                    
+                default:
+                    Text("Error")
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.white)
             }
-            .onAppear {
-                viewModelWrapper.viewModel.onViewShown()
-                print(statePaging.data.description)
-            }
+            .onAppear { viewModelWrapper.viewModel.onViewShown()}
+            .onDisappear{ viewModelWrapper.viewModel.onViewHidden() }
         }
     }
 }

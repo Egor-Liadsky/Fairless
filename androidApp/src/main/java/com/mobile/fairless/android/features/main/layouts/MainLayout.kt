@@ -64,7 +64,7 @@ fun MainLayout(viewModelWrapper: StatefulViewModelWrapper<MainViewModel, MainSta
                 modifier = Modifier.fillMaxSize()
             ) {
 
-                when (statePaging.value.pagingData.loadingState) {
+                when (state.value.pagingData.loadingState) {
                     LoadingState.Loading -> {
                         item {
                             LoadingLayout()
