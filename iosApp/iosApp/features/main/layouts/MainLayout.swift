@@ -28,7 +28,7 @@ struct MainLayout: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 5)
                                     .inset(by: 0.25)
-                                    .stroke(Color(red: 0.88, green: 0.88, blue: 0.88), lineWidth: 0.5)
+                                    .stroke(Color.Background.borderGray, lineWidth: 0.5)
                             )
                             .padding(.horizontal, 16)
                     }

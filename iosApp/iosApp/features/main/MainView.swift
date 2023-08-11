@@ -19,7 +19,7 @@ struct MainView: View {
     
         ZStack (alignment: .top) {
             
-            Color(hex: "F4F6F7").edgesIgnoringSafeArea(.all)
+            Color.Background.topBar.edgesIgnoringSafeArea(.all)
             
             VStack {
                 MainTopBar(
@@ -49,10 +49,10 @@ struct MainView: View {
                         .background(Color.white)
 
                 case LoadingState.Empty():
-                    Text("Empty")
+                    EmptyView()
                     
                 default:
-                    Text("Error")
+                    ErrorView(onClick: { viewModelWrapper.viewModel.onRefreshClick() })
                 }
             }
             .onAppear { viewModelWrapper.viewModel.onViewShown()}
