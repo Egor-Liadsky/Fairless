@@ -36,10 +36,10 @@ struct ProductView: View {
                         .foregroundColor(Color.black)
 
                     
-                    if let price = product.sale_price {
+                    if product.sale_price != nil && product.sale_old_price != nil{
                         let percent = (100 - ((Int(truncating: product.sale_price!) * 100) / Int(truncating: product.sale_old_price!)))
                         HStack(spacing: 7) {
-                            Text(price.description)
+                            Text(product.sale_price?.description ?? "")
                                 .font(.custom("Qanelas-Heavy", size: 17))
                                 .foregroundColor(.orangePrimary)
                             

@@ -23,14 +23,28 @@ struct MainLayout: View {
         if let products = productsState {
             ScrollView {
                 VStack (spacing: 10) {
-                    ForEach(products, id: \.self) { product in
-                        ProductView(product: product.product)
+                    ForEach(products.indices, id: \.self) { index in
+                        ProductView(product: products[index].product)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 5)
                                     .inset(by: 0.25)
                                     .stroke(Color.Background.borderGray, lineWidth: 0.5)
                             )
                             .padding(.horizontal, 16)
+                            .onAppear {
+                                print("asdjasdjalskdj \(products.count)")
+                                if index == products.count - 30 {
+                                   viewModelWrapper.viewModel.onAppend()
+                               }
+                            }
+                    }
+                    if (viewModelWrapper.state.pagingData.isAppending) {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                                .padding(.vertical, 10)
+                            Spacer()
+                        }
                     }
                 }
                 .padding(.vertical, 10)
