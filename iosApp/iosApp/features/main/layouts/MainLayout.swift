@@ -31,12 +31,12 @@ struct MainLayout: View {
                                     .stroke(Color.Background.borderGray, lineWidth: 0.5)
                             )
                             .padding(.horizontal, 16)
-                            .onAppear {
-                                print("asdjasdjalskdj \(products.count)")
-                                if index == products.count - 30 {
-                                   viewModelWrapper.viewModel.onAppend()
-                               }
-                            }
+//                            .onAppear {
+//                                print("asdjasdjalskdj \(products.count)")
+//                                if index == products.count - 30 {
+//                                   viewModelWrapper.viewModel.onAppend()
+//                               }
+//                            }
                     }
                     if (viewModelWrapper.state.pagingData.isAppending) {
                         HStack {

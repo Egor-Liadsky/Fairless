@@ -10,13 +10,14 @@ import Foundation
 import SwiftUI
 import shared
 
-@MainActor class NavigatorImpl: Navigator, ObservableObject {
+@MainActor class NavigatorImpl: UIViewController, Navigator, ObservableObject {
+    
+    @Environment(\.appRoutingState) var appRoutingState: AppRoutingState
     
     static let shared = NavigatorImpl()
     let startDestination = ScreenRoute.main
     
     nonisolated func navigateBack() {
-        
     }
     
     nonisolated func navigateToAboutApp() {
@@ -43,12 +44,12 @@ import shared
         
     }
     
-    nonisolated func navigateToMain() {
-        
+    func navigateToMain() {
+        appRoutingState.currentScreen = .main
     }
     
-    nonisolated func navigateToMenu() {
-        
+    func navigateToMenu() {
+        appRoutingState.currentScreen = .menu
     }
     
     nonisolated func navigateToMessage() {

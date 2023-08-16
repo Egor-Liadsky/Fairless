@@ -11,7 +11,7 @@ import shared
 
 struct MainView: View {
     
-    @StateObject var viewModelWrapper: StatefulViewModelWrapper<MainViewModelImpl, MainState> = ViewModelFactory.getMainViewModel()
+    @StateObject var viewModelWrapper: StatefulViewModelWrapper<MainViewModelImpl, MainState> = ViewModelFactory.getMainViewModelWrapper()
     
     var body: some View {
         

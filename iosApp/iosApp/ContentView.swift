@@ -4,7 +4,11 @@ import shared
 struct ContentView: View {
 
 	var body: some View {
-		MainView()
+        Button {
+            NavigatorImpl().navigateToMain()
+        } label: {
+            Text("Navigate to Main")
+        }
 	}
 }
 
