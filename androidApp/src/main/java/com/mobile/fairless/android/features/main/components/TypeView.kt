@@ -88,15 +88,14 @@ fun TypeItem(
     Row(modifier = modifier.border(1.dp, colors.navBar, RoundedCornerShape(20.dp))) {
         Column(
             modifier = Modifier
-                .clip(RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(25.dp))
                 .background(if (selected) orangeGradient else whiteGradient)
-                .height(35.dp)
                 .clickable { onClick() }
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 10.dp),
+                    .fillMaxWidth()
+                    .padding(horizontal = 18.dp, vertical = 13.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -105,7 +104,7 @@ fun TypeItem(
                     style = TextStyle(
                         fontFamily = fontQanelas,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 15.sp,
+                        fontSize = 16.sp,
                         textAlign = TextAlign.Center,
                         color = if (selected) colors.white else colors.black
                     )

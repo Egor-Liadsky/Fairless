@@ -1,5 +1,6 @@
 package com.mobile.fairless.android.features.main.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,13 +31,15 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.mobile.fairless.R
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
 import com.mobile.fairless.android.utils.Constants
 import com.mobile.fairless.features.main.models.ProductData
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun ProductItem(modifier: Modifier = Modifier, product: ProductData, onClick: () -> Unit) {
     Card(
@@ -54,9 +57,8 @@ fun ProductItem(modifier: Modifier = Modifier, product: ProductData, onClick: ()
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             AsyncImage(
-                model = Constants.BASE_URL + product.image?.url,
+                model = Constants.BASE_URL + product.image?.formats?.thumbnail?.url,
                 contentDescription = "product_image",
                 modifier = Modifier
                     .width(90.dp)

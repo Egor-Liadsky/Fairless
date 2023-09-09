@@ -54,7 +54,8 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose:3.4.1")
 
     // Images
-    implementation("io.coil-kt:coil-compose:2.3.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
 
     // Adfox
     implementation("com.yandex.android:mobileads:5.6.0")

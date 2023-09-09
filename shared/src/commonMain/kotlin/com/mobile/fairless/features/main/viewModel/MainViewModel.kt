@@ -67,14 +67,14 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
     private val pager = Pager<ProductData>(PaginationType.MAIN, mainService)
 
     override val statePaging: StateFlow<MainState> =
-        pager.state.map { pagingData ->
-            val list = pagingData.data.map {
+        pager.state.map { data ->
+            val list = data.data.map {
                 ProductModel(it, state.value.selectCategory.type ?: "news")
             }.toMutableList()
             PagingData<ProductModel>(
-                loadingState = pagingData.loadingState,
-                isRefreshing = pagingData.isRefreshing,
-                isAppending = pagingData.isAppending,
+                loadingState = data.loadingState,
+                isRefreshing = data.isRefreshing,
+                isAppending = data.isAppending,
                 data = list,
                 category = state.value.selectCategory.type ?: "news",
                 type = state.value.selectType.type

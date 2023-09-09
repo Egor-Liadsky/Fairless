@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +28,9 @@ import com.mobile.fairless.android.theme.fontQanelas
 @Composable
 fun ErrorLayout(background: Color = colors.white,onClick: () -> Unit) {
     Box(
-        modifier = Modifier.fillMaxSize().background(background),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(background),
         contentAlignment = Alignment.Center
     ) {
         Column(Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -57,18 +60,19 @@ fun ErrorLayout(background: Color = colors.white,onClick: () -> Unit) {
                 ), modifier = Modifier.padding(top = 15.dp)
             )
 
-            Text(
-                text = "Обновить",
-                style = TextStyle(
-                    fontFamily = fontQanelas,
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFFE74017),
-                    textAlign = TextAlign.Center
-                ), modifier = Modifier
-                    .padding(top = 20.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .clickable { onClick() }
-            )
+            TextButton(
+                modifier = Modifier.padding(top = 20.dp),
+                onClick = { onClick() }) {
+                Text(
+                    text = "Обновить",
+                    style = TextStyle(
+                        fontFamily = fontQanelas,
+                        fontWeight = FontWeight(600),
+                        color = Color(0xFFE74017),
+                        textAlign = TextAlign.Center
+                    )
+                )
+            }
         }
     }
 }

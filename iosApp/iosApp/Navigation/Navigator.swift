@@ -9,15 +9,33 @@
 import Foundation
 import SwiftUI
 import shared
+import Combine
 
-@MainActor class NavigatorImpl: UIViewController, Navigator, ObservableObject {
+@MainActor class NavigatorImpl: Navigator, ObservableObject {
     
-    @Environment(\.appRoutingState) var appRoutingState: AppRoutingState
+    static let shared: NavigatorImpl = NavigatorImpl(startScreen: .main)
     
-    static let shared = NavigatorImpl()
-    let startDestination = ScreenRoute.main
+    var didSendRequest: AnyPublisher<Void, Never> {
+           subject.eraseToAnyPublisher()
+       }
     
-    nonisolated func navigateBack() {
+    private let subject = PassthroughSubject<Void, Never>()
+    
+    @Environment(\.presentationMode) var presentationMode
+    @Published var currentTab: ScreenRoute
+    @Published var currentScreen: ScreenRoute
+    
+    init(startScreen: ScreenRoute){
+        self.currentScreen = startScreen
+        if (startScreen.isMain){
+            self.currentTab = startScreen
+        } else{
+            self.currentTab = .main
+        }
+    }
+    
+    func navigateBack() {
+        subject.send()
     }
     
     nonisolated func navigateToAboutApp() {
@@ -45,11 +63,13 @@ import shared
     }
     
     func navigateToMain() {
-        appRoutingState.currentScreen = .main
+        currentScreen = .main
+        currentTab = .main
     }
     
     func navigateToMenu() {
-        appRoutingState.currentScreen = .menu
+        currentScreen = .menu
+        currentTab = .menu
     }
     
     nonisolated func navigateToMessage() {
@@ -68,8 +88,9 @@ import shared
         
     }
     
-    nonisolated func navigateToSearch() {
-        
+    func navigateToSearch() {
+        currentScreen = .search
+        currentTab = .search
     }
     
     nonisolated func navigateToShop(shop_ shop: String) {

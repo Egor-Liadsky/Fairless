@@ -1,15 +1,22 @@
 PODS:
-  - shared (1.0)
+  - shared (1.0):
+    - SkeletonUI (= 2.0.0)
+  - SkeletonUI (2.0.0)
 
 DEPENDENCIES:
   - shared (from `../shared`)
+
+SPEC REPOS:
+  trunk:
+    - SkeletonUI
 
 EXTERNAL SOURCES:
   shared:
     :path: "../shared"
 
 SPEC CHECKSUMS:
-  shared: 2d3b24a8fe27b7d9e65b8d075a9672fbc6a1aa10
+  shared: 1aab3fa46b00936bcfb38393dc0401146aac8237
+  SkeletonUI: 236767189616d1d15fefd95c13f0dcd73bcefa10
 
 PODFILE CHECKSUM: cb976e7e275a85ac0f87a2394c4de9268ead2adf
 

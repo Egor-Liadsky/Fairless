@@ -34,6 +34,7 @@ data class UsersPermissionsUser(
     val updatedAt: String? = null,
     val __v: Int? = null,
     val city: String? = null,
+    val cityCode: String? = null,
     val role: String? = null,
     val id: String? = null
 )

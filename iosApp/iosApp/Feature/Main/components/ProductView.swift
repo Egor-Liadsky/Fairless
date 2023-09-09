@@ -22,9 +22,7 @@ struct ProductView: View {
                         .frame(width: 90, height: 120)
                         .scaledToFit()
                 } placeholder: {
-                    Rectangle()
-                        .frame(width: 90, height: 120)
-                        .background(Color.Background.borderGray.cornerRadius(16))
+                    ShimmerBox(width: 90, height: 120)
                         .cornerRadius(16)
                 }
                 .padding(.leading, 10)

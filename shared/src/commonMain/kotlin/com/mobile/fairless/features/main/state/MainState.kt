@@ -27,7 +27,7 @@ data class MainState(
     val productsLoading: LoadingState = LoadingState.Loading,
 
     val user: UserReceive? = UserReceive(),
-    val products: List<ProductModel>? = null,
+    val products: List<ProductModel> = listOf(),
 
     val selectCategory: CategoryModel = CategoryModel(url = "news", type = "news"),
     val selectType: Type = Type("Промокоды и скидки", ProductStockType.ALL),

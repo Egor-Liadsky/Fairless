@@ -9,57 +9,123 @@
 /* Begin PBXAggregateTarget section */
 		8777C9F6889E59EFFD631D80AEE9048B /* shared */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 8349D8E2EC974421A14EF8ABFF6AD6DC /* Build configuration list for PBXAggregateTarget "shared" */;
+			buildConfigurationList = D398D6F02E4686BC9C059BE5A8BDEBC1 /* Build configuration list for PBXAggregateTarget "shared" */;
 			buildPhases = (
-				BEA8885189D408D600647BDC228A6A20 /* [CP-User] Build shared */,
+				54F1A595A44AB151CD2D2299D627A79B /* [CP-User] Build shared */,
 			);
 			dependencies = (
+				ACC8649BF4B32D74C274DBB6569F0513 /* PBXTargetDependency */,
 			);
 			name = shared;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		648F16425FEF89525AE0325F5A984B86 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		8749C8E8DC500B064FA0BC7A78C38A2A /* Pods-iosApp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 54DC7F9924F99FEE67A9AD3BEE09A10C /* Pods-iosApp-dummy.m */; };
-		8801CBFD38B946597BD07145B2EEFC9F /* Pods-iosApp-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F87A626222A8D9B26448A9FEB04FD0DF /* Pods-iosApp-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0525283BA337E7D3992E91E256BD36FF /* Toggle+OptionalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A062C3BF79145441E8B7DD1D4C22E92 /* Toggle+OptionalType.swift */; };
+		0B9515A1C94BB9BC6A1F4904FC877FD5 /* OptionalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1179F7DAA9C515615CE05EEC112D57E7 /* OptionalType.swift */; };
+		0EC995CE7D9F2B62E2841209150CBAAC /* SkeletonUI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA9B43F1A6748D48BABE1D9DA9A7667 /* SkeletonUI-dummy.m */; };
+		108319E6D28115FFF8663EA992B95853 /* TextField+OptionalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD293D812F00AF0B205150FA2CFCDFB /* TextField+OptionalType.swift */; };
+		144E8BB12E6D26E06D7DBB172D90FF98 /* SkeletonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F5FBAC1973F9B82DB2396A2936541D /* SkeletonModifier.swift */; };
+		30F2E85B5889C51C02572A1912DC7087 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		471A62F6485B31155B4BE748F08CCBDA /* Text+OptionalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78AB78C585EBC44B39C97E1A5FFAC42 /* Text+OptionalType.swift */; };
+		69EF420FDA1E4E9DBC3022430CFFD48D /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5519A2D206731A9342E31AAF300F895C /* ShapeType.swift */; };
+		96F568E0FD80A4139ACBE02E403EF943 /* SkeletonUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726A2FF5C47F2F7C4C257910BF1E8C2 /* SkeletonUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9FD973D010F6AB9BC52F7D63689DAEE2 /* SkeletonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C1D4D4E23117AC6844AE73F1948713 /* SkeletonList.swift */; };
+		B60A643F458F7CB3BDE3B9EA2B5CEAA9 /* Optional+OptionalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CE6C323DE797080A97BDE52344D1CC /* Optional+OptionalType.swift */; };
+		BAA7242C1F4AD6669C10ACFFB16ABB17 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		BDCE33B9ED32ADAB3EA8E3AE19C866B3 /* SkeletonForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81F3F2B097B8F4B390534EED959C4F /* SkeletonForEach.swift */; };
+		C080B0C758F6D3165EBB6AECB3324A2F /* SkeletonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9A523FEDD78B58E34908ABE3170B69 /* SkeletonShape.swift */; };
+		CB988721032970AA746D8FB2B03FB146 /* Pods-iosApp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 54DC7F9924F99FEE67A9AD3BEE09A10C /* Pods-iosApp-dummy.m */; };
+		CF23B625BC8971D6C4FEE86FC9EFAB80 /* Image+OptionalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE590753C5B3B2EDC3A06F877F0A7F52 /* Image+OptionalType.swift */; };
+		D1CDA09F80695DC9BD924B2D1A706441 /* Pods-iosApp-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F87A626222A8D9B26448A9FEB04FD0DF /* Pods-iosApp-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D7E0846DAFC4F32106BBFE2F11BDF783 /* AppearanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE3E43BF07F89C33E048618BF3040B6 /* AppearanceType.swift */; };
+		DA2883D16AD5B8C66D34E1A2748867CD /* SkeletonAnimatableModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B07AB0B3E16094CFEAEA09CB3EF573 /* SkeletonAnimatableModifier.swift */; };
+		EDDD7655AB890BC12409A607C5BFD3C8 /* SecureField+OptionalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355AF063300619393EDFB054C2E88763 /* SecureField+OptionalType.swift */; };
+		EF0C3ACEB415F5D72A4E78C2B09F6DE7 /* View+SkeletonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88004A48EDA793B416C4D7B4373E5A57 /* View+SkeletonModifier.swift */; };
+		F84250E246E4559DC9E9C65A217CD05F /* AnimationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2660A0C970A6BBDB2898116E18EE1426 /* AnimationType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C1E4F2F8101E860063100BCC8448BC3B /* PBXContainerItemProxy */ = {
+		51F79F2F4010154D382C3574DF8DC1BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6510766A9670BFA3B251E2A62446FC5D;
+			remoteInfo = SkeletonUI;
+		};
+		9500F6A11A08468F438840C7FEE66AC6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8777C9F6889E59EFFD631D80AEE9048B;
 			remoteInfo = shared;
 		};
+		E4253946D48DEEFB1FB4BC37C07D0DCC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6510766A9670BFA3B251E2A62446FC5D;
+			remoteInfo = SkeletonUI;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0187F135D5F61750CD24C3E04B6E8B64 /* Pods-iosApp-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iosApp-frameworks.sh"; sourceTree = "<group>"; };
+		04B6C2AA8682717E2070031A0E567910 /* SkeletonUI-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SkeletonUI-prefix.pch"; sourceTree = "<group>"; };
+		1179F7DAA9C515615CE05EEC112D57E7 /* OptionalType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OptionalType.swift; path = Sources/SkeletonUI/Protocols/OptionalType.swift; sourceTree = "<group>"; };
+		2660A0C970A6BBDB2898116E18EE1426 /* AnimationType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnimationType.swift; path = Sources/SkeletonUI/Enumerations/AnimationType.swift; sourceTree = "<group>"; };
+		2726A2FF5C47F2F7C4C257910BF1E8C2 /* SkeletonUI-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SkeletonUI-umbrella.h"; sourceTree = "<group>"; };
+		31CE6C323DE797080A97BDE52344D1CC /* Optional+OptionalType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Optional+OptionalType.swift"; path = "Sources/SkeletonUI/Extensions/Optional+OptionalType.swift"; sourceTree = "<group>"; };
 		35548E3BD8DA30925E8FE97E67B84868 /* shared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = shared.release.xcconfig; sourceTree = "<group>"; };
+		355AF063300619393EDFB054C2E88763 /* SecureField+OptionalType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SecureField+OptionalType.swift"; path = "Sources/SkeletonUI/Extensions/SecureField+OptionalType.swift"; sourceTree = "<group>"; };
 		3F64BADB16C311E9D09DAD0116F684F4 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
+		41ADA1E7CB2FA385AC657337B1DF0934 /* SkeletonUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SkeletonUI.debug.xcconfig; sourceTree = "<group>"; };
 		54DC7F9924F99FEE67A9AD3BEE09A10C /* Pods-iosApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iosApp-dummy.m"; sourceTree = "<group>"; };
+		5519A2D206731A9342E31AAF300F895C /* ShapeType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShapeType.swift; path = Sources/SkeletonUI/Enumerations/ShapeType.swift; sourceTree = "<group>"; };
 		5AC974169B09D4545F741E9A2147610E /* Pods-iosApp-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-Info.plist"; sourceTree = "<group>"; };
+		62BEA3B2B09BB68F5CF3AD515877AE35 /* SkeletonUI-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SkeletonUI-Info.plist"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		73D4D08B8C9FAD17B10E8E5C0EB49A76 /* shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared.framework; path = build/cocoapods/framework/shared.framework; sourceTree = "<group>"; };
+		84C1D4D4E23117AC6844AE73F1948713 /* SkeletonList.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SkeletonList.swift; path = Sources/SkeletonUI/Skeleton/SkeletonList.swift; sourceTree = "<group>"; };
+		85F5FBAC1973F9B82DB2396A2936541D /* SkeletonModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SkeletonModifier.swift; path = Sources/SkeletonUI/Modifiers/SkeletonModifier.swift; sourceTree = "<group>"; };
+		88004A48EDA793B416C4D7B4373E5A57 /* View+SkeletonModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "View+SkeletonModifier.swift"; path = "Sources/SkeletonUI/Extensions/View+SkeletonModifier.swift"; sourceTree = "<group>"; };
+		8A062C3BF79145441E8B7DD1D4C22E92 /* Toggle+OptionalType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Toggle+OptionalType.swift"; path = "Sources/SkeletonUI/Extensions/Toggle+OptionalType.swift"; sourceTree = "<group>"; };
 		8B524AABE529FB8A2D151B05321336E0 /* Pods-iosApp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iosApp.modulemap"; sourceTree = "<group>"; };
+		8B81F3F2B097B8F4B390534EED959C4F /* SkeletonForEach.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SkeletonForEach.swift; path = Sources/SkeletonUI/Skeleton/SkeletonForEach.swift; sourceTree = "<group>"; };
+		93B07AB0B3E16094CFEAEA09CB3EF573 /* SkeletonAnimatableModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SkeletonAnimatableModifier.swift; path = Sources/SkeletonUI/Modifiers/SkeletonAnimatableModifier.swift; sourceTree = "<group>"; };
 		95B09EA82E7AF9ACCCCAF3E55C859116 /* shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = shared.debug.xcconfig; sourceTree = "<group>"; };
 		9BB0B8B698D4C35D4F9A07EF70910170 /* Pods-iosApp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-acknowledgements.plist"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F1FFC8B10F4D7D4F37606E8959B3F29 /* Pods-iosApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iosApp-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9FECCB5AFF87D121F15BA01E683C7932 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		B097DD7534E741D5C41838011D755842 /* Pods-iosApp */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iosApp"; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE590753C5B3B2EDC3A06F877F0A7F52 /* Image+OptionalType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Image+OptionalType.swift"; path = "Sources/SkeletonUI/Extensions/Image+OptionalType.swift"; sourceTree = "<group>"; };
+		BEA9B43F1A6748D48BABE1D9DA9A7667 /* SkeletonUI-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SkeletonUI-dummy.m"; sourceTree = "<group>"; };
+		CF7AA116C789682FBB45EA51FE6D3B2C /* SkeletonUI.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SkeletonUI.modulemap; sourceTree = "<group>"; };
+		D78AB78C585EBC44B39C97E1A5FFAC42 /* Text+OptionalType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Text+OptionalType.swift"; path = "Sources/SkeletonUI/Extensions/Text+OptionalType.swift"; sourceTree = "<group>"; };
+		DD0615EE9ABCD9C05B7FDCD7BE0741F0 /* SkeletonUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SkeletonUI.release.xcconfig; sourceTree = "<group>"; };
+		E5219DE582915E75A487F051CBA44B19 /* SkeletonUI */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SkeletonUI; path = SkeletonUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87A626222A8D9B26448A9FEB04FD0DF /* Pods-iosApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iosApp-umbrella.h"; sourceTree = "<group>"; };
 		FB1BF8BE937671FB0F330C2D28634477 /* shared.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = shared.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		FCE3E43BF07F89C33E048618BF3040B6 /* AppearanceType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppearanceType.swift; path = Sources/SkeletonUI/Enumerations/AppearanceType.swift; sourceTree = "<group>"; };
+		FF9A523FEDD78B58E34908ABE3170B69 /* SkeletonShape.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SkeletonShape.swift; path = Sources/SkeletonUI/Skeleton/SkeletonShape.swift; sourceTree = "<group>"; };
+		FFD293D812F00AF0B205150FA2CFCDFB /* TextField+OptionalType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TextField+OptionalType.swift"; path = "Sources/SkeletonUI/Extensions/TextField+OptionalType.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CC3CD5459C4A5476C5A93268587E63E7 /* Frameworks */ = {
+		74A2109CFE7E92D5CFDD169CAFFCBD3A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				648F16425FEF89525AE0325F5A984B86 /* Foundation.framework in Frameworks */,
+				30F2E85B5889C51C02572A1912DC7087 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DD49134D75822EF2B898636C58B13B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BAA7242C1F4AD6669C10ACFFB16ABB17 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,14 +138,6 @@
 				52A898E555C2DBD7D25A7E44754C3FC6 /* Pods-iosApp */,
 			);
 			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		1F86AA6785DF34AFD5A71790761717DE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B097DD7534E741D5C41838011D755842 /* Pods-iosApp */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		313FE5FE915A4A924C55AAC02A910D61 /* Development Pods */ = {
@@ -141,13 +199,63 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8DC36DA62E84F54A96CE7D8DB82B47B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B097DD7534E741D5C41838011D755842 /* Pods-iosApp */,
+				E5219DE582915E75A487F051CBA44B19 /* SkeletonUI */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A2DC5CD845F1152961409DAB1C125E37 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				CF7AA116C789682FBB45EA51FE6D3B2C /* SkeletonUI.modulemap */,
+				BEA9B43F1A6748D48BABE1D9DA9A7667 /* SkeletonUI-dummy.m */,
+				62BEA3B2B09BB68F5CF3AD515877AE35 /* SkeletonUI-Info.plist */,
+				04B6C2AA8682717E2070031A0E567910 /* SkeletonUI-prefix.pch */,
+				2726A2FF5C47F2F7C4C257910BF1E8C2 /* SkeletonUI-umbrella.h */,
+				41ADA1E7CB2FA385AC657337B1DF0934 /* SkeletonUI.debug.xcconfig */,
+				DD0615EE9ABCD9C05B7FDCD7BE0741F0 /* SkeletonUI.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SkeletonUI";
+			sourceTree = "<group>";
+		};
+		CA530EDC3C826410A95904D8AE97B441 /* SkeletonUI */ = {
+			isa = PBXGroup;
+			children = (
+				2660A0C970A6BBDB2898116E18EE1426 /* AnimationType.swift */,
+				FCE3E43BF07F89C33E048618BF3040B6 /* AppearanceType.swift */,
+				BE590753C5B3B2EDC3A06F877F0A7F52 /* Image+OptionalType.swift */,
+				31CE6C323DE797080A97BDE52344D1CC /* Optional+OptionalType.swift */,
+				1179F7DAA9C515615CE05EEC112D57E7 /* OptionalType.swift */,
+				355AF063300619393EDFB054C2E88763 /* SecureField+OptionalType.swift */,
+				5519A2D206731A9342E31AAF300F895C /* ShapeType.swift */,
+				93B07AB0B3E16094CFEAEA09CB3EF573 /* SkeletonAnimatableModifier.swift */,
+				8B81F3F2B097B8F4B390534EED959C4F /* SkeletonForEach.swift */,
+				84C1D4D4E23117AC6844AE73F1948713 /* SkeletonList.swift */,
+				85F5FBAC1973F9B82DB2396A2936541D /* SkeletonModifier.swift */,
+				FF9A523FEDD78B58E34908ABE3170B69 /* SkeletonShape.swift */,
+				D78AB78C585EBC44B39C97E1A5FFAC42 /* Text+OptionalType.swift */,
+				FFD293D812F00AF0B205150FA2CFCDFB /* TextField+OptionalType.swift */,
+				8A062C3BF79145441E8B7DD1D4C22E92 /* Toggle+OptionalType.swift */,
+				88004A48EDA793B416C4D7B4373E5A57 /* View+SkeletonModifier.swift */,
+				A2DC5CD845F1152961409DAB1C125E37 /* Support Files */,
+			);
+			name = SkeletonUI;
+			path = SkeletonUI;
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				313FE5FE915A4A924C55AAC02A910D61 /* Development Pods */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				1F86AA6785DF34AFD5A71790761717DE /* Products */,
+				F93BCD03BFB7C89594311666AB3F9133 /* Pods */,
+				8DC36DA62E84F54A96CE7D8DB82B47B5 /* Products */,
 				11C970DEAE48C6D0282DFE54684F53F1 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -171,33 +279,68 @@
 			path = ../../shared;
 			sourceTree = "<group>";
 		};
+		F93BCD03BFB7C89594311666AB3F9133 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CA530EDC3C826410A95904D8AE97B441 /* SkeletonUI */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		DA71CB665A4F7860DB550FAA48FB6AD2 /* Headers */ = {
+		27399853083018BDEC3E57270F764EC5 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8801CBFD38B946597BD07145B2EEFC9F /* Pods-iosApp-umbrella.h in Headers */,
+				D1CDA09F80695DC9BD924B2D1A706441 /* Pods-iosApp-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98FC0FA56E552BB17EAF35557AEEC7ED /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96F568E0FD80A4139ACBE02E403EF943 /* SkeletonUI-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		ED39C638569286489CD697A6C8964146 /* Pods-iosApp */ = {
+		6510766A9670BFA3B251E2A62446FC5D /* SkeletonUI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9F1E85ECB672A0CC96333A6C6DF60EE6 /* Build configuration list for PBXNativeTarget "Pods-iosApp" */;
+			buildConfigurationList = 43175656D1F719F2271E9C92E99A6257 /* Build configuration list for PBXNativeTarget "SkeletonUI" */;
 			buildPhases = (
-				DA71CB665A4F7860DB550FAA48FB6AD2 /* Headers */,
-				EB28A529759E3D2117E28CE3CB8387D3 /* Sources */,
-				CC3CD5459C4A5476C5A93268587E63E7 /* Frameworks */,
-				0EC1C62FF9B25EAB2D236D122EAF4C98 /* Resources */,
+				98FC0FA56E552BB17EAF35557AEEC7ED /* Headers */,
+				4395E361ADA60DA628F4C3184B31D9C2 /* Sources */,
+				74A2109CFE7E92D5CFDD169CAFFCBD3A /* Frameworks */,
+				55A76DA159FE09267BE94771B065918A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4A9525469F8E46F3883CC6599FCCFEDB /* PBXTargetDependency */,
+			);
+			name = SkeletonUI;
+			productName = SkeletonUI;
+			productReference = E5219DE582915E75A487F051CBA44B19 /* SkeletonUI */;
+			productType = "com.apple.product-type.framework";
+		};
+		ED39C638569286489CD697A6C8964146 /* Pods-iosApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51F7CF7BEB9D75AB0BA38D6808CD2518 /* Build configuration list for PBXNativeTarget "Pods-iosApp" */;
+			buildPhases = (
+				27399853083018BDEC3E57270F764EC5 /* Headers */,
+				8521BD8C63192D10DA96A6CA71498924 /* Sources */,
+				9DD49134D75822EF2B898636C58B13B2 /* Frameworks */,
+				ED6FF592019D9D2C8E91E2F989A3AA66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1F13A8358E406FDCB5F99250291ADF4E /* PBXTargetDependency */,
+				28219BC055BE66B9892EC492F2921088 /* PBXTargetDependency */,
 			);
 			name = "Pods-iosApp";
 			productName = Pods_iosApp;
@@ -222,18 +365,26 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 1F86AA6785DF34AFD5A71790761717DE /* Products */;
+			productRefGroup = 8DC36DA62E84F54A96CE7D8DB82B47B5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				ED39C638569286489CD697A6C8964146 /* Pods-iosApp */,
 				8777C9F6889E59EFFD631D80AEE9048B /* shared */,
+				6510766A9670BFA3B251E2A62446FC5D /* SkeletonUI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		0EC1C62FF9B25EAB2D236D122EAF4C98 /* Resources */ = {
+		55A76DA159FE09267BE94771B065918A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED6FF592019D9D2C8E91E2F989A3AA66 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -243,7 +394,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BEA8885189D408D600647BDC228A6A20 /* [CP-User] Build shared */ = {
+		54F1A595A44AB151CD2D2299D627A79B /* [CP-User] Build shared */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,29 +407,117 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		EB28A529759E3D2117E28CE3CB8387D3 /* Sources */ = {
+		4395E361ADA60DA628F4C3184B31D9C2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8749C8E8DC500B064FA0BC7A78C38A2A /* Pods-iosApp-dummy.m in Sources */,
+				F84250E246E4559DC9E9C65A217CD05F /* AnimationType.swift in Sources */,
+				D7E0846DAFC4F32106BBFE2F11BDF783 /* AppearanceType.swift in Sources */,
+				CF23B625BC8971D6C4FEE86FC9EFAB80 /* Image+OptionalType.swift in Sources */,
+				B60A643F458F7CB3BDE3B9EA2B5CEAA9 /* Optional+OptionalType.swift in Sources */,
+				0B9515A1C94BB9BC6A1F4904FC877FD5 /* OptionalType.swift in Sources */,
+				EDDD7655AB890BC12409A607C5BFD3C8 /* SecureField+OptionalType.swift in Sources */,
+				69EF420FDA1E4E9DBC3022430CFFD48D /* ShapeType.swift in Sources */,
+				DA2883D16AD5B8C66D34E1A2748867CD /* SkeletonAnimatableModifier.swift in Sources */,
+				BDCE33B9ED32ADAB3EA8E3AE19C866B3 /* SkeletonForEach.swift in Sources */,
+				9FD973D010F6AB9BC52F7D63689DAEE2 /* SkeletonList.swift in Sources */,
+				144E8BB12E6D26E06D7DBB172D90FF98 /* SkeletonModifier.swift in Sources */,
+				C080B0C758F6D3165EBB6AECB3324A2F /* SkeletonShape.swift in Sources */,
+				0EC995CE7D9F2B62E2841209150CBAAC /* SkeletonUI-dummy.m in Sources */,
+				471A62F6485B31155B4BE748F08CCBDA /* Text+OptionalType.swift in Sources */,
+				108319E6D28115FFF8663EA992B95853 /* TextField+OptionalType.swift in Sources */,
+				0525283BA337E7D3992E91E256BD36FF /* Toggle+OptionalType.swift in Sources */,
+				EF0C3ACEB415F5D72A4E78C2B09F6DE7 /* View+SkeletonModifier.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8521BD8C63192D10DA96A6CA71498924 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB988721032970AA746D8FB2B03FB146 /* Pods-iosApp-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4A9525469F8E46F3883CC6599FCCFEDB /* PBXTargetDependency */ = {
+		1F13A8358E406FDCB5F99250291ADF4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SkeletonUI;
+			target = 6510766A9670BFA3B251E2A62446FC5D /* SkeletonUI */;
+			targetProxy = E4253946D48DEEFB1FB4BC37C07D0DCC /* PBXContainerItemProxy */;
+		};
+		28219BC055BE66B9892EC492F2921088 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = shared;
 			target = 8777C9F6889E59EFFD631D80AEE9048B /* shared */;
-			targetProxy = C1E4F2F8101E860063100BCC8448BC3B /* PBXContainerItemProxy */;
+			targetProxy = 9500F6A11A08468F438840C7FEE66AC6 /* PBXContainerItemProxy */;
+		};
+		ACC8649BF4B32D74C274DBB6569F0513 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SkeletonUI;
+			target = 6510766A9670BFA3B251E2A62446FC5D /* SkeletonUI */;
+			targetProxy = 51F79F2F4010154D382C3574DF8DC1BA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		02DDCCED053337F381DEBAFDEC6F354F /* Release */ = {
+		007F13CB0F672228E6E670E467A743B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9FECCB5AFF87D121F15BA01E683C7932 /* Pods-iosApp.release.xcconfig */;
+			baseConfigurationReference = 41ADA1E7CB2FA385AC657337B1DF0934 /* SkeletonUI.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SkeletonUI/SkeletonUI-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SkeletonUI/SkeletonUI-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SkeletonUI/SkeletonUI.modulemap";
+				PRODUCT_MODULE_NAME = SkeletonUI;
+				PRODUCT_NAME = SkeletonUI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		0F3609665FD97150EE2EEB763B61E501 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95B09EA82E7AF9ACCCCAF3E55C859116 /* shared.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		494FCBE2CDE3F5DE715DF7812F6A54CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F64BADB16C311E9D09DAD0116F684F4 /* Pods-iosApp.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -308,11 +547,10 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		593F10BFFA94DAC7D6E17FB8A7F32D72 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -373,6 +611,24 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		677E2E9D88C6D1F10FCD93CF6805D586 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 35548E3BD8DA30925E8FE97E67B84868 /* shared.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -442,44 +698,9 @@
 			};
 			name = Debug;
 		};
-		A7B4967B71249851CABD6EC29251E481 /* Debug */ = {
+		A1D7EA2D11ED7D0DF442C5315FC9FFCD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 95B09EA82E7AF9ACCCCAF3E55C859116 /* shared.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		A96D4527F178BD8C0DEB7EE72B9AAE09 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35548E3BD8DA30925E8FE97E67B84868 /* shared.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		AF088B6CD92A52AC4DCB62DEEC871231 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F64BADB16C311E9D09DAD0116F684F4 /* Pods-iosApp.debug.xcconfig */;
+			baseConfigurationReference = 9FECCB5AFF87D121F15BA01E683C7932 /* Pods-iosApp.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -509,14 +730,60 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
+		};
+		BB25BB7417B798985D7E24AD42B30C95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD0615EE9ABCD9C05B7FDCD7BE0741F0 /* SkeletonUI.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SkeletonUI/SkeletonUI-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SkeletonUI/SkeletonUI-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SkeletonUI/SkeletonUI.modulemap";
+				PRODUCT_MODULE_NAME = SkeletonUI;
+				PRODUCT_NAME = SkeletonUI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		43175656D1F719F2271E9C92E99A6257 /* Build configuration list for PBXNativeTarget "SkeletonUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				007F13CB0F672228E6E670E467A743B2 /* Debug */,
+				BB25BB7417B798985D7E24AD42B30C95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -526,20 +793,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8349D8E2EC974421A14EF8ABFF6AD6DC /* Build configuration list for PBXAggregateTarget "shared" */ = {
+		51F7CF7BEB9D75AB0BA38D6808CD2518 /* Build configuration list for PBXNativeTarget "Pods-iosApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A7B4967B71249851CABD6EC29251E481 /* Debug */,
-				A96D4527F178BD8C0DEB7EE72B9AAE09 /* Release */,
+				494FCBE2CDE3F5DE715DF7812F6A54CE /* Debug */,
+				A1D7EA2D11ED7D0DF442C5315FC9FFCD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9F1E85ECB672A0CC96333A6C6DF60EE6 /* Build configuration list for PBXNativeTarget "Pods-iosApp" */ = {
+		D398D6F02E4686BC9C059BE5A8BDEBC1 /* Build configuration list for PBXAggregateTarget "shared" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AF088B6CD92A52AC4DCB62DEEC871231 /* Debug */,
-				02DDCCED053337F381DEBAFDEC6F354F /* Release */,
+				0F3609665FD97150EE2EEB763B61E501 /* Debug */,
+				677E2E9D88C6D1F10FCD93CF6805D586 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Color {
     
-    public static let orangePrimary = Color(hex: "F73B00")
+    public static let orangePrimary = Color(hex: "E74017")
     public static let white = Color(hex: "FFFFFF")
     public static let black = Color(hex: "2A2F33")
     
@@ -26,5 +26,11 @@ extension Color {
     struct Background {
         public static let topBar = Color(hex: "F4F6F7")
         public static let borderGray = Color(hex: "E1E1E1")
+    }
+    
+    struct Navigation {
+        public static let tabViewBackground = Color(hex: "F1F3F5")
+        public static let selectColor = Color(hex: "F73B00")
+        public static let unselectColor = Color(hex: "A8ADB0")
     }
 }

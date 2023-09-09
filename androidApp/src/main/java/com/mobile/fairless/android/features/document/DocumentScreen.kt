@@ -150,7 +150,7 @@ fun DocumentScreen(
                         onRefresh = { viewModelWrapper.viewModel.reloadDocument() }) {
 
                         CollapsingToolbar(
-                            imageUrl = state.value.product.image?.url ?: "",
+                            imageUrl = state.value.product.image?.formats?.thumbnail?.url ?: "",
                             onBackClick = { viewModelWrapper.viewModel.onBackButtonClick() },
                             onShareClick = { viewModelWrapper.viewModel.onShareClick(state.value.product) }
                         ) {

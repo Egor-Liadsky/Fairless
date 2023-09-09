@@ -31,6 +31,12 @@ kotlin {
         framework {
             baseName = "shared"
         }
+
+        // Skeleton
+        pod("SkeletonUI") {
+            moduleName = "SkeletonUI"
+            version = "2.0.0"
+        }
     }
     
     sourceSets {
