@@ -25,6 +25,7 @@ data class MainState(
 
     val categoriesLoading: LoadingState = LoadingState.Loading,
     val productsLoading: LoadingState = LoadingState.Loading,
+    val isAppending:Boolean = false,
 
     val user: UserReceive? = UserReceive(),
     val products: List<ProductModel> = listOf(),

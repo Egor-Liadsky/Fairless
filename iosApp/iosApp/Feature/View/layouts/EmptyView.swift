@@ -21,7 +21,6 @@ struct EmptyView: View {
                 .foregroundColor(Color(hex: "A7ACAF"))
                 .padding()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

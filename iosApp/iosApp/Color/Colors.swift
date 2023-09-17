@@ -28,9 +28,32 @@ extension Color {
         public static let borderGray = Color(hex: "E1E1E1")
     }
     
+    struct SearchTopBar {
+        public static let topBarBackground = Color(hex: "F4F6F7")
+        public static let textFieldBackground = Color(hex: "FFFFFF")
+        public static let buttonColor = Color(hex: "979797")
+    }
+    
     struct Navigation {
         public static let tabViewBackground = Color(hex: "F1F3F5")
         public static let selectColor = Color(hex: "F73B00")
         public static let unselectColor = Color(hex: "A8ADB0")
+    }
+    
+    struct Menu {
+        
+        struct Account {
+            public static let border = Color(hex: "F1F3F5")
+        }
+        
+        struct Test {
+            public static let orangeGradient1 = Color(hex: "F73000")
+            public static let orangeGradient2 = Color(hex: "FD7A00")
+        }
+        
+        struct Additional {
+            public static let nextButton = Color("F73300")
+            public static let square = Color("A8ACAF")
+        }
     }
 }

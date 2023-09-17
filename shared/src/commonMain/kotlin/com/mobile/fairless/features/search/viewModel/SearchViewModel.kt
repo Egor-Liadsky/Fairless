@@ -22,9 +22,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
@@ -54,8 +57,8 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     private val urlEncode: UrlEncode by inject()
     private val appMetricaService: AppMetricaService by inject()
 
-    private val _state = MutableStateFlow(SearchState())
-    override val state: StateFlow<SearchState> = _state.asStateFlow()
+    private val mutableState = MutableStateFlow(SearchState())
+    override val state: StateFlow<SearchState> = mutableState.asStateFlow()
 
     private val pager = Pager<ProductData>(PaginationType.SEARCH, searchService)
 
@@ -74,6 +77,36 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
                 )
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), SearchState())
+
+//    pager.state.combine(mutableState) {pagingData, screenData ->
+//        val list = pagingData.data.map {
+//            ProductModel(it, state.value.searchString)
+//        }
+////            if (list.size < 30 && !pagingData.isAtEnd) onAppend()
+//        SearchState(
+//            pagingData = PagingData<ProductModel>(
+//                loadingState = pagingData.loadingState,
+//                isRefreshing = pagingData.isRefreshing,
+//                isAppending = pagingData.isAppending,
+//                data = list.toMutableList(),
+//                name = state.value.searchString
+//            )
+//        )
+//    }.stateIn(scope, SharingStarted.WhileSubscribed(), SearchState())
+
+    init {
+        scope.launch {
+            statePaging.collectLatest { item ->
+                mutableState.update {
+                    it.copy(
+                        productsLoading = item.pagingData.loadingState,
+                        products = item.pagingData.data,
+                        isAppending = item.pagingData.isAppending
+                    )
+                }
+            }
+        }
+    }
 
     override fun onViewShown() {
         super.onViewShown()
@@ -94,7 +127,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     }
 
     override fun searchChanged(search: String) {
-        _state.update { it.copy(searchString = search) }
+        mutableState.update { it.copy(searchString = search) }
         pager.updateSearchText(state.value.searchString)
     }
 
@@ -103,16 +136,16 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     }
 
     override fun selectPopularFilter(popularFilter: PopularFilter) {
-        _state.update { it.copy(selectedPopularFilter = popularFilter) }
+        mutableState.update { it.copy(selectedPopularFilter = popularFilter) }
         pager.changeFilter(popularFilter.sort)
     }
 
     override fun popularFilterOpen() {
-        _state.update { it.copy(popularFilterOpen = !it.popularFilterOpen) }
+        mutableState.update { it.copy(popularFilterOpen = !it.popularFilterOpen) }
     }
 
     override fun filtersOpen() {
-        _state.update { it.copy(filtersOpen = !it.filtersOpen) }
+        mutableState.update { it.copy(filtersOpen = !it.filtersOpen) }
     }
 
     override fun onDocumentClick(product: String) {
@@ -122,7 +155,7 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     }
 
     override fun selectCategory(category: CategoryModel) {
-        _state.update { it.copy(selectCategory = category) }
+        mutableState.update { it.copy(selectCategory = category) }
     }
 
     override fun onAppend() {
@@ -136,11 +169,11 @@ class SearchViewModelImpl(override val navigator: Navigator) : KoinComponent,
     }
 
     override fun selectType(type: Type) {
-        _state.update { it.copy(selectType = type) }
+        mutableState.update { it.copy(selectType = type) }
         pager.changeType(type.type)
     }
 
     private fun setLoadingRefreshable(status: Boolean) {
-        _state.update { it.copy(refreshable = status) }
+        mutableState.update { it.copy(refreshable = status) }
     }
 }

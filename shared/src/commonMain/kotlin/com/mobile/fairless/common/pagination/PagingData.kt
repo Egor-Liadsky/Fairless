@@ -70,39 +70,51 @@ class Pager<T : Any>(
 
             PaginationType.MAIN -> {
                 mutex.withLock {
-                    if (page > total) {
-                        return listOf()
+                    if (!mutableState.value.isAtEnd) {
+                        if (page > total) {
+                            mutableState.update { it.copy(isAtEnd = true) }
+                            return listOf()
+                        }
+                        val response = source.getPage(page, category, type, sort)
+                        if (response.list.isNotEmpty())
+                            page++
+                        return response.list
                     }
-                    val response = source.getPage(page, category, type, sort)
-                    if (response.list.isNotEmpty())
-                        page++
-                    return response.list
                 }
+                return listOf()
             }
 
             PaginationType.SHOP -> {
                 mutex.withLock {
-                    if (page > total) {
-                        return listOf()
+                    if (!mutableState.value.isAtEnd) {
+                        if (page > total) {
+                            mutableState.update { it.copy(isAtEnd = true) }
+                            return listOf()
+                        }
+                        val response = source.getPage(page, category, type, sort, shop)
+                        if (response.list.isNotEmpty())
+                            page++
+                        return response.list
                     }
-                    val response = source.getPage(page, category, type, sort, shop)
-                    if (response.list.isNotEmpty())
-                        page++
-                    return response.list
                 }
+                return listOf()
             }
 
             PaginationType.SEARCH -> {
                 if (name.replace(" ", "") != "") {
                     mutex.withLock {
-                        if (page > total) {
-                            return listOf()
+                        if (!mutableState.value.isAtEnd) {
+                            if (page > total) {
+                                mutableState.update { it.copy(isAtEnd = true) }
+                                return listOf()
+                            }
+                            val response = source.getPage(page, name, type, sort)
+                            if (response.list.isNotEmpty())
+                                page++
+                            return response.list
                         }
-                        val response = source.getPage(page, name, type, sort)
-                        if (response.list.isNotEmpty())
-                            page++
-                        return response.list
                     }
+                    return listOf()
                 } else {
                     return emptyList()
                 }
@@ -212,7 +224,8 @@ data class PagingData<T : Any>(
     var type: ProductStockType = ProductStockType.ALL,
     var sort: Sort = Sort.CREATE,
     val data: MutableList<T> = mutableListOf(),
-    val shop: Shop? = null
+    val shop: Shop? = null,
+    var isAtEnd: Boolean = false,
 )
 
 interface PagingDataSourceMain<T : Any> {

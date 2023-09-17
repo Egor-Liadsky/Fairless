@@ -17,12 +17,12 @@ struct MainLayout: View {
         self.viewModelWrapper = viewModelWrapper
     }
     
-    var body: some View {
+    var body: some View {        
+        
         let products = viewModelWrapper.state.products
         
-                
         ScrollView {
-
+            
             VStack (spacing: 10) {
                 
                 ForEach(products.indices, id: \.self) { index in
@@ -34,20 +34,20 @@ struct MainLayout: View {
                                 .stroke(Color.Background.borderGray, lineWidth: 0.5)
                         )
                         .padding(.horizontal, 16)
-//                        .onAppear {
-//                            if index == products.count - 2 {
-//                                viewModelWrapper.viewModel.onAppend()
-//                            }
-//                        }
+                    //                        .onAppear {
+                    //                            if index == products.count - 2 {
+                    //                                viewModelWrapper.viewModel.onAppend()
+                    //                            }
+                    //                        }
                 }
-//                if (viewModelWrapper.state.pagingData.isAppending) {
-//                    HStack {
-//                        Spacer()
-//                        ProgressView()
-//                            .padding(.vertical, 10)
-//                        Spacer()
-//                    }
-//                }
+                if (viewModelWrapper.state.pagingData.isAppending) {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                            .padding(.vertical, 10)
+                        Spacer()
+                    }
+                }
             }
             .padding(.vertical, 10)
         }

@@ -67,23 +67,39 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
     private val pager = Pager<ProductData>(PaginationType.MAIN, mainService)
 
     override val statePaging: StateFlow<MainState> =
-        pager.state.map { data ->
-            val list = data.data.map {
+        pager.state.combine(mutableState) {pagingData, screenData ->
+            val list = pagingData.data.map {
                 ProductModel(it, state.value.selectCategory.type ?: "news")
-            }.toMutableList()
-            PagingData<ProductModel>(
-                loadingState = data.loadingState,
-                isRefreshing = data.isRefreshing,
-                isAppending = data.isAppending,
-                data = list,
-                category = state.value.selectCategory.type ?: "news",
-                type = state.value.selectType.type
-            )
-        }.combine(mutableState) { pagingData, screenData ->
+            }
+//            if (list.size < 30 && !pagingData.isAtEnd) onAppend()
             MainState(
-                pagingData = pagingData
+                pagingData = PagingData(
+                    loadingState = pagingData.loadingState,
+                    isRefreshing = pagingData.isRefreshing,
+                    isAppending = pagingData.isAppending,
+                    data = list.toMutableList(),
+                    category = state.value.selectCategory.type ?: "news",
+                    type = state.value.selectType.type
+                )
             )
         }.stateIn(scope, SharingStarted.WhileSubscribed(), MainState())
+//        pager.state.map { data ->
+//            val list = data.data.map {
+//                ProductModel(it, state.value.selectCategory.type ?: "news")
+//            }.toMutableList()
+//            PagingData<ProductModel>(
+//                loadingState = data.loadingState,
+//                isRefreshing = data.isRefreshing,
+//                isAppending = data.isAppending,
+//                data = list,
+//                category = state.value.selectCategory.type ?: "news",
+//                type = state.value.selectType.type
+//            )
+//        }.combine(mutableState) { pagingData, screenData ->
+//            MainState(
+//                pagingData = pagingData
+//            )
+//        }.stateIn(scope, SharingStarted.WhileSubscribed(), MainState())
 
     init {
         scope.launch {
@@ -91,7 +107,8 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
                 mutableState.update {
                     it.copy(
                         productsLoading = item.pagingData.loadingState,
-                        products = item.pagingData.data
+                        products = item.pagingData.data,
+                        isAppending = item.pagingData.isAppending
                     )
                 }
             }

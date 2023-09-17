@@ -15,7 +15,7 @@ struct ProductView: View {
     
     var body: some View {
             HStack{
-                AsyncImage(url: URL(string: .base_url + (product.image?.url ?? ""))) { image in
+                AsyncImage(url: URL(string: .base_url + (product.image?.formats?.thumbnail?.url ?? ""))) { image in
                     image
                         .resizable()
                         .scaledToFit()
@@ -90,7 +90,7 @@ struct ProductView: View {
                     
                     HStack {
                         if let user = product.users_permissions_user {
-                            Image("avatarka")
+                            Image("ic_avatarka")
                                 .resizable()
                                 .frame(width: 16, height: 16)
                             Text(user.username ?? "")

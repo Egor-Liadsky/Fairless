@@ -35,7 +35,7 @@ struct MainView: View {
                     }
                 )
                 
-                switch viewModelWrapper.state.productsLoading {
+                switch state.productsLoading {
 
                 case LoadingState.Loading():
                     ProgressView()

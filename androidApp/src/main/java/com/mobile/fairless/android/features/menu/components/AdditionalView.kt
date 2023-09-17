@@ -1,4 +1,4 @@
-package com.mobile.fairless.android.features.menu.components
+Ipackage com.mobile.fairless.android.features.menu.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
