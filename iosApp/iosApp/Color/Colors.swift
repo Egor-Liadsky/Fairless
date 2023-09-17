@@ -31,7 +31,9 @@ extension Color {
     struct SearchTopBar {
         public static let topBarBackground = Color(hex: "F4F6F7")
         public static let textFieldBackground = Color(hex: "FFFFFF")
+        public static let placeholder = Color(hex: "979797")
         public static let buttonColor = Color(hex: "979797")
+        public static let filters = Color(hex: "979797")
     }
     
     struct Navigation {

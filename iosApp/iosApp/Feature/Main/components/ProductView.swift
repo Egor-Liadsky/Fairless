@@ -35,7 +35,9 @@ struct ProductView: View {
 
                     
                     if product.sale_price != nil && product.sale_old_price != nil{
-                        let percent = (100 - ((Int(truncating: product.sale_price!) * 100) / Int(truncating: product.sale_old_price!)))
+                        let salePrice = Int(truncating: product.sale_price ?? 0)
+                        let oldPrice = Int(truncating: product.sale_old_price ?? 1)
+                        let percent = oldPrice != 0 ? 100 - ((salePrice * 100) / oldPrice) : 0
                         HStack(spacing: 7) {
                             Text(product.sale_price?.description ?? "")
                                 .font(.custom("Qanelas-Heavy", size: 17))

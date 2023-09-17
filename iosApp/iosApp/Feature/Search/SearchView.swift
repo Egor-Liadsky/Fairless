@@ -18,31 +18,34 @@ struct SearchView: View {
         let state = viewModelWrapper.state
         
         VStack {
-    
-            SearchTopBar(
-                searchString: state.searchString) { it in
-                    viewModelWrapper.viewModel.searchChanged(search: it)
-                } onClearText: {
-                    viewModelWrapper.viewModel.onDeleteSearchClick()
-                }
+            SearchTopBar(viewModelWrapper: viewModelWrapper)
             
             VStack {
                 switch state.productsLoading {
                     
                 case LoadingState.Loading():
                     ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .frame(alignment: .center)
                     
                 case LoadingState.Success():
                     SearchLayout(viewModelWrapper: viewModelWrapper)
-                    
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                 case LoadingState.Empty():
-                    EmptyView()
-//                        .frame(minWidth: .infinity, minHeight: .infinity)
+                    if state.searchString.isEmpty {
+                        SearchEmptyLayout()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        EmptyView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                    
+                   
                     
                 default:
                     ErrorView(onClick: { viewModelWrapper.viewModel.onRefresh() })
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
         }

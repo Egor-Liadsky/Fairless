@@ -48,7 +48,7 @@ struct AdditionalView: View {
         }
         .overlay(
                RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.Menu.Account.border, lineWidth: 2)
+                .stroke(Color.Menu.Account.border, lineWidth: 1)
            )
     }
 }

@@ -30,7 +30,7 @@ struct TestView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(height: 70)
+            .frame(height: 60)
             .frame(maxWidth: .infinity)
             .background(LinearGradient(gradient: Gradient(colors: [.Menu.Test.orangeGradient1, .Menu.Test.orangeGradient2]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(5)
