@@ -52,7 +52,7 @@ struct MainView: View {
                     EmptyView()
                     
                 default:
-                    ErrorView(onClick: { viewModelWrapper.viewModel.onRefreshClick() })
+                    ErrorLayout(onClick: { viewModelWrapper.viewModel.onRefreshClick() })
                 }
             }
             .onAppear { viewModelWrapper.viewModel.onViewShown()}

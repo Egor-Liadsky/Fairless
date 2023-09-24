@@ -7,28 +7,41 @@
 //
 
 import SwiftUI
+import shared
 
 struct MenuLayout: View {
-    var body: some View {
-        VStack {
-            ScrollView {
-                ProfileView()
-                    .padding(EdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16))
-                
-                TestView()
-                    .padding(EdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16))
-                
-                AdditionalView()
-                    .padding(EdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16))
+    
+    let viewModelWrapper: StatefulViewModelWrapper<MenuViewModelImpl, MenuState>
+    
+    @EnvironmentObject var navigator: NavigatorImpl
+    @Environment(\.viewFactory) var viewFactory
+    @State private var isActive: Bool = false
 
-                Spacer()
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                ScrollView {
+                    ProfileView()
+                        .padding(EdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16))
+                    
+                    TestView()
+                        .padding(EdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16))
+                    
+                    AdditionalView(viewModelWrapper: viewModelWrapper, action: { isActive = true })
+                        .padding(EdgeInsets(top: 20, leading: 16, bottom: 0, trailing: 16))
+
+                    Spacer()
+                }
             }
         }
+        .background(
+            NavigationLink(
+                destination: viewFactory.makeView(for: navigator.currentScreen),
+                isActive: $isActive,
+                label: { EmptyView() }
+            )
+        )
     }
 }
 
-struct MenuLayout_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuLayout()
-    }
-}

@@ -36,6 +36,10 @@ extension Color {
         public static let filters = Color(hex: "979797")
     }
     
+    struct AdditionalTopBar {
+        public static let topBarBackground = Color(hex: "F1F3F5")
+    }
+    
     struct Navigation {
         public static let tabViewBackground = Color(hex: "F1F3F5")
         public static let selectColor = Color(hex: "F73B00")

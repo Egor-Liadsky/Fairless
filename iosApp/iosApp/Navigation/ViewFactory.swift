@@ -29,6 +29,11 @@ final class ViewFactory: EnvironmentKey {
         case .main: MainView()
         case .menu: MenuView()
         case .search: SearchView()
+        case .aboutapp: AboutAppView()
+        case .aboutfairless: AboutFairlessView()
+        case .rules: RulesView()
+        case .feedback: FeedbackView()
+        case .faq: FaqView()
         default:
             Text("error navigation")
         }

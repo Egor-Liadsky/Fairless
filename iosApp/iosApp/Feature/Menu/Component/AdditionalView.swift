@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import shared
 
 struct AdditionalInfo: Identifiable {
     
@@ -16,14 +17,33 @@ struct AdditionalInfo: Identifiable {
 }
 
 struct AdditionalView: View {
+    
+    let viewModelWrapper: StatefulViewModelWrapper<MenuViewModelImpl, MenuState>
+    let action: () -> Void
+    
     var body: some View {
         
         let additionalList = [
-            AdditionalInfo(id: 1, title: "О нас", onClick: {}),
-            AdditionalInfo(id: 2, title: "Правила поведения", onClick: {}),
-            AdditionalInfo(id: 3, title: "Обратная связь", onClick: {}),
-            AdditionalInfo(id: 4, title: "FAQ", onClick: {}),
-            AdditionalInfo(id: 5, title: "О приложении", onClick: {})
+            AdditionalInfo(id: 1, title: "О нас", onClick: {
+                viewModelWrapper.viewModel.navigateToAboutFairLess()
+                action()
+            }),
+            AdditionalInfo(id: 2, title: "Правила поведения", onClick: {
+                viewModelWrapper.viewModel.navigateToRules()
+                action()
+            }),
+            AdditionalInfo(id: 3, title: "Обратная связь", onClick: {
+                viewModelWrapper.viewModel.navigateToFeedback()
+                action()
+            }),
+            AdditionalInfo(id: 4, title: "FAQ", onClick: {
+                viewModelWrapper.viewModel.navigateToFaq()
+                action()
+            }),
+            AdditionalInfo(id: 5, title: "О приложении", onClick: {
+                viewModelWrapper.viewModel.navigateToAboutApp()
+                action()
+            })
         ]
         
         VStack {
@@ -81,11 +101,5 @@ struct AdditionalItem : View {
                     .frame(width: 5, height: 11)
             }
         }
-    }
-}
-
-struct AdditionalView_Previews: PreviewProvider {
-    static var previews: some View {
-        AdditionalView()
     }
 }

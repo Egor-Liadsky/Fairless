@@ -4,4 +4,8 @@ import com.mobile.fairless.features.welcome.models.UserReceive
 
 data class MenuState(
     val user: UserReceive? = null
-)
+){
+    companion object {
+        fun getInstance() = MenuState()
+    }
+}

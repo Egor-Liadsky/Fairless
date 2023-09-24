@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ErrorView: View {
+struct ErrorLayout: View {
     
     let onClick: () -> Void
     
@@ -34,6 +34,7 @@ struct ErrorView: View {
                     .font(.custom("Qanelas-Semibold", size: 16))
                     .foregroundColor(Color.orangePrimary)
             }
+            .padding(.top, 20)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

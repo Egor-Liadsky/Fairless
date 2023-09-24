@@ -7,11 +7,15 @@
 //
 
 import SwiftUI
+import shared
 
 struct MenuView: View {
+    
+    @StateObject var viewModelWrapper: StatefulViewModelWrapper<MenuViewModelImpl, MenuState> = ViewModelFactory.getMenuViewModel()
+    
     var body: some View {
         VStack {
-            MenuLayout()
+            MenuLayout(viewModelWrapper: viewModelWrapper)
         }
     }
 }

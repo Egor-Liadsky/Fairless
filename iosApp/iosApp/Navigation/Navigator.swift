@@ -38,12 +38,12 @@ import Combine
         subject.send()
     }
     
-    nonisolated func navigateToAboutApp() {
-        
+    func navigateToAboutApp() {
+        currentScreen = .aboutapp
     }
     
-    nonisolated func navigateToAboutFairLess() {
-        
+    func navigateToAboutFairLess() {
+        currentScreen = .aboutfairless
     }
     
     nonisolated func navigateToAuth() {
@@ -54,12 +54,12 @@ import Combine
         
     }
     
-    nonisolated func navigateToFaq() {
-        
+    func navigateToFaq() {
+        currentScreen = .faq
     }
     
-    nonisolated func navigateToFeedback() {
-        
+    func navigateToFeedback() {
+        currentScreen = .feedback
     }
     
     func navigateToMain() {
@@ -84,8 +84,8 @@ import Combine
         
     }
     
-    nonisolated func navigateToRules() {
-        
+    func navigateToRules() {
+        currentScreen = .rules
     }
     
     func navigateToSearch() {

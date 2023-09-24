@@ -37,14 +37,12 @@ struct SearchView: View {
                         SearchEmptyLayout()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
-                        EmptyView()
+                        EmptyLayout()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                     
-                   
-                    
                 default:
-                    ErrorView(onClick: { viewModelWrapper.viewModel.onRefresh() })
+                    ErrorLayout(onClick: { viewModelWrapper.viewModel.onRefresh() })
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }

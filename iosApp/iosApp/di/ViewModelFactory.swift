@@ -41,4 +41,37 @@ struct ViewModelFactory {
             )
         )
     }
+    
+    @MainActor static func getMenuViewModel() ->
+    StatefulViewModelWrapper<MenuViewModelImpl, MenuState> {
+        return StatefulViewModelWrapper<MenuViewModelImpl, MenuState>(
+            state: MenuState.companion.getInstance(),
+            viewModel: MenuViewModelImpl(navigator: NavigatorImpl.shared)
+        )
+    }
+    
+    @MainActor static func getAboutAppViewModel() ->
+    ViewModelWrapper<AboutAppViewModelImpl> {
+        return ViewModelWrapper(viewModel: AboutAppViewModelImpl(navigator: NavigatorImpl.shared))
+    }
+    
+    @MainActor static func getRulesViewModel() ->
+    ViewModelWrapper<RulesViewModelImpl> {
+        return ViewModelWrapper(viewModel: RulesViewModelImpl(navigator: NavigatorImpl.shared))
+    }
+    
+    @MainActor static func getFeedbackViewModel() ->
+    ViewModelWrapper<FeedbackViewModelImpl> {
+        return ViewModelWrapper(viewModel: FeedbackViewModelImpl(navigator: NavigatorImpl.shared))
+    }
+    
+    @MainActor static func getAboutFairlessViewModel() ->
+    ViewModelWrapper<AboutFairLessViewModelImpl> {
+        return ViewModelWrapper(viewModel: AboutFairLessViewModelImpl(navigator: NavigatorImpl.shared))
+    }
+    
+    @MainActor static func getFaqViewModel() ->
+    ViewModelWrapper<FaqViewModelImpl> {
+        return ViewModelWrapper(viewModel: FaqViewModelImpl(navigator: NavigatorImpl.shared))
+    }
 }

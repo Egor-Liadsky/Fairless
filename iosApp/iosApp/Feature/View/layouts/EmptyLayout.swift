@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct EmptyView: View {
+struct EmptyLayout: View {
     var body: some View {
         VStack {
             Image("ic_empty")
