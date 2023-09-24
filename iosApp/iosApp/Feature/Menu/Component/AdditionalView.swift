@@ -24,7 +24,7 @@ struct AdditionalView: View {
     var body: some View {
         
         let additionalList = [
-            AdditionalInfo(id: 1, title: "О нас", onClick: {
+            AdditionalInfo(id: 1, title: "О нашем сообществе", onClick: {
                 viewModelWrapper.viewModel.navigateToAboutFairLess()
                 action()
             }),

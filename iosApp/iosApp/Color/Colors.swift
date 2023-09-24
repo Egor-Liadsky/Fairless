@@ -62,4 +62,13 @@ extension Color {
             public static let square = Color("A8ACAF")
         }
     }
+    
+    struct AboutFairless {
+        public static let orangeGradient1 = Color(hex: "FF8D00")
+        public static let orangeGradient2 = Color(hex: "F51B00")
+    }
+    
+    struct FAQ {
+        public static let faqItemBorder = Color(hex: "E1E1E1")
+    }
 }

@@ -18,4 +18,8 @@ data class FaqState(
     val throwable_info2: Boolean = false,
     val soc_info1: Boolean = false,
     val soc_info2: Boolean = false,
-)
+){
+    companion object {
+        fun getInstance() = FaqState()
+    }
+}

@@ -38,10 +38,10 @@ struct AdditionalTopBar: View {
                 Spacer()
             }
             .padding(.horizontal, 16)
+            .padding(.vertical, 16)
         }
         .onReceive(navigator.didSendRequest) { _ in dismiss() }
         .frame(maxWidth: .infinity)
-        .frame(height: 102)
         .background(Color.AdditionalTopBar.topBarBackground)//.edgesIgnoringSafeArea(.top)
     }
 }

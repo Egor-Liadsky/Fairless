@@ -14,6 +14,7 @@ import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FeedbackV
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.FeedbackViewModelImpl
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.RulesViewModel
 import com.mobile.fairless.features.additional.aboutFairLess.viewModel.RulesViewModelImpl
+import com.mobile.fairless.features.additional.faq.state.FaqState
 import com.mobile.fairless.features.document.state.DocumentState
 import com.mobile.fairless.features.document.viewModel.DocumentViewModel
 import com.mobile.fairless.features.document.viewModel.DocumentViewModelImpl
@@ -72,7 +73,7 @@ fun androidModule() = module {
     }
 
     viewModel(named("FaqViewModel")) {
-        ViewModelWrapper<FaqViewModel>(FaqViewModelImpl(get()))
+        StatefulViewModelWrapper<FaqViewModel, FaqState>(FaqViewModelImpl(get()))
     }
 
     viewModel(named("AboutAppViewModel")) {

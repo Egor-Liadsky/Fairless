@@ -25,7 +25,7 @@ struct AboutAppView: View {
                     .frame(width: 146, height: 103)
                 
                 Text("Версия 1.0")
-                    .font(.custom("Qanelas-Semibold", size: 12))
+                    .font(.custom("Qanelas-Semibold", size: 20))
                     .foregroundColor(Color.black)
                     .padding(.top, 30)
             }

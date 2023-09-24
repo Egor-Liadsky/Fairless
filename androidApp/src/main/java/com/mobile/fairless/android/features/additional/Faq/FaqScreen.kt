@@ -25,18 +25,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.fairless.R
+import com.mobile.fairless.android.di.StatefulViewModelWrapper
 import com.mobile.fairless.android.di.ViewModelWrapper
 import com.mobile.fairless.android.features.views.topBars.CommonTopBar
 import com.mobile.fairless.android.theme.colors
 import com.mobile.fairless.android.theme.fontQanelas
+import com.mobile.fairless.features.additional.faq.state.FaqState
 import com.mobile.fairless.features.additional.faq.viewModel.FaqViewModel
 import org.koin.androidx.compose.get
 import org.koin.core.qualifier.named
 
 @Composable
-fun FaqScreen(viewModelWrapper: ViewModelWrapper<FaqViewModel> = get(named("FaqViewModel"))) {
+fun FaqScreen(viewModelWrapper: StatefulViewModelWrapper<FaqViewModel, FaqState> = get(named("FaqViewModel"))) {
 
-    val state = viewModelWrapper.viewModel.state.collectAsState()
+    val state = viewModelWrapper.viewModel.state
 
     Column(
         Modifier

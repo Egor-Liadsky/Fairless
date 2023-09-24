@@ -71,7 +71,10 @@ struct ViewModelFactory {
     }
     
     @MainActor static func getFaqViewModel() ->
-    ViewModelWrapper<FaqViewModelImpl> {
-        return ViewModelWrapper(viewModel: FaqViewModelImpl(navigator: NavigatorImpl.shared))
+    StatefulViewModelWrapper<FaqViewModelImpl, FaqState> {
+        return StatefulViewModelWrapper<FaqViewModelImpl, FaqState>(
+            state: FaqState.companion.getInstance(),
+            viewModel: FaqViewModelImpl(navigator: NavigatorImpl.shared)
+        )
     }
 }
