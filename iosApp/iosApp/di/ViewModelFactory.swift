@@ -32,6 +32,16 @@ struct ViewModelFactory {
         )
     }
     
+    @MainActor static func getDocumentViewModelWrapper() ->
+    StatefulViewModelWrapper<DocumentViewModelImpl, DocumentState> {
+        return StatefulViewModelWrapper<DocumentViewModelImpl, DocumentState>(
+            state: DocumentState.companion.getInstance(),
+            viewModel: DocumentViewModelImpl(
+                navigator: NavigatorImpl.shared
+            )
+        )
+    }
+    
     @MainActor static func getSearchViewModelWrapper() ->
     StatefulViewModelWrapper<SearchViewModelImpl, SearchState> {
         return StatefulViewModelWrapper<SearchViewModelImpl, SearchState>(

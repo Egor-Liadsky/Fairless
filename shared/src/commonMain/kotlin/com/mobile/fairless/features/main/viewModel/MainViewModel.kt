@@ -38,7 +38,7 @@ interface MainViewModel : StatefulKmpViewModel<MainState>, SubScreenViewModel {
 
     fun getCategories()
     fun selectCategory(category: CategoryModel)
-    fun onDocumentClick(product: String)
+    fun onDocumentClick(product: String, ios: Boolean = false)
     fun onProfileClick()
     fun onAppend()
     fun onRefresh()
@@ -206,10 +206,14 @@ class MainViewModelImpl(override val navigator: Navigator) : StatefulKmpViewMode
         }
     }
 
-    override fun onDocumentClick(product: String) {
-        val document = Json.encodeToString(product)
-        val encodeUrl = urlEncode.encodeToUrl(document)
-        navigator.navigateToDocument(encodeUrl)
+    override fun onDocumentClick(product: String, ios: Boolean) {
+        if (!ios) {
+            val document = Json.encodeToString(product)
+            val encodeUrl = urlEncode.encodeToUrl(document)
+            navigator.navigateToDocument(encodeUrl)
+        } else {
+            navigator.navigateToDocument(product)
+        }
     }
 
     override fun onProfileClick() {

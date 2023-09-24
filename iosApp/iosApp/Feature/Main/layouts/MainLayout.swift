@@ -17,17 +17,24 @@ struct MainLayout: View {
         self.viewModelWrapper = viewModelWrapper
     }
     
+    @Environment(\.viewFactory) var viewFactory
+    @EnvironmentObject var navigator: NavigatorImpl
+    @State private var isActive = false
+
+    
     var body: some View {        
         
         let products = viewModelWrapper.state.products
         
         ScrollView {
-            
             VStack (spacing: 10) {
                 
                 ForEach(products.indices, id: \.self) { index in
                     
-                    ProductView(product: products[index].product)
+                    ProductView(product: products[index].product){
+                        isActive = true
+                        viewModelWrapper.viewModel.onDocumentClick(product: products[index].product.name?.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "", ios: true)
+                    }
                         .overlay(
                             RoundedRectangle(cornerRadius: 5)
                                 .inset(by: 0.25)
@@ -50,6 +57,17 @@ struct MainLayout: View {
                 }
             }
             .padding(.vertical, 10)
+        }
+        .background(
+            NavigationLink(
+                destination: viewFactory.makeView(for: .document),
+                isActive: $isActive,
+                label: { EmptyView() }
+            )
+        )
+        .refreshable { viewModelWrapper.viewModel.onRefresh() }
+        .onAppear {
+            UIRefreshControl.appearance().tintColor = UIColor(Color.orangePrimary)
         }
     }
 }

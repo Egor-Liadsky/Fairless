@@ -34,6 +34,7 @@ final class ViewFactory: EnvironmentKey {
         case .rules: RulesView()
         case .feedback: FeedbackView()
         case .faq: FaqView()
+        case .document: DocumentView()
         default:
             Text("error navigation")
         }

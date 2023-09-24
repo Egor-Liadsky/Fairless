@@ -47,7 +47,7 @@ interface DocumentViewModel : StatefulKmpViewModel<DocumentState>, SubScreenView
     fun sendComment(text: String)
     fun changeCommentText(text: String)
     fun reactionDocument(like: Boolean)
-    fun getNameProduct(productName: String)
+    fun getNameProduct(productName: String, ios: Boolean = false)
     fun periodClick()
     fun navigateToShop(shop: Shop)
     fun reloadDocument()
@@ -104,9 +104,13 @@ class DocumentViewModelImpl(override val navigator: Navigator) :
         }
     }
 
-    override fun getNameProduct(productName: String) {
-        val decodeProduct = urlEncode.decodeToUrl(productName)
-        _state.update { it.copy(productName = Json.decodeFromString(decodeProduct)) }
+    override fun getNameProduct(productName: String, ios: Boolean) {
+        if (!ios) {
+            val decodeProduct = urlEncode.decodeToUrl(productName)
+            _state.update { it.copy(productName = Json.decodeFromString(decodeProduct)) }
+        } else {
+            _state.update { it.copy(productName = productName) }
+        }
     }
 
     override fun periodClick() {

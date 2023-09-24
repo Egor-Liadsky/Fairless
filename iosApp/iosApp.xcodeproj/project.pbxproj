@@ -51,6 +51,8 @@
 		74DC12ED2AC051F0008A7CB9 /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC12EC2AC051F0008A7CB9 /* RulesView.swift */; };
 		74DC12F02AC05211008A7CB9 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC12EF2AC05211008A7CB9 /* FeedbackView.swift */; };
 		74DC12F32AC0522D008A7CB9 /* FaqView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC12F22AC0522D008A7CB9 /* FaqView.swift */; };
+		74DC12FA2AC0B4A0008A7CB9 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC12F92AC0B4A0008A7CB9 /* DocumentView.swift */; };
+		74DC12FC2AC0B4E0008A7CB9 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC12FB2AC0B4E0008A7CB9 /* Navigation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +100,8 @@
 		74DC12EC2AC051F0008A7CB9 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
 		74DC12EF2AC05211008A7CB9 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		74DC12F22AC0522D008A7CB9 /* FaqView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaqView.swift; sourceTree = "<group>"; };
+		74DC12F92AC0B4A0008A7CB9 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
+		74DC12FB2AC0B4E0008A7CB9 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A85FF435CEF911A5A3566396 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +212,8 @@
 		748AA4FD2A815C8700A5EB83 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				74DC12FD2AC0B4E6008A7CB9 /* Navigation */,
+				74DC12F82AC0B495008A7CB9 /* Document */,
 				7469C8222ABB3700005E8634 /* Additional */,
 				743588B22A8D24C300E0E680 /* Search */,
 				743588AD2A8D1C9800E0E680 /* Menu */,
@@ -273,9 +279,8 @@
 			isa = PBXGroup;
 			children = (
 				748AA5192A8243FD00A5EB83 /* Navigator.swift */,
-				7460BC942A8A47BC00C7222B /* MainNavigationView.swift */,
 				743588A92A8D17FB00E0E680 /* ViewFactory.swift */,
-				743588B02A8D230400E0E680 /* BottomBar.swift */,
+				74DC12FB2AC0B4E0008A7CB9 /* Navigation.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -363,6 +368,23 @@
 				74DC12F22AC0522D008A7CB9 /* FaqView.swift */,
 			);
 			path = Faq;
+			sourceTree = "<group>";
+		};
+		74DC12F82AC0B495008A7CB9 /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				74DC12F92AC0B4A0008A7CB9 /* DocumentView.swift */,
+			);
+			path = Document;
+			sourceTree = "<group>";
+		};
+		74DC12FD2AC0B4E6008A7CB9 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				743588B02A8D230400E0E680 /* BottomBar.swift */,
+				7460BC942A8A47BC00C7222B /* MainNavigationView.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		7555FF72242A565900829871 = {
@@ -538,6 +560,8 @@
 				748CCEFB2AB5FD5C006DAC3A /* ProfileView.swift in Sources */,
 				74601B812AAF11B300027B68 /* SearchLayout.swift in Sources */,
 				748AA5002A815CE200A5EB83 /* MainView.swift in Sources */,
+				74DC12FC2AC0B4E0008A7CB9 /* Navigation.swift in Sources */,
+				74DC12FA2AC0B4A0008A7CB9 /* DocumentView.swift in Sources */,
 				7460BC952A8A47BC00C7222B /* MainNavigationView.swift in Sources */,
 				7486FEC72A82C21000A32051 /* TypeView.swift in Sources */,
 				7469C8282ABB3861005E8634 /* AdditionalTopBar.swift in Sources */,

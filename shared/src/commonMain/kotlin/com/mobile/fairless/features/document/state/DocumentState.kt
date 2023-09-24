@@ -26,4 +26,8 @@ data class DocumentState(
     val isLike: Boolean? = null,
     val periodMenuOpen: Boolean = false,
     val userLike: Boolean? = null,
-)
+) {
+    companion object {
+        fun getInstance() = DocumentState()
+    }
+}

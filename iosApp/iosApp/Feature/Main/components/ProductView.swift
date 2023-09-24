@@ -12,8 +12,12 @@ import shared
 struct ProductView: View {
     
     let product: ProductData
+    let onClick: () -> Void
     
     var body: some View {
+        Button {
+            onClick()
+        } label: {
             HStack{
                 AsyncImage(url: URL(string: .base_url + (product.image?.formats?.thumbnail?.url ?? ""))) { image in
                     image
@@ -141,5 +145,6 @@ struct ProductView: View {
                 .padding(.trailing, 10)
             }
             .padding(.vertical, 12)
+        }
     }
 }

@@ -26,7 +26,9 @@ struct SearchLayout: View {
                 
                 ForEach(products.indices, id: \.self) { index in
                     
-                    ProductView(product: products[index].product)
+                    ProductView(product: products[index].product){
+                        
+                    }
                         .overlay(
                             RoundedRectangle(cornerRadius: 5)
                                 .inset(by: 0.25)
@@ -49,6 +51,10 @@ struct SearchLayout: View {
                 }
             }
             .padding(.vertical, 10)
+        }
+        .refreshable { viewModelWrapper.viewModel.onRefresh() }
+        .onAppear {
+            UIRefreshControl.appearance().tintColor = UIColor(Color.orangePrimary)
         }
     }
 }

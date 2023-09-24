@@ -25,6 +25,8 @@ import Combine
     @Published var currentTab: ScreenRoute
     @Published var currentScreen: ScreenRoute
     
+    @Published var documentNavigation: DocumentNavigation?
+    
     init(startScreen: ScreenRoute){
         self.currentScreen = startScreen
         if (startScreen.isMain){
@@ -50,8 +52,9 @@ import Combine
         
     }
     
-    nonisolated func navigateToDocument(product: String) {
-        
+    func navigateToDocument(product: String) {
+        currentScreen = .document
+        documentNavigation = .init(product: product)
     }
     
     func navigateToFaq() {
